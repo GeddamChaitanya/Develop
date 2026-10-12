@@ -1,4 +1,29 @@
-    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+Read-only. Use the DB connection from the current .env (SELECT queries only, 
+no INSERT/UPDATE/DELETE).
+
+Goal: build valid Swagger payloads for POST /api/v1/agentic_fit_allocator to 
+reproduce the L2 OpEx bug.
+
+1. First print only the DB host name (no password) so I can confirm which DB 
+   this is.
+2. Find the most recent sub-step input records where input_name is 
+   'IA L2 Capabilities Opex' (or 'IA L1l2 Capabilities Opex'). For each, show: 
+   input_key, sub_step_key, process key, step key, process name, created date.
+3. For those records, check that the parent sub_step row exists in 
+   blueprinting_process_sub_step and the input exists in 
+   blueprinting_process_sub_step_input.
+4. From each input_json, tell me:
+   - Capability setup type: AI Research vs Client Capability Map
+   - Whether capabilityInfo.total_opex exists
+   - Whether capabilityInfo.AgenticFitGrid.l1_allocations exists and how many
+   - The capability map shape (flat/hierarchical, has L3 or not)
+5. Pick one valid record for Case 1 (AI Research) and one for Case 2 (Client 
+   Capability Map), and generate the exact request body for the endpoint, 
+   using the AgenticFitAllocatorInput schema in schemas/.
+
+Do not modify any files or data.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
     'x-ms-request-id': '97ded78f-601e-0018-3c47-5a28d9000000'
     'x-ms-client-request-id': 'ce7a555a-c63a-11f1-8273-d4f32df15685'
     'x-ms-version': 'REDACTED'
