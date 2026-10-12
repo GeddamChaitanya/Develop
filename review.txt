@@ -1,3 +1,292 @@
+[ERROR] AGENTIC_FIT_ALLOCATOR_Background - 500: 'NoneType' object is not iterable
+2026-10-12 15:58:35,870 - uvicorn.access - INFO - 127.0.0.1:52504 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
+[TRACE] Received input_data: {"stepKey":11697,"substepkey":11697,"processName":"Customer Query Resolution","processKey":3001,"in
+Getting database session...
+Database session created.
+--- Reading input record for input_key: 5958 ---
+No input record found for input_key: 5958
+[TRACE] DB_Read: No input record found for input_key: 5958
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11697
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11697.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11697
+
+--- Operations finished ---
+[TRACE] Starting agentic fit allocation for action: GENERATE_L2_OPEX
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11697
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11697.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11697
+
+--- Operations finished ---
+{'ID': None, 'Status': 'Started', 'Logs': ' Started generating for Impact Analyser for action GENERATE_L2_OPEX', 'input_key': 5958, 'substepkey': 11697, 'receiverEmail': 'test.user@example.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11697, 'input_key': 5958, 'receiverEmail': 'test.user@example.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11697:5958', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+[TRACE] Allocating OPEX to capability levels: ['L2']
+[TRACE] Progress monitor started for ID: None
+[TRACE] Allocating opex to capabilities
+[TRACE] Total OPEX missing before allocation; researching OPEX instead of using a default
+
+Researching OPEX for None...
+{'ID': None, 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 5958, 'substepkey': 11697, 'receiverEmail': 'test.user@example.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:11697:5958', 'substepkey': 11697, 'input_key': 5958, 'receiverEmail': 'test.user@example.com', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+2026-10-12 15:58:48,957 - httpx - INFO - HTTP Request: GET https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json "HTTP/1.1 200 OK"
+2026-10-12 15:58:51,838 - httpx - INFO - HTTP Request: GET https://data.sec.gov/submissions/CIK0001318605.json "HTTP/1.1 200 OK"
+2026-10-12 15:58:53,838 - httpx - INFO - HTTP Request: GET https://data.sec.gov/submissions/CIK0001318605.json "HTTP/1.1 200 OK"
+   SEC Company Facts OPEX Complete: $15,162,000,000.00
+      Confidence: high
+      Sources: 3 found
+
+Allocating OPEX to capabilities...
+============================================================
+[ERROR] Agentic_Fit_Allocation - 'NoneType' object is not iterable
+[TRACE] Error in agentic fit allocation
+[TRACE] Progress monitor stopped for ID: None
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11697
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11697.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11697
+
+--- Operations finished ---
+{'ID': None, 'Status': 'Error', 'Logs': "Error in Agentic Fit Allocation: 'NoneType' object is not iterable", 'input_key': 5958, 'substepkey': 11697, 'receiverEmail': 'test.user@example.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Error', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11697, 'input_key': 5958, 'receiverEmail': 'test.user@example.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11697:5958', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Error
+[TRACE] Redis message published successfully: Error
+Getting database session...
+Database session created.
+--- Reading app_user for email: test.user@example.com ---
+No app_user found for email: test.user@example.com
+[TRACE] DB_Read: No app_user found for email: test.user@example.com
+2026-10-12 15:58:57,781 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '1198'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'bb8d3951-c627-11f1-a784-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-12 15:59:00,533 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:29:00 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-12 15:59:00,538 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/631012b8-c272-4d47-9934-fc320aec7c26?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'bb8d3951-c627-11f1-a784-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:59:00,846 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:29:00 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:59:03,849 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/631012b8-c272-4d47-9934-fc320aec7c26?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'bb8d3951-c627-11f1-a784-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:59:04,167 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:29:04 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:59:07,171 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/631012b8-c272-4d47-9934-fc320aec7c26?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'bb8d3951-c627-11f1-a784-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:59:07,698 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:29:07 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:59:07,698 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14188'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'c1767c6d-c627-11f1-b547-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-12 15:59:08,082 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:29:07 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-12 15:59:08,085 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/61d1e208-6294-4b7f-8a1a-4a6184568cea?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'c1767c6d-c627-11f1-b547-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:59:08,398 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:29:08 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:59:11,400 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/61d1e208-6294-4b7f-8a1a-4a6184568cea?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'c1767c6d-c627-11f1-b547-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:59:11,712 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:29:11 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+Email send operation status:  {'id': '61d1e208-6294-4b7f-8a1a-4a6184568cea', 'status': 'Succeeded', 'error': None}
+Message sent with ID:  61d1e208-6294-4b7f-8a1a-4a6184568cea
+Status:  Succeeded
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 356, in agentic_fit_allocation
+    agentic_fit_grid = await agentic_fit_allocator.allocate_opex_to_capability_levels(levels,survey_ctx=survey_ctx, file_ctx=file_ctx)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\agentic_fit_allocator.py", line 120, in allocate_opex_to_capability_levels
+    self.agentic_fit_grid = await run_full_analysis_with_research(self.company_name, self.capability_map,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\allocate_opex.py", line 825, in run_full_analysis_with_research
+    allocation_results = await run_capability_allocation(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\allocate_opex.py", line 742, in run_capability_allocation
+    capability_map = convert_capability_map(new_capability_map)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\allocate_opex.py", line 846, in convert_capability_map
+    for item in capability_map:
+                ^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 138, in _agentic_fit_runner
+    asyncio.run(agentic_fit_allocation(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 632, in agentic_fit_allocation
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+fastapi.exceptions.HTTPException: 500: 'NoneType' object is not iterable
+[ERROR] AGENTIC_FIT_ALLOCATOR_Background - 500: 'NoneType' object is not iterable
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Already up to date.
 PS C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi> git switch fix/l2-opex-stuck-loading
 branch 'fix/l2-opex-stuck-loading' set up to track 'origin/fix/l2-opex-stuck-loading'.
