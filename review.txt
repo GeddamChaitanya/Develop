@@ -1,3 +1,28 @@
+Read-only, do not edit.
+
+Bug: L2 Capability OpEx analysis never completes.
+Case 1: Capability Setup = Client Specific Based on AI Research, AI Identifier = 
+AI Generated Evaluation → stuck on "Generating L2 Capability OpEx analysis".
+Case 2: Capability Setup = Client Specific Based on Client Capability Map → after 
+L1 OpEx completes, L2 stays stuck at 5%.
+
+Trace:
+1. The FastAPI endpoint for L2 OpEx and the full background task flow 
+   (ProgressMonitor / publish_message / Redis / heartbeat / mark_completed / 
+   mark_failed). Show where progress is set to 5% and what runs next.
+2. How L2 reads L1 OpEx output. Check for key mismatches, especially after the 
+   recent commit "rename all reasoning keys to source_reasoning across all 
+   endpoints" (e.g. L2 still expecting "reasoning").
+3. Any client/project name changes in this flow (clientName vs projectName via 
+   project_compat) that could return None and break something.
+4. Exception handling: places where an error is swallowed, or where the except 
+   block itself can fail (e.g. email_send, telemetry), so status is never set 
+   to failed and the UI keeps loading.
+5. git log for the files in this flow over the last few weeks. List commits that 
+   touched it.
+
+Report suspected root causes ranked by likelihood with file:line evidence.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Write a throwaway test script (do not commit it) that builds a sample CDC json_obj 
 with clientInfo.projectName = "Test Project", calls _add_header_footer on a new 
 python-docx Document and _generate_current_state_docx (skip any blob upload), 
