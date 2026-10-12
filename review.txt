@@ -1,3 +1,21 @@
+Read-only, do not edit.
+
+Inspect only these export paths:
+- utilities/cdc_export.py lines ~40-70 and ~600-625
+- jsontodocx.py lines ~980-990 and ~1080-1090
+- project_compat.py (the projectName/clientName alias helpers)
+
+For each place that reads clientInfo.clientName or prints "Client Name":
+1. Which export/endpoint uses it (and is it the citation/source reasoning export)?
+2. What it outputs when the payload has projectName but no clientName.
+3. Is there a workspace name field in the payload/schemas (e.g. workspaceName)? 
+   Show where it's defined.
+4. Is there an existing helper in project_compat.py that resolves project name 
+   with clientName fallback that these functions should use instead?
+
+Propose the minimal change (do not apply it) to show "Project Name - Workspace Name" 
+instead of client name, without changing any other logic.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll trace the requested Git history on the remote refs and compare the citation-specific files between `origin/ascend/develop` and `origin/feature/citation`, then verify any suspicious surviving lines in the current checkout. Everything will remain read-only.
 
 Ran terminal command: git log --oneline --merges -i --grep="citation" origin/ascend/develop
