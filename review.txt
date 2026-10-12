@@ -1,7 +1,93 @@
-Apply a minimal fix in apis/v1/agentic_fit_allocator.py exception handler only 
-(around L594-L631):
-- Replace the `"substepkey" in locals()` guard with the substepkey/input_key 
-  that is actually available (from payload or background_processing_data), so 
+I’ll re-read the exception handler, update only its failure-path identifiers and early-error defaults, then validate it with mocked dependencies and show the full diff.
+
+
+Ran terminal command: git status --short
+
+Read , lines 590 to 634
+
+The payload always supplies `substepkey` and `input_key`; background metadata can override them when populated. I’ll use those identifiers consistently for the failed DB write and Error event, and give the logging and email arguments safe defaults for early failures.
+
+
+Generating patch (42 lines) in 
+
+
+```
+
+```
+
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "workingDirectory": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "codeSnippet": "import ast, asyncio, builtins, json, os\nfrom pathlib import Path\nfrom types import SimpleNamespace\nsource = Path('apis/v1/agentic_fit_allocator.py').read_text(encoding='utf-8-sig')\nmodule = ast.parse(source)\njob = next(node for node in module.body if isinstance(node, ast.AsyncFunctionDef) and node.name == 'agentic_fit_allocation')\nisolated = ast.fix_missing_locations(ast.Module(body=[ast.ImportFrom(module='__future__', names=[ast.alias(name='annotations')], level=0), job], type_ignores=[]))\nclass MockHTTPException(Exception):\n    def __init__(self, status_code, detail):\n        self.status_code = status_code\n        self.detail = detail\n        super().__init__(detail)\ndef check(label, failure_stage, background, expected_input, expected_substep, receiver=None):\n    calls = []\n    class MockMonitor:\n        async def start_progress(self, *args, **kwargs): pass\n        async def stop_progress(self): calls.append(('monitor',))\n    class MockAllocator:\n        def __init__(self, *args): pass\n        async def allocate_opex_to_capability_levels(self, *args, **kwargs): raise ValueError('original failure')\n    def api_call(*args, **kwargs):\n        if failure_stage == 'api': raise ValueError('original failure')\n    def read_input(key):\n        if failure_stage == 'read': raise ValueError('original failure')\n        return SimpleNamespace(input_json=json.dumps({'projectInfo':{'clientName':'Acme'}, 'capabilityInfo':{}, 'backgroundProcessingInfo':background}))\n    def record_status(**kwargs): calls.append(('db', kwargs))\n    def record_publish(*args, **kwargs): calls.append(('publish', args, kwargs))\n    def record_email(*args, **kwargs): calls.append(('email', args, kwargs))\n    safe_builtins = dict(vars(builtins))\n    def controlled_import(name, *args, **kwargs):\n        if name == '__future__': return builtins.__import__(name, *args, **kwargs)\n        raise ImportError('context imports blocked by isolated validation')\n    safe_builtins['__import__'] = controlled_import\n    ns = {'__builtins__':safe_builtins, 'json':json, 'os':SimpleNamespace(getenv=lambda name:'mock-channel'), 'normalize_project_payload':lambda value:value, 'action_':{'IA L2 Capabilities Opex':'GENERATE_L2_OPEX'}, 'order_':{'IA L2 Capabilities Opex':3}, 'ProgressMonitor':MockMonitor, 'AgenticFitAllocator':MockAllocator, 'HTTPException':MockHTTPException, 'status':SimpleNamespace(HTTP_500_INTERNAL_SERVER_ERROR=500), 'track_api_call':api_call, 'track_trace':lambda *args, **kwargs:None, 'track_operation_start':lambda *args, **kwargs:None, 'track_operation_error':lambda *args, **kwargs:None, 'email_send':record_email, 'publish_message':record_publish, 'db_operations_orm':SimpleNamespace(run_operations_status=record_status), 'read_sub_step_input_by_input_key':read_input}\n    exec(compile(isolated, 'allocator-source', 'exec'), ns)\n    payload = SimpleNamespace(input_key=11, substepkey=22, input_name='IA L2 Capabilities Opex', OutputKey=None, receiverEmail=receiver, model_dump_json=lambda:'{}')\n    try:\n        asyncio.run(ns['agentic_fit_allocation'](payload))\n    except MockHTTPException as error:\n        assert error.status_code == 500 and error.detail == 'original failure'\n    else:\n        raise AssertionError('Original exception was not preserved')\n    failed = [entry[1] for entry in calls if entry[0] == 'db' and entry[1]['data']['sub_step_status_key'] == 6]\n    assert len(failed) == 1 and failed[0]['sub_step_key'] == expected_substep\n    assert failed[0]['data']['sub_step_progress_percentage'] == 0\n    events = [entry for entry in calls if entry[0] == 'publish' and entry[1][1] == 'Error']\n    assert len(events) == 1 and events[0][1][3:5] == (expected_input, expected_substep)\n    assert events[0][2]['channel_name'] == 'mock-channel'\n    emails = [entry for entry in calls if entry[0] == 'email']\n    assert len(emails) == 1\n    if failure_stage in ('api', 'read'):\n        assert emails[0][2]['action'] is None and emails[0][2]['client_name'] is None and emails[0][2]['process_name'] is None\n        assert events[0][1][5] == receiver\n    print('PASS:', label)\ncheck('failure before action/client/background initialization', 'api', {}, 11, 22, '[user@example.test](mailto:user@example.test)')\ncheck('input lookup failure', 'read', {}, 11, 22)\ncheck('allocation failure with background identifiers', 'allocation', {'input_key':33,'substepkey':44}, 33, 44)\ncheck('allocation failure without background metadata', 'allocation', {}, 11, 22)\ncheck('zero background identifiers fall back to payload', 'allocation', {'input_key':0,'substepkey':0}, 11, 22)\nprint('All five isolated failure-path checks passed; no external services contacted.')"
+}
+
+All five isolated failure-path checks passed, including failures before initialization and absent or zero-valued background identifiers. I’ll check editor diagnostics and the diff to confirm the change is confined to the exception handler.
+
+
+Ran terminal command: git diff -- apis/v1/agentic_fit_allocator.py
+
+Ran terminal command: git status --short
+
+Checked , 6 problems found
+
+Updated only the exception handler in `agentic_fit_allocator.py:599`. Success-path logic is unchanged.
+
+Five mocked failure-path checks passed, covering early errors and missing/zero background identifiers. Editor diagnostics report unresolved imports outside the changed block; no live-service tests were run.
+
+Full diff:
+
+```diff
+diff --git a/apis/v1/agentic_fit_allocator.py b/apis/v1/agentic_fit_allocator.py
+index df55428..d39df59 100644
+--- a/apis/v1/agentic_fit_allocator.py
++++ b/apis/v1/agentic_fit_allocator.py
+@@ -597,15 +597,20 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+         
+         return []
+     except Exception as e:
++        _bg = locals().get("background_processing_data") or {}
++        _action = locals().get("action")
++        _client_info = locals().get("client_info")
++        _receiver_email = locals().get("receiver_email") or input_data.receiverEmail or _bg.get("receiverEmail")
++        _failed_substepkey = _bg.get("substepkey") or input_data.substepkey
++        _failed_input_key = _bg.get("input_key") or input_data.input_key
+         track_operation_error("Agentic_Fit_Allocation", error=e,
+-                              properties={"action": action if 'action' in locals() else None})
++                              properties={"action": _action})
+         track_trace("Error in agentic fit allocation", severity="Error")
+         await monitor.stop_progress()
+-        _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else {}
+         failed_status_written = False
+-        if "substepkey" in locals() and _bg.get("substepkey"):
++        if _failed_substepkey:
+             db_operations_orm.run_operations_status(
+-                sub_step_key=_bg.get("substepkey"),
++                sub_step_key=_failed_substepkey,
+                 data={
+                     "sub_step_name": _bg.get("step_name"),
+                     "sub_step_status_key": 6,  # Error
+@@ -618,11 +623,11 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+             publish_message(
+                 _bg.get("ID"), "Error",
+                 f"Error in Agentic Fit Allocation: {str(e)[:500]}",
+-                _bg.get("input_key"), _bg.get("substepkey"),
+-                receiver_email, _bg.get("requestedOn"),
+-                channel_name=channel_name if "channel_name" in locals() else None,
++                _failed_input_key, _failed_substepkey,
++                _receiver_email, _bg.get("requestedOn"),
++                channel_name=locals().get("channel_name") or os.getenv('REDIS_channel_name_agenticfit'),
+             )
+-        email_send(receiver_email, action=action, process_name=background_processing_data.get('processName'),  client_name=client_info.get('clientName') if isinstance(client_info, dict) else None, from_exception=True, e=e)
++        email_send(_receiver_email, action=_action, process_name=_bg.get('processName'),  client_name=_client_info.get('clientName') if isinstance(_client_info, dict) else None, from_exception=True, e=e)
+ 
+         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+```
+
+Made changes.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ata), so 
   the failed DB status write and the Redis "Error" publish actually run.
 - Make sure the handler can't crash itself if the error happened early 
   (action / background_processing_data / client_info may be undefined): use 
