@@ -1,3 +1,13 @@
+Apply a minimal fix in apis/v1/agentic_fit_allocator.py exception handler only 
+(around L594-L631):
+- Replace the `"substepkey" in locals()` guard with the substepkey/input_key 
+  that is actually available (from payload or background_processing_data), so 
+  the failed DB status write and the Redis "Error" publish actually run.
+- Make sure the handler can't crash itself if the error happened early 
+  (action / background_processing_data / client_info may be undefined): use 
+  safe defaults.
+- Do not change success-path logic or any other file. Show the full diff.
+--------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll trace the L2 OpEx endpoint and background task, then check the L1 output contract, project-name handling, exception paths, and recent commits. This will be read-only.
 
 
