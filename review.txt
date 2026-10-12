@@ -1,3 +1,96 @@
+I’ll do a read-only workspace search, then inspect each hit in its local context so the report can distinguish citation flow, API fields, prompts, and likely merge leftovers. I won’t edit anything.
+
+Ran terminal command: git status --short
+
+Searched for regex `client_name|clientName|ClientName|client name|Client Name`, 132 results
+
+The first pass found 132 matches across 36 files, and the only pre-existing worktree change is an untracked `run.ps1`; I’ll leave it untouched. The search output was capped at 100, so I’m retrieving the complete hit list before classifying and checking possible duplicated logic.
+
+Searched for regex `client_name|clientName|ClientName|client name|Client Name`, 132 results
+
+The complete list confirms most hits are client fields in test payloads; production hits cluster around API metadata/notifications, document exports, schema aliases, and compatibility helpers. I’m now checking the citation-specific call path and adjacent `project_name` logic, since that’s the useful signal for deciding whether any blocks are merge leftovers.
+
+Searched for regex `citation|cite|citation flow`, 317 results
+
+Searched for regex `project_name|projectName|ProjectName`, 120 results
+
+Read , lines 1 to 150
+
+Read , lines 130 to 185
+
+Read , lines 400 to 478
+
+Read , lines 270 to 355
+
+Read , lines 920 to 975
+
+Read , lines 55 to 92
+
+Read , lines 62 to 95
+
+Read , lines 132 to 160
+
+Read , lines 205 to 270
+
+Read , lines 545 to 607
+
+Read , lines 575 to 635
+
+Read , lines 95 to 130
+
+Read , lines 32 to 52
+
+Read , lines 1 to 36
+
+**Scope:** Read-only search found **132 matches across 36 files**. No files were changed. No direct match is in citation instructions or LLM prompt text; the citation-specific prompt files use terms such as `source_reasoning` and `client file`, but not the searched client-name variants. I found no matching Redis key names. The missing-client-capabilities match below is an email argument, not citation logic.
+
+Each listed line is a separate occurrence. Within a row, snippets correspond to the line links in order. “Duplicate?” refers specifically to a likely leftover where equivalent logic appears once with `client_name` and once with `project_name`.
+
+| File and line(s) | Snippet(s) | Category | Duplicate? |
+|---|---|---|---|
+| `create_cap_maps_from_xlsx_offline.md:36` | `"clientName": "HPE"` | (c) API request/response field | No |
+| `agentic_fit_allocator.py:210` · `agentic_fit_allocator.py:232` · `agentic_fit_allocator.py:294` · `agentic_fit_allocator.py:593` · `agentic_fit_allocator.py:596` · `agentic_fit_allocator.py:625` | `AgenticFitAllocator(client_info.get('clientName')...)`<br>`properties={"action": action, "client_name": ...}`<br>`Generating total OPEX for {client_info.get('clientName')...}`<br>`email_send(... client_name=client_info.get('clientName')...)`<br>`properties={"action": action, "client_name": ...}`<br>`email_send(... client_name=client_info.get('clientName')..., from_exception=True...)` | (b) Unrelated module | No |
+| `capability_double_click.py:559` · `capability_double_click.py:561` · `capability_double_click.py:563` · `capability_double_click.py:583` · `capability_double_click.py:603` | `email_send(... client_name=client_info.get('clientName')...)`<br>Commented-out `email_send(... client_name=...)`<br>`properties={"action": analysis_type, "client_name": ...}`<br>Error email with `client_name=...`<br>Outer error email with `client_name=...` | (b) Unrelated module | No; completion and exception paths |
+| `capability_maps_generator.py:153` · `capability_maps_generator.py:417` · `capability_maps_generator.py:471` | Commented `client_name=input_data.projectName`<br>`client_name=input_data.projectName`<br>`client_name=input_data.clientName if hasattr(input_data, 'clientName') else None` | (b) Unrelated module | No; success and exception notification paths, with `clientName` a schema alias |
+| `heatmap.py:118` | Error email receives `client_name=output_data.get('clientInfo').get('clientName')...` | (b) Unrelated module | No |
+| `industrial_map.py:352` · `industrial_map.py:390` | `email_send(... client_name=None)`<br>Error email with `client_name=None` | (b) Unrelated module | No; success and exception paths |
+| `missing_capabilities.py:168` | `email_send(... client_name=None)` | (b) Unrelated module | No |
+| `missing_client_capabilities.py:956` | Email notification argument `client_name=None` | (b) Unrelated module; notification only | No |
+| `two_by_two.py:227` · `two_by_two.py:229` · `two_by_two.py:237` · `two_by_two.py:241` · `two_by_two.py:262` | Success email `client_name=client_info.get('clientName')`<br>Telemetry `properties={"action": analysis_type, "client_name": ...}`<br>Error email with `client_name=...`<br>Error email with `client_name=...`<br>Outer error email with `client_name=...` | (b) Unrelated module | No client/project variant. The two nearby error-email calls are both `client_name` calls in nested exception handling. |
+| `workforce_analyzer.py:291` · `workforce_analyzer.py:293` · `workforce_analyzer.py:342` · `workforce_analyzer.py:382` · `workforce_analyzer.py:407` · `workforce_analyzer.py:415` · `workforce_analyzer.py:435` · `workforce_analyzer.py:503` · `workforce_analyzer.py:537` · `workforce_analyzer.py:550` · `workforce_analyzer.py:657` · `workforce_analyzer.py:732` · `workforce_analyzer.py:826` · `workforce_analyzer.py:831` · `workforce_analyzer.py:841` | `client_name = client_info.get("projectName", "")`<br>`client_name = client_info.projectName...`<br>Telemetry `client_name` property<br>Log interpolation `{client_name}`<br>`client_name or "client"`<br>Metric property `client_name`<br>`"company_name": client_name`<br>Log interpolation `{client_name}`<br>`client_name or "client"`<br>`"company_name": client_name`<br>`client_name or "client"`<br>`"company_name": client_name`<br>`client_name=client_name`<br>Telemetry property `client_name`<br>`"company_name": client_name` | (b) Unrelated module | No; the local `client_name` value is sourced from `projectName` |
+| `genai_attribution_report.md:207` · `genai_attribution_report.md:470` · `genai_attribution_report.md:517` · `genai_attribution_report.md:549` | `Telemetry captured ... client name ...`<br>`company_name` described as “Client name”<br>`clientName` field documented as required<br>`clientName` field documented as required | (b) at L207, L470; (c) at L517, L549 | No |
+| `README..txt:37` | `"clientName": "Tesla"` | (c) API request/response field | No |
+| `capability_maps_generator.py:74` | `def clientName(self) -> str:` | (c) API request/response field; compatibility property | No |
+| `missing_capabilities.py:82` | `def clientName(self) -> Optional[str]:` | (c) API request/response field; compatibility property | No |
+| `two_by_two_generator.py:22` | `def clientName(self) -> str:` | (c) API request/response field; compatibility property | No |
+| `workforce_analyzer.py:154` | `def clientName(self) -> Optional[str]:` | (c) API request/response field; compatibility property | No |
+| `test_api_endpoints_comprehensive.py:16` · `test_api_endpoints_comprehensive.py:30` · `test_api_endpoints_comprehensive.py:53` · `test_api_endpoints_comprehensive.py:76` · `test_api_endpoints_comprehensive.py:114` · `test_api_endpoints_comprehensive.py:167` | `# Missing clientName`<br>`"clientName": "TestCo"`<br>`"clientName": "TestCo"`<br>`"clientName": "TestCo"`<br>`"clientName": "TestCo"`<br>`"clientName": "TestCo"` | (c) API request/response field | No |
+| `test_capability_maps_endpoint_additional.py:18` · `test_capability_maps_endpoint_additional.py:38` · `test_capability_maps_endpoint_additional.py:55` | `"clientName": "TestCo"`<br>`"clientName": "TestCo"`<br>`"clientName": ""` | (c) API request/response field | No |
+| `test_capability_maps_endpoint_additional.py:48` · `test_capability_maps_endpoint_additional.py:49` | `test_capability_maps_empty_client_name`<br>Test docstring: “Test with empty client name.” | (b) Unrelated module; test labels | No |
+| `test_capability_maps_endpoint.py:19` · `test_capability_maps_endpoint.py:57` · `test_capability_maps_endpoint.py:86` · `test_capability_maps_endpoint.py:119` · `test_capability_maps_endpoint.py:146` · `test_capability_maps_endpoint.py:175` | `"clientName": "CoA"`<br>`"clientName": "CoB"`<br>`"clientName": "CoC"`<br>`"clientName": "CoD"`<br>`"clientName": "CoE"`<br>`"clientName": "CoF"` | (c) API request/response field | No |
+| `test_cdc_status.py:39` | `"clientInfo": {"clientName": "Acme Corp", ...}` | (c) API request/response field | No |
+| `test_current_process_flow_generator_endpoint.py:47` · `test_current_process_flow_generator_endpoint.py:80` · `test_current_process_flow_generator_endpoint.py:101` · `test_current_process_flow_generator_endpoint.py:122` · `test_current_process_flow_generator_endpoint.py:137` · `test_current_process_flow_generator_endpoint.py:150` · `test_current_process_flow_generator_endpoint.py:169` · `test_current_process_flow_generator_endpoint.py:193` · `test_current_process_flow_generator_endpoint.py:219` · `test_current_process_flow_generator_endpoint.py:234` · `test_current_process_flow_generator_endpoint.py:243` · `test_current_process_flow_generator_endpoint.py:255` | `"clientName": "AwesomeCo"`<br>`"clientName": "CamelCo"`<br>`"clientName": "FailCo"`<br>`"clientName": "ExCo"`<br>`"clientName": "NoLong"`<br>`"clientName": "NoShort"`<br>`"clientName": "NullBPMN"`<br>`"clientName": "ValFail"`<br>`"clientName": "ConcatCo"`<br>Comment: `"clientName" omitted intentionally`<br>Error-detail assertion accepts `clientname`<br>`"clientName": "NoRolesCo"` | (c) API request/response field and validation | No |
+| `test_current_process_flow_generator_endpoint.py:230` · `test_current_process_flow_generator_endpoint.py:242` | Comment: `Missing required company/client name`<br>Comment: error may mention `company_name` or `clientName` | (b) Unrelated module; test comments | No |
+| `test_future_process_flow_generator.py:68` · `test_future_process_flow_generator.py:117` · `test_future_process_flow_generator.py:139` · `test_future_process_flow_generator.py:161` · `test_future_process_flow_generator.py:176` · `test_future_process_flow_generator.py:190` · `test_future_process_flow_generator.py:228` · `test_future_process_flow_generator.py:261` · `test_future_process_flow_generator.py:306` · `test_future_process_flow_generator.py:331` · `test_future_process_flow_generator.py:364` · `test_future_process_flow_generator.py:377` | `"clientName": "AwesomeCo"`<br>`"clientName": "CamelCo"`<br>`"clientName": "FailCo"`<br>`"clientName": "ExCo"`<br>`"clientName": "NoLong"`<br>`"clientName": "NoShort"`<br>`"clientName": "NullBPMN"`<br>`"clientName": "ValFail"`<br>`"clientName": "ConcatCo"`<br>Error-detail check accepts `clientname`<br>`"clientName": "NoRolesCo"`<br>`"clientName": "MissingStepsCo"` | (c) API request/response field and validation | No |
+| `test_future_process_flow_generator.py:318` | Comment: `Missing required company/client name` | (b) Unrelated module; test comment | No |
+| `test_genai_coverage_edges.py:73` · `test_genai_coverage_edges.py:99` | `"clientName": "Acme"`<br>`"clientInfo": {"clientName": "Nested", ...}` | (c) API/job metadata payload | No |
+| `test_genai_failure_notifications.py:16` · `test_genai_failure_notifications.py:60` | `"clientName": "Northwind Manufacturing"`<br>`_metadata(... clientInfo={"clientName": "Nested Client", ...})` | (c) API/job metadata payload | No |
+| `test_genai_failure_notifications.py:52` · `test_genai_failure_notifications.py:66` | Asserts email contains `"Client Name: Northwind Manufacturing"`<br>Asserts email contains `"Client Name: Nested Client"` | (b) Unrelated module; email-output assertions | No |
+| `test_genai_job_recovery.py:89` · `test_genai_job_recovery.py:121` | `"clientName": "ClientCo"`<br>`loaded["clientName"] == "ClientCo"` | (c) API/job metadata payload | No |
+| `test_genai_recovery_e2e_real_payload.py:59` | `"clientName": "Northwind Manufacturing"` | (c) API/job metadata payload | No |
+| `test_industry_classification_code.py:74` | `clientName="Deloitte"` | (c) API request/response field | No |
+| `test_workforce_analyzer.py:154` · `test_workforce_analyzer.py:177` · `test_workforce_analyzer.py:604` · `test_workforce_analyzer.py:639` · `test_workforce_analyzer.py:783` · `test_workforce_analyzer.py:900` | `"clientName": "TestCorp"`<br>`"clientInfo": {"clientName": "TestCorp"}`<br>`"clientInfo": {"clientName": "TestCorp"}`<br>`"clientInfo": {"clientName": "TestCorp"}`<br>`"clientInfo": {"clientName": "DBCompany"}`<br>`"clientInfo": {"clientName": "TestCorp"}` | (c) API request/response field | No |
+| `cdc_export.py:45` · `cdc_export.py:51` · `cdc_export.py:61` · `cdc_export.py:64` · `cdc_export.py:615` · `cdc_export.py:616` | Docstring `<Client Name>`<br>`client_name = json_obj.get("clientInfo", {}).get("clientName", "")`<br>Comment `Analysis Name + Client Name`<br>`h_para.add_run(f"{analysis_name}  {client_name}")`<br>`client_name = json_obj.get("clientInfo", {}).get("clientName", ...)`<br>`doc.add_paragraph(client_name)` | (b) Unrelated module; document export | No |
+| `email_send.py:9` · `email_send.py:22` · `email_send.py:23` | `def email_send(..., client_name=None, ...)`<br>`if process_name and client_name:`<br>Formats process name with `str(client_name)` | (b) Unrelated module; email/log text | No |
+| `genai_failure_notifications.py:112` · `genai_failure_notifications.py:118` | Reads `"clientName"`, `"client_name"`, `"ClientName"`<br>Email row label `("Client Name", client_name)` | (b) Unrelated module; failure notification | No |
+| `genai_job_metadata.py:43` | `"clientName": ("clientName", "client_name", "ClientName")` | (b) Unrelated module; job metadata aliases | No |
+| `genai_job_recovery.py:156` | Required-field tuple includes `"clientName"` | (b) Unrelated module; job recovery payload | No |
+| `genai_job_state.py:120` | `"clientName": metadata.get("clientName")` | (b) Unrelated module; job-state serialization | No |
+| `jsontodocx.py:27` · `jsontodocx.py:986` · `jsontodocx.py:1086` · `jsontodocx.py:1087` | `"clientName": "AT&T"`<br>`pool_name = data.get("clientInfo", {}).get("clientName", "Organization")`<br>`client_name = json_obj.get("clientInfo", {}).get("clientName", ...)`<br>`doc.add_paragraph(client_name)` | (b) Unrelated module; document generation | No |
+| `project_compat.py:20` · `project_compat.py:21` · `project_compat.py:22` · `project_compat.py:115` | `("projectName", "clientName")`<br>`("ProjectName", "ClientName")`<br>`("project_name", "client_name")`<br>Name lookup checks project and client spellings | (c) API request/response compatibility fields | No; intentional alias mapping |
+
+**Merge check:** I found no likely duplicate block where the same logic appears once with `client_name` and once with `project_name`. In `capability_maps_generator.py:417`, the success email uses `projectName`; the separate exception email uses the schema’s `clientName` alias. That looks like two distinct paths, not a duplicated block. The aliases in `project_compat.py` and the Pydantic properties are also deliberate compatibility mappings.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Search the entire workspace for every occurrence of client_name, clientName, 
 ClientName, "client name", and "Client Name" (case-insensitive), including 
 Python code, Pydantic models, prompt templates (.txt/.md/.yaml/.json/.py strings), 
