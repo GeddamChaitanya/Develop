@@ -1,3 +1,91 @@
+I’m resuming from the failed `python` command. I’ll verify the nested-name helper behavior and inspect the file’s import/header context, then make the one-file edit and show the complete diff.
+
+Ran terminal command: Get-Command py, python, python3 -ErrorAction SilentlyContinue | Select-Object Name, Source
+
+Ran terminal command: git status --short
+
+Read , lines 1 to 72
+
+Read , lines 55 to 125
+
+The helper path checks out structurally: `get_project_name()` calls `get_project_info()`, which normalizes nested `projectInfo` and `clientInfo` dictionaries before reading `projectName`. `py.exe` is available, so I’ll run the two-case runtime check and confirm the pool-label snippet before editing; the existing untracked `run.ps1` will remain untouched.
+
+Ran terminal command: py -3 -c "from utilities.project_compat import get_project_name; assert get_project_name({'clientInfo': {'projectName': 'Project A'}}) == 'Project A'; assert get_project_name({'projectInfo': {'projectName': 'Project B'}}) == 'Project B'; print('nested clientInfo/projectInfo projectName resolves correctly')"
+
+Searched for regex `client_name = json_obj.get\("clientInfo", \{\}\).get\("clientName"` (`**/utilities/cdc_export.py`), 2 results
+
+The runtime check passes for both `clientInfo.projectName` and `projectInfo.projectName`. I’m making exactly the requested edits now: import `get_project_name`, use it at the header and Current State pool label with their original fallbacks, and rename only those two locals.
+
+Generating patch (21 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile utilities/cdc_export.py
+
+The edited module compiles successfully. I’m checking the complete file diff and worktree status now to verify the change is limited to `cdc_export.py` and the requested header/pool reads.
+
+Ran terminal command: git diff -- utilities/cdc_export.py
+
+Ran terminal command: git status --short
+
+Updated only `cdc_export.py`. `get_project_name()` resolves `projectName` under both nested payload keys; the runtime check passed. The edited module also passed `py_compile`. The pre-existing untracked `run.ps1` was left untouched.
+
+Full diff:
+
+```diff
+diff --git a/utilities/cdc_export.py b/utilities/cdc_export.py
+index 421a5ee..41179ef 100644
+--- a/utilities/cdc_export.py
++++ b/utilities/cdc_export.py
+@@ -23,6 +23,7 @@ import re
+ 
+ from azure.storage.blob import BlobServiceClient
+ from utilities.telemetry import track_trace
++from utilities.project_compat import get_project_name
+ 
+ # Azure Storage Config
+ AZURE_CONTAINER_NAME = os.getenv("AZURE_INDUSTRIAL_MAP_CONTAINER")
+@@ -48,7 +49,7 @@ def _add_header_footer(doc, json_obj: dict):
+     Footer (every page):
+         Enterprise AI Navigator
+     """
+-    client_name = json_obj.get("clientInfo", {}).get("clientName", "")
++    project_name = get_project_name(json_obj, default="")
+     bg = json_obj.get("backgroundProcessingInfo", {})
+     analysis_name = bg.get("processName", bg.get("category", "Capability Double Click"))
+     export_date = datetime.now().strftime("%B %d, %Y")
+@@ -58,10 +59,10 @@ def _add_header_footer(doc, json_obj: dict):
+     header = section.header
+     header.is_linked_to_previous = False
+ 
+-    # Line 1: Analysis Name + Client Name
++    # Line 1: Analysis Name + Project Name
+     h_para = header.paragraphs[0] if header.paragraphs else header.add_paragraph()
+     h_para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+-    run1 = h_para.add_run(f"{analysis_name}  {client_name}")
++    run1 = h_para.add_run(f"{analysis_name}  {project_name}")
+     run1.bold = True
+     run1.font.size = Pt(9)
+ 
+@@ -612,8 +613,8 @@ def _generate_current_state_docx(json_obj: dict) -> str:
+     # Participants (BPMN Mapping)
+     add_header(doc, "Participants (BPMN Mapping)")
+     add_subheader(doc, "Pool")
+-    client_name = json_obj.get("clientInfo", {}).get("clientName", "<< Add Pool Name >>")
+-    doc.add_paragraph(client_name)
++    project_name = get_project_name(json_obj, default="<< Add Pool Name >>")
++    doc.add_paragraph(project_name)
+ 
+     add_subheader(doc, "Lanes")
+     try:
+```
+
+Made changes.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Apply the change ONLY in utilities/cdc_export.py, at the header (around L51/L64) 
 and the Current State pool label (around L615/L616). Do not touch jsontodocx.py 
 or any other file.
