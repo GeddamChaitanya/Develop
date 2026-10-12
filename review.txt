@@ -1,3 +1,26 @@
+Read-only, do not edit anything.
+
+The citation feature was merged from ascend/feature/citation into ascend/develop, 
+and after that merge, citations started asking for "Client Name" instead of 
+"Project Name". I suspect the merge conflict resolution kept both versions of 
+some code.
+
+Trace it:
+1. Run: git log --oneline --merges -i --grep="citation" origin/ascend/develop
+   to find the citation merge commit(s).
+2. Run: git log --oneline -G "client_name|clientName|ClientName|Client Name|client" 
+   origin/ascend/develop -- . 
+   to find commits that added or changed client-related lines.
+3. For the citation merge commit, compare what ascend/develop has now vs. what 
+   ascend/feature/citation had for the citation files (prompts, source_reasoning 
+   logic, citation builders, schemas).
+4. Identify every line in the citation flow where "client"/"client name"/
+   client_name is used where project_name/Project Name should be, especially any 
+   duplicated block from the merge.
+
+Report: file, line, snippet, which commit introduced it, and whether it's a 
+merge-conflict leftover. Only citation-related code. Do not touch anything else.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll do a read-only workspace search, then inspect each hit in its local context so the report can distinguish citation flow, API fields, prompts, and likely merge leftovers. I won’t edit anything.
 
 Ran terminal command: git status --short
