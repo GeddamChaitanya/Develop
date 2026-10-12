@@ -1,3 +1,18 @@
+Apply the change ONLY in utilities/cdc_export.py, at the header (around L51/L64) 
+and the Current State pool label (around L615/L616). Do not touch jsontodocx.py 
+or any other file.
+
+1. First confirm whether get_project_name() resolves projectName when given the 
+   full json_obj (including when nested under clientInfo/projectInfo). If not, 
+   wrap with get_project_info() as needed.
+2. Import get_project_name (and get_project_info if needed) from 
+   utilities.project_compat at the top of the file.
+3. Replace the clientInfo.clientName reads with the project name:
+   - Header: project name, fallback "" if empty.
+   - Pool label: project name, fallback "<< Add Pool Name >>" if empty.
+4. Rename the local variable client_name to project_name in those two spots only.
+5. Change nothing else. Show me the full diff afterward.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect only the two export regions and `project_compat.py`, plus the specific schema declarations needed to verify `workspaceName`. I’ll trace the payload fallback behavior and propose a minimal change without editing anything.
 
 Searched for regex `workspaceName|workspace_name` (`**/schemas/**`), 14 results
