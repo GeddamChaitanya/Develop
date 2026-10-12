@@ -1,3 +1,110 @@
+I’ll make a temporary standalone script outside the repository, inspect the Current State export’s save path so the run cannot upload a blob, then execute it and report the printed header and pool text.
+
+Searched for regex `AZURE_STORAGE_CONNECTION_STRING|upload_blob|def _save|def _generate_current_state_docx|doc.save` (`**/utilities/cdc_export.py`), 6 results
+
+Read , lines 607 to 680
+
+The Current State builder calls a shared save/upload function at the end. I’ll override that function only inside the temporary test process to capture the generated `Document`, and stub lane generation to avoid any LLM call; this exercises the requested builder without writing or uploading a DOCX.
+
+Created 
+
+Ran terminal command: py -3 C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Completed with input: py -3 C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Tool execution failed with exit code 1
+
+The script reached the interpreter but failed because that Python lacks `python-docx` (`docx`). I’ll locate the workspace’s configured Python environment and rerun with it; the test still hasn’t saved or uploaded anything.
+
+
+
+
+
+
+
+Configuring a Python Environment
+Completed with input: {
+  "resourcePath": "c:\\Users\\gedchaitanya\\Ascend-Dev-Citation\\aai-bpt-genaiapi"
+}
+
+Creating a Virtual Environment
+Completed with input: {
+  "resourcePath": "c:\\Users\\gedchaitanya\\Ascend-Dev-Citation\\aai-bpt-genaiapi"
+}
+
+Ran terminal command: C:/Users/gedchaitanya/.local/bin/python3.14.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Completed with input: C:/Users/gedchaitanya/.local/bin/python3.14.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Tool execution failed with exit code 1
+
+The configured VS Code interpreter also lacks `python-docx`, so the script still cannot construct a real `Document`. I’m checking the repository’s declared dependencies and available local environments before deciding whether there’s an existing project interpreter to use instead of changing machine packages.
+
+Ran terminal command: Get-ChildItem -Force -Directory | Select-Object Name, FullName
+
+Read 
+
+Read 
+
+Fetching Python environment information
+Completed with input: {
+  "resourcePath": "c:\\Users\\gedchaitanya\\Ascend-Dev-Citation\\aai-bpt-genaiapi"
+}
+
+Configuring a Python Environment
+Completed with input: {
+  "resourcePath": "c:\\Users\\gedchaitanya\\Ascend-Dev-Citation\\aai-bpt-genaiapi",
+  "pythonPath": "c:\\Users\\gedchaitanya\\Ascend-Dev-Citation\\aai-bpt-genaiapi\\.venv\\Scripts\\python.exe"
+}
+
+Ran terminal command: c:/Users/gedchaitanya/Ascend-Dev-Citation/aai-bpt-genaiapi/.venv/Scripts/python.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Completed with input: c:/Users/gedchaitanya/Ascend-Dev-Citation/aai-bpt-genaiapi/.venv/Scripts/python.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Tool execution failed with exit code 1
+
+The repository `.venv` also lacks `python-docx`, despite it being listed in `requirements.txt`. I won’t install the full requirements; I’ll add only that required package to the project virtual environment, then rerun the temporary test while stubbing unrelated cloud/LLM dependencies so no external service can be contacted.
+
+
+
+Installing python-docx==1.2.0 in .venv (3.14.5)
+Completed with input: {
+  "packageList": [
+    "python-docx==1.2.0"
+  ],
+  "resourcePath": "c:\\Users\\gedchaitanya\\Ascend-Dev-Citation\\aai-bpt-genaiapi"
+}
+
+Ran terminal command: c:/Users/gedchaitanya/Ascend-Dev-Citation/aai-bpt-genaiapi/.venv/Scripts/python.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Completed with input: c:/Users/gedchaitanya/Ascend-Dev-Citation/aai-bpt-genaiapi/.venv/Scripts/python.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Tool execution failed with exit code 1
+
+Ran terminal command: $env:PYTHONPATH='C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi'; & c:/Users/gedchaitanya/Ascend-Dev-Citation/aai-bpt-genaiapi/.venv/Scripts/python.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Completed with input: $env:PYTHONPATH='C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi'; & c:/Users/gedchaitanya/Ascend-Dev-Citation/aai-bpt-genaiapi/.venv/Scripts/python.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+Tool execution failed with exit code 1
+
+With `python-docx` installed, the import now reaches an unrelated missing Azure package. I’ll keep this test isolated by stubbing the Azure, telemetry, and formatting imports in the temporary script; the real `Document` implementation and the CDC functions under test remain active, and the save/upload hook stays disabled.
+
+Generating patch (33 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: $env:PYTHONPATH='C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi'; & c:/Users/gedchaitanya/Ascend-Dev-Citation/aai-bpt-genaiapi/.venv/Scripts/python.exe C:\Users\gedchaitanya\AppData\Local\Temp\cdc_export_smoke_20261012.py
+
+The smoke test now passes. It printed `Test CDC  Test Project` in the header and `Test Project` for the pool; lane generation was stubbed and the save/upload function only captured the document, so no blob or DOCX was written. I’m checking that the test left no repository files behind.
+
+Ran terminal command: git status --short
+
+The temporary script passed. It printed:
+
+```text
+Header: Test CDC  Test Project
+Date of export October 12, 2026
+Pool: Test Project
+```
+
+The test used a real `python-docx` `Document`, stubbed unrelated Azure/LLM imports, and replaced save/upload with an in-memory capture. No DOCX was saved and no blob was uploaded. The script is at `cdc_export_smoke_20261012.py`; `python-docx==1.2.0` was installed in the repository `.venv` to run it. No repository files were created or changed by the test.
+
+Made changes.
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 [ERROR] AGENTIC_FIT_ALLOCATOR_Background - 500: 'NoneType' object is not iterable
 2026-10-12 15:58:35,870 - uvicorn.access - INFO - 127.0.0.1:52504 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
 [TRACE] Received input_data: {"stepKey":11697,"substepkey":11697,"processName":"Customer Query Resolution","processKey":3001,"in
