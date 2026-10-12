@@ -1,3 +1,84 @@
+I’ll inspect only the two export regions and `project_compat.py`, plus the specific schema declarations needed to verify `workspaceName`. I’ll trace the payload fallback behavior and propose a minimal change without editing anything.
+
+Searched for regex `workspaceName|workspace_name` (`**/schemas/**`), 14 results
+
+Read , lines 40 to 70
+
+Read , lines 600 to 625
+
+Read , lines 980 to 990
+
+Read , lines 1080 to 1090
+
+Read , lines 1 to 145
+
+The compatibility helper can normalize both project/client payload shapes and has separate getters for project and workspace names. I’m checking the exact export snippets once more because the requested CDC line range appears to have shifted relative to the earlier search results; I’ll use the current file contents for the final references.
+
+Searched for regex `clientInfo.*clientName|Client Name|client_name|get_project_name|get_workspace_name` (`**/utilities/cdc_export.py`), 6 results
+
+Searched for regex `clientInfo.*clientName|Client Name|client_name|get_project_name|get_workspace_name` (`**/utilities/jsontodocx.py`), 3 results
+
+Read , lines 605 to 625
+
+Read , lines 1078 to 1092
+
+Read , lines 31 to 47
+
+Read , lines 39 to 56
+
+The current line checks confirm four relevant reads: CDC export header and pool label, plus JSON-to-DOCX lane-generation input and pool label. With a project-only payload, each currently falls through to an empty string or a generic placeholder; I’m checking whether either exporter actually serializes citation/source-reasoning fields before recommending the smallest display-only adjustment.
+
+Searched for regex `source_reasoning|citation|Source:|def .*docx|def generate_` (`**/utilities/cdc_export.py`), 17 results
+
+Searched for regex `source_reasoning|citation|Source:|def .*docx|def generate_` (`**/utilities/jsontodocx.py`), 2 results
+
+Read , lines 505 to 625
+
+Read , lines 965 to 995
+
+The CDC exporter does contain source-reasoning sections, while `jsontodocx.py` is the separate BPMN/pool-and-lanes DOCX path and has no citation/source-reasoning logic. I’m confirming the export entry-point names and call structure so the recommendation is scoped to the right outputs.
+
+Read , lines 675 to 696
+
+Read , lines 1015 to 1055
+
+Read , lines 18 to 30
+
+Read , lines 21 to 31
+
+The entry points are confirmed: `generate_cdc_docs()` emits three per-tab CDC DOCX files, including source reasoning; `generate_docx()` builds the separate narrative BPMN-ready document. I’m fetching exact helper line numbers for the proposed call sites, then I’ll summarize the fallback behavior and minimal suggested expression.
+
+Searched for regex `def get_project_name|def get_workspace_name|def normalize_project_info|def normalize_project_payload|projectName.*clientName|project_name.*client_name` (`**/utilities/project_compat.py`), 8 results
+
+**What Uses These Fields**
+
+| Location | Export and citation status | With `projectName` but no `clientName` |
+|---|---|---|
+| `cdc_export.py:51` and `cdc_export.py:64` | Shared header for `generate_cdc_docs()`; this CDC export also contains source-reasoning sections. The header itself prints the analysis name followed by the client value; it does not print a literal “Client Name” label. | The client value defaults to `""`, so the project name is omitted from the header. |
+| `cdc_export.py:615` and `cdc_export.py:616` | Pool label in the CDC Current State DOCX, another tab in the source-reasoning export. | Prints `<< Add Pool Name >>`, not the project name. |
+| `jsontodocx.py:986` | `generate_lanes_with_llm()` uses this as the BPMN pool name supplied to lane generation. This file has no source-reasoning/citation logic. | Uses the fallback `"Organization"`. |
+| `jsontodocx.py:1086` and `jsontodocx.py:1087` | Pool label in the separate `generate_docx()` BPMN-ready document. | Prints `<< Add Pool Name >>`. |
+
+These are utility export entry points (`generate_cdc_docs()` and `generate_docx()`); I did not trace API routes, keeping to the requested inspection scope.
+
+**Workspace and Helpers**
+
+`workspaceName` is available but optional in request schemas: `capability_maps_generator.py:40`, `missing_client_capabilities.py:51`, and the current/future process-flow schemas as `workspace_name` aliased to `workspaceName` (`current_process_flow_generator.py:24`, `future_process_flow_generator.py:26`). Its presence in a schema does not guarantee it exists in every export payload.
+
+The existing `project_compat.py:113` `get_project_name()` helper resolves `projectName` first, with `clientName` and other casing variants as fallbacks. `project_compat.py:119` resolves workspace-name variants, and `get_project_info()` handles `projectInfo`/`clientInfo` nesting. These are suitable for the exports; direct `clientInfo.clientName` reads bypass that compatibility behavior.
+
+**Minimal Proposal**
+
+At each of the four read sites, use the existing getters and join the non-empty values. Preserve each site’s current fallback when both are absent:
+
+```python
+project_name = get_project_name(json_obj)
+workspace_name = get_workspace_name(json_obj)
+display_name = " - ".join(name for name in (project_name, workspace_name) if name)
+```
+
+Use `display_name` for the header/pool value; retain `""`, `"<< Add Pool Name >>"`, or `"Organization"` as that site’s fallback if `display_name` is empty. This is a proposal only; nothing was changed.
+-----------------------------------------------------------------------------------------------------------
 Read-only, do not edit.
 
 Inspect only these export paths:
