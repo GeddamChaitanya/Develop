@@ -1,3 +1,324 @@
+2026-10-12 17:45:57,540 - uvicorn.access - INFO - 127.0.0.1:56605 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
+[TRACE] Received input_data: {"stepKey":5067,"substepkey":11921,"processName":"Blueprinting Analysis-#1026","processKey":1039,"i
+Getting database session...
+Database session created.
+--- Reading input record for input_key: 6013 ---
+No input record found for input_key: 6013
+[TRACE] DB_Read: No input record found for input_key: 6013
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11921
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11921.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11921
+
+--- Operations finished ---
+[TRACE] Starting agentic fit allocation for action: GENERATE_TOTAL_OPEX
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11921
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11921.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11921
+
+--- Operations finished ---
+{'ID': None, 'Status': 'Started', 'Logs': ' Started generating for Impact Analyser for action GENERATE_TOTAL_OPEX', 'input_key': 6013, 'substepkey': 11921, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11921, 'input_key': 6013, 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11921:6013', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+[TRACE] Generating total OPEX for Unknown Company
+[TRACE] Progress monitor started for ID: None
+[TRACE] Generating total OPEX for company: None
+
+Researching OPEX for None...
+{'ID': None, 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_TOTAL_OPEX', 'input_key': 6013, 'substepkey': 11921, 'receiverEmail': None, 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:11921:6013', 'substepkey': 11921, 'input_key': 6013, 'action': 'GENERATE_TOTAL_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+2026-10-12 17:46:08,190 - httpx - INFO - HTTP Request: GET https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json "HTTP/1.1 200 OK"
+2026-10-12 17:46:10,573 - httpx - INFO - HTTP Request: GET https://data.sec.gov/submissions/CIK0001318605.json "HTTP/1.1 200 OK"
+2026-10-12 17:46:12,006 - httpx - INFO - HTTP Request: GET https://data.sec.gov/submissions/CIK0001318605.json "HTTP/1.1 200 OK"
+   SEC Company Facts OPEX Complete: $15,162,000,000.00
+      Confidence: high
+      Sources: 3 found
+[TRACE] Progress monitor stopped for ID: None
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11921
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11921.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11921
+
+--- Operations finished ---
+[TRACE] Total OPEX generated successfully: {'total_opex_costs': 15162000000.0, 'currency': 'USD', 'breakdown': {'SG_n_A': None, 
+2026-10-12 17:46:13,530 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/outputs/Total_OPEX_Generation_Output_cb21acf6-c90e-4519-918e-ecb08067ef41.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '2738'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'b78e8152-c636-11f1-ad78-d4f32df15685'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-12 17:46:15,860 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Mon, 12 Oct 2026 12:16:15 GMT'
+    'ETag': '"0x8DF285A9D0CAC5B"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '913ea44f-b01e-009d-7343-5a0504000000'
+    'x-ms-client-request-id': 'b78e8152-c636-11f1-ad78-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Mon, 12 Oct 2026 12:16:14 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/outputs/Total_OPEX_Generation_Output_cb21acf6-c90e-4519-918e-e
+{'ID': None, 'Status': 'Inserting', 'Logs': ' IA total opex inserting into DB for action GENERATE_TOTAL_OPEX', 'input_key': 6013, 'substepkey': 11921, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11921, 'input_key': 6013, 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11921:6013', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Inserting
+[TRACE] Redis message published successfully: Inserting
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running INSERT operation for output
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+[ERROR] DB_Insert_SubStepOutput - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] DB_Operations_Output - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+An error occurred during operations: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+[ERROR] Agentic_Fit_Allocation - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[TRACE] Error in agentic fit allocation
+[TRACE] Progress monitor stopped for ID: None
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11921
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11921.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11921
+
+--- Operations finished ---
+{'ID': None, 'Status': 'Error', 'Logs': 'Error in Agentic Fit Allocation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'input_key': 6013, 'substepkey': 11921, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Error', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11921, 'input_key': 6013, 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11921:6013', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Error
+[TRACE] Redis message published successfully: Error
+Getting database session...
+Database session created.
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+No app_user found for email: gedchaitanya@deloitte.com
+[TRACE] DB_Read: No app_user found for email: gedchaitanya@deloitte.com
+2026-10-12 17:46:21,726 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '1530'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'bc706e30-c636-11f1-964e-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-12 17:46:23,866 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 12:16:23 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-12 17:46:23,866 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/e7fae280-eae2-48e5-9ada-220e9bfee1ab?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'bc706e30-c636-11f1-964e-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 17:46:24,213 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 12:16:24 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 17:46:27,220 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/e7fae280-eae2-48e5-9ada-220e9bfee1ab?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'bc706e30-c636-11f1-964e-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 17:46:27,552 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 12:16:27 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 17:46:27,555 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14210'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'bfeaa089-c636-11f1-939a-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-12 17:46:27,996 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 12:16:27 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-12 17:46:27,998 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/76e30db6-b6d2-417d-8e34-9ebab94126e1?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'bfeaa089-c636-11f1-939a-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 17:46:28,330 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 12:16:28 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 17:46:31,334 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/76e30db6-b6d2-417d-8e34-9ebab94126e1?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'bfeaa089-c636-11f1-939a-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 17:46:31,667 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 12:16:31 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+Email send operation status:  {'id': '76e30db6-b6d2-417d-8e34-9ebab94126e1', 'status': 'Succeeded', 'error': None}
+Message sent with ID:  76e30db6-b6d2-417d-8e34-9ebab94126e1
+Status:  Succeeded
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 327, in agentic_fit_allocation
+    output_key = db_operations_orm.run_operations(output_key=requested_output_key, data=db_data)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 411, in run_operations
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 392, in run_operations
+    output_record = insert_sub_step_output(db, data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 309, in insert_sub_step_output
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 289, in insert_sub_step_output
+    validate_sub_step_output_references(db, sub_step_output_data)
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 60, in validate_sub_step_output_references
+    raise ValueError(
+ValueError: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 138, in _agentic_fit_runner
+    asyncio.run(agentic_fit_allocation(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 632, in agentic_fit_allocation
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+fastapi.exceptions.HTTPException: 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] AGENTIC_FIT_ALLOCATOR_Background - 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll make a temporary standalone script outside the repository, inspect the Current State export’s save path so the run cannot upload a blob, then execute it and report the printed header and pool text.
 
 Searched for regex `AZURE_STORAGE_CONNECTION_STRING|upload_blob|def _save|def _generate_current_state_docx|doc.save` (`**/utilities/cdc_export.py`), 6 results
