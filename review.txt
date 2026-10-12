@@ -1,0 +1,17 @@
+Search the entire workspace for every occurrence of client_name, clientName, 
+ClientName, "client name", and "Client Name" (case-insensitive), including 
+Python code, Pydantic models, prompt templates (.txt/.md/.yaml/.json/.py strings), 
+Redis keys, and log messages.
+
+Do NOT make any changes yet.
+
+For each occurrence, give me a table with:
+- File path and line number
+- The code snippet
+- Category: (a) citation-related, (b) unrelated module, (c) API request/response 
+  field, (d) LLM prompt text
+- Whether it looks like a duplicate block left over from a merge conflict 
+  (same function/logic appearing twice, one using client_name and one using 
+  project_name)
+
+Focus especially on the citation flow.
