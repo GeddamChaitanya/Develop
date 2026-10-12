@@ -1,3 +1,85 @@
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '97ded78f-601e-0018-3c47-5a28d9000000'
+    'x-ms-client-request-id': 'ce7a555a-c63a-11f1-8273-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Mon, 12 Oct 2026 12:45:31 GMT'
+{'ID': None, 'Status': 'Inserting', 'Logs': ' IA total opex inserting into DB for action GENERATE_TOTAL_OPEX', 'input_key': 6013, 'substepkey': 11921, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11921, 'input_key': 6013, 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11921:6013', 'missingFields': ['processKey']}}
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+[ERROR] DB_Insert_SubStepOutput - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] DB_Operations_Output - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+An error occurred during operations: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+[ERROR] Agentic_Fit_Allocation - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11921
+Failed to update the output record with key: 11921.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11921
+
+--- Operations finished ---
+{'ID': None, 'Status': 'Error', 'Logs': 'Error in Agentic Fit Allocation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'input_key': 6013, 'substepkey': 11921, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Error', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11921, 'input_key': 6013, 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11921:6013', 'missingFields': ['processKey']}}
+Getting database session...
+Database session created.
+--- Operations finished ---
+{'ID': None, 'Status': 'Error', 'Logs': 'Error in Agentic Fit Allocation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'input_key': 6013, 'substepkey': 11921, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Error', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 11921, 'input_key': 6013, 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:11921:6013', 'missingFields': ['processKey']}}
+Getting database session...
+Database session created.
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+No app_user found for email: gedchaitanya@deloitte.com
+Incorrect padding
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 327, in agentic_fit_allocation
+    output_key = db_operations_orm.run_operations(output_key=requested_output_key, data=db_data)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 411, in run_operations
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 392, in run_operations
+    output_record = insert_sub_step_output(db, data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 309, in insert_sub_step_output
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 289, in insert_sub_step_output
+    validate_sub_step_output_references(db, sub_step_output_data)
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 60, in validate_sub_step_output_references
+    raise ValueError(
+ValueError: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 138, in _agentic_fit_runner
+    asyncio.run(agentic_fit_allocation(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 632, in agentic_fit_allocation
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+fastapi.exceptions.HTTPException: 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] AGENTIC_FIT_ALLOCATOR_Background - 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=11921 not found in blueprinting_process_sub_step; generated_for_input_key=6013 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+------------------------------------------------------
 2026-10-12 17:45:57,540 - uvicorn.access - INFO - 127.0.0.1:56605 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
 [TRACE] Received input_data: {"stepKey":5067,"substepkey":11921,"processName":"Blueprinting Analysis-#1026","processKey":1039,"i
 Getting database session...
