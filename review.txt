@@ -1,3 +1,104 @@
+I’ll trace the requested Git history on the remote refs and compare the citation-specific files between `origin/ascend/develop` and `origin/feature/citation`, then verify any suspicious surviving lines in the current checkout. Everything will remain read-only.
+
+Ran terminal command: git log --oneline --merges -i --grep="citation" origin/ascend/develop
+
+Ran terminal command: git log --oneline -G "client_name|clientName|ClientName|Client Name|client" origin/ascend/develop -- .
+
+The requested merge search returns one commit: `2c5e5eb`. The `-G` history is larger, so I’m reading its full output and checking the merge parents and changed-file list next; that will anchor the comparison to the actual pre-merge branch snapshots.
+
+Ran terminal command: git show -s --format="commit %H%nparents %P%nsubject %s" 2c5e5eb
+
+Ran terminal command: git show --stat --oneline 2c5e5eb
+
+Ran terminal command: git branch -r --contains 2c5e5eb
+
+Read 
+
+Ran terminal command: git log -1 --oneline origin/ascend/develop
+
+Ran terminal command: git log --oneline --all --decorate -- agents/capability_maps_generation/prompts.py agents/missing_capabilities/fill_missing_l3capabilities.py agents/industrial_map/fill_missing_capabilities.py | Select-Object -First 30
+
+Ran terminal command: git diff --stat origin/ascend/feature/citation..origin/ascend/develop -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer schemas apis/v1
+
+Ran terminal command: git log --oneline -G "client_name|clientName|ClientName|Client Name|client" origin/ascend/develop -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer
+
+The merge is `2c5e5eb`, with develop as first parent and `bf735bb` (the citation feature tip) as second parent. Current `origin/ascend/develop` is now at `fee7e76`; the citation directories show no net differences from the feature branch, so I’m checking the merge tree itself and the earlier project-terminology change to tell an intentional merge result from a later regression.
+
+Ran terminal command: git diff --name-status 2c5e5eb^2 2c5e5eb -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer schemas apis/v1
+
+Ran terminal command: git diff --name-status 2c5e5eb^1 2c5e5eb -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer schemas apis/v1
+
+Ran terminal command: git show --no-patch --format="%H%n%P%n%s" e2c3171
+
+Ran terminal command: git merge-base --is-ancestor origin/ascend/feature/citation origin/ascend/develop; Write-Output "exit=$LASTEXITCODE"
+
+Ran terminal command: git diff --name-status origin/ascend/feature/citation origin/ascend/develop
+
+Ran terminal command: git grep -n -i -E "client_name|clientName|ClientName|Client Name|project_name|projectName|Project Name" origin/ascend/develop -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer schemas apis/v1/missing_client_capabilities.py
+
+Ran terminal command: git show --stat --oneline e2c3171
+
+Ran terminal command: git log --oneline --follow origin/ascend/develop -- agents/capability_maps_generation/prompts.py
+
+Ran terminal command: git log --oneline --follow origin/ascend/develop -- agents/missing_capabilities/fill_missing_l3capabilities.py
+
+Ran terminal command: git show --remerge-diff --format=fuller 2c5e5eb -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer schemas apis/v1/missing_client_capabilities.py
+
+Ran terminal command: git show --format=fuller --find-renames 9927b9b -- agents/industrial_map/fill_missing_capabilities.py agents/missing_capabilities apis/v1/missing_client_capabilities.py
+
+Ran terminal command: git show --format=fuller e2c3171 -- apis/v1/missing_client_capabilities.py schemas/missing_client_capabilities.py agents/client_file_context.py
+
+Ran terminal command: git log --oneline -G "Client Name|client_name|clientName|ClientName" origin/ascend/develop -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer apis/v1/missing_client_capabilities.py
+
+The merge’s feature-parent comparison is clean for the citation directories, and `--remerge-diff` shows no conflict-resolution patch. That points away from “both sides kept” at the citation merge; I’m checking the few citation-flow identifiers that still say `client` and their blame history to see whether they are merely legacy variable names or actually feed the name prompt.
+
+Ran terminal command: git grep -n -i "client" origin/ascend/develop -- agents/capability_maps_generation/prompts.py agents/capability_maps_generation/capability_maps_generator.py agents/industrial_map/fill_missing_capabilities.py agents/missing_capabilities/fill_missing_l1description.py agents/missing_capabilities/fill_missing_l2capabilities.py agents/missing_capabilities/fill_missing_l3capabilities.py agents/two_by_two/current_state.py agents/two_by_two/future_state.py agents/two_by_two/prompts.py agents/two_by_two/two_by_two_generator.py agents/workforce_analyzer/workforce_analyzer.py apis/v1/missing_client_capabilities.py
+
+Ran terminal command: git blame -L 378,378 origin/ascend/develop -- agents/two_by_two/current_state.py; git blame -L 963,963 origin/ascend/develop -- agents/two_by_two/future_state.py; git blame -L 956,956 origin/ascend/develop -- apis/v1/missing_client_capabilities.py
+
+Read , lines 350 to 395
+
+Read , lines 945 to 980
+
+Read , lines 942 to 965
+
+Read 
+
+The remaining citation-flow matches are either `client_info` variables that read the `projectName` field, or an old notification argument `client_name=None`; the prompt/source-reasoning text has no `Client Name` input instruction. I’m confirming the exact introducing commits for those lines and whether the citation feature commit itself touched any such terminology.
+
+Ran terminal command: git show --format= 9927b9b -- agents/industrial_map/fill_missing_capabilities.py agents/missing_capabilities | Select-String -Pattern "client_name|clientName|ClientName|Client Name|Project Name|project_name|projectName|Client File|client file" -Context 3,3
+
+Ran terminal command: git grep -n -i -E "client.{0,30}name|name.{0,30}client|project.{0,30}name|name.{0,30}project" origin/ascend/develop -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two apis/v1/missing_client_capabilities.py schemas/missing_client_capabilities.py
+
+Ran terminal command: git show --format= --remerge-diff 2c5e5eb -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer schemas apis/v1/missing_client_capabilities.py | Measure-Object -Line
+
+Ran terminal command: git show --format=fuller --stat 2d97afd
+
+Ran terminal command: git grep -n -i -E "client name|client_name|clientName|ClientName" origin/ascend/develop -- agents/capability_maps_generation agents/industrial_map agents/missing_capabilities agents/two_by_two agents/workforce_analyzer apis/v1/missing_client_capabilities.py schemas/missing_client_capabilities.py
+
+The exact case-insensitive search across citation-related files returns just one `client_name` occurrence: the `None` email argument. I’m doing one final targeted lookup for the citation prompt’s “client file” wording and the old email-call commit metadata, so I can separate legitimate evidence terminology from anything that could actually request a project name.
+
+Ran terminal command: git grep -n -i -E "client file|client filename|client capability map" origin/ascend/develop -- agents/capability_maps_generation/prompts.py agents/industrial_map/fill_missing_capabilities.py agents/missing_capabilities/fill_missing_l1description.py agents/missing_capabilities/fill_missing_l2capabilities.py agents/missing_capabilities/fill_missing_l3capabilities.py agents/two_by_two/prompts.py agents/two_by_two/two_by_two_generator.py
+
+Ran terminal command: git show -s --format="%h %s" 53c8538
+
+Ran terminal command: git grep -n -i -E "client filename|exact-client-filename|client file" origin/ascend/develop -- agents/industrial_map/fill_missing_capabilities.py agents/missing_capabilities/fill_missing_l1description.py agents/missing_capabilities/fill_missing_l2capabilities.py agents/missing_capabilities/fill_missing_l3capabilities.py
+
+Ran terminal command: git blame -L 110,110 origin/ascend/develop -- agents/missing_capabilities/fill_missing_l3capabilities.py; git blame -L 164,164 origin/ascend/develop -- agents/missing_capabilities/fill_missing_l3capabilities.py; git blame -L 148,148 origin/ascend/develop -- agents/industrial_map/fill_missing_capabilities.py
+
+**Conclusion:** I found no citation prompt or `source_reasoning` instruction that asks for “Client Name” instead of “Project Name.” The citation merge is `2c5e5eb` (PR #229), with `bf735bb` as its feature-branch parent. The merge result has no citation-file changes relative to that parent, and its remerge diff contains no citation conflict-resolution edits. Current `origin/ascend/develop` (`fee7e76`) differs from `origin/ascend/feature/citation` only in the deploy workflow.
+
+| File and line | Snippet | Introduced by | Assessment |
+|---|---|---|---|
+| `current_state.py:378` | `projectName=client_info.get('projectName')...` | `2d97afd` | `client_info` is a legacy variable name, but the field passed to the generator is `projectName`. Not a merge leftover. |
+| `future_state.py:963` | `projectName=clientInfo.get('projectName')...` | `2d97afd` | Same: legacy object variable, correct project-name field. Not a merge leftover. |
+| `missing_client_capabilities.py:956` | `client_name=None` | `53c8538` | Old email-notification argument, not prompt/source-reasoning input; the value is `None`. Predates the citation merge and cannot supply a client name to the LLM. |
+| `fill_missing_l3capabilities.py:110` · `fill_missing_l3capabilities.py:164` | Cite the exact `client filename` when the uploaded Client Capability Map supports the claim. | `da993dd` | These are source-file citation rules for two distinct output prompts, not requests for a client name. Not merge leftovers. |
+| `fill_missing_capabilities.py:148` | `ONLY when no client file or external URL directly supports...` | `9927b9b` | Refers to an evidence file, not a client-name field. Not a merge leftover. |
+
+The “client file” wording is intentional citation-source terminology. I found no duplicated client-name/project-name block left by the merge. This points away from the citation merge as the cause; the inspected citation code passes `projectName` where a project name is used.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Read-only, do not edit anything.
 
 The citation feature was merged from ascend/feature/citation into ascend/develop, 
