@@ -1,3 +1,229 @@
+I’ll trace the L2 OpEx endpoint and background task, then check the L1 output contract, project-name handling, exception paths, and recent commits. This will be read-only.
+
+
+Read skill `python-fact-grounded-coding`
+
+Searched for regex `opex|ProgressMonitor|project_compat` (`**/apis/**`), 181 results
+
+Searched for files matching `**/*{opex,progress,project_compat}*`, 5 matches
+
+Searched for files matching `**/{AGENTS.md,copilot-instructions.md,*.instructions.md}`, no matches
+
+The L2 action is handled by the shared agentic-fit allocator endpoint. I’ll follow its first progress update into the allocation code and check how terminal status is recorded.
+
+
+Searched for regex `allocate_opex_to_capability_levels|reasoning|l1_allocations|mark_failed|mark_completed|heartbeat` (`**/agents/agentic_fit/**`), 81 results
+
+Read , lines 1 to 625
+
+Read 
+
+Read 
+
+The failure handler has a concrete defect: it checks for a local variable named `substepkey`, but the task never defines one. That appears to skip both the failed DB status and Redis error event; I’ll now identify what can throw during L2 allocation.
+
+
+Searched for regex `mark_completed|mark_failed|progress_percentage.*5|progressPercentage.*5|heartbeat|def ` (`**/utilities/genai_job*.py`), 82 results
+
+Read , lines 610 to 650
+
+Read , lines 1 to 220
+
+Read , lines 1 to 475
+
+Read , lines 695 to 860
+
+L2 reads `capabilityInfo.AgenticFitGrid.l1_allocations`, not the L1 output record directly, and it does not read L1’s `reasoning` key. I’ll check the handoff fields, prompt formatting, and recent history for a more direct trigger.
+
+
+Ran terminal command: git log --since="2026-09-14" --date=iso-strict --format="%h %ad %s" -- apis/v1/agentic_fit_allocator.py agents/agentic_fit/agentic_fit_allocator.py agents/agentic_fit/allocate_opex.py agents/agentic_fit/prompts.py agents/agentic_fit/opex_research.py utilities/redis_cache.py utilities/project_compat.py utilities/email_send.py utilities/telemetry.py utilities/genai_job_state.py utilities/genai_job_lifecycle.py utilities/genai_job_watchdog.py utilities/genai_job_recovery.py
+
+Searched for regex `progress_percentage.*5|progressPercentage.*5|sub_step_progress_percentage.*5|include_router.*agentic|mark_failed|mark_completed` (`**/*.py`), 32 results
+
+Read , lines 320 to 420
+
+Read 
+
+Read 
+
+I found no backend assignment to 5%; this endpoint writes 25%, 75%, and 100%, while heartbeat events omit a percentage. The reasoning rename also looks internally consistent for L2, so I’m checking request contracts and working-tree changes before attributing the regression to it.
+
+
+Ran terminal command: git status --short
+
+Ran terminal command: git log --since="2026-09-14" --date=short --format="%h %ad %s" --name-only -- apis/v1/agentic_fit_allocator.py agents/agentic_fit/agentic_fit_allocator.py agents/agentic_fit/allocate_opex.py agents/agentic_fit/prompts.py agents/agentic_fit/opex_research.py utilities/redis_cache.py utilities/project_compat.py utilities/email_send.py utilities/telemetry.py utilities/genai_job_state.py utilities/genai_job_lifecycle.py utilities/genai_job_watchdog.py utilities/genai_job_recovery.py schemas/agentic_fit_allocator.py apis/base.py api_v1.py db/db_operations_orm.py
+
+Read , lines 1 to 215
+
+Read , lines 1 to 220
+
+Read 
+
+A second gap is visible: the allocator’s Started and heartbeat calls omit `processKey`, which the durable Redis state key requires. Only the final Completed event supplies it. I’ll verify that behavior with isolated checks and inspect the failure-handler and rename commits.
+
+
+
+
+I’ll run source-isolated checks with a mocked LLM, so they won’t contact Redis, SQL, email, or the model API. These should distinguish a reasoning-key issue from L1 field mismatches and confirm the failure guard.
+
+
+Ran terminal command: git show bf735bb -- agents/agentic_fit/allocate_opex.py agents/agentic_fit/prompts.py apis/v1/agentic_fit_allocator.py
+
+Ran terminal command: git blame -L 594,631 -- apis/v1/agentic_fit_allocator.py
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "workingDirectory": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "codeSnippet": "import ast, asyncio, json, re, unicodedata\nfrom pathlib import Path\nroot = Path.cwd()\ndef tree(path):\n    return ast.parse((root / path).read_text(encoding='utf-8-sig'))\ndef selected(path, names, namespace):\n    module = tree(path)\n    nodes = [node for node in module.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Assign)) and (getattr(node, 'name', '') in names or (isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id in names for target in node.targets)))]\n    exec(compile(ast.Module(body=[ast.ImportFrom(module='__future__', names=[ast.alias(name='annotations')], level=0)] + nodes, type_ignores=[]), path, 'exec'), namespace)\nendpoint_tree = tree('apis/v1/agentic_fit_allocator.py')\njob = next(node for node in endpoint_tree.body if isinstance(node, ast.AsyncFunctionDef) and node.name == 'agentic_fit_allocation')\nstored = {node.id for node in ast.walk(job) if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store)}\nprint('substepkey assigned locally:', 'substepkey' in stored)\ncompat = {}\nselected('utilities/project_compat.py', {'_KEY_ALIASES','_INFO_ALIASES','_as_dict','_copy_aliases','normalize_project_info','normalize_project_payload'}, compat)\nfor info in [{'projectName':'Acme'}, {'projectName':'Acme','clientName':None}, {'ProjectName':'Acme'}]:\n    normalized = compat['normalize_project_payload']({'projectInfo':info})['projectInfo']\n    print('name aliases:', info, '-> clientName:', normalized.get('clientName'))\nstate_ns = {'JOB_STATE_KEY_PREFIX':'genai:job'}\nselected('utilities/genai_job_state.py', {'build_job_state_key'}, state_ns)\nprint('heartbeat state key without processKey:', state_ns['build_job_state_key']({'input_key':1,'substepkey':2,'processKey':None}))\nns = {'asyncio':asyncio,'json':json,'re':re,'unicodedata':unicodedata,'LARGE_MODEL_NAME':'mock','GEMINI_API_KEY':'mock','PERCENTAGE_ROUNDING_INCREMENT':1,'PERCENTAGE_ROUNDING_INCREMENT_L2_L3':1,'sanitize_source_reasoning':lambda value:value,'track_trace':lambda *args,**kwargs:None,'track_exception':lambda *args,**kwargs:None}\nclass MockLLM:\n    def __init__(self, **kwargs): pass\n    async def ainvoke(self, prompt):\n        return type('Response', (), {'content':json.dumps({'allocations':[{'capability_name':'Child','percentage':1.0,'source_reasoning':'Test'}]})})()\nns['ChatGoogleGenerativeAI'] = MockLLM\nselected('agents/agentic_fit/prompts.py', {'prompt_L2_Opex_allocation','prompt_L2_Opex_allocation_context'}, ns)\nselected('agents/agentic_fit/allocate_opex.py', {'_fix_mojibake','normalize_name','round_percentages_to_increment','round_percentages','allocate_l2_capabilities'}, ns)\nbase = {'company_name':None,'capability_map':{'L1':[{'l1_capability_name':'Parent','L2':[{'l2_capability_name':'Child','l2_capability_description':'Child description'}]}]},'levels':['L2'],'total_opex_costs':100,'error':''}\nfor label, allocation in [('source_reasoning',{'capability_name':'Parent','capability_description':'Parent description','amount_dollars':100,'source_reasoning':'L1 evidence'}),('legacy reasoning',{'capability_name':'Parent','capability_description':'Parent description','amount_dollars':100,'reasoning':'L1 evidence'}),('missing description',{'capability_name':'Parent','amount_dollars':100}),('missing L1 grid',None)]:\n    state = dict(base, l1_allocations=[] if allocation is None else [allocation])\n    result = asyncio.run(ns['allocate_l2_capabilities'](state))\n    print(label, '=> error:',repr(result.get('error')), 'L2 count:',len(result.get('l2_allocations', [])))"
+}
+
+Read 
+
+Read , lines 260 to 287
+
+Blame shows the broken failure guard predates the October rename: it was introduced in May, and Redis error publication was tied to that guard in July. The isolated check confirmed `substepkey` is not assigned locally, but the remaining checks stopped on an AST harness error; I’m correcting the harness without changing repository files.
+
+
+Ran terminal command: git show bf735bb --format=short --unified=1 -- agents/agentic_fit/allocate_opex.py apis/v1/agentic_fit_allocator.py
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "workingDirectory": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "codeSnippet": "import ast, asyncio, json, re, unicodedata\nfrom pathlib import Path\nroot = Path.cwd()\ndef selected(path, names, namespace):\n    module = ast.parse((root / path).read_text(encoding='utf-8-sig'))\n    nodes = [node for node in module.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Assign)) and (getattr(node, 'name', '') in names or (isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id in names for target in node.targets)))]\n    isolated = ast.Module(body=[ast.ImportFrom(module='__future__', names=[ast.alias(name='annotations')], level=0)] + nodes, type_ignores=[])\n    exec(compile(ast.fix_missing_locations(isolated), path, 'exec'), namespace)\ncompat = {}\nselected('utilities/project_compat.py', {'_KEY_ALIASES','_INFO_ALIASES','_as_dict','_copy_aliases','normalize_project_info','normalize_project_payload'}, compat)\nfor info in [{'projectName':'Acme'}, {'projectName':'Acme','clientName':None}, {'ProjectName':'Acme'}]:\n    normalized = compat['normalize_project_payload']({'projectInfo':info})['projectInfo']\n    print('name aliases:', info, '-> clientName:', normalized.get('clientName'))\nstate_ns = {'JOB_STATE_KEY_PREFIX':'genai:job'}\nselected('utilities/genai_job_state.py', {'build_job_state_key'}, state_ns)\nprint('heartbeat state key without processKey:', state_ns['build_job_state_key']({'input_key':1,'substepkey':2,'processKey':None}))\nns = {'asyncio':asyncio,'json':json,'re':re,'unicodedata':unicodedata,'LARGE_MODEL_NAME':'mock','GEMINI_API_KEY':'mock','PERCENTAGE_ROUNDING_INCREMENT':1,'PERCENTAGE_ROUNDING_INCREMENT_L2_L3':1,'sanitize_source_reasoning':lambda value:value,'track_trace':lambda *args,**kwargs:None,'track_exception':lambda *args,**kwargs:None}\nclass MockLLM:\n    def __init__(self, **kwargs): pass\n    async def ainvoke(self, prompt):\n        return type('Response', (), {'content':json.dumps({'allocations':[{'capability_name':'Child','percentage':1.0,'source_reasoning':'Test'}]})})()\nns['ChatGoogleGenerativeAI'] = MockLLM\nselected('agents/agentic_fit/prompts.py', {'prompt_L2_Opex_allocation','prompt_L2_Opex_allocation_context'}, ns)\nselected('agents/agentic_fit/allocate_opex.py', {'_fix_mojibake','normalize_name','round_percentages_to_increment','round_percentages','allocate_l2_capabilities'}, ns)\nbase = {'company_name':None,'capability_map':{'L1':[{'l1_capability_name':'Parent','L2':[{'l2_capability_name':'Child','l2_capability_description':'Child description'}]}]},'levels':['L2'],'total_opex_costs':100,'error':''}\nfor label, allocation in [('source_reasoning',{'capability_name':'Parent','capability_description':'Parent description','amount_dollars':100,'source_reasoning':'L1 evidence'}),('legacy reasoning',{'capability_name':'Parent','capability_description':'Parent description','amount_dollars':100,'reasoning':'L1 evidence'}),('missing description',{'capability_name':'Parent','amount_dollars':100}),('missing L1 grid',None)]:\n    state = dict(base, l1_allocations=[] if allocation is None else [allocation])\n    result = asyncio.run(ns['allocate_l2_capabilities'](state))\n    print(label, '=> error:',repr(result.get('error')), 'L2 count:',len(result.get('l2_allocations', [])))"
+}
+
+Searched for regex `company_name.*lower|company_name.*strip|raise |async def research_company_opex|timeout|max_retries|ainvoke|except` (`**/agents/agentic_fit/opex_research.py`), 15 results
+
+Searched for regex `def run_operations_status|def run_operations\(|def read_sub_step_input_by_input_key|def read_sub_step_output_by_output_key|raise|except` (`**/db/db_operations_orm.py`), 56 results
+
+Searched for regex `l2|L2|error|reasoning|capability_description` (`**/tests/test_opex_consistency_guardrails.py`), 1 result
+
+Read , lines 839 to 900
+
+The mocked L2 checks completed with either `reasoning` or `source_reasoning` on L1. A missing `capability_description` instead produced a swallowed node error and empty L2 output. I also confirmed that an existing `clientName: null` prevents `projectName` from filling that alias.
+
+
+Ran terminal command: git log --since="2026-09-14" --date=short --format="%h author=%ad committer=%cd %s" -- utilities/file_storage.py utilities/genai_job_metadata.py utilities/genai_job_status.py utilities/genai_job_reconciliation.py agents/survey_context.py agents/client_file_context.py agents/industry_classification_context.py agents/capability_maps_generation/capability_maps_generator.py
+
+Searched for regex `api_router|prefix|watchdog|genai_job` (`**/api_v1.py`), 2 results
+
+Searched for files matching `**/tests/*{agentic,allocation,allocate}*`, no matches
+
+Read , lines 20 to 195
+
+Read , lines 598 to 652
+
+Read , lines 183 to 218
+
+Read , lines 131 to 243
+
+The strongest trigger candidate is the L1-to-L2 handoff: L1 output contains a grid with numeric `total_opex_costs`, but L2 reads a separate `capabilityInfo.total_opex` object. If that object is absent, L2 researches OpEx again and can ultimately raise; the broken failure handler would then leave the UI without a terminal error. I’ll verify that path and separate it from lower-confidence map-format issues.
+
+
+Ran terminal command: git log --since="2026-09-14" --date=short --format="%h author=%ad committer=%cd %s" --name-only -- utilities/file_storage.py utilities/genai_job_metadata.py utilities/genai_job_status.py utilities/genai_job_reconciliation.py agents/survey_context.py agents/client_file_context.py agents/industry_classification_context.py agents/capability_maps_generation/capability_maps_generator.py
+
+Ran terminal command: git log --since="2026-09-14" --date=short --format="%h author=%ad committer=%cd %s" -- apis/v1/agentic_fit_allocator.py agents/agentic_fit/agentic_fit_allocator.py agents/agentic_fit/allocate_opex.py agents/agentic_fit/prompts.py agents/agentic_fit/opex_research.py utilities/redis_cache.py utilities/project_compat.py utilities/email_send.py utilities/telemetry.py schemas/agentic_fit_allocator.py apis/base.py api_v1.py db/db_operations_orm.py
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "workingDirectory": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "codeSnippet": "import ast, asyncio, json, os\nfrom pathlib import Path\nfrom types import SimpleNamespace\nsource = Path('apis/v1/agentic_fit_allocator.py').read_text(encoding='utf-8-sig')\nmodule = ast.parse(source)\njob = next(node for node in module.body if isinstance(node, ast.AsyncFunctionDef) and node.name == 'agentic_fit_allocation')\nns = {'json':json,'os':os,'normalize_project_payload':lambda value:value,'action_':{'IA L2 Capabilities Opex':'GENERATE_L2_OPEX'},'order_':{'IA L2 Capabilities Opex':3}}\nrecords = []\nclass MockMonitor:\n    async def start_progress(self, *args, **kwargs): records.append(('monitor','started'))\n    async def stop_progress(self): records.append(('monitor','stopped'))\nclass MockAllocator:\n    def __init__(self, *args): pass\n    async def allocate_opex_to_capability_levels(self, *args, **kwargs): raise ValueError('mock allocation failure')\nclass MockHTTPException(Exception):\n    def __init__(self, **kwargs): super().__init__(kwargs.get('detail'))\nns.update(ProgressMonitor=MockMonitor, AgenticFitAllocator=MockAllocator, HTTPException=MockHTTPException, status=SimpleNamespace(HTTP_500_INTERNAL_SERVER_ERROR=500))\nfor name in ['track_api_call','track_trace','track_operation_start','track_operation_error']:\n    ns[name] = lambda *args, **kwargs:None\nns['email_send'] = lambda *args, **kwargs: records.append(('email','attempted'))\nns['publish_message'] = lambda *args, **kwargs: records.append(('publish',args[1]))\nns['db_operations_orm'] = SimpleNamespace(run_operations_status=lambda **kwargs: records.append(('db',kwargs['data']['sub_step_status_key'],kwargs['data']['sub_step_progress_percentage'])))\npayload_data = {'projectInfo':{'clientName':'Acme'},'capabilityInfo':{},'backgroundProcessingInfo':{'ID':'mock','input_key':1,'substepkey':2}}\nns['read_sub_step_input_by_input_key'] = lambda key:SimpleNamespace(input_json=json.dumps(payload_data))\nns['__import__'] = None\nisolated = ast.Module(body=[ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0),job],type_ignores=[])\nexec(compile(ast.fix_missing_locations(isolated),'endpoint-source','exec'),ns)\n# Replace only context imports with an import blocker to prevent module/network side effects.\nimport builtins\nsafe_builtins = dict(vars(builtins))\ndef blocked_import(name, *args, **kwargs): raise ImportError('context imports blocked by read-only harness')\nsafe_builtins['__import__'] = blocked_import\nns['__builtins__'] = safe_builtins\n# Recompile so the isolated function captures the safe builtins.\nexec(compile(ast.fix_missing_locations(isolated),'endpoint-source','exec'),ns)\npayload = SimpleNamespace(input_key=1,substepkey=2,input_name='IA L2 Capabilities Opex',OutputKey=None,receiverEmail=None,model_dump_json=lambda:'{}')\ntry: asyncio.run(ns['agentic_fit_allocation'](payload))\nexcept Exception as error: print(type(error).__name__,str(error))\nprint('mock failure lifecycle:',records)\nprint('failed DB write:',any(record[:2] == ('db',6) for record in records))\nprint('Error event:',('publish','Error') in records)\nallocation_tree = ast.parse(Path('agents/agentic_fit/allocate_opex.py').read_text(encoding='utf-8-sig'))\nconverter = next(node for node in allocation_tree.body if isinstance(node,ast.FunctionDef) and node.name=='convert_capability_map')\nmap_ns = {}\nexec(compile(ast.Module(body=[converter],type_ignores=[]),'converter-source','exec'),map_ns)\nfor label, capmap in [('hierarchical grid map',{'L1':[]}),('L2-only flat map',[{'l1CapabilityName':'Parent','l2CapabilityName':'Child','l1CapabilityDescription':'P','l2CapabilityDescription':'C'}])]:\n    try: map_ns['convert_capability_map'](capmap)\n    except Exception as error: print(label,'=>',type(error).__name__,str(error))"
+}
+
+Searched for regex `def sanitize_source_reasoning|def _normalize|source_reasoning|def create_fallback_opex_estimate|sanitize_source_urls` (`**/agents/agentic_fit/opex_research.py`), 15 results
+
+Searched for regex `def sanitize_source_reasoning|client_specific|Client Specific|AI Generated Evaluation|5%|Generating L2 Capability` (`**/*.py`), 22 results
+
+Read 
+
+The source checks now rule out the suspected L1 reasoning-key mismatch and confirm the alias and Redis-key gaps. I’m finishing a mocked endpoint failure check to verify whether an allocation exception actually leaves both DB and pub/sub without a failed status.
+
+
+Ran `pylanceRunCodeSnippet` 
+Completed with input: {
+  "workspaceRoot": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "workingDirectory": "c:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi",
+  "codeSnippet": "import ast, asyncio, json, os, builtins\nfrom pathlib import Path\nfrom types import SimpleNamespace\nmodule = ast.parse(Path('apis/v1/agentic_fit_allocator.py').read_text(encoding='utf-8-sig'))\njob = next(node for node in module.body if isinstance(node,ast.AsyncFunctionDef) and node.name=='agentic_fit_allocation')\nrecords=[]\nclass MockMonitor:\n    async def start_progress(self,*args,**kwargs): records.append(('monitor','started'))\n    async def stop_progress(self): records.append(('monitor','stopped'))\nclass MockAllocator:\n    def __init__(self,*args): pass\n    async def allocate_opex_to_capability_levels(self,*args,**kwargs): raise ValueError('mock allocation failure')\nclass MockHTTPException(Exception):\n    def __init__(self,**kwargs): super().__init__(kwargs.get('detail'))\nsafe_builtins=dict(vars(builtins))\ndef controlled_import(name,*args,**kwargs):\n    if name=='__future__': return builtins.__import__(name,*args,**kwargs)\n    raise ImportError('context imports blocked by read-only harness')\nsafe_builtins['__import__']=controlled_import\nns={'__builtins__':safe_builtins,'json':json,'os':os,'normalize_project_payload':lambda value:value,'action_':{'IA L2 Capabilities Opex':'GENERATE_L2_OPEX'},'order_':{'IA L2 Capabilities Opex':3},'ProgressMonitor':MockMonitor,'AgenticFitAllocator':MockAllocator,'HTTPException':MockHTTPException,'status':SimpleNamespace(HTTP_500_INTERNAL_SERVER_ERROR=500)}\nfor name in ['track_api_call','track_trace','track_operation_start','track_operation_error']: ns[name]=lambda *args,**kwargs:None\nns['email_send']=lambda *args,**kwargs:records.append(('email','attempted'))\nns['publish_message']=lambda *args,**kwargs:records.append(('publish',args[1]))\nns['db_operations_orm']=SimpleNamespace(run_operations_status=lambda **kwargs:records.append(('db',kwargs['data']['sub_step_status_key'],kwargs['data']['sub_step_progress_percentage'])))\ndata={'projectInfo':{'clientName':'Acme'},'capabilityInfo':{},'backgroundProcessingInfo':{'ID':'mock','input_key':1,'substepkey':2}}\nns['read_sub_step_input_by_input_key']=lambda key:SimpleNamespace(input_json=json.dumps(data))\nisolated=ast.Module(body=[ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0),job],type_ignores=[])\nexec(compile(ast.fix_missing_locations(isolated),'endpoint-source','exec'),ns)\npayload=SimpleNamespace(input_key=1,substepkey=2,input_name='IA L2 Capabilities Opex',OutputKey=None,receiverEmail=None,model_dump_json=lambda:'{}')\ntry: asyncio.run(ns['agentic_fit_allocation'](payload))\nexcept Exception as error: print(type(error).__name__,str(error))\nprint('mock failure lifecycle:',records)\nprint('failed DB write:',any(record[:2]==('db',6) for record in records))\nprint('Error event:',('publish','Error') in records)\nallocation_tree=ast.parse(Path('agents/agentic_fit/allocate_opex.py').read_text(encoding='utf-8-sig'))\nconverter=next(node for node in allocation_tree.body if isinstance(node,ast.FunctionDef) and node.name=='convert_capability_map')\nmap_ns={}\nexec(compile(ast.Module(body=[converter],type_ignores=[]),'converter-source','exec'),map_ns)\nfor label,capmap in [('hierarchical grid map',{'L1':[]}),('L2-only flat map',[{'l1CapabilityName':'Parent','l2CapabilityName':'Child','l1CapabilityDescription':'P','l2CapabilityDescription':'C'}])]:\n    try: map_ns['convert_capability_map'](capmap)\n    except Exception as error: print(label,'=>',type(error).__name__,str(error))\nprompt_tree=ast.parse(Path('agents/agentic_fit/prompts.py').read_text(encoding='utf-8-sig'))\nfor node in prompt_tree.body:\n    if isinstance(node,ast.Assign) and any(isinstance(target,ast.Name) and target.id in {'prompt_L2_Opex_allocation','prompt_L2_Opex_allocation_context'} for target in node.targets):\n        template=ast.literal_eval(node.value)\n        rendered=template.format(company_note='',l1_name='Parent',l1_description='Description',l1_amount=100,l2_list='Child',l2_count=1,survey_context='Survey',file_context='Files')\n        print(node.targets[0].id,'format OK; characters:',len(rendered))"
+}
+
+Searched for regex `def update_sub_step|sub_step_progress_percentage|commit\(` (`**/db/db_operations_orm.py`), 5 results
+
+Read , lines 746 to 803
+
+Read , lines 100 to 152
+
+The mocked endpoint failure confirms the lifecycle defect: it writes 25% and publishes Started, then stops the monitor without writing failed status or publishing Error. I also found synchronous URL validation inside the reasoning sanitizer; I’ll inspect that as a possible source of long pauses and blocked heartbeats.
+
+
+Ran terminal command: git log -3 --date=short --format="%h %ad %s" -L :sanitize_source_reasoning:agents/capability_maps_generation/capability_maps_generator.py
+
+Ran terminal command: git status --short
+
+Read , lines 145 to 280
+
+Read , lines 137 to 183
+
+The investigation is complete. The failure-reporting defect is reproduced, and the source identifies conditional handoff and latency risks. I can’t identify the trigger for either reported job without its stored input and logs; the report will distinguish confirmed defects from those candidates. No files changed.
+
+
+Searched for regex `def publish_message|def start_progress|heartbeat_job_state\(|async def publish_progress|REDIS_PROGRESS_HEARTBEAT_SECONDS|async def stop_progress|create_task|if not channel_name|r.publish|await self.task|for ik|MAX_L2_ATTEMPTS|response = await llm.ainvoke|state\["error"\]|workflow.ainvoke|total_opex_costs=|l1_allocations=agentic|if not total_opex_costs|if total_opex_costs is None` (`**/{redis_cache,allocate_opex,agentic_fit_allocator}.py`), 40 results
+
+**Findings**
+The clearest defect is **failed L2 jobs never publish failure**. The suspected `reasoning` mismatch is **not present in the L1-to-L2 reader**. The original exception or stalled operation remains unverified without the affected jobs’ stored inputs and logs.
+
+1. **Highest confidence: allocation exceptions leave the job loading.** The handler checks `"substepkey" in locals()`, but that variable is never assigned. Consequently, failed DB status and Redis `"Error"` publication are both skipped: `agentic_fit_allocator.py:606`, `agentic_fit_allocator.py:617`. An isolated execution of the actual function with mocked dependencies reproduced: DB `2/25%` twice → Started → monitor stopped → email attempted, **no failed write and no Error event**. The outer runner only logs the escaped exception: `agentic_fit_allocator.py:132`.
+
+2. **Likely trigger, conditional on payload: L2 loses total OpEx during the L1 handoff.** L2 reads `capabilityInfo.total_opex` separately from `capabilityInfo.AgenticFitGrid`: `agentic_fit_allocator.py:210`. L1 output contains `AgenticFitGrid`, whose state includes numeric `total_opex_costs`, but no separate top-level `total_opex`: `agentic_fit_allocator.py:369`, `allocate_opex.py:757`. That grid value is not reused. Missing total triggers research in `agentic_fit_allocator.py:115`, potentially again in `allocate_opex.py:811`. Failed research returns `total_opex_costs: None`; allocation then raises: `opex_research.py:792`, `allocate_opex.py:744`. Combined with finding 1, this explains permanent loading.
+
+3. **Plausible long-running cause: sequential LLM calls and blocking citation checks.** L2 processes each L1 sequentially, allows three allocation attempts per parent, and configures SDK retries: `allocate_opex.py:280`, `allocate_opex.py:288`, `allocate_opex.py:315`. No application-level deadline wraps `ainvoke`: `allocate_opex.py:350`. Each allocation’s sanitizer can synchronously perform `requests.head(..., timeout=5, allow_redirects=True)` for every public source token, blocking that job’s event loop and heartbeat: `allocate_opex.py:455`, `capability_maps_generator.py:147`. This is a latency risk, not proof of an infinite hang.
+
+4. **Confirmed recovery gap: Started/heartbeat calls lack `processKey`.** The monitor receives input/substep identifiers but no process identifier: `agentic_fit_allocator.py:355`. Durable Redis state requires all three; otherwise its key builder returns `None`: `genai_job_state.py:77`. Confirmed by an isolated check. Thus live pub/sub may work while durable heartbeat state is absent. Completion supplies `processKey`, but only after success. Recovery currently supports Capability Maps, not Impact Analyzer: `genai_job_recovery.py:284`.
+
+5. **Conditional input-contract defects.** Conversion always expects a **flat, full L1/L2/L3 map**, even for L2-only work: `allocate_opex.py:839`, `allocate_opex.py:893`. Isolated checks reproduced `TypeError` for a hierarchical grid map and `KeyError: 'l3CapabilityName'` for an L2-only flat map. These exceptions reach finding 1. Separately, L2 requires L1 `capability_description`; missing it is swallowed into `state["error"]`: `allocate_opex.py:290`, `allocate_opex.py:461`. The caller never checks that error, so it can persist empty L2 output and report success rather than failure.
+
+6. **Lower likelihood: project-name aliases can leave company name `None`.** Normalization copies aliases only when the destination key is absent, not null: `project_compat.py:59`. Verified: `projectName="Acme"` works; adding `clientName=None` leaves it `None`; uppercase `ProjectName` does not populate lowercase `clientName`. The endpoint reads only lowercase `projectInfo.clientName`: `agentic_fit_allocator.py:210`. A null company name did **not** break mocked L2 allocation; it mainly weakens any fallback research. I found no unconditional `None.lower()` failure on this path.
+
+**Task Flow**
+`POST /api/v1/agentic_fit_allocator` → HTTP 202 → synchronous BackgroundTasks runner → `asyncio.run(agentic_fit_allocation(...))`: `agentic_fit_allocator.py:156`, `base.py:24`.
+
+- `"IA L2 Capabilities Opex"` and `"IA L1l2 Capabilities Opex"` select `GENERATE_L2_OPEX`: `agentic_fit_allocator.py:40`.
+- Load persisted input → normalize project aliases → construct allocator → DB in-progress **25% twice** → publish Started: `agentic_fit_allocator.py:200`, `agentic_fit_allocator.py:238`.
+- Load survey/files/workspace context → start monitor → allocate `["L2"]`: `agentic_fit_allocator.py:260`, `agentic_fit_allocator.py:347`.
+- Monitor schedules an initial event and nominal 10-second heartbeats. `publish_message` attempts durable state, then Redis pub/sub; missing channel and Redis failures are logged without failing the job: `redis_cache.py:237`, `redis_cache.py:100`.
+- Graph runs L1 → L2 → L3; L1/L3 skip for `["L2"]`. Success adds IDs → stops monitor → writes **75%** → adds descriptions → stores blob/output row → publishes Inserting/Generated → writes **100%** → publishes Completed → email: `allocate_opex.py:710`, `agentic_fit_allocator.py:356`, `agentic_fit_allocator.py:574`.
+- **No backend assignment to 5% was found.** Progress events omit percentages until completion. The displayed 5% is therefore not traceable to an assignment in this repository; UI/orchestrator initialization remains unverified.
+- `mark_completed`/`mark_failed` exist, but this endpoint calls neither; it maintains its own defective lifecycle: `genai_job_lifecycle.py:180`.
+
+**L1 Contract**
+L2 consumes supplied `capabilityInfo.AgenticFitGrid.l1_allocations`; it does **not** retrieve the previous L1 output using `OutputKey`: `allocate_opex.py:829`. Required fields are `capability_name`, `capability_description`, and numeric `amount_dollars`. Missing allocations default to `[]` and silently produce no L2 rows.
+
+The October rename changed L1/L2 output producers consistently to `source_reasoning`. L2 does not read L1 reasoning at all. Mocked execution succeeded with either L1 key, and both L2 prompt templates formatted successfully. Residual prose mentions of `reasoning` can affect output quality, but no blocking key mismatch was found.
+
+**Exception Handling**
+Beyond the broken guard, `stop_progress()` awaits its task before any failure write; a task exception can escape the handler: `redis_cache.py:374`. Early initialization errors can also make the handler’s email arguments reference undefined `action`, `background_processing_data`, or `client_info`: `agentic_fit_allocator.py:625`. Email’s internal exceptions are swallowed, and normal completion is published before email, so email failure alone does not explain stuck L2: `email_send.py:234`. Telemetry backend exceptions are caught, although synchronous telemetry requests can add latency: `telemetry.py:150`.
+
+**Recent Commits**
+History window: September 14–October 12, 2026. Dates below are committer dates.
+
+| Commit | Date | Relevant changes |
+|---|---|---|
+| `bf735bb` | Oct 8 | Reasoning rename: allocation, research, prompts, endpoint |
+| `9927b9b` | Oct 7 | Citation/special-character changes: prompts, endpoint, sanitizer module |
+| `da993dd` | Oct 7 | “citation re-test”: allocation, prompts, endpoint, sanitizer, file context; authored Sep 18 |
+| `1c32370` | Oct 1 | Email functionality and DB user lookup |
+| `562d5e6` | Sep 29 | Allocator completion-message change |
+| `1def2dc` | Sep 29 | Publish status changed to Completed |
+| `6d521dd` | Sep 29 | DB changes associated with Capability Maps completion/idempotency |
+| `9b8c7c0` | Sep 15 | Release hot-fix merge touching this history |
+
+Blame attributes the bad local-variable guard to `9b95ae9a` on May 11, and conditional Error publication to `2efae3c3` on July 10. Blocking URL sanitization was introduced by `da993dd`, integrated October 7.
+
+**Next Evidence**
+For each case, inspect the persisted L2 input’s separate `total_opex`, L1 allocations, map shape, and project aliases, then locate the last allocation/research exception or LLM response. Those distinguish a failed job hidden by finding 1 from a genuinely slow task. No production services were contacted, and no files were edited.
+----------------------------------------------------------------------------------------------------------------------------------------------------
 Read-only, do not edit.
 
 Bug: L2 Capability OpEx analysis never completes.
