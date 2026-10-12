@@ -1,3 +1,434 @@
+Already up to date.
+PS C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi> git switch fix/l2-opex-stuck-loading
+branch 'fix/l2-opex-stuck-loading' set up to track 'origin/fix/l2-opex-stuck-loading'.
+Switched to a new branch 'fix/l2-opex-stuck-loading'
+PS C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi> (Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& c:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Scripts\Activate.ps1)
+(.venv) PS C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi> .\run.ps1                                  
+(.venv) PS C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi> uvicorn api_v1:app --host 0.0.0.0 --port 8080 --reload --log-level info --log-config config/logging.yaml
+2026-10-12 14:58:57,342 - uvicorn.error - INFO - Will watch for changes in these directories: ['C:\\Users\\gedchaitanya\\fix_opexstuck\\aai-bpt-genaiapi']
+2026-10-12 14:58:57,342 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+2026-10-12 14:58:57,342 - uvicorn.error - INFO - Started reloader process [28744] using WatchFiles
+2026-10-12 14:58:57,958 - watchfiles.main - INFO - 9 changes detected
+2026-10-12 14:58:59,535 - watchfiles.main - INFO - 12 changes detected
+2026-10-12 14:58:59,899 - watchfiles.main - INFO - 1 change detected
+DB_string: postgresql://postgresadmin:IzhPw6grV0Et@ccon-westus3-eno0000j-pgsql.postgres.database.azure.com:5432/aab_db_eno0000j?sslmode=require
+2026-10-12 14:59:00,755 - watchfiles.main - INFO - 4 changes detected
+2026-10-12 14:59:01,159 - watchfiles.main - INFO - 12 changes detected
+2026-10-12 14:59:01,517 - watchfiles.main - INFO - 16 changes detected
+2026-10-12 14:59:01,920 - watchfiles.main - INFO - 7 changes detected
+2026-10-12 14:59:02,429 - watchfiles.main - INFO - 20 changes detected
+2026-10-12 14:59:05,531 - watchfiles.main - INFO - 26 changes detected
+2026-10-12 14:59:09,992 - watchfiles.main - INFO - 42 changes detected
+2026-10-12 14:59:10,700 - watchfiles.main - INFO - 135 changes detected
+2026-10-12 14:59:11,062 - watchfiles.main - INFO - 8 changes detected
+DB_string: postgresql://postgresadmin:IzhPw6grV0Et@ccon-westus3-eno0000j-pgsql.postgres.database.azure.com:5432/aab_db_eno0000j?sslmode=require
+2026-10-12 14:59:11,222 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-12 14:59:11,303 - uvicorn.error - INFO - Started server process [32396]
+2026-10-12 14:59:11,303 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-12 14:59:11,306 - uvicorn.error - INFO - Application startup complete.
+2026-10-12 14:59:11,426 - watchfiles.main - INFO - 66 changes detected
+2026-10-12 14:59:11,833 - watchfiles.main - INFO - 1 change detected
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11868
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11868.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11868
+
+--- Operations finished ---
+{'ID': 'l1-11868-1791795475111', 'Status': 'Recovering', 'Logs': 'Recovering stale GenAI job after missed heartbeat', 'input_key': '6000', 'substepkey': '11868', 'receiverEmail': 'vreddykandula@deloitte.com', 'requestedOn': '2026-10-12T08:57:55.111Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': '85', 'stage': 'watchdog-stale-heartbeat', 'stageStatus': 'recovering', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:1033:11868:6000:l1-11868-1791795475111', 'processKey': '1033', 'processName': 'Testing analysis library 272236', 'substepkey': '11868', 'input_key': '6000', 'input_name': 'L1 Capability Generation Input', 'ID': 'l1-11868-1791795475111', 'receiverEmail': 'vreddykandula@deloitte.com', 'requestedOn': '2026-10-12T08:57:55.111Z', 'clientName': 'Microsoft', 'clientKey': 18, 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: Recovering
+[TRACE] Redis message published successfully: Recovering
+[TRACE] [GENAI WATCHDOG] Marked stale job as Recovering
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11871
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11871.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11871
+
+--- Operations finished ---
+{'ID': 'l1-11871-1791795811031', 'Status': 'Recovering', 'Logs': 'Recovering stale GenAI job after missed heartbeat', 'input_key': '6001', 'substepkey': '11871', 'receiverEmail': 'vreddykandula@deloitte.com', 'requestedOn': '2026-10-12T09:03:31.031Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': '85', 'stage': 'watchdog-stale-heartbeat', 'stageStatus': 'recovering', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:1034:11871:6001:l1-11871-1791795811031', 'processKey': '1034', 'processName': 'Testing analysis library 696474', 'substepkey': '11871', 'input_key': '6001', 'input_name': 'L1 Capability Generation Input', 'ID': 'l1-11871-1791795811031', 'receiverEmail': 'vreddykandula@deloitte.com', 'requestedOn': '2026-10-12T09:03:31.031Z', 'clientName': 'Microsoft', 'clientKey': 18, 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: Recovering
+[TRACE] Redis message published successfully: Recovering
+[TRACE] [GENAI WATCHDOG] Marked stale job as Recovering
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-12 15:01:29,630 - watchfiles.main - INFO - 2 changes detected
+2026-10-12 15:02:58,766 - watchfiles.main - INFO - 3 changes detected
+2026-10-12 15:02:59,120 - watchfiles.main - INFO - 1 change detected
+2026-10-12 15:07:03,976 - watchfiles.main - INFO - 3 changes detected
+2026-10-12 15:07:04,338 - watchfiles.main - INFO - 1 change detected
+2026-10-12 15:17:34,214 - uvicorn.access - INFO - 127.0.0.1:52087 - "GET /api/v1/docs HTTP/1.1" 200
+C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\fastapi\openapi\utils.py:254: UserWarning: Duplicate Operation ID health_check_health_get for function health_check at C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\api_v1.py
+  warnings.warn(message, stacklevel=1)
+C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\fastapi\openapi\utils.py:254: UserWarning: Duplicate Operation ID whoami_api_v1_me_get for function whoami at C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\api_v1.py
+  warnings.warn(message, stacklevel=1)
+2026-10-12 15:17:36,125 - uvicorn.access - INFO - 127.0.0.1:52087 - "GET /openapi.json HTTP/1.1" 200
+2026-10-12 15:19:18,571 - watchfiles.main - INFO - 3 changes detected
+2026-10-12 15:19:44,727 - watchfiles.main - INFO - 1 change detected
+2026-10-12 15:19:44,727 - uvicorn.error - WARNING - WatchFiles detected changes in 'apis\v1\agentic_fit_allocator.py'. Reloading...
+ 2026-10-12 15:19:44,733 - uvicorn.error - INFO - Shutting down
+2026-10-12 15:19:44,834 - uvicorn.error - INFO - Waiting for application shutdown.
+2026-10-12 15:19:44,834 - uvicorn.error - INFO - Application shutdown complete.
+2026-10-12 15:19:44,834 - uvicorn.error - INFO - Finished server process [32396]
+DB_string: postgresql://postgresadmin:IzhPw6grV0Et@ccon-westus3-eno0000j-pgsql.postgres.database.azure.com:5432/aab_db_eno0000j?sslmode=require
+2026-10-12 15:19:54,073 - watchfiles.main - INFO - 5 changes detected
+DB_string: postgresql://postgresadmin:IzhPw6grV0Et@ccon-westus3-eno0000j-pgsql.postgres.database.azure.com:5432/aab_db_eno0000j?sslmode=require
+2026-10-12 15:19:54,639 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-12 15:19:54,682 - uvicorn.error - INFO - Started server process [30192]
+2026-10-12 15:19:54,682 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-12 15:19:54,684 - uvicorn.error - INFO - Application startup complete.
+2026-10-12 15:20:16,070 - watchfiles.main - INFO - 3 changes detected
+2026-10-12 15:20:16,428 - watchfiles.main - INFO - 1 change detected
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-12 15:35:47,564 - uvicorn.access - INFO - 127.0.0.1:52351 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 422
+2026-10-12 15:41:10,512 - uvicorn.access - INFO - 127.0.0.1:53195 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 422
+2026-10-12 15:41:55,490 - watchfiles.main - INFO - 1 change detected
+2026-10-12 15:41:55,490 - uvicorn.error - WARNING - WatchFiles detected changes in 'apis\v1\agentic_fit_allocator.py'. Reloading...
+ 2026-10-12 15:41:55,587 - uvicorn.error - INFO - Shutting down
+2026-10-12 15:41:55,695 - uvicorn.error - INFO - Waiting for application shutdown.
+2026-10-12 15:41:55,695 - uvicorn.error - INFO - Application shutdown complete.
+2026-10-12 15:41:55,695 - uvicorn.error - INFO - Finished server process [30192]
+DB_string: postgresql://postgresadmin:IzhPw6grV0Et@ccon-westus3-eno0000j-pgsql.postgres.database.azure.com:5432/aab_db_eno0000j?sslmode=require
+2026-10-12 15:42:03,215 - watchfiles.main - INFO - 5 changes detected
+DB_string: postgresql://postgresadmin:IzhPw6grV0Et@ccon-westus3-eno0000j-pgsql.postgres.database.azure.com:5432/aab_db_eno0000j?sslmode=require
+2026-10-12 15:42:03,661 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-12 15:42:03,711 - uvicorn.error - INFO - Started server process [35112]
+2026-10-12 15:42:03,711 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-12 15:42:03,717 - uvicorn.error - INFO - Application startup complete.
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 11891
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 11891.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 11891
+
+--- Operations finished ---
+{'ID': 'l1-11891-1791799333490', 'Status': 'Recovering', 'Logs': 'Recovering stale GenAI job after missed heartbeat', 'input_key': '6003', 'substepkey': '11891', 'receiverEmail': 'vreddykandula@deloitte.com', 'requestedOn': '2026-10-12T10:02:13.49Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': '85', 'stage': 'watchdog-stale-heartbeat', 'stageStatus': 'recovering', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:1036:11891:6003:l1-11891-1791799333490', 'processKey': '1036', 'processName': 'Testing analysis library 153492', 'substepkey': '11891', 'input_key': '6003', 'input_name': 'L1 Capability Generation Input', 'ID': 'l1-11891-1791799333490', 'receiverEmail': 'vreddykandula@deloitte.com', 'requestedOn': '2026-10-12T10:02:13.49Z', 'clientName': 'Microsoft', 'clientKey': 18, 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: Recovering
+[TRACE] Redis message published successfully: Recovering
+[TRACE] [GENAI WATCHDOG] Marked stale job as Recovering
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-12 15:49:56,652 - uvicorn.access - INFO - 127.0.0.1:52797 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
+[TRACE] Received input_data: {"stepKey":4001,"substepkey":5030,"processName":"Customer Query Resolution","processKey":3001,"inpu
+Getting database session...
+Database session created.
+--- Reading input record for input_key: 6030 ---
+No input record found for input_key: 6030
+[TRACE] DB_Read: No input record found for input_key: 6030
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 5030
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 5030.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 5030
+
+--- Operations finished ---
+[TRACE] Starting agentic fit allocation for action: GENERATE_L2_OPEX
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 5030
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 5030.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 5030
+
+--- Operations finished ---
+{'ID': None, 'Status': 'Started', 'Logs': ' Started generating for Impact Analyser for action GENERATE_L2_OPEX', 'input_key': 6030, 'substepkey': 5030, 'receiverEmail': 'test.user@example.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 5030, 'input_key': 6030, 'receiverEmail': 'test.user@example.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:5030:6030', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+[TRACE] Allocating OPEX to capability levels: ['L2']
+[TRACE] Progress monitor started for ID: None
+[TRACE] Allocating opex to capabilities
+[TRACE] Total OPEX missing before allocation; researching OPEX instead of using a default
+
+Researching OPEX for None...
+{'ID': None, 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 6030, 'substepkey': 5030, 'receiverEmail': 'test.user@example.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:5030:6030', 'substepkey': 5030, 'input_key': 6030, 'receiverEmail': 'test.user@example.com', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+2026-10-12 15:50:08,784 - httpx - INFO - HTTP Request: GET https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json "HTTP/1.1 200 OK"
+2026-10-12 15:50:12,278 - httpx - INFO - HTTP Request: GET https://data.sec.gov/submissions/CIK0001318605.json "HTTP/1.1 200 OK"
+2026-10-12 15:50:14,094 - httpx - INFO - HTTP Request: GET https://data.sec.gov/submissions/CIK0001318605.json "HTTP/1.1 200 OK"
+   SEC Company Facts OPEX Complete: $15,162,000,000.00
+      Confidence: high
+      Sources: 3 found
+
+Allocating OPEX to capabilities...
+============================================================
+[ERROR] Agentic_Fit_Allocation - 'NoneType' object is not iterable
+[TRACE] Error in agentic fit allocation
+[TRACE] Progress monitor stopped for ID: None
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 5030
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 5030.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 5030
+
+--- Operations finished ---
+{'ID': None, 'Status': 'Error', 'Logs': "Error in Agentic Fit Allocation: 'NoneType' object is not iterable", 'input_key': 6030, 'substepkey': 5030, 'receiverEmail': 'test.user@example.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Error', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 5030, 'input_key': 6030, 'receiverEmail': 'test.user@example.com', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:5030:6030', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Error
+[TRACE] Redis message published successfully: Error
+Getting database session...
+Database session created.
+--- Reading app_user for email: test.user@example.com ---
+No app_user found for email: test.user@example.com
+[TRACE] DB_Read: No app_user found for email: test.user@example.com
+2026-10-12 15:50:18,400 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '1198'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '85f9e9bd-c626-11f1-9e27-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-12 15:50:23,066 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:20:22 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-12 15:50:23,070 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/999f4846-5c9a-44de-a854-ec53e5822c8f?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '85f9e9bd-c626-11f1-9e27-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:50:23,419 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:20:23 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:50:26,421 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/999f4846-5c9a-44de-a854-ec53e5822c8f?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '85f9e9bd-c626-11f1-9e27-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:50:26,795 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:20:26 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:50:29,798 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/999f4846-5c9a-44de-a854-ec53e5822c8f?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '85f9e9bd-c626-11f1-9e27-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:50:30,174 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:20:30 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:50:30,177 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14188'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '8cfe78ea-c626-11f1-8aa2-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-12 15:50:30,568 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:20:30 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-12 15:50:30,573 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/f2021d64-c956-4bc9-8602-7c4d63b16f91?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '8cfe78ea-c626-11f1-8aa2-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:50:30,909 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:20:30 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-12 15:50:33,920 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/f2021d64-c956-4bc9-8602-7c4d63b16f91?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '8cfe78ea-c626-11f1-8aa2-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-12 15:50:34,287 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Mon, 12 Oct 2026 10:20:34 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+Email send operation status:  {'id': 'f2021d64-c956-4bc9-8602-7c4d63b16f91', 'status': 'Succeeded', 'error': None}
+Message sent with ID:  f2021d64-c956-4bc9-8602-7c4d63b16f91
+Status:  Succeeded
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 356, in agentic_fit_allocation
+    agentic_fit_grid = await agentic_fit_allocator.allocate_opex_to_capability_levels(levels,survey_ctx=survey_ctx, file_ctx=file_ctx)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\agentic_fit_allocator.py", line 120, in allocate_opex_to_capability_levels
+    self.agentic_fit_grid = await run_full_analysis_with_research(self.company_name, self.capability_map,
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\allocate_opex.py", line 825, in run_full_analysis_with_research
+    allocation_results = await run_capability_allocation(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\allocate_opex.py", line 742, in run_capability_allocation
+    capability_map = convert_capability_map(new_capability_map)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\agents\agentic_fit\allocate_opex.py", line 846, in convert_capability_map
+    for item in capability_map:
+                ^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 138, in _agentic_fit_runner
+    asyncio.run(agentic_fit_allocation(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 632, in agentic_fit_allocation
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+fastapi.exceptions.HTTPException: 500: 'NoneType' object is not iterable
+[ERROR] AGENTIC_FIT_ALLOCATOR_Background - 500: 'NoneType' object is not iterable
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll re-read the exception handler, update only its failure-path identifiers and early-error defaults, then validate it with mocked dependencies and show the full diff.
 
 
