@@ -1,3 +1,46 @@
+Read-only investigation. Do not edit any files or data. DB access: SELECT only, 
+using the current .env (Ascend DB).
+
+Question: Total OpEx comes out empty. Is it only because the test company is a 
+dummy (expected), or is the company/project name not being passed into the 
+Total OpEx step (bug)?
+
+1. Code trace for action GENERATE_TOTAL_OPEX in apis/v1/agentic_fit_allocator.py 
+   and agents/agentic_fit/:
+   - Exactly where the company name is read from the input (which key: 
+     projectInfo.clientName, projectName, clientInfo, etc.) and how 
+     normalize_project_payload / project_compat affect it.
+   - Why our logs showed "Generating total OPEX for Unknown Company" and 
+     "Researching OPEX for None". What input would produce a real name?
+
+2. Research behavior:
+   - What happens in opex_research when the company name is None vs a 
+     non-existent/dummy name? Show the code path.
+   - Our log showed SEC lookup for CIK0001318605 (Tesla) with company None. 
+     Explain why: is there a default/fallback CIK?
+   - When research finds nothing, what exactly is returned and stored 
+     (None, 0, empty breakdown)?
+
+3. Manual value:
+   - Where is the manually edited Total OpEx stored (which input/output field), 
+     and how do L1 and L2 read it later (capabilityInfo.total_opex vs 
+     AgenticFitGrid.total_opex_costs)? Confirm that a manually entered value 
+     will actually reach L2.
+
+4. DB check (SELECT only):
+   - Latest 10 sub-step input records for Total OpEx (input_name containing 
+     'Total' and 'Opex'): show input_key, created date, and the company/project 
+     name fields inside input_json.
+   - Their matching output records: is total_opex_costs null/0/populated?
+   - Latest L1/L2 OpEx input records: does capabilityInfo.total_opex exist and 
+     what value?
+
+5. Conclusion: classify as
+   (a) expected: dummy company, name passed correctly, research returns empty
+   (b) bug: name not passed / wrong key read
+   (c) bug: Tesla/default fallback produces wrong value
+   with file:line evidence for each.
+0---------------------------------------------------------------------------------------------------------------------------------------------------------
 Read-only. Use the DB connection from the current .env (SELECT queries only, 
 no INSERT/UPDATE/DELETE).
 
