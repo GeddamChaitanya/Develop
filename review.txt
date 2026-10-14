@@ -1,4 +1,14 @@
-**Where `Unknown` Comes From**
+1. Read-only first: search the repo for any code that reconstructs blob paths 
+   containing "/cdc/" or "MAS/" from clientKey/projectKey (for download/read), 
+   rather than using the stored path/URL. Report findings.
+2. Check utilities/project_compat.py for an existing helper that returns the 
+   project key (e.g. get_project_key, or get_project_info(...).get("projectKey")).
+3. If no reconstruction is found, change ONLY utilities/cdc_export.py line ~537 
+   to resolve the key via the project_compat helper (projectKey first, clientKey 
+   fallback, from projectInfo/clientInfo), keeping "Unknown" as the final default. 
+   Do not touch jsontodocx.py or anything else. Show the full diff.
+--------------------------------------------------------------------------------------------------------------------------------------------------*
+*Where `Unknown` Comes From**
 Both exporters read **`clientInfo.clientKey`**, not `clientName`, `projectName`, or `workspaceName`:
 
 ```python
