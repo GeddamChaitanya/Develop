@@ -1,3 +1,15 @@
+{
+  "stepKey": 437,
+  "substepkey": 934,
+  "processName": "Blueprinting Analysis-#88",
+  "processKey": 88,
+  "input_key": 999999,
+  "input_name": "IA L1l2 Capabilities Opex",
+  "OutputKey": null,
+  "ProjectKey": 1,
+  "receiverEmail": "gedchaitanya@deloitte.com"
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect only the exception handler around the failed-status write, make the three requested changes there, then run a focused validation and show the complete diff.
 
 Checked , 6 problems found
