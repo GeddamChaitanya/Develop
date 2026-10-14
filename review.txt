@@ -1,3 +1,305 @@
+Incorrect padding
+2026-10-14 15:11:56,342 - uvicorn.access - INFO - 127.0.0.1:64856 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
+Getting database session...
+Database session created.
+--- Reading input record for input_key: 293 ---
+[ERROR] DB_Read_SubStepInput - (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+An error occurred while reading input record: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+[ERROR] Agentic_Fit_Allocation - (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - (psycopg2.errors.NotNullViolation) null value in column "sub_step_name" of relation "blueprinting_process_sub_step" violates not-null constraint
+DETAIL:  Failing row contains (934, 437, null, 3, 6, 0, Error occurred: (psycopg2.OperationalError) connection to server..., null, null).
+
+[SQL: UPDATE blueprinting_process_sub_step SET sub_step_name=%(sub_step_name)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'sub_step_name': None, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error occurred: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)', 'blueprinting_process_sub_step_sub_step_key': 934}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] DB_Update_SubStep - (psycopg2.errors.NotNullViolation) null value in column "sub_step_name" of relation "blueprinting_process_sub_step" violates not-null constraint
+DETAIL:  Failing row contains (934, 437, null, 3, 6, 0, Error occurred: (psycopg2.OperationalError) connection to server..., null, null).
+
+[SQL: UPDATE blueprinting_process_sub_step SET sub_step_name=%(sub_step_name)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'sub_step_name': None, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error occurred: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)', 'blueprinting_process_sub_step_sub_step_key': 934}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] DB_Operations - (psycopg2.errors.NotNullViolation) null value in column "sub_step_name" of relation "blueprinting_process_sub_step" violates not-null constraint
+DETAIL:  Failing row contains (934, 437, null, 3, 6, 0, Error occurred: (psycopg2.OperationalError) connection to server..., null, null).
+
+[SQL: UPDATE blueprinting_process_sub_step SET sub_step_name=%(sub_step_name)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'sub_step_name': None, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error occurred: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)', 'blueprinting_process_sub_step_sub_step_key': 934}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+An error occurred during operations: (psycopg2.errors.NotNullViolation) null value in column "sub_step_name" of relation "blueprinting_process_sub_step" violates not-null constraint
+DETAIL:  Failing row contains (934, 437, null, 3, 6, 0, Error occurred: (psycopg2.OperationalError) connection to server..., null, null).
+
+[SQL: UPDATE blueprinting_process_sub_step SET sub_step_name=%(sub_step_name)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'sub_step_name': None, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error occurred: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)', 'blueprinting_process_sub_step_sub_step_key': 934}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 143, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3309, in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 447, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 1264, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 716, in checkout
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 714, in checkout
+    dbapi_connection = rec.get_connection()
+                       ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 865, in get_connection
+    self.__connect()
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 899, in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\create.py", line 661, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 630, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 201, in agentic_fit_allocation
+    input_record = read_sub_step_input_by_input_key(input_data.input_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 575, in read_sub_step_input_by_input_key
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 558, in read_sub_step_input_by_input_key
+    input_record = crud.get_blueprinting_process_sub_step_input(db, input_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\crud.py", line 668, in get_blueprinting_process_sub_step_input
+    return db.query(models.BlueprintingProcessSubStepInput).filter(models.BlueprintingProcessSubStepInput.input_key == input_key).first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2759, in first
+    return self.limit(1)._iter().first()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2239, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2108, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1187, in _connection_for_bind
+    conn = bind.connect()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3285, in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 145, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2448, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 143, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3309, in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 447, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 1264, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 716, in checkout
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 714, in checkout
+    dbapi_connection = rec.get_connection()
+                       ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 865, in get_connection
+    self.__connect()
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 899, in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\create.py", line 661, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 630, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.NotNullViolation: null value in column "sub_step_name" of relation "blueprinting_process_sub_step" violates not-null constraint
+DETAIL:  Failing row contains (934, 437, null, 3, 6, 0, Error occurred: (psycopg2.OperationalError) connection to server..., null, null).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 138, in _agentic_fit_runner
+    asyncio.run(agentic_fit_allocation(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py", line 612, in agentic_fit_allocation
+    db_operations_orm.run_operations_status(
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 215, in run_operations_status
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 209, in run_operations_status
+    update_sub_step(db, sub_step_key, data)
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 181, in update_sub_step
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\db_operations_orm.py", line 156, in update_sub_step
+    updated_output = crud.update_blueprinting_process_sub_step(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\crud.py", line 648, in update_blueprinting_process_sub_step
+    raise e
+  File "C:\Users\gedchaitanya\fix_opexstuck\aai-bpt-genaiapi\db\crud.py", line 636, in update_blueprinting_process_sub_step
+    db.commit()
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 85, in save_obj
+    _emit_update_statements(
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 912, in _emit_update_statements
+    c = connection.execute(
+        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\gedchaitanya\Documents\citation_dev\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "sub_step_name" of relation "blueprinting_process_sub_step" violates not-null constraint
+DETAIL:  Failing row contains (934, 437, null, 3, 6, 0, Error occurred: (psycopg2.OperationalError) connection to server..., null, null).
+
+[SQL: UPDATE blueprinting_process_sub_step SET sub_step_name=%(sub_step_name)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'sub_step_name': None, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error occurred: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)', 'blueprinting_process_sub_step_sub_step_key': 934}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] AGENTIC_FIT_ALLOCATOR_Background - (psycopg2.errors.NotNullViolation) null value in column "sub_step_name" of relation "blueprinting_process_sub_step" violates not-null constraint
+DETAIL:  Failing row contains (934, 437, null, 3, 6, 0, Error occurred: (psycopg2.OperationalError) connection to server..., null, null).
+
+[SQL: UPDATE blueprinting_process_sub_step SET sub_step_name=%(sub_step_name)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'sub_step_name': None, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error occurred: (psycopg2.OperationalError) connection to server at "ccon-westus3-eno0000j-pgsql.postgres.database.azure.com" (10.143.48.8), port 5432 failed: timeout expired\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)', 'blueprinting_process_sub_step_sub_step_key': 934}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+
+payload used : 
+
+{
+  "stepKey": 437,
+  "substepkey": 934,
+  "processName": "Blueprinting Analysis-#88",
+  "processKey": 88,
+  "input_key": 293,
+  "input_name": "IA L1l2 Capabilities Opex",
+  "OutputKey": null,
+  "ProjectKey": 1,
+  "WorkspaceName": null,
+  "ParentWorkspaceName": null,
+  "WorkspaceDescription": null,
+  "discount_rate": 0.25,
+  "TwoByTwoOutPutKeys": [],
+  "receiverEmail": "gedchaitanya@deloitte.com"
+}
+------------------------------------------------------------------------------------------------------------------------------------------
 {
   "stepKey": 437,
   "substepkey": 932,
