@@ -1,3 +1,16 @@
+In utilities/cdc_export.py only, at the two places we changed earlier 
+(header in _add_header_footer and the Current State Pool label):
+
+1. First confirm get_workspace_name() in utilities/project_compat.py:
+   - its signature (does it accept default=?)
+   - that it resolves workspaceName / WorkspaceName / workspace_name from the 
+     full json_obj, including top-level and nested projectInfo/clientInfo.
+2. Import get_workspace_name alongside get_project_name.
+3. Build: display_name = " - ".join(n for n in (project_name, workspace_name) if n)
+   - Header: use display_name, fallback "" if empty.
+   - Pool: use display_name, fallback "<< Add Pool Name >>" if empty.
+4. Change nothing else. Show the full diff.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Read-only. Find which FastAPI endpoint/action calls generate_cdc_docs() in 
 utilities/cdc_export.py (likely in apis/v1/capability_double_click.py). 
 Show the request schema and an example payload. Using the Ascend DB 
