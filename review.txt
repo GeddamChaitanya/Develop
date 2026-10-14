@@ -1,3 +1,9 @@
+Read-only. Find which FastAPI endpoint/action calls generate_cdc_docs() in 
+utilities/cdc_export.py (likely in apis/v1/capability_double_click.py). 
+Show the request schema and an example payload. Using the Ascend DB 
+(DB_string from env, SELECT only), find a recent Capability Double Click 
+sub-step input for process 88 or 89 and give me a ready-to-use Swagger payload.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Summary
 L1/L2 OpEx generation could stay stuck in loading / at 5% forever. When the
 background job failed, the exception handler never reported it: the guard
