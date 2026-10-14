@@ -1,3 +1,14 @@
+In apis/v1/agentic_fit_allocator.py, exception handler only (the block we 
+changed earlier, ~L599-L632):
+
+1. Build the failed-status data dict without sub_step_name when 
+   _bg.get("step_name") is empty (only add the key when it has a value).
+2. Wrap the run_operations_status call in its own try/except; on failure, log 
+   it via track_trace(..., severity="Error") and continue.
+3. Ensure publish_message(... "Error" ...) runs regardless of whether the DB 
+   write succeeded.
+4. Do not change anything else. Show the full diff.
+=---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Incorrect padding
 2026-10-14 15:11:56,342 - uvicorn.access - INFO - 127.0.0.1:64856 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
 Getting database session...
