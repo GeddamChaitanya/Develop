@@ -1,385 +1,14 @@
-2026-10-14 16:14:23,689 - uvicorn.access - INFO - 127.0.0.1:56441 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
-Getting database session...
-Database session created.
---- Reading input record for input_key: 298 ---
-Successfully retrieved input record with input_key: 298
-Details: Input Name: IA L1 Capabilities Opex, Sub Step Key: 943, Input Order: 1
+l2 scenario output client capability 
 
---- Starting database operations ---
-Getting database session...
-Database session created.
---- Running Update Operation ---
-
---- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 943
-Updated Description: L1 CAPABILITIES OPEX
-
---- Operations finished ---
-
---- Starting database operations ---
-Getting database session...
-Database session created.
---- Running Update Operation ---
-
---- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 943
-Updated Description: L1 CAPABILITIES OPEX
-
---- Operations finished ---
-{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Started', 'Logs': ' Started generating for Impact Analyser for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'missingFields': ['processKey']}}
-Getting database session...
-Database session created.
---- Reading survey responses for project_id: 1 ---
-[ERROR] CRUD_Get_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
-LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
-                                                             ^
-
-[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
-FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
-WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
-[parameters: {'client_id_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-[ERROR] DB_Read_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
-LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
-                                                             ^
-
-[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
-FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
-WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
-[parameters: {'client_id_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-An error occurred while reading survey responses: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
-LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
-                                                             ^
-
-[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
-FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
-WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
-[parameters: {'client_id_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-Warning: Failed to fetch survey context for project 1: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
-LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
-                                                             ^
-
-[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
-FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
-WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
-[parameters: {'client_id_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-Getting database session...
-Database session created.
---- Reading supporting files for project_key: 1 ---
-[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
-LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
-               ^
-
-[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
-FROM project_supporting_file 
-WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
-[parameters: {'project_key_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-[ERROR] DB_Read_ProjectSupportingFiles - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
-LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
-               ^
-
-[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
-FROM project_supporting_file 
-WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
-[parameters: {'project_key_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-An error occurred while reading supporting files: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
-LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
-               ^
-
-[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
-FROM project_supporting_file 
-WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
-[parameters: {'project_key_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-Warning: Failed to fetch file context for project 1: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
-LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
-               ^
-
-[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
-FROM project_supporting_file 
-WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
-[parameters: {'project_key_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
-
-Allocating OPEX to capabilities...
-============================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'action': 'GENERATE_L1_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-E0000 00:00:1791974804.172755   11880 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
-E0000 00:00:1791974804.184630   11880 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
-{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'action': 'GENERATE_L1_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
-
---- Starting database operations ---
-Getting database session...
-Database session created.
---- Running Update Operation ---
-
---- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 943
-Updated Description: L1 CAPABILITIES OPEX
-
---- Operations finished ---
-2026-10-14 16:17:47,565 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
-Request method: 'GET'
-Request headers:
-    'x-ms-version': 'REDACTED'
-    'Accept': 'application/xml'
-    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
-    'x-ms-date': 'REDACTED'
-    'x-ms-client-request-id': 'b1c824d2-c7bc-11f1-a052-d4f32df15686'
-    'Authorization': 'REDACTED'
-No body was attached to the request
-2026-10-14 16:17:50,012 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
-Response headers:
-    'Transfer-Encoding': 'chunked'
-    'Content-Type': 'application/xml'
-    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
-    'x-ms-request-id': '42a1aaed-201e-007b-52c9-5bb522000000'
-    'x-ms-client-request-id': 'b1c824d2-c7bc-11f1-a052-d4f32df15686'
-    'x-ms-version': 'REDACTED'
-    'Date': 'Wed, 14 Oct 2026 10:47:49 GMT'
-2026-10-14 16:17:50,019 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/89/943/OPEX_Generation_Output_for_levels_L1_2afd7df5-3b13-424d-bfe0-f43f8460f15d.json'
-Request method: 'PUT'
-Request headers:
-    'Content-Length': '151997'
-    'x-ms-blob-type': 'REDACTED'
-    'x-ms-version': 'REDACTED'
-    'Content-Type': 'application/octet-stream'
-    'Accept': 'application/xml'
-    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
-    'x-ms-date': 'REDACTED'
-    'x-ms-client-request-id': 'b33e724a-c7bc-11f1-8c33-d4f32df15686'
-    'Authorization': 'REDACTED'
-A body is sent with the request
-2026-10-14 16:17:52,743 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
-Response headers:
-    'Content-Length': '0'
-    'Content-MD5': 'REDACTED'
-    'Last-Modified': 'Wed, 14 Oct 2026 10:47:52 GMT'
-    'ETag': '"0x8DF29E098FAF7C2"'
-    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
-    'x-ms-request-id': '0b253555-b01e-0069-38c9-5bcef2000000'
-    'x-ms-client-request-id': 'b33e724a-c7bc-11f1-8c33-d4f32df15686'
-    'x-ms-version': 'REDACTED'
-    'x-ms-content-crc64': 'REDACTED'
-    'x-ms-request-server-encrypted': 'REDACTED'
-    'Date': 'Wed, 14 Oct 2026 10:47:51 GMT'
-{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Inserting', 'Logs': ' IA total opex inserting into DB for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'missingFields': ['processKey']}}
-
---- Starting database operations ---
-Getting database session...
-Database session created.
-Getting database session...
-Database session created.
---- Running Update Operation ---
-
---- Updating the sub_step_output record ---
-Successfully updated output record with key: 292
-Updated Description: 
-Updated File Name: OPEX_Allocation_Output_for_levels_L1.json
-
---- Operations finished ---
-{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Generated', 'Logs': ' IA total opex inserted into DB for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Generated', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'missingFields': ['processKey']}}
-
---- Starting database operations ---
-Getting database session...
-Database session created.
---- Running Update Operation ---
-
---- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 943
-Updated Description: L1 CAPABILITIES OPEX
-
---- Operations finished ---
-{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Completed', 'Logs': ' IA opex inserted into DB for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 100, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'processKey': 89, 'stepKey': 444, 'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': 'Impact Analyzer', 'subModule': None, 'action': 'GENERATE_L1_OPEX', 'jobId': 'genai:89:943:298:l1-capability-opex-943-1791965522221', 'missingFields': []}}
-Getting database session...
-Database session created.
 --- Reading app_user for email: gedchaitanya@deloitte.com ---
 Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
 Incorrect padding
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-2026-10-14 15:51:08,983 - uvicorn.access - INFO - 127.0.0.1:49198 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
+2026-10-14 16:22:53,128 - uvicorn.access - INFO - 127.0.0.1:50362 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
 Getting database session...
 Database session created.
---- Reading input record for input_key: 293 ---
-Successfully retrieved input record with input_key: 293
-Details: Input Name: IA L1l2 Capabilities Opex, Sub Step Key: 934, Input Order: 1
+--- Reading input record for input_key: 299 ---
+Successfully retrieved input record with input_key: 299
+Details: Input Name: IA L1l2 Capabilities Opex, Sub Step Key: 944, Input Order: 1
 
 --- Starting database operations ---
 Getting database session...
@@ -387,7 +16,7 @@ Database session created.
 --- Running Update Operation ---
 
 --- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 934
+Successfully updated output record with key: 944
 Updated Description: L1L2 CAPABILITIES OPEX
 
 --- Operations finished ---
@@ -398,11 +27,11 @@ Database session created.
 --- Running Update Operation ---
 
 --- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 934
+Successfully updated output record with key: 944
 Updated Description: L1L2 CAPABILITIES OPEX
 
 --- Operations finished ---
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'Started', 'Logs': ' Started generating for Impact Analyser for action GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'missingFields': ['processKey']}}
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'Started', 'Logs': ' Started generating for Impact Analyser for action GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'missingFields': ['processKey']}}
 Getting database session...
 Database session created.
 --- Reading survey responses for project_id: 1 ---
@@ -481,231 +110,222 @@ FROM project_supporting_file
 WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
 [parameters: {'project_key_1': 1}]
 (Background on this error at: https://sqlalche.me/e/20/f405)
-HERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
-[parameters: {'project_key_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/f405)
 
 Allocating OPEX to capabilities...
 ============================================================
-[{'key_roles': 'Enterprise Architect', 'responsibilities': 'Defines the overall taxonomy framework and standards for capability definition. Ensures alignment with broader enterprise architecture principles. Governs the structural integrity of the capability model.'}, {'key_roles': 'Business Architect', 'responsibilities': 'Develops the specific hierarchical levels and creates naming conventions. Works with business units to ensure the taxonomy accurately reflects business operations. Documents and communicates the taxonomy standards to all stakeholders.'}]
-[{'key_roles': 'Business Architect', 'responsibilities': 'Leads the decomposition process and facilitates workshops with business stakeholders. Documents all capability definitions, scopes, and boundaries. Ensures the final decomposed model is logical and comprehensive.'}, {'key_roles': 'Subject Matter Expert (SME)', 'responsibilities': 'Provides deep knowledge of specific business domains to ensure capabilities are accurately identified and defined. Validates the accuracy and completeness of the capability decomposition. Assists in defining the scope and boundaries of individual capabilities.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Supports the Business Architect by gathering requirements from business processes. Analyzes business functions to assist in the decomposition effort. Documents the detailed attributes of each capability.'}]
-[{'key_roles': 'Lead Enterprise Architect', 'responsibilities': 'Chairs the capability governance body or council. Approves significant structural changes to the model. Resolves disputes regarding capability definitions or ownership.'}, {'key_roles': 'Capability Owner', 'responsibilities': 'Accountable for the definition, accuracy, and maintenance of a specific set of capabilities within their business domain. Initiates change requests for their owned capabilities. Represents their domain in governance meetings.'}, {'key_roles': 'Architecture Analyst', 'responsibilities': 'Manages the change request process and maintains the central repository of the capability model. Communicates updates and changes to all relevant stakeholders. Conducts periodic audits of the model for consistency and quality.'}]
-[{'key_roles': 'Business Architect', 'responsibilities': 'Researches and recommends relevant industry frameworks (e.g., APQC). Maps internal capabilities to the selected framework to identify gaps and opportunities. Leads the adaptation of the external framework to the specific needs of the enterprise.'}, {'key_roles': 'Industry SME', 'responsibilities': 'Provides context on the applicability and nuances of specific industry frameworks. Validates the mapping between internal capabilities and the industry model. Advises on industry-specific best practices for capability definition.'}]
-[{'key_roles': 'Strategic Planner', 'responsibilities': 'Defines corporate strategy and translates strategic goals into capability requirements. Uses the aligned capability model to assess strategic scenarios. Communicates strategic priorities to the architecture team.'}, {'key_roles': 'Enterprise Architect', 'responsibilities': 'Develops the methodology and tools for mapping capabilities to strategic objectives. Maintains the repository of capability-to-strategy linkages. Provides analysis on capability gaps that impact strategic goals.'}, {'key_roles': 'Portfolio Manager', 'responsibilities': 'Uses the capability-strategy alignment to assess project proposals. Prioritizes investments based on their contribution to strategic capabilities. Monitors the impact of projects on improving critical capabilities.'}]
-[{'key_roles': 'Business Architect', 'responsibilities': "Leads scoping sessions to define the blueprint's boundaries.\nAligns the new blueprint with existing enterprise architecture standards.\nDevelops the initial high-level capability model."}, {'key_roles': 'Project Manager', 'responsibilities': 'Develops the detailed project plan for the blueprinting initiative.\nAllocates resources and manages the project timeline and budget.\nFacilitates the creation and approval of the project charter.'}, {'key_roles': 'Business Stakeholder', 'responsibilities': 'Provides the business context and strategic drivers for the blueprint.\nApproves the project scope, objectives, and charter.\nActs as the primary champion for the blueprinting effort within the business.'}]
-[{'key_roles': 'Enterprise Architect', 'responsibilities': 'Defines and enforces the versioning standards and policies.\nReviews and approves significant version changes or branching strategies.\nEnsures architectural integrity across different blueprint versions.'}, {'key_roles': 'Blueprint Administrator', 'responsibilities': 'Manages the central blueprint repository on the Ascend platform.\nLogs all changes, updates version numbers, and controls access rights.\nHandles the technical aspects of branching, merging, and tagging blueprint versions.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Ensures that data elements, definitions, and terminology remain consistent across blueprint versions.\nGoverns the master data used within the blueprints.\nAudits versions for data consistency and accuracy.'}]
-[{'key_roles': 'Business Analyst', 'responsibilities': 'Gathers feedback from business units and identifies changes in processes or strategy.\nAnalyzes the impact of business changes on the existing blueprint.\nDocuments and proposes specific updates or enhancements.'}, {'key_roles': 'Capability Owner', 'responsibilities': 'Owns the accuracy and relevance of a specific domain or section of the blueprint.\nReviews and approves proposed changes within their area of responsibility.\nPeriodically validates that the blueprint reflects the current state of the business.'}, {'key_roles': 'Platform Administrator', 'responsibilities': 'Implements the approved technical changes to the blueprint within the Ascend platform.\nManages the update and release cycles for blueprint revisions.\nEnsures the performance and stability of the blueprinting environment.'}]
-[{'key_roles': 'Enterprise Architect', 'responsibilities': 'Determines when a blueprint should be retired based on portfolio analysis and strategic shifts.\nLeads the assessment process for blueprint obsolescence.\nApproves the final retirement and archival plan.'}, {'key_roles': 'Records Manager', 'responsibilities': 'Manages the long-term storage and archival of retired blueprints.\nEnsures compliance with corporate data retention policies.\nControls access to archived blueprints for historical inquiries.'}, {'key_roles': 'IT Administrator', 'responsibilities': 'Executes the technical decommissioning of the blueprint from active systems.\nRestricts user access to retired blueprints.\nEnsures data is securely transferred to the archive.'}]
-[{'key_roles': 'Governance Board', 'responsibilities': 'A cross-functional committee that sets and approves all blueprinting standards.\nResolves disputes related to blueprint content or standards.\nOversees the overall health and quality of the blueprint portfolio.'}, {'key_roles': 'Quality Assurance Analyst', 'responsibilities': 'Audits blueprints against established standards and policies.\nProvides feedback to blueprinting teams for improvement and compliance.\nDevelops and maintains quality checklists and review templates.'}, {'key_roles': 'Business Architect', 'responsibilities': 'Champions the adoption of blueprinting standards across projects.\nProvides training and support to blueprint developers and users on governance procedures.\nActs as a primary point of contact for standards-related questions.'}]
-[{'key_roles': 'Business Architect', 'responsibilities': 'Defines the parameters for scenarios and builds simulation models within the blueprinting tool.\nInterprets simulation results from a business architecture perspective.\nValidates that the models accurately reflect the enterprise structure.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Gathers and prepares the data needed for simulations.\nValidates the assumptions underlying the models.\nPerforms quantitative analysis on the outputs of the simulations.'}, {'key_roles': 'Financial Analyst', 'responsibilities': 'Provides financial data inputs for cost and revenue projections.\nModels the financial implications of each scenario.\nAssesses the overall financial impact and viability based on simulation outcomes.'}]
-[{'key_roles': 'Enterprise Architect', 'responsibilities': 'Leads the effort to map dependencies across business, data, application, and technology domains.\nEnsures the integrity and accuracy of the overall architecture model.\nVisualizes complex dependency chains to communicate impact to stakeholders.'}, {'key_roles': 'Business Process Analyst', 'responsibilities': 'Documents and analyzes process flows to identify dependencies between business activities.\nMaps processes to the capabilities they support and the systems they use.\nIdentifies upstream and downstream process impacts of a proposed change.'}, {'key_roles': 'IT Systems Analyst', 'responsibilities': 'Maps relationships between business capabilities and the underlying IT applications and infrastructure.\nAnalyzes technical dependencies between systems.\nAssesses the technical feasibility of changes based on system interdependencies.'}]
-[{'key_roles': 'Financial Analyst', 'responsibilities': 'Develops detailed financial models for cost-benefit analysis.\nCalculates ROI, NPV, payback period, and other key financial metrics.\nPrepares and presents the financial business case for the initiative.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Gathers and validates cost estimates for resources, technology, and implementation efforts.\nTracks projected versus actual costs.\nProvides input on the financial feasibility from a project delivery perspective.'}, {'key_roles': 'Business Architect', 'responsibilities': 'Collaborates with financial analysts to link architectural changes to specific cost drivers and revenue streams.\nHelps quantify the business value of proposed changes.\nEnsures financial models reflect the scope of the architectural initiative.'}]
-[{'key_roles': 'Risk Manager', 'responsibilities': "Identifies, analyzes, and evaluates potential operational risks associated with the proposed change.\nDevelops risk mitigation strategies and contingency plans.\nMonitors risk throughout the initiative's lifecycle."}, {'key_roles': 'Change Management Lead', 'responsibilities': 'Assesses the impact of the change on people, roles, and the organization.\nEvaluates organizational readiness and capacity for change.\nPlans for stakeholder communication, engagement, and training.'}, {'key_roles': 'Operations Manager', 'responsibilities': 'Provides input on the practical feasibility of implementing changes within the current operational environment.\nIdentifies potential disruptions to daily business activities.\nValidates the operational assumptions made in the feasibility study.'}]
-[{'key_roles': 'Strategy Manager', 'responsibilities': 'Assesses the alignment of proposed initiatives with corporate and business unit strategy.\nEnsures that changes contribute directly to strategic goals and KPIs.\nCommunicates the strategic rationale for selected initiatives.'}, {'key_roles': 'Portfolio Manager', 'responsibilities': 'Manages the portfolio of potential initiatives.\nAnalyzes trade-offs between projects based on cost, benefit, risk, and strategic alignment.\nMakes recommendations for investment prioritization and sequencing.'}, {'key_roles': 'Business Architect', 'responsibilities': 'Articulates how different architectural scenarios support or detract from specific strategic objectives.\nProvides the link between technical/operational changes and business strategy.\nHelps define metrics to measure the strategic contribution of an initiative.'}]
-[{'key_roles': 'Business Strategist', 'responsibilities': 'Defines and communicates corporate strategy.\nWorks with architects to translate goals into blueprint requirements.\nValidates final blueprint alignment with strategic objectives.'}, {'key_roles': 'Enterprise Architect', 'responsibilities': 'Analyzes business strategy and identifies key drivers.\nFacilitates workshops with stakeholders to capture strategic context.\nModels the strategic objectives within the blueprinting platform.'}, {'key_roles': 'Product Manager', 'responsibilities': 'Ensures the blueprinting platform has the features necessary to capture and link strategic objectives to blueprint components.\nGathers requirements for strategy-related platform functionality.'}]
-[{'key_roles': 'Governance Lead', 'responsibilities': 'Develops and documents governance policies and standards.\nChairs architecture review boards and governance committees.\nMonitors and reports on compliance with established standards.'}, {'key_roles': 'Enterprise Architect', 'responsibilities': 'Contributes to the definition of technical and modeling standards.\nParticipates in governance reviews to ensure architectural integrity.\nEnforces standards within blueprinting projects.'}, {'key_roles': 'System Administrator (Ascend Platform)', 'responsibilities': 'Implements governance workflows, user permissions, and approval gates within the tool.\nManages the technical configuration of the governance framework.'}]
-[{'key_roles': 'Program Manager', 'responsibilities': 'Owns the overall communication plan for blueprinting initiatives.\nSchedules and facilitates stakeholder meetings and workshops.\nReports on progress, risks, and alignment status to leadership.'}, {'key_roles': 'Business Relationship Manager', 'responsibilities': 'Acts as a liaison between business units (e.g., Road Freight division) and the blueprinting team.\nGathers business requirements and manages stakeholder expectations.\nCommunicates the value and impact of blueprints to business leaders.'}, {'key_roles': 'Change Management Specialist', 'responsibilities': 'Develops strategies to help the organization adopt processes defined in blueprints.\nAddresses the human impact of strategic changes.\nCreates training and communication materials.'}]
-[{'key_roles': 'Data Analyst', 'responsibilities': 'Designs KPI dashboards and reporting tools.\nCollects and analyzes performance data related to blueprint initiatives.\nGenerates reports on value realization for leadership.'}, {'key_roles': 'Enterprise Architect', 'responsibilities': 'Helps define relevant architectural and process metrics that align with business KPIs.\nEmbeds measurement points and data requirements into the blueprint design.'}, {'key_roles': 'Financial Analyst', 'responsibilities': 'Assesses the financial impact of blueprint-driven initiatives.\nCalculates ROI and tracks benefits realization against the business case.\nProvides financial input for prioritization decisions.'}]
-[{'key_roles': 'Portfolio Manager', 'responsibilities': 'Manages the pipeline of blueprinting requests and proposals.\nFacilitates the prioritization process with business and IT leaders.\nMaintains and communicates the strategic blueprinting roadmap.'}, {'key_roles': 'Steering Committee', 'responsibilities': 'Reviews and approves the blueprinting portfolio and roadmap.\nMakes final decisions on resource allocation and strategic priorities.\nProvides executive oversight for the portfolio.'}, {'key_roles': 'Enterprise Architect', 'responsibilities': 'Provides technical and architectural assessments for proposed projects.\nEstimates complexity, dependencies, and resource needs to inform prioritization.\nEnsures the roadmap is architecturally sound and feasible.'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Defines environment templates, Automates provisioning scripts, Allocates platform resources'}, {'key_roles': 'DevOps Engineer', 'responsibilities': 'Executes the provisioning process, Configures initial environment settings, Installs necessary software and dependencies'}, {'key_roles': 'Project Manager', 'responsibilities': 'Submits requests for new environments, Provides project-specific requirements'}]
-[{'key_roles': 'Configuration Manager', 'responsibilities': 'Defines and documents configuration baselines, Tracks versions and ensures compliance'}, {'key_roles': 'Platform Administrator', 'responsibilities': 'Implements and enforces baseline configurations across all environments on the Ascend platform'}, {'key_roles': 'Quality Assurance Engineer', 'responsibilities': 'Verifies that new environments conform to the established baseline before they are released for use'}]
-[{'key_roles': 'IT Operations Analyst', 'responsibilities': 'Monitors dashboards and alerts, Performs initial troubleshooting and escalates issues'}, {'key_roles': 'Platform Administrator', 'responsibilities': 'Configures monitoring tools, Defines alert thresholds, Analyzes performance trends'}, {'key_roles': 'Support Engineer', 'responsibilities': 'Responds to user-reported issues related to environment performance or availability'}]
-[{'key_roles': 'Change Manager', 'responsibilities': 'Oversees the change management process, Chairs the Change Advisory Board (CAB), Ensures all changes are properly documented and approved'}, {'key_roles': 'Release Manager', 'responsibilities': 'Plans and coordinates the deployment of software releases and configuration updates into the various environments'}, {'key_roles': 'DevOps Engineer', 'responsibilities': 'Executes the deployment of approved changes, Performs post-implementation verification'}]
-[{'key_roles': 'Performance Engineer', 'responsibilities': 'Conducts deep-dive analysis of performance data, Identifies root causes of issues, Recommends tuning adjustments'}, {'key_roles': 'Platform Administrator', 'responsibilities': 'Implements configuration changes to optimize performance and resource consumption'}, {'key_roles': 'Cloud Financial Analyst (FinOps)', 'responsibilities': 'Monitors resource costs and works with administrators to optimize spending on the underlying cloud infrastructure'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Executes the decommissioning process, Ensures data is securely archived, Releases allocated resources'}, {'key_roles': 'Project Manager', 'responsibilities': 'Authorizes the decommissioning of project-specific environments at the end of a project lifecycle'}, {'key_roles': 'Data Manager/Archivist', 'responsibilities': 'Manages the long-term storage and retention policies for archived environment data'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Creates user accounts, Assigns default roles, Configures initial workspace settings for new users'}, {'key_roles': 'IT Support Specialist', 'responsibilities': 'Verifies user identity, Processes access requests, Provides initial login support'}, {'key_roles': 'Hiring Manager/Project Lead', 'responsibilities': 'Submits access requests for new team members, Confirms the required level of access for their team'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Defines and assigns user roles, Modifies permissions based on approved requests, Conducts regular access audits'}, {'key_roles': 'Security Analyst', 'responsibilities': 'Reviews and approves access control policies, Investigates potential security breaches, Ensures compliance with security standards'}, {'key_roles': 'Project Manager', 'responsibilities': 'Requests specific access rights for team members based on project needs, Approves access changes for their projects'}]
-[{'key_roles': 'Help Desk Technician', 'responsibilities': 'Provides first-level support, Logs user issues, Resolves common problems and escalates complex issues'}, {'key_roles': 'Platform Support Engineer', 'responsibilities': 'Handles escalated technical issues, Liaises with platform developers, Implements solutions for complex problems'}, {'key_roles': 'Workspace User', 'responsibilities': 'Reports technical issues, Provides necessary details for troubleshooting, Confirms issue resolution'}]
-[{'key_roles': 'Technical Writer', 'responsibilities': 'Creates and updates user manuals, Develops FAQs and online help documentation'}, {'key_roles': 'Training Specialist', 'responsibilities': 'Designs and delivers training programs, Conducts workshops and webinars for platform users'}, {'key_roles': 'Subject Matter Expert (SME)', 'responsibilities': 'Provides expert knowledge on blueprinting workflows, Informs the content of training materials with platform feature expertise'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Deactivates user accounts, Revokes permissions, Archives user data according to company policy'}, {'key_roles': 'HR Business Partner', 'responsibilities': 'Initiates the offboarding process upon employee termination or role change'}, {'key_roles': 'IT Security Officer', 'responsibilities': 'Audits the offboarding process to ensure all access has been successfully and completely revoked'}]
-[{'key_roles': 'Support Team Lead', 'responsibilities': 'Manages the escalation queue, Prioritizes critical issues, Coordinates with senior support engineers or development teams'}, {'key_roles': 'Product/Platform Manager', 'responsibilities': 'Reviews user feedback to identify trends and opportunities for platform enhancements'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Analyzes support ticket data and user feedback to generate insights on platform performance and user satisfaction'}]
-[{'key_roles': 'Platform Operations Engineer', 'responsibilities': 'Configures and maintains monitoring tools and agents. Sets up and visualizes performance dashboards for key metrics. Responds to real-time performance alerts and initiates troubleshooting.'}, {'key_roles': 'Site Reliability Engineer (SRE)', 'responsibilities': 'Defines service-level objectives (SLOs) and error budgets for platform services. Analyzes performance data to identify systemic issues and areas for improvement. Implements automation to enhance platform reliability and performance.'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Implements and manages uptime monitoring tools and defines health check parameters. Manages the incident response process during an outage. Communicates platform status and planned maintenance to users.'}, {'key_roles': 'IT Operations Manager', 'responsibilities': 'Oversees overall platform availability and stability. Reports on SLA compliance to business stakeholders. Coordinates and leads post-incident reviews to identify root causes.'}]
-[{'key_roles': 'Cloud/Infrastructure Engineer', 'responsibilities': 'Monitors resource utilization dashboards and configures alerts for resource thresholds. Manages infrastructure scaling activities based on demand. Optimizes cloud resource configurations for cost and performance.'}, {'key_roles': 'Financial Analyst (FinOps)', 'responsibilities': 'Analyzes resource consumption data to forecast cloud spending. Identifies opportunities for cost optimization and reports on budget variance. Collaborates with engineering teams to implement cost-saving measures.'}]
-[{'key_roles': 'Platform Operations Engineer', 'responsibilities': 'Manages log aggregation and monitoring systems (e.g., Splunk, Datadog). Configures alerting rules for specific error conditions and anomalies. Performs initial investigation and triage of alerts.'}, {'key_roles': 'Software Developer', 'responsibilities': 'Uses error logs and reports to debug application code. Implements fixes for identified software defects. Adds structured logging to new features to improve observability.'}]
-[{'key_roles': 'IT Operations Manager', 'responsibilities': 'Defines reporting requirements and KPIs with business stakeholders. Reviews performance dashboards and presents health summaries to leadership. Uses reports to track progress against operational goals.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Creates and maintains performance reports and dashboards. Analyzes trends over time and provides insights based on the collected data. Ensures data accuracy and integrity in all reporting.'}]
-[{'key_roles': 'IT Security Administrator', 'responsibilities': 'Manages user accounts, roles, and permissions.\nImplements and monitors access controls.\nConducts regular access reviews.'}, {'key_roles': 'Platform Owner', 'responsibilities': 'Defines access policies and approves high-privilege access requests.\nWorks with business units to define role-based access control (RBAC) models.'}, {'key_roles': 'Compliance Officer', 'responsibilities': 'Audits access logs and user permissions to ensure adherence to internal policies and external regulations.'}]
-[{'key_roles': 'Data Security Analyst', 'responsibilities': 'Implements and monitors data protection controls like encryption and DLP.\nClassifies data according to sensitivity.\nResponds to data security alerts.'}, {'key_roles': 'Privacy Officer', 'responsibilities': 'Develops and enforces privacy policies.\nEnsures compliance with regulations like GDPR or CCPA.\nManages data subject access requests.'}, {'key_roles': 'Database Administrator', 'responsibilities': 'Manages encryption of data at rest within databases.\nEnsures secure configuration of data storage systems.'}]
-[{'key_roles': 'Security Engineer', 'responsibilities': 'Conducts vulnerability scans and penetration tests.\nAnalyzes scan results to identify and prioritize risks.\nWorks with development teams to remediate vulnerabilities.'}, {'key_roles': 'IT Operations Manager', 'responsibilities': 'Manages the patching and configuration management processes to apply security updates in a timely manner.'}, {'key_roles': 'Threat Intelligence Analyst', 'responsibilities': "Monitors external threat feeds and security communities for emerging threats relevant to the platform's technology stack."}]
-[{'key_roles': 'Incident Response Coordinator', 'responsibilities': 'Leads and coordinates the response efforts during a security incident.\nCommunicates with stakeholders.\nEnsures the incident response plan is followed.'}, {'key_roles': 'Security Analyst (SOC)', 'responsibilities': 'Monitors security alerts, investigates potential incidents, and performs initial triage and containment actions.'}, {'key_roles': 'Forensic Investigator', 'responsibilities': 'Collects and analyzes digital evidence after an incident to determine the root cause and extent of the breach.'}]
-[{'key_roles': 'Compliance Manager', 'responsibilities': 'Oversees the compliance program.\nCoordinates internal and external audits.\nTracks and reports on compliance status and remediation efforts.'}, {'key_roles': 'Internal Auditor', 'responsibilities': 'Independently assesses the effectiveness of security controls and their alignment with policies and standards.'}, {'key_roles': 'Platform Administrator', 'responsibilities': 'Provides evidence of control implementation (e.g., system configurations, logs) to auditors.\nImplements changes required to address audit findings.'}]
-[{'key_roles': 'Data Engineer', 'responsibilities': 'Designs, builds, and maintains the data pipelines; ensures data is clean, transformed, and available for model training.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Oversees data governance, quality, and policy implementation; ensures data used for modeling complies with internal and external standards.'}, {'key_roles': 'AI/ML Scientist', 'responsibilities': 'Defines data requirements for specific models; performs exploratory data analysis to identify relevant features and patterns.'}]
-[{'key_roles': 'AI/ML Scientist', 'responsibilities': 'Researches and selects appropriate algorithms; designs and conducts training experiments; analyzes model performance metrics.'}, {'key_roles': 'ML Engineer', 'responsibilities': 'Builds and maintains the infrastructure for model training at scale; optimizes training processes for efficiency and speed.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Assists in preparing and segmenting data for different training experiments; helps interpret the results of model tests.'}]
-[{'key_roles': 'AI/ML Scientist', 'responsibilities': 'Defines evaluation criteria and metrics; designs and executes validation tests; interprets results and provides a recommendation for deployment.'}, {'key_roles': 'QA Engineer (AI Focus)', 'responsibilities': 'Develops and implements test cases for AI models; focuses on identifying edge cases, vulnerabilities, and potential biases.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Provides business context for evaluation; helps define acceptable performance thresholds based on the needs of the blueprinting workflows.'}]
-[{'key_roles': 'ML Engineer (MLOps)', 'responsibilities': 'Automates the deployment pipeline (CI/CD for models); packages models for production; manages the serving infrastructure.'}, {'key_roles': 'Software Developer', 'responsibilities': "Integrates the model's API endpoints into the user-facing application; ensures the model's outputs are correctly consumed and displayed in the UI."}, {'key_roles': 'DevOps Engineer', 'responsibilities': 'Provisions and manages the underlying cloud or on-premise infrastructure required to host the AI models.'}]
-[{'key_roles': 'ML Engineer (MLOps)', 'responsibilities': 'Implements and maintains monitoring tools and dashboards; sets up automated alerts for performance degradation or data drift.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Analyzes monitoring data to diagnose issues with live models; determines the root cause of performance drops.'}, {'key_roles': 'Site Reliability Engineer (SRE)', 'responsibilities': 'Ensures the uptime and reliability of the model serving and monitoring infrastructure.'}]
-[{'key_roles': 'AI Ethicist / Governance Officer', 'responsibilities': 'Develops and oversees the AI governance framework; reviews models for ethical implications and compliance.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Implements techniques for model explainability (e.g., SHAP, LIME); documents model behavior and limitations.'}, {'key_roles': 'Legal/Compliance Officer', 'responsibilities': 'Provides guidance on regulatory requirements (e.g., GDPR, AI Act); ensures models do not introduce legal risks.'}]
-[{'key_roles': 'ML Engineer (MLOps)', 'responsibilities': 'Implements and manages the model registry and version control system; automates the process for promoting or rolling back model versions.'}, {'key_roles': 'Product Manager (AI)', 'responsibilities': 'Decides when a model is no longer aligned with business needs and should be retired; prioritizes the development of new model versions.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Creates and validates new model versions; provides the performance data needed to make promotion or retirement decisions.'}]
-[{'key_roles': 'AI/ML Engineer', 'responsibilities': "Designs and implements the state machine and behavior tree logic in code. Ensures the technical performance and efficiency of the agent's core behavior model."}, {'key_roles': 'Business Architect', 'responsibilities': 'Provides the business context and rules that inform the different states and tasks. Defines the required sequences of operations for blueprinting workflows.'}, {'key_roles': 'Systems Analyst', 'responsibilities': 'Translates business requirements into formal specifications for the AI/ML Engineer. Models the workflows and decision points within the behavior trees.'}]
-[{'key_roles': 'Data Scientist', 'responsibilities': 'Develops and trains machine learning models that are part of the decision framework. Validates the statistical soundness of the decision-making models.'}, {'key_roles': 'AI Ethicist/Policy Analyst', 'responsibilities': 'Reviews and validates decision rules to ensure they are fair, unbiased, and compliant with enterprise policies. Defines the constraints and ethical boundaries for agent autonomy.'}, {'key_roles': 'Solutions Architect', 'responsibilities': 'Designs the overall architecture of the decision-making engine. Ensures the framework integrates with other components of the agentic system and can scale effectively.'}]
-[{'key_roles': 'Software Architect', 'responsibilities': 'Designs the API contracts and communication protocols (e.g., REST, gRPC) for inter-agent and system communication. Ensures protocols are secure, efficient, and scalable.'}, {'key_roles': 'Data Engineer', 'responsibilities': 'Defines the data schemas and message formats (e.g., JSON, Avro) used in the interaction protocols. Ensures data consistency and integrity during transmission.'}, {'key_roles': 'DevOps Engineer', 'responsibilities': 'Implements and manages the messaging queues or service mesh infrastructure that facilitates agent communication. Monitors the health and performance of the communication channels.'}]
-[{'key_roles': 'AI Planner/Researcher', 'responsibilities': 'Designs the algorithms (e.g., hierarchical task networks) that agents use for goal decomposition. Researches and implements advanced planning techniques.'}, {'key_roles': 'Knowledge Engineer', 'responsibilities': 'Structures and curates the domain-specific knowledge that agents need to reason about tasks. Builds ontologies of business processes and analysis techniques.'}, {'key_roles': 'Subject Matter Expert (SME)', 'responsibilities': 'Provides the expert knowledge about blueprinting and viability assessment. Validates the logic used by the agent for task decomposition.'}]
-[{'key_roles': 'Workflow Automation Specialist', 'responsibilities': 'Uses tools like BPMN engines or workflow orchestration platforms to model and implement high-level process flows. Monitors and optimizes workflow performance.'}, {'key_roles': 'Solutions Architect', 'responsibilities': 'Designs the overall system architecture to support robust workflow orchestration. Implements state management and recovery mechanisms for long-running workflows.'}, {'key_roles': 'Product Manager', 'responsibilities': 'Defines the end-to-end user journeys and business processes that the workflow orchestration needs to support. Ensures the final output of the orchestrated workflow meets user expectations.'}]
-[{'key_roles': 'Site Reliability Engineer (SRE)', 'responsibilities': 'Defines standards for logging, monitoring, and alerting related to agent errors. Implements infrastructure to support resilient operations.'}, {'key_roles': 'AI/ML Engineer', 'responsibilities': "Codes the specific exception handling routines and fallback logic within the agent's programming. Tests the agent's resilience to failure."}, {'key_roles': 'Quality Assurance (QA) Engineer', 'responsibilities': 'Designs and executes test cases that target potential failure modes and edge cases. Validates the effectiveness of the error handling logic.'}]
-[{'key_roles': 'Data Engineer', 'responsibilities': 'Builds and maintains pipelines for sourcing, cleaning, and provisioning test data for the AI models.\nEnsures data privacy and anonymization standards are met for all test datasets.\nVersions datasets to align with model versions for reproducibility.'}, {'key_roles': 'MLOps Engineer', 'responsibilities': 'Manages the testing infrastructure, including compute resources and software environments.\nAutomates the deployment of models into testing environments.\nMonitors infrastructure performance during testing cycles.'}, {'key_roles': 'QA Engineer', 'responsibilities': 'Defines data requirements for test cases and scenarios.\nValidates the integrity and appropriateness of the test datasets.\nManages the repository of test cases and scenarios.'}]
-[{'key_roles': 'AI/ML Engineer', 'responsibilities': 'Designs and runs experiments to evaluate model performance.\nAnalyzes model metrics and performs error analysis.\nFine-tunes models based on performance results to improve accuracy.'}, {'key_roles': 'QA Engineer (AI Specialist)', 'responsibilities': "Develops and executes test plans for AI model performance.\nReports defects and inconsistencies in model outputs.\nValidates that the model's outputs meet the specified quality standards."}, {'key_roles': 'Data Scientist', 'responsibilities': 'Prepares and curates validation datasets and establishes ground truth.\nPerforms deep-dive analysis into model failures or inaccuracies.\nDevelops new metrics and evaluation methodologies.'}]
-[{'key_roles': 'QA Engineer', 'responsibilities': 'Designs and executes stress tests, load tests, and edge case scenarios.\nUses automated tools to simulate high user loads and identify system vulnerabilities.\nDocuments system behavior under stress and reports performance degradation.'}, {'key_roles': 'DevOps/MLOps Engineer', 'responsibilities': 'Monitors system resources and performance during stress tests.\nIdentifies and resolves infrastructure bottlenecks that impact stability.\nImplements scaling solutions to handle peak loads.'}, {'key_roles': 'AI/ML Engineer', 'responsibilities': "Analyzes model behavior under stress and with malformed inputs.\nImplements improvements to enhance the model's resilience and robustness.\nDevelops strategies for graceful degradation of service."}]
-[{'key_roles': 'AI Ethicist / Responsible AI Specialist', 'responsibilities': 'Develops the framework and methodologies for bias testing.\nDefines fairness metrics relevant to the business context.\nReviews audit results and recommends mitigation strategies to product and engineering teams.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Conducts statistical analyses on model outputs to identify and quantify biases.\nDevelops and tests debiasing algorithms and techniques.\nPrepares reports on fairness metrics for internal review.'}, {'key_roles': 'Product Manager', 'responsibilities': "Understands potential product risks related to bias.\nPrioritizes fairness-enhancing features in the product roadmap.\nCommunicates the platform's commitment to fairness to stakeholders."}]
-[{'key_roles': 'UX Researcher', 'responsibilities': "Conducts user studies to assess the clarity and usefulness of the AI's explanations.\nGathers feedback from target users on the interpretability of model outputs.\nProvides design recommendations to improve the presentation of AI-driven insights."}, {'key_roles': 'AI/ML Engineer', 'responsibilities': "Implements and refines explainability techniques (e.g., SHAP, LIME).\nEnsures the technical explanations are correctly surfaced in the user interface.\nValidates the fidelity of the explanations against the model's actual behavior."}, {'key_roles': 'Business Architect (as SME)', 'responsibilities': "Reviews the AI's justifications for its outputs for business logic and relevance.\nValidates that the explanations align with established business architecture principles.\nProvides expert feedback on the practical utility of the AI's reasoning."}]
-[{'key_roles': 'Product Manager', 'responsibilities': 'Defines UAT scope, user stories, and success criteria.\nRecruits appropriate user testers from the target audience.\nSynthesizes feedback to inform final launch decisions and future iterations.'}, {'key_roles': 'QA Manager', 'responsibilities': 'Organizes and facilitates UAT sessions, providing guidance to testers.\nTracks issues and feedback raised by users in a systematic way.\nEnsures all critical feedback is triaged and addressed before release.'}, {'key_roles': 'End-Users (e.g., Business Architects)', 'responsibilities': 'Participate in testing by executing real-world scenarios.\nProvide detailed qualitative and quantitative feedback on the AI features.\nFormally sign off on features, confirming they meet operational needs.'}]
-[{'key_roles': 'Data Engineer', 'responsibilities': 'Designs, builds, and maintains the data ingestion pipelines. Ensures data is extracted efficiently and reliably from source systems.'}, {'key_roles': 'Solutions Architect', 'responsibilities': 'Defines the overall architecture for data integration. Selects appropriate tools and technologies to connect with diverse enterprise systems.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Works with stakeholders to identify and define data requirements and source systems relevant for AI blueprinting and analysis.'}]
-[{'key_roles': 'Data Quality Analyst', 'responsibilities': 'Defines data quality rules, monitors data for issues, and works with data owners to resolve anomalies.'}, {'key_roles': 'Data Engineer', 'responsibilities': 'Implements automated data cleansing scripts and workflows within the data pipeline.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Owns the definition of data quality standards for specific data domains (e.g., financial data, operational data) and is responsible for their enforcement.'}]
-[{'key_roles': 'Data Scientist', 'responsibilities': 'Designs and develops relevant features from the data that will be used to train the AI/ML models for blueprinting and analysis.'}, {'key_roles': 'Data Engineer', 'responsibilities': 'Builds and automates the data transformation pipelines that create the engineered features at scale.'}, {'key_roles': 'Subject Matter Expert (SME)', 'responsibilities': 'Provides domain expertise (e.g., in logistics, finance) to guide the creation of meaningful and impactful features.'}]
-[{'key_roles': 'Data Governance Manager', 'responsibilities': 'Develops and oversees the implementation of data governance policies, standards, and procedures.'}, {'key_roles': 'Data Security Engineer', 'responsibilities': 'Implements technical controls to protect data, including encryption, access management, and threat monitoring.'}, {'key_roles': 'Compliance Officer', 'responsibilities': 'Ensures the data pipeline and its usage adhere to relevant legal and regulatory frameworks like GDPR or industry-specific standards.'}]
-[{'key_roles': 'Data Operations (DataOps) Engineer', 'responsibilities': 'Manages the deployment, scheduling, and monitoring of data pipelines. Responds to and resolves pipeline failures.'}, {'key_roles': 'Data Engineer', 'responsibilities': 'Designs pipelines with observability in mind, implementing logging, metrics, and alerting mechanisms.'}, {'key_roles': 'AI/ML Operations (MLOps) Engineer', 'responsibilities': 'Ensures the seamless integration of data pipelines with the model training and deployment workflows.'}]
-[{'key_roles': 'Chief Ethics Officer/AI Ethics Officer', 'responsibilities': 'Leads the development of AI ethics policies; Provides guidance on ethical dilemmas; Champions a culture of responsible AI'}, {'key_roles': 'Legal Counsel', 'responsibilities': 'Ensures policies comply with existing and emerging regulations and legal standards for AI'}, {'key_roles': 'Policy Manager', 'responsibilities': 'Drafts, updates, and communicates AI ethics policies and guidelines across the organization'}]
-[{'key_roles': 'Data Scientist/ML Engineer', 'responsibilities': 'Implements bias detection algorithms; Analyzes model performance for fairness metrics; Applies mitigation techniques'}, {'key_roles': 'AI Quality Assurance (QA) Analyst', 'responsibilities': 'Designs and executes test cases specifically to uncover biases in AI model behavior and outputs'}, {'key_roles': 'Data Steward', 'responsibilities': 'Governs the quality and representativeness of data sets used for training AI models to minimize inherent biases'}]
-[{'key_roles': 'XAI Specialist/Researcher', 'responsibilities': 'Develops and applies explainability algorithms (e.g., LIME, SHAP) to AI models to generate human-readable justifications'}, {'key_roles': 'UX/UI Designer', 'responsibilities': 'Designs interfaces that effectively communicate AI-generated explanations and confidence scores to end-users'}, {'key_roles': 'Product Manager', 'responsibilities': 'Defines the requirements for explainability features based on customer needs and ensures they are integrated into the product roadmap'}]
-[{'key_roles': 'Compliance Officer', 'responsibilities': 'Monitors AI regulations; Interprets their impact on the business; Oversees the implementation of compliance controls'}, {'key_roles': 'Legal Counsel (AI/Data Privacy)', 'responsibilities': 'Provides legal advice on AI-related compliance matters and helps navigate complex regulatory environments'}, {'key_roles': 'Data Protection Officer (DPO)', 'responsibilities': 'Ensures AI systems comply with data privacy regulations like GDPR, particularly in how they process personal or client data'}]
-[{'key_roles': 'AI Risk Manager', 'responsibilities': 'Leads the risk assessment process; Maintains a risk register; Works with teams to develop mitigation strategies'}, {'key_roles': 'Cybersecurity Analyst', 'responsibilities': 'Assesses the AI system for security vulnerabilities that could be exploited for malicious purposes'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Analyzes the potential impact of AI recommendations on client business operations and identifies areas of organizational risk'}]
-[{'key_roles': 'Committee Chairperson (e.g., Chief Ethics Officer)', 'responsibilities': 'Convenes meetings; Sets the agenda; Facilitates discussions and decision-making'}, {'key_roles': 'Committee Members (Cross-functional Leaders)', 'responsibilities': 'Provide diverse perspectives (legal, technical, business, HR) to evaluate AI projects and policies'}, {'key_roles': 'Program Manager', 'responsibilities': "Manages the committee's operations, including scheduling, documentation of decisions, and tracking action items"}]
-[{'key_roles': 'QA Manager', 'responsibilities': 'Oversees the entire scope definition process and secures stakeholder approval.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Provides detailed requirements and user stories to define the functional scope of testing.'}, {'key_roles': 'Test Lead', 'responsibilities': 'Drafts the scope document, identifies specific modules for testing (e.g., capability mapping, impact analysis), and outlines testing objectives.'}]
-[{'key_roles': 'Test Strategist/Architect', 'responsibilities': 'Leads risk identification workshops and develops the risk-based testing model.'}, {'key_roles': 'Development Lead', 'responsibilities': 'Provides insights into technically complex or fragile areas of the codebase.'}, {'key_roles': 'Product Manager', 'responsibilities': 'Highlights key business functionalities and the potential business impact of their failure.'}]
-[{'key_roles': 'Test Environment Manager', 'responsibilities': 'Responsible for the setup, configuration, and maintenance of all test environments.'}, {'key_roles': 'Data Analyst/Engineer', 'responsibilities': 'Creates and manages the test datasets, ensuring data privacy and integrity.'}, {'key_roles': 'DevOps Engineer', 'responsibilities': 'Automates the provisioning and deployment of test environments.'}]
-[{'key_roles': 'QA Architect', 'responsibilities': 'Designs the overall test framework and selects appropriate methodologies (e.g., Agile, BDD).'}, {'key_roles': 'Automation Lead', 'responsibilities': 'Defines the strategy for test automation, including tool selection and scope.'}, {'key_roles': 'Manual QA Lead', 'responsibilities': 'Outlines the approach for exploratory and manual testing efforts.'}]
-[{'key_roles': 'QA Manager', 'responsibilities': 'Defines the KPIs and reporting standards in alignment with business goals.'}, {'key_roles': 'Test Lead', 'responsibilities': 'Responsible for collecting test data, generating reports, and communicating progress to stakeholders.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Uses test reports to track overall project health and make go/no-go decisions.'}]
-[{'key_roles': 'QA Tester', 'responsibilities': 'Executes manual and automated test cases according to the test plan. Documents test results and records evidence of test execution. Identifies and reports initial discrepancies between expected and actual results.'}, {'key_roles': 'Automation Engineer', 'responsibilities': 'Develops, maintains, and runs automated test scripts. Analyzes automated test run results and reports failures. Integrates automated tests into the CI/CD pipeline.'}, {'key_roles': 'Test Lead', 'responsibilities': 'Oversees the daily test execution activities. Assigns test cases to QA team members. Monitors test progress and ensures adherence to the test schedule.'}]
-[{'key_roles': 'QA Analyst', 'responsibilities': 'Creates detailed, clear, and concise defect reports with supporting evidence (e.g., screenshots, logs). Verifies defect fixes once they are deployed to a test environment. Collaborates with developers to ensure defects are understood.'}, {'key_roles': 'Development Lead', 'responsibilities': 'Triages new defects and assigns them to the appropriate developers. Prioritizes defect fixes based on severity and business impact. Monitors the overall defect backlog and resolution rates.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Tracks the status of critical defects and their impact on project timelines. Facilitates defect triage meetings. Communicates defect status to stakeholders.'}]
-[{'key_roles': 'DevOps Engineer', 'responsibilities': 'Automates the provisioning and deployment of test environments. Manages the configuration of the test infrastructure. Monitors environment health and performance.'}, {'key_roles': 'System Administrator', 'responsibilities': 'Manages the underlying hardware, software, and network infrastructure. Performs system maintenance and applies security patches. Troubleshoots environment-related issues.'}, {'key_roles': 'Test Lead', 'responsibilities': 'Defines and communicates test environment requirements. Schedules the use of test environments for different testing phases. Coordinates with DevOps and System Administrators to resolve environment issues.'}]
-[{'key_roles': 'QA Manager', 'responsibilities': 'Creates and presents test summary reports to senior management and project stakeholders. Defines key quality metrics and KPIs to be tracked. Provides final sign-off on testing phases.'}, {'key_roles': 'Test Analyst', 'responsibilities': 'Analyzes test data to identify defect patterns, trends, and potential root causes. Maintains dashboards for real-time visibility into test execution and defect status. Prepares detailed reports on test coverage and results.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Uses test reports to assess project health and risks. Makes informed decisions regarding release schedules based on quality metrics. Communicates the quality status of the product to the wider project team.'}]
-[{'key_roles': 'Automation Engineer', 'responsibilities': 'Develops, maintains, and executes the automated regression test suite. Analyzes regression test failures to distinguish between real defects and script issues. Continuously expands the regression suite to cover new functionality.'}, {'key_roles': 'QA Lead', 'responsibilities': 'Defines the scope and strategy for regression testing for each release. Analyzes regression test results and reports on any new issues found. Prioritizes the automation of test cases for inclusion in the regression suite.'}, {'key_roles': 'Release Manager', 'responsibilities': 'Ensures that regression testing is successfully completed as part of the release criteria. Assesses the risk of release based on regression testing outcomes. Coordinates the timing of regression test cycles with the development schedule.'}]
-[{'key_roles': 'Performance Engineer', 'responsibilities': 'Defines benchmark scenarios and key performance indicators (KPIs)., Develops and maintains test scripts for executing benchmark tests., Executes tests in a controlled environment and analyzes results to establish performance baselines., Documents and communicates benchmark findings to stakeholders.'}, {'key_roles': 'QA Lead', 'responsibilities': 'Oversies the entire benchmarking process to ensure it aligns with quality standards., Reviews and approves the final benchmark reports and baselines., Ensures that benchmark tests are integrated into the overall quality assurance strategy.'}, {'key_roles': 'System Architect', 'responsibilities': 'Provides expert input on critical system workflows and components that require benchmarking., Helps interpret performance results in the context of the overall system design and architecture., Uses benchmark data to inform architectural decisions and identify areas for optimization.'}]
-[{'key_roles': 'Performance Tester', 'responsibilities': 'Designs and executes load test scenarios based on expected usage patterns and user profiles., Monitors system resources and application performance during tests., Analyzes test results to identify performance bottlenecks and reports findings to the development team.'}, {'key_roles': 'DevOps Engineer', 'responsibilities': 'Sets up and maintains the performance testing environment., Monitors infrastructure performance (CPU, memory, network, I/O) during load tests., Assists in diagnosing and resolving infrastructure-related performance issues.'}, {'key_roles': 'Product Manager', 'responsibilities': 'Provides data and insights on expected user concurrency and typical workflows., Defines acceptable performance thresholds and service level agreements (SLAs).., Helps prioritize the resolution of performance issues based on business impact.'}]
-[{'key_roles': 'Performance Engineer', 'responsibilities': "Designs and executes stress test scenarios that push system resources to their limits., Analyzes system behavior at and beyond the breaking point to identify failure modes., Documents the system's recovery process and time-to-recover metrics."}, {'key_roles': 'Site Reliability Engineer (SRE)', 'responsibilities': 'Monitors system stability, alerting, and recovery mechanisms during stress tests., Identifies opportunities to improve system resilience and implements automated recovery procedures., Validates that failover mechanisms work as expected under extreme conditions.'}, {'key_roles': 'System Administrator', 'responsibilities': 'Manages the underlying infrastructure during stress tests., Assists in analyzing system logs, crash dumps, and error reports to pinpoint the root cause of failures., Restores the test environment to a stable state after stress tests are complete.'}]
-[{'key_roles': 'Cloud/Infrastructure Engineer', 'responsibilities': 'Provisions and configures scalable infrastructure for testing environments., Monitors resource utilization and costs associated with scaling., Implements and tests auto-scaling policies to handle dynamic loads.'}, {'key_roles': 'Performance Engineer', 'responsibilities': 'Designs and executes scalability tests under various configurations., Analyzes the relationship between resource allocation and performance improvement., Provides data-driven recommendations for capacity planning and infrastructure sizing.'}, {'key_roles': 'System Architect', 'responsibilities': 'Reviews scalability test results to validate the architectural design., Ensures the system architecture supports efficient and cost-effective scaling., Makes architectural adjustments to address any identified scalability limitations.'}]
-[{'key_roles': 'QA Automation Engineer', 'responsibilities': 'Develops and maintains the automated scripts required to run long-duration tests., Configures monitoring and alerting to detect anomalies during the test run., Ensures the stability and reliability of the test execution framework itself.'}, {'key_roles': 'Performance Engineer', 'responsibilities': 'Analyzes performance metrics collected over the entire test duration to identify degradation trends., Investigates the root causes of issues like memory leaks or resource exhaustion., Reports on the long-term stability and reliability of the system.'}, {'key_roles': 'Developer', 'responsibilities': "Reviews code and system logs to diagnose and fix issues identified during endurance testing., Focuses on resolving problems related to resource management, caching, and long-term stability., Implements code changes to improve the system's resilience over time."}]
-[{'key_roles': 'Test Automation Architect', 'responsibilities': 'Designs the overall framework architecture. Selects core technologies and tools for the framework. Sets coding standards and best practices for test automation. Provides technical guidance and mentorship to the testing team.'}, {'key_roles': 'Software Development Engineer in Test (SDET)', 'responsibilities': 'Develops and implements core framework components and libraries. Integrates the test framework with CI/CD pipelines and other development tools. Maintains and updates the framework to accommodate new features and technologies.'}]
-[{'key_roles': 'Software Development Engineer in Test (SDET)', 'responsibilities': 'Writes, debugs, and executes automated test scripts based on test cases and user stories. Analyzes test results, identifies defects, and reports them in a tracking system. Maintains and refactors the existing suite of automated test scripts.'}, {'key_roles': 'QA Analyst', 'responsibilities': 'Collaborates with SDETs to define test scenarios and acceptance criteria suitable for automation. Performs manual testing to identify areas that are good candidates for automation. Reviews automated test script coverage and results to ensure business requirements are met.'}]
-[{'key_roles': 'DevOps Engineer', 'responsibilities': 'Automates the provisioning and deployment of test environments using Infrastructure as Code (IaC) tools. Manages the CI/CD pipeline integration for environment setup and teardown. Monitors the health and performance of test environments.'}, {'key_roles': 'Test Data Engineer', 'responsibilities': 'Creates, manages, and maintains the datasets required for automated testing. Ensures test data privacy and integrity through masking and anonymization. Develops tools and scripts to generate and load test data into environments.'}]
-[{'key_roles': 'DevOps Engineer', 'responsibilities': 'Configures and maintains the CI/CD pipeline (e.g., Jenkins, GitLab CI) to trigger automated test runs. Manages the infrastructure for the build and test agents. Integrates quality gates and reporting mechanisms into the pipeline.'}, {'key_roles': 'Software Development Engineer in Test (SDET)', 'responsibilities': 'Ensures test scripts are optimized for pipeline execution. Analyzes pipeline test failures and triages issues. Develops strategies for parallel test execution to speed up feedback cycles.'}]
-[{'key_roles': 'Performance Test Engineer', 'responsibilities': 'Designs performance test scenarios and workload models. Develops and maintains performance test scripts using tools like JMeter or LoadRunner. Executes tests, analyzes results to identify bottlenecks, and provides tuning recommendations.'}, {'key_roles': 'Site Reliability Engineer (SRE)', 'responsibilities': 'Works with performance testers to monitor system health during tests. Helps diagnose infrastructure-related performance issues. Implements monitoring and alerting to proactively identify performance degradation.'}]
-[{'key_roles': 'ML Test Engineer / AI QA Specialist', 'responsibilities': 'Designs and implements automated tests for AI models, focusing on metrics like precision, recall, and fairness. Collaborates with data scientists to understand model behavior and define acceptance criteria. Develops frameworks for testing model robustness and security against adversarial attacks.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Provides the expected model outputs and performance benchmarks used for validation. Helps interpret test results and diagnose model-specific issues. Participates in the development of strategies for monitoring models in production.'}]
-[{'key_roles': 'QA Manager', 'responsibilities': 'Oversees the entire UAT planning process.\nEnsures alignment with the overall quality assurance strategy.\nAllocates necessary resources for testing activities.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Works with stakeholders to define UAT scope and objectives.\nTranslates business requirements into testable criteria.\nDocuments the formal UAT plan.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Integrates the UAT schedule into the overall project plan.\nManages timelines and key milestones.\nFacilitates communication between technical and business teams.'}]
-[{'key_roles': 'Business Analyst', 'responsibilities': 'Collaborates with subject matter experts to gather requirements.\nAuthors detailed business scenarios and use cases for testing.\nEnsures test cases have clear, measurable outcomes.'}, {'key_roles': 'Subject Matter Expert (SME)', 'responsibilities': 'Provides deep industry knowledge (e.g., from a Logistics Planner or Fleet Manager perspective).\nEnsures test scenarios are realistic and cover critical business processes.\nValidates the accuracy and relevance of the use cases.'}, {'key_roles': 'Product Manager', 'responsibilities': "Validates that the use cases align with the product's intended functionality.\nEnsures scenarios test the core value proposition for the transportation sector.\nPrioritizes use cases based on business impact."}]
-[{'key_roles': 'IT/DevOps Engineer', 'responsibilities': 'Sets up, configures, and maintains the technical UAT environment.\nManages server, database, and network configurations.\nEnsures the environment is stable and available for testers.'}, {'key_roles': 'Data Analyst', 'responsibilities': "Sources, anonymizes, and provisions realistic test data.\nEnsures data reflects the client's operational complexity in the trucking industry.\nManages data refreshes and integrity within the UAT environment."}, {'key_roles': 'QA Engineer', 'responsibilities': 'Verifies that the UAT environment is stable and correctly configured.\nConfirms that the correct version of the application is deployed for testing.\nManages user accounts and permissions for the testing team.'}]
-[{'key_roles': 'Business User / End-User Tester', 'responsibilities': 'Executes the assigned test scenarios according to the UAT plan.\nDocuments test results accurately and completely.\nLogs defects with detailed information, including steps to reproduce.'}, {'key_roles': 'QA Analyst', 'responsibilities': 'Facilitates test execution sessions and provides support to testers.\nTriages reported defects for validity and priority.\nWorks with development teams to ensure defects are understood and tracked.'}, {'key_roles': 'Developer', 'responsibilities': 'Analyzes and fixes the defects assigned to them.\nCollaborates with QA to verify the fixes in the test environment.\nProvides updates on defect resolution status.'}]
-[{'key_roles': 'Business Stakeholder / Product Owner', 'responsibilities': 'Reviews the final UAT report and testing metrics.\nAssesses the business impact of any outstanding defects.\nProvides the official go/no-go decision and sign-off for release.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Prepares and presents the UAT summary report to stakeholders.\nFacilitates the sign-off meeting.\nFormally documents the sign-off decision and communicates it to the project team.'}, {'key_roles': 'QA Manager', 'responsibilities': 'Provides a comprehensive overview of the testing process and results.\nOffers a recommendation on quality and readiness for release.\nEnsures all entry and exit criteria have been met.'}]
-[{'key_roles': 'Product Manager', 'responsibilities': 'Owns the process of collecting and analyzing user feedback.\nUses insights to inform the product backlog and strategic roadmap.\nPrioritizes feature enhancements based on feedback themes.'}, {'key_roles': 'UX/UI Designer', 'responsibilities': "Analyzes feedback related to usability and user experience.\nIdentifies areas for design improvements in the platform's interface.\nCreates prototypes or mockups for proposed changes."}, {'key_roles': 'Business Analyst', 'responsibilities': 'Helps categorize and synthesize qualitative feedback.\nTranslates user suggestions into actionable themes and requirements.\nDocuments findings for the product and development teams.'}]
-[{'key_roles': 'Chief Data Officer (CDO)', 'responsibilities': 'Championing the enterprise data governance strategy.\n- Securing executive sponsorship and funding.\n- Overseeing the data governance program.'}, {'key_roles': 'Data Governance Lead', 'responsibilities': 'Managing the implementation of the data governance framework.\n- Facilitating the data governance council meetings.\n- Developing and maintaining data policies and standards.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Assuming responsibility for a specific data domain.\n- Defining data elements and establishing quality rules.\n- Resolving data-related issues and ensuring policy compliance.'}]
-[{'key_roles': 'Master Data Manager', 'responsibilities': 'Overseeing the master data management (MDM) program.\n- Defining MDM processes and standards.\n- Managing the MDM technology platform.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Governing specific master data domains (e.g., Customer, Product).\n- Approving changes to master data.\n- Ensuring master data quality and accuracy.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Analyzing master data for quality issues.\n- Performing data cleansing and enrichment activities.\n- Supporting data integration projects involving master data.'}]
-[{'key_roles': 'Data Quality Analyst', 'responsibilities': 'Developing and implementing data quality rules and checks.\n- Monitoring data quality metrics and identifying issues.\n- Working with data stewards to remediate data quality problems.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Defining data quality standards for their specific data domain.\n- Investigating and resolving root causes of data quality issues.\n- Approving data cleansing and correction activities.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Identifying the business impact of poor data quality.\n- Defining data quality requirements for business processes.\n- Validating that data quality meets business needs.'}]
-[{'key_roles': 'Data Security Officer', 'responsibilities': 'Developing and enforcing data security policies.\n- Overseeing data encryption, masking, and other security controls.\n- Managing responses to data security incidents.'}, {'key_roles': 'IT Security Analyst', 'responsibilities': 'Implementing and managing access control systems.\n- Monitoring for unauthorized data access and security threats.\n- Conducting security audits and vulnerability assessments.'}, {'key_roles': 'Database Administrator', 'responsibilities': 'Implementing user access controls at the database level.\n- Managing database security configurations.\n- Performing regular security patching and updates.'}]
-[{'key_roles': 'Data Catalog Manager', 'responsibilities': 'Administering the enterprise data catalog platform.\n- Developing processes for metadata ingestion and curation.\n- Promoting the use and adoption of the data catalog.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Defining and documenting business terms and data definitions.\n- Certifying data assets within the catalog.\n- Ensuring metadata accuracy and completeness for their domain.'}, {'key_roles': 'Data Architect', 'responsibilities': 'Defining the metadata strategy and standards.\n- Modeling data lineage and relationships between data assets.\n- Integrating metadata from various source systems into the catalog.'}]
-[{'key_roles': 'Data Architect', 'responsibilities': 'Developing and maintaining the enterprise data architecture.\n- Creating and managing conceptual, logical, and physical data models.\n- Setting standards for data storage, integration, and consumption.'}, {'key_roles': 'Solution Architect', 'responsibilities': 'Designing data solutions that align with the enterprise data architecture.\n- Ensuring new projects and applications adhere to data modeling standards.\n- Collaborating with data engineers on implementation.'}, {'key_roles': 'Data Engineer', 'responsibilities': 'Implementing physical data models in databases and data platforms.\n- Building and maintaining data pipelines and ETL/ELT processes.\n- Optimizing data structures for performance and scalability.'}]
-[{'key_roles': 'BI Developer', 'responsibilities': 'Designs and builds dashboards using BI tools. Connects dashboards to underlying data sources. Implements interactive features and drill-down functionality.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Gathers dashboard requirements from business stakeholders. Defines the KPIs and metrics to be displayed. Validates the accuracy of the data presented in the dashboards.'}, {'key_roles': 'UX/UI Designer', 'responsibilities': 'Ensures dashboards are user-friendly, intuitive, and visually appealing. Applies design best practices for data visualization to enhance clarity. Creates wireframes and prototypes for new dashboard designs.'}]
-[{'key_roles': 'Report Analyst', 'responsibilities': 'Develops and maintains standardized report templates. Defines data extraction logic for reports. Manages the scheduling and distribution of automated reports.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Works with business units to define reporting requirements. Ensures reports contain relevant metrics that meet audience needs. Documents the logic and definitions used in standardized reports.'}, {'key_roles': 'IT Operations', 'responsibilities': 'Manages the underlying reporting infrastructure and servers. Ensures the reliability and performance of automated report generation jobs. Monitors report distribution to ensure successful delivery.'}]
-[{'key_roles': 'Data Analyst', 'responsibilities': 'Trains and supports business users on ad-hoc query tools. Performs more complex analyses that are beyond the scope of typical business users. Helps optimize queries for better performance.'}, {'key_roles': 'Business Power User', 'responsibilities': 'Acts as a subject matter expert within a business unit for data analysis. Uses query tools to answer questions for their team. Creates and shares custom reports and analyses with colleagues.'}, {'key_roles': 'Data Engineer', 'responsibilities': 'Ensures data is structured and accessible in a way that supports efficient ad-hoc querying. Manages data access and permissions for self-service tools. Maintains the performance of the analytical database or data warehouse.'}]
-[{'key_roles': 'UX/UI Designer', 'responsibilities': 'Develops and maintains the visualization style guide and best practices. Creates standard templates for charts and dashboards. Advises development teams on the most effective ways to visualize data.'}, {'key_roles': 'BI Architect', 'responsibilities': 'Enforces visualization standards within the BI tools and platform. Ensures that all developed reports and dashboards are compliant with the style guide. Manages the technical implementation of visualization standards.'}, {'key_roles': 'Data Governance Steward', 'responsibilities': 'Oversees the governance process for data visualization. Reviews and approves new visualizations for compliance with standards. Manages and communicates updates to the visualization standards.'}]
-[{'key_roles': 'Business Analyst', 'responsibilities': 'Works with stakeholders to identify and define relevant KPIs that align with business goals. Documents the business logic and calculation rules for each KPI. Facilitates workshops to gain consensus on KPI definitions.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Owns the official definition, calculation logic, and data quality of specific KPIs. Acts as the subject matter expert for a given set of metrics. Approves any changes to the KPIs within their data domain.'}, {'key_roles': 'BI Manager', 'responsibilities': 'Oversees the entire KPI lifecycle, from definition to implementation in reporting tools. Ensures alignment of KPIs with overall business strategy. Maintains a central repository or dictionary of all official KPIs.'}]
-[{'key_roles': 'Data Scientist', 'responsibilities': 'Selects appropriate statistical and machine learning algorithms. Cleans, transforms, and prepares data for modeling. Builds, trains, and validates predictive models. Interprets model outputs and communicates findings to stakeholders.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Defines business problems and requirements for predictive models. Provides domain expertise to guide model development. Validates model accuracy and relevance from a business perspective. Assists in integrating model insights into business processes.'}]
-[{'key_roles': 'Operations Research Analyst', 'responsibilities': 'Develops complex optimization models (e.g., linear programming, integer programming). Designs and runs simulations to test various decision scenarios. Translates business problems into mathematical models. Recommends actions to improve efficiency and reduce costs.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Integrates predictive model outputs into prescriptive frameworks. Develops algorithms to automate decision-making processes. Collaborates with business stakeholders to understand decision constraints and objectives.'}]
-[{'key_roles': 'Simulation Engineer/Analyst', 'responsibilities': 'Builds and maintains digital twin or simulation models of business operations. Designs and executes experiments based on different scenarios. Analyzes simulation outputs to identify risks, bottlenecks, and opportunities. Presents findings to support strategic decision-making.'}, {'key_roles': 'Business Architect', 'responsibilities': 'Defines the scenarios and business changes to be tested. Uses simulation results to inform capability mapping and impact analysis. Evaluates the viability of different enterprise blueprints based on model outcomes.'}]
-[{'key_roles': 'ML Engineer', 'responsibilities': 'Builds and manages CI/CD pipelines for machine learning models. Deploys models into production environments. Monitors model performance, drift, and accuracy over time. Automates model retraining and updating processes.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Develops models with production deployment in mind. Collaborates with ML Engineers to package and containerize models. Defines monitoring metrics and thresholds for model performance.'}, {'key_roles': 'IT Operations Specialist', 'responsibilities': 'Manages the underlying infrastructure for model serving. Ensures security and compliance of the MLOps platform. Handles incident response for production model failures.'}]
-[{'key_roles': 'Logistics Analyst / Data Scientist', 'responsibilities': 'Develops and implements route optimization algorithms. Analyzes transportation data to identify inefficiencies and cost-saving opportunities. Uses geospatial analytics to model and optimize the logistics network. Monitors the performance of routing solutions and refines models as needed.'}, {'key_roles': 'Transportation Planner / Dispatcher', 'responsibilities': 'Uses optimization tools to plan daily routes and schedules. Makes real-time adjustments to routes based on live data and alerts. Provides feedback to data science teams on the practical application of optimization models.'}]
-[{'key_roles': 'Business Architect', 'responsibilities': 'Defines the KPI framework in alignment with the overall business capability map and strategic goals. Ensures KPIs are relevant to the blueprinting and viability assessment workflows.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Researches and validates relevant industry KPIs for the freight and trucking sector. Analyzes data to ensure metrics are meaningful, measurable, and achievable.'}, {'key_roles': 'Operations Manager', 'responsibilities': 'Provides expert input on operational metrics critical to the freight business. Ensures KPIs accurately reflect the realities of daily trucking operations.'}]
-[{'key_roles': 'Data Engineer', 'responsibilities': 'Designs and builds pipelines to extract, transform, and load (ETL) data from various source systems. Maintains the data repository, ensuring data quality and integrity for analysis.'}, {'key_roles': 'IT Operations Specialist', 'responsibilities': 'Manages the infrastructure and systems that house performance data. Ensures high availability and security of the data aggregation platform.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Works with business units to identify critical data sources for performance measurement. Defines data requirements and validation rules for the aggregation process.'}]
-[{'key_roles': 'Data Analyst', 'responsibilities': 'Performs statistical analysis to identify significant trends and patterns. Generates reports on performance variances and investigates data anomalies.'}, {'key_roles': 'Financial Analyst', 'responsibilities': 'Analyzes financial KPIs to assess profitability, cost-efficiency, and the financial impact of operational performance. Models financial scenarios based on performance trends.'}, {'key_roles': 'Continuous Improvement Manager', 'responsibilities': 'Uses trend and variance analysis to identify opportunities for operational improvements. Tracks the success of implemented changes against performance data.'}]
-[{'key_roles': 'Market Research Analyst', 'responsibilities': 'Gathers, validates, and manages external industry data and competitor performance benchmarks. Ensures the relevance and accuracy of benchmarking data sets.'}, {'key_roles': 'Strategy Analyst', 'responsibilities': 'Interprets benchmarking results to inform strategic planning and identify competitive threats. Provides context for performance gaps and highlights market opportunities.'}, {'key_roles': 'Business Architect', 'responsibilities': 'Integrates benchmarking insights into capability maps and viability assessments. Uses external benchmarks to provide a market-based context for strategic recommendations.'}]
-[{'key_roles': 'BI Developer', 'responsibilities': 'Designs, develops, and maintains interactive dashboards and automated reports using business intelligence tools. Ensures reports are user-friendly and meet stakeholder requirements.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Creates ad-hoc reports and data visualizations to support specific business questions. Helps craft the narrative and key takeaways for performance reports.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Ensures timely delivery of performance reports to stakeholders. Facilitates review meetings and discussions around the findings to drive action.'}]
-[{'key_roles': 'IT Security Administrator', 'responsibilities': 'Configures and manages SSO integrations, MFA policies, and password complexity rules.; Monitors authentication logs for suspicious activity.'}, {'key_roles': 'System Administrator', 'responsibilities': 'Implements and maintains the authentication infrastructure.; Troubleshoots login issues for users.'}]
-[{'key_roles': 'Workspace Administrator', 'responsibilities': 'Defines roles (e.g., Project Manager, Business Architect, Viewer), assigns permissions to these roles, and maps users to the appropriate roles.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Manages role assignments for users within their specific blueprint navigator projects.'}]
-[{'key_roles': 'HR Systems Analyst', 'responsibilities': 'Integrates the HR information system with the platform to automate the provisioning and deprovisioning process based on employee status.'}, {'key_roles': 'IT Administrator', 'responsibilities': 'Manually provisions accounts for contractors or exceptions and ensures deprovisioning processes are executed correctly.; Manages user group memberships.'}]
-[{'key_roles': 'Chief Information Security Officer (CISO)', 'responsibilities': 'Defines the overall security strategy and policies for platform access.'}, {'key_roles': 'IT Security Analyst', 'responsibilities': "Implements, monitors, and updates security policies within the platform's administrative console.; Conducts regular policy compliance checks."}]
-[{'key_roles': 'Compliance Officer', 'responsibilities': 'Reviews access logs and reports to ensure adherence to internal policies and external regulations.'}, {'key_roles': 'Security Operations Center (SOC) Analyst', 'responsibilities': 'Monitors real-time access logs for potential security threats and investigates alerts.'}, {'key_roles': 'IT Auditor', 'responsibilities': 'Performs periodic reviews of access controls and user activity reports to verify security effectiveness.'}]
-[{'key_roles': 'Identity & Access Management (IAM) Administrator', 'responsibilities': 'Manages the integration with the corporate identity provider (e.g., SSO). Defines policies for user authentication and data synchronization. Troubleshoots authentication and provisioning failures.'}, {'key_roles': 'Platform Engineer', 'responsibilities': 'Develops and maintains the automation scripts and services that handle user creation. Ensures the provisioning logic is scalable and resilient. Integrates the provisioning service with other platform components.'}, {'key_roles': 'System Administrator', 'responsibilities': 'Monitors the health and performance of the provisioning process. Manages the underlying infrastructure that supports the automated workflows. Maintains logs for audit and troubleshooting purposes.'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Defines and maintains the rules for default project mapping. Manages the configuration and settings of the default enterprise workspace. Updates the mapping rules as organizational needs change.'}, {'key_roles': 'Business Architect', 'responsibilities': "Provides the requirements for the default project's structure, templates, and initial content. Ensures the default workspace is relevant for standard blueprinting activities. Validates that the initial setup meets business objectives."}, {'key_roles': 'IT Operations', 'responsibilities': 'Monitors the automated mapping process to ensure reliability and success for all new users. Investigates and resolves any errors in the project assignment workflow. Reports on the success rate and performance of the mapping capability.'}]
-[{'key_roles': 'Security Administrator', 'responsibilities': 'Defines the roles and their associated permissions (e.g., create, read, update, delete) within the platform. Manages the matrix of roles and access rights. Conducts periodic reviews of role definitions and assignments.'}, {'key_roles': 'Platform Engineer', 'responsibilities': 'Implements the logic that maps user attributes to the defined roles. Develops the services that apply and enforce the corresponding access controls. Ensures the RBAC system is integrated securely with the identity provider.'}, {'key_roles': 'Compliance Officer', 'responsibilities': 'Audits the automated RBAC assignments to ensure they align with enterprise security and data governance policies. Provides requirements for logging and monitoring access. Verifies that access controls are correctly implemented for regulatory compliance.'}]
-[{'key_roles': 'Business Architect/Content Manager', 'responsibilities': 'Defines and manages the standard templates, models, and data sets to be provisioned. Curates the content to ensure it reflects best practices. Updates the initial environment content as methodologies evolve.'}, {'key_roles': 'UX/UI Designer', 'responsibilities': 'Designs the default workspace layout and tool configuration. Ensures the initial user experience is intuitive and efficient. Gathers user feedback to refine the default environment.'}, {'key_roles': 'DevOps Engineer', 'responsibilities': 'Creates and maintains the automation scripts that deploy and configure the workspace environment. Manages the versioning and release of the initial environment assets. Ensures the setup process is fast and error-free.'}]
-[{'key_roles': 'UX Designer', 'responsibilities': 'Designs the flow and user interface of the guided tours to ensure they are intuitive and engaging.'}, {'key_roles': 'Product Manager', 'responsibilities': 'Defines the key features and workflows to be highlighted in the onboarding tours, aligning them with user needs and product strategy.'}, {'key_roles': 'Technical Writer', 'responsibilities': 'Writes the instructional text and calls-to-action for each step of the walkthrough.'}, {'key_roles': 'Frontend Developer', 'responsibilities': 'Implements the guided tour functionality within the platform using relevant libraries or custom code.'}]
-[{'key_roles': 'Instructional Designer', 'responsibilities': 'Designs the curriculum and structure of training materials to optimize learning outcomes.'}, {'key_roles': 'Content Creator/Technical Writer', 'responsibilities': 'Writes scripts for videos, authors knowledge base articles, and creates other written training materials.'}, {'key_roles': 'Video Producer/Editor', 'responsibilities': 'Produces and edits high-quality video tutorials.'}, {'key_roles': 'Subject Matter Expert (SME)', 'responsibilities': "Provides deep knowledge of the platform's features and blueprinting methodologies to ensure content accuracy and relevance."}]
-[{'key_roles': 'Product Marketing Manager', 'responsibilities': 'Defines user personas and segments to inform the personalization strategy.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Analyzes user data to identify different user segments and measure the effectiveness of personalized onboarding paths.'}, {'key_roles': 'Onboarding Specialist', 'responsibilities': 'Designs and configures the logic for delivering different onboarding experiences to various user segments.'}, {'key_roles': 'Customer Success Manager', 'responsibilities': 'Gathers feedback from different user groups to refine and improve the role-based enablement content.'}]
-[{'key_roles': 'Data Analyst', 'responsibilities': 'Implements tracking, analyzes user onboarding data, and creates dashboards to report on key adoption metrics.'}, {'key_roles': 'Product Manager', 'responsibilities': 'Uses analytics to understand user behavior, identify pain points in the initial user journey, and prioritize improvements.'}, {'key_roles': 'Growth Manager', 'responsibilities': 'Focuses on experiments and A/B testing within the onboarding flow to improve conversion and adoption rates.'}, {'key_roles': 'Data Engineer', 'responsibilities': 'Ensures the necessary data pipelines and infrastructure are in place to collect and process user engagement data.'}]
-[{'key_roles': 'Knowledge Manager', 'responsibilities': 'Owns the structure, organization, and quality of the content within the resource hub.'}, {'key_roles': 'Community Manager', 'responsibilities': 'Fosters user engagement with the resource hub, potentially through forums or Q&A sections, and gathers feedback on content gaps.'}, {'key_roles': 'Web Administrator', 'responsibilities': 'Manages the technical platform or content management system (CMS) that hosts the resource hub.'}, {'key_roles': 'Support Specialist', 'responsibilities': 'Uses the resource hub to answer user questions and identifies common issues that need to be addressed with new or improved documentation.'}]
-[{'key_roles': 'Business Architect', 'responsibilities': 'Defines the business capability models and blueprinting standards to be included in the templates.\nLeads the design from a business process and strategy perspective.'}, {'key_roles': 'Platform Owner/Product Manager', 'responsibilities': 'Gathers requirements from users and defines the features of the templates.\nPrioritizes design efforts and ensures templates meet the needs of the enterprise workspace.'}, {'key_roles': 'Solution Architect', 'responsibilities': 'Designs the technical structure of the templates within the Ascend platform.\nEnsures templates are technically sound, performant, and integrate with other platform features.'}]
-[{'key_roles': 'Platform Administrator', 'responsibilities': 'Implements changes to the templates within the Ascend platform.\nManages the technical deployment of new versions and handles configuration updates.'}, {'key_roles': 'Business Analyst', 'responsibilities': 'Gathers feedback from users and identifies areas for improvement in the templates.\nTranslates business needs into specific update requirements.'}, {'key_roles': 'Quality Assurance (QA) Analyst', 'responsibilities': 'Tests updated templates to ensure they function correctly and meet quality standards before they are published for wider use.'}]
-[{'key_roles': 'Governance Board/Committee', 'responsibilities': 'Reviews and approves all new templates and significant changes to existing ones.\nSets the overall policies and standards for blueprint management.'}, {'key_roles': 'Compliance Officer', 'responsibilities': 'Audits templates and their usage to ensure they comply with internal policies and any relevant external regulations.'}, {'key_roles': 'Data Steward', 'responsibilities': 'Ensures that the data models and information architecture within the templates align with enterprise data governance standards.'}]
-[{'key_roles': 'Release Manager', 'responsibilities': 'Coordinates the release schedule for new and updated templates.\nManages the deployment process to ensure a seamless transition for users.'}, {'key_roles': 'Communications Specialist', 'responsibilities': 'Drafts and disseminates announcements, release notes, and documentation related to template updates.\nEnsures users are informed about changes and benefits.'}, {'key_roles': 'Training Coordinator', 'responsibilities': 'Develops and delivers training materials or sessions to educate users on how to effectively use the new or updated templates and blueprints.'}]
-[{'key_roles': 'Compliance Officer', 'responsibilities': 'Monitors changes in FMCSA and state-level transportation regulations.\nConducts internal audits of safety procedures and records.\nDevelops and implements compliance training programs for drivers and staff.'}, {'key_roles': 'Safety Manager', 'responsibilities': 'Manages driver safety performance and HOS logs.\nOversees vehicle inspection and maintenance programs.\nInvestigates accidents and incidents to identify root causes and prevent recurrence.'}, {'key_roles': 'Fleet Manager', 'responsibilities': 'Ensures all vehicles in the fleet meet safety and maintenance standards.\nSchedules regular vehicle inspections and repairs.\nMaintains accurate and up-to-date vehicle and driver compliance records.'}]
-[{'key_roles': 'Customs Compliance Specialist', 'responsibilities': 'Prepares and files all necessary customs documentation for shipments.\nEnsures proper classification and valuation of goods.\nStays current with international trade regulations and tariff changes.'}, {'key_roles': 'Logistics Coordinator', 'responsibilities': 'Coordinates with customs brokers to facilitate smooth border crossings.\nTracks international shipments and resolves any customs-related issues.\nEnsures all cross-border shipments have the required permits and documentation.'}, {'key_roles': 'International Trade Analyst', 'responsibilities': 'Analyzes the impact of trade agreements on shipping lanes and costs.\nAdvises on compliance with import/export controls and sanctions.\nDevelops strategies to optimize cross-border supply chains.'}]
-[{'key_roles': 'Environmental, Health, and Safety (EHS) Manager', 'responsibilities': 'Monitors environmental regulations from agencies like the EPA.\nDevelops and implements policies for emissions control and waste management.\nConducts environmental compliance audits and manages reporting.'}, {'key_roles': 'Sustainability Officer', 'responsibilities': 'Tracks carbon footprint and other sustainability metrics.\nIdentifies opportunities for improving fuel efficiency and reducing emissions.\nDevelops long-term sustainability strategies for the fleet.'}, {'key_roles': 'Fleet Operations Analyst', 'responsibilities': 'Analyzes telematics data to optimize routes for fuel efficiency.\nEvaluates the environmental performance of different vehicle types.\nReports on fuel consumption and emissions data.'}]
-[{'key_roles': 'HR Manager', 'responsibilities': 'Manages driver hiring and maintains driver qualification files.\nEnsures compliance with wage and hour laws.\nAdministers employee relations and handles disciplinary actions in accordance with labor laws.'}, {'key_roles': 'Compliance Specialist', 'responsibilities': 'Manages the DOT-mandated drug and alcohol testing program.\nAudits HR processes to ensure compliance with labor regulations.\nKeeps abreast of changes in employment law affecting the transportation industry.'}, {'key_roles': 'Legal Counsel', 'responsibilities': 'Provides legal advice on labor and employment matters.\nRepresents the company in labor disputes or litigation.\nReviews and drafts employment contracts and policies.'}]
-[{'key_roles': 'Licensing and Permit Specialist', 'responsibilities': 'Processes applications and renewals for all vehicle and operating permits.\nMaintains a centralized database of all licenses, permits, and registration documents.\nEnsures compliance with IFTA and IRP requirements.'}, {'key_roles': 'Fleet Administrator', 'responsibilities': 'Manages vehicle titles and registrations.\nCoordinates the acquisition of temporary or special permits for specific loads.\nEnsures all vehicles have the correct decals and documentation.'}, {'key_roles': 'Compliance Coordinator', 'responsibilities': 'Audits permit and license records for accuracy and completeness.\nMonitors changes in permitting requirements across different jurisdictions.\nServes as the point of contact for regulatory agencies regarding licensing.'}]
-[{'key_roles': 'Claims Manager', 'responsibilities': 'Receives, investigates, and processes all freight claims.\nDetermines carrier liability based on regulations and contracts.\nNegotiates settlements with claimants and insurance companies.'}, {'key_roles': 'Risk Analyst', 'responsibilities': 'Analyzes claims data to identify trends and root causes of cargo loss/damage.\nRecommends and implements preventative measures and policies.\nManages insurance policies related to cargo liability.'}, {'key_roles': 'Customer Service Manager', 'responsibilities': 'Acts as the primary point of contact for customers regarding claims.\nCommunicates the status of claims investigations and resolutions.\nWorks to resolve disputes and maintain positive customer relationships.'}]
-[{'key_roles': 'Logistics Engineer/Analyst', 'responsibilities': 'Gathers and analyzes data on shipment volumes, customer locations, and transportation costs.\nUses network modeling software to run simulations and develop optimal network designs.\nPresents findings and recommendations to management.'}, {'key_roles': 'Supply Chain Strategist', 'responsibilities': 'Sets the long-term vision for the logistics network in alignment with overall business goals.\nEvaluates strategic options like insourcing vs. outsourcing.\nMakes final decisions on network infrastructure investments.'}, {'key_roles': 'Operations Manager', 'responsibilities': 'Provides operational input into the network design process, ensuring that proposed designs are feasible.\nResponsible for implementing changes to the network structure.'}]
-[{'key_roles': 'Dispatcher/Route Planner', 'responsibilities': 'Uses Transportation Management Systems (TMS) and routing software to create and assign daily routes to drivers.\nMonitors progress and makes adjustments as needed.'}, {'key_roles': 'Transportation Coordinator', 'responsibilities': 'Manages the overall schedule of shipments and coordinates with planners, drivers, and customers to ensure smooth execution.\nHandles exceptions and resolves scheduling conflicts.'}, {'key_roles': 'Driver', 'responsibilities': 'Executes the planned route and provides feedback on route feasibility and conditions.\nRecords delivery information and communicates status updates.'}]
-[{'key_roles': 'Procurement Manager/Carrier Manager', 'responsibilities': 'Negotiates contracts and rates with third-party carriers.\nManages carrier relationships and monitors their performance against agreed-upon service level agreements (SLAs).'}, {'key_roles': 'Logistics Planner', 'responsibilities': 'Determines the most suitable carrier and service type (e.g., LTL, FTL, expedited) for individual shipments.\nTenders loads to selected carriers.'}, {'key_roles': 'Freight Broker', 'responsibilities': 'Acts as an intermediary to find and contract with qualified carriers on behalf of the shipper, especially for spot market needs.'}]
-[{'key_roles': 'Load Planner', 'responsibilities': 'Analyzes shipment orders to identify opportunities for consolidation.\nBuilds optimal full truckloads to maximize vehicle cube and weight utilization.'}, {'key_roles': 'Fleet Manager', 'responsibilities': 'Oversees the entire vehicle fleet, including asset assignment, maintenance scheduling, and monitoring of utilization rates.\nMakes decisions on fleet sizing and composition.'}, {'key_roles': 'Dispatcher', 'responsibilities': 'Assigns specific trucks and drivers to loads, ensuring that fleet resources are used efficiently.\nPlans backhauls to minimize empty miles.'}]
-[{'key_roles': 'Control Tower Operator/Analyst', 'responsibilities': 'Monitors the live transportation network using visibility platforms.\nIdentifies potential disruptions and exceptions, and coordinates responsive actions.'}, {'key_roles': 'Dispatcher', 'responsibilities': 'Communicates route changes and updates to drivers in real-time.\nProvides drivers with the necessary information to navigate new routes effectively.'}, {'key_roles': 'Customer Service Representative', 'responsibilities': 'Uses real-time tracking information to provide customers with accurate ETAs.\nProactively communicates updates on the status of shipments.'}]
-[{'key_roles': 'Market Analyst', 'responsibilities': 'Gathers and cleanses rate data from industry sources (e.g., DAT, Truckstop) and internal systems.\nPerforms statistical analysis to identify pricing trends, seasonality, and anomalies.\nCreates and maintains pricing reports, benchmarks, and dashboards for internal and client use.'}, {'key_roles': 'Data Scientist', 'responsibilities': 'Develops and validates predictive models for freight rate forecasting.\nUses machine learning to identify complex patterns and drivers of price volatility.\nAutomates data ingestion and analysis pipelines to ensure timely intelligence.'}]
-[{'key_roles': 'Demand Planner / Forecaster', 'responsibilities': 'Analyzes historical data and market signals to create statistical forecasts of freight demand.\nCollaborates with clients to incorporate their specific volume projections and business plans.\nMonitors forecast accuracy and adjusts models as market conditions change.'}, {'key_roles': 'Supply Chain Analyst', 'responsibilities': 'Monitors carrier capacity metrics such as tender rejection rates and truck postings.\nAnalyzes the impact of capacity constraints on service levels and costs.\nProvides insights for network design and risk mitigation within client blueprints.'}]
-[{'key_roles': 'Competitive Intelligence Analyst', 'responsibilities': 'Tracks competitor announcements, financial reports, and service changes.\nConducts SWOT analyses of key players in the road freight market.\nSynthesizes findings into actionable intelligence reports and presentations.'}, {'key_roles': 'Market Research Manager', 'responsibilities': 'Designs and executes studies to benchmark performance against key competitors.\nAnalyzes metrics like on-time performance, cost-per-mile, and customer satisfaction.\nIdentifies best practices and performance gaps to inform blueprint recommendations.'}]
-[{'key_roles': 'Compliance Specialist', 'responsibilities': 'Monitors regulatory bodies like the FMCSA and EPA for new and updated rules.\nAnalyzes the impact of legislation on trucking operations and costs.\nDisseminates updates on compliance requirements to internal teams and for inclusion in blueprints.'}, {'key_roles': 'Logistics Analyst', 'responsibilities': 'Models the cost and operational impact of regulatory changes, such as new equipment mandates.\nIncorporates compliance constraints and costs into network and financial models.\nAssesses regulatory risk as part of the overall viability assessment for blueprint projects.'}]
-[{'key_roles': 'Transportation Analyst', 'responsibilities': 'Collects and analyzes data on specific freight lanes to identify volume and cost trends.\nIdentifies imbalanced lanes (headhaul vs. backhaul) that present cost challenges.\nBenchmarks lane performance against market averages to identify improvement areas.'}, {'key_roles': 'Network Engineer / Modeler', 'responsibilities': "Uses specialized software to model and simulate transportation networks.\nRuns 'what-if' scenarios to test the impact of changes in lane assignments or facility locations.\nProvides data-driven recommendations for network optimization within client blueprints."}]
-[{'key_roles': 'Business Architect', 'responsibilities': 'Analyzes and designs TMS solutions within enterprise blueprints. Maps TMS capabilities to client business processes and strategic goals. Evaluates different TMS vendors and platforms based on client needs.'}, {'key_roles': 'Logistics Analyst', 'responsibilities': 'Uses TMS knowledge to model and analyze transportation networks. Identifies cost-saving opportunities through route and load optimization. Provides data-driven insights on carrier performance and selection.'}, {'key_roles': 'Solutions Consultant', 'responsibilities': 'Advises clients on the selection and implementation of TMS technology. Demonstrates how TMS features can address specific logistics challenges. Develops business cases and ROI analyses for TMS investments.'}]
-[{'key_roles': 'Fleet Operations Specialist', 'responsibilities': 'Analyzes telematics data to identify trends in driver behavior and vehicle performance. Develops strategies for improving fuel efficiency and fleet utilization. Manages vehicle maintenance schedules based on diagnostic alerts.'}, {'key_roles': 'Data Analyst', 'responsibilities': 'Builds dashboards and reports to visualize key fleet performance indicators. Performs predictive analytics on telematics data to forecast maintenance needs. Correlates fleet data with financial outcomes to measure ROI.'}, {'key_roles': 'Technology Consultant', 'responsibilities': 'Evaluates and recommends telematics and fleet management solutions. Designs integration strategies between telematics platforms and other business systems. Advises on best practices for leveraging telematics data for operational improvement.'}]
-[{'key_roles': 'Supply Chain Analyst', 'responsibilities': 'Monitors real-time shipment data to identify and address potential disruptions. Analyzes visibility data to measure on-time performance and identify bottlenecks. Communicates shipment status updates to internal and external stakeholders.'}, {'key_roles': 'Logistics Coordinator', 'responsibilities': 'Uses visibility platforms to track active shipments and manage carrier communications. Handles exceptions and coordinates solutions for in-transit issues. Provides customers with proactive updates on their delivery status.'}, {'key_roles': 'Customer Success Manager', 'responsibilities': 'Leverages visibility data to enhance the customer experience and build trust. Works with clients to configure notifications and reporting based on their needs. Analyzes trends in delivery performance to drive service improvements.'}]
-[{'key_roles': 'Logistics Engineer', 'responsibilities': 'Uses route optimization software to design and model efficient delivery routes. Analyzes the trade-offs between transportation costs and service levels. Conducts network studies to recommend strategic infrastructure changes.'}, {'key_roles': 'Operations Research Analyst', 'responsibilities': 'Develops and refines algorithms for solving complex routing problems. Builds simulation models to test the impact of different network strategies. Applies statistical analysis to historical data to improve planning accuracy.'}, {'key_roles': 'Network Planner', 'responsibilities': 'Manages the master route plan for a transportation network. Adjusts routes based on changing demand, capacity, and operational constraints. Collaborates with sales and operations to ensure network design supports business growth.'}]
-[{'key_roles': 'Business Development Manager', 'responsibilities': 'Identifies and evaluates new digital freight platforms and partnership opportunities. Develops strategies for leveraging digital marketplaces to expand carrier networks. Negotiates agreements with digital brokerage platform providers.'}, {'key_roles': 'Market Analyst', 'responsibilities': 'Monitors trends and competitive dynamics in the digital freight technology space. Analyzes pricing and capacity data from digital marketplaces. Provides insights on how digital transformation is impacting the freight industry.'}, {'key_roles': 'Digital Transformation Consultant', 'responsibilities': 'Advises clients on how to incorporate digital freight platforms into their operations. Designs workflows for integrating digital booking with existing TMS solutions. Helps clients manage the organizational change associated with adopting new technologies.'}]
-[{'key_roles': 'Compliance Manager', 'responsibilities': 'Oversees the implementation and use of compliance-related technologies. Monitors regulatory changes and ensures systems are updated accordingly. Manages data for safety audits and reporting to regulatory agencies.'}, {'key_roles': 'Safety Director', 'responsibilities': 'Uses data from safety systems to develop driver training and coaching programs. Investigates safety incidents and identifies root causes using system data. Establishes and promotes safety policies and procedures across the organization.'}, {'key_roles': 'Fleet Manager', 'responsibilities': 'Ensures all vehicles are equipped with required safety and compliance technology. Monitors ELD data to ensure driver compliance with hours-of-service rules. Uses system alerts to manage and schedule preventative vehicle maintenance.'}]
-[{'key_roles': 'Fleet Manager', 'responsibilities': 'Develops the overall vehicle lifecycle strategy. Manages capital budgets for vehicle acquisition and disposal. Determines optimal vehicle replacement cycles based on TCO analysis.'}, {'key_roles': 'Procurement Specialist', 'responsibilities': 'Handles the vehicle acquisition process, including sourcing and vendor negotiations. Manages relationships with vehicle manufacturers and dealers. Ensures vehicle specifications meet operational requirements.'}, {'key_roles': 'Financial Analyst', 'responsibilities': 'Performs total cost of ownership (TCO) and return on investment (ROI) analyses. Evaluates leasing versus purchasing options. Tracks and reports on fleet-related capital expenditures.'}]
-[{'key_roles': 'Maintenance Manager', 'responsibilities': 'Oversees all maintenance operations and workshop activities. Develops and implements preventive maintenance schedules. Manages the maintenance budget and controls repair costs.'}, {'key_roles': 'Fleet Technician', 'responsibilities': 'Performs scheduled preventive maintenance and vehicle inspections. Diagnoses and repairs mechanical and electrical issues. Documents all maintenance and repair work performed.'}, {'key_roles': 'Parts Manager', 'responsibilities': 'Manages the inventory of spare parts and supplies. Sources and orders parts from vendors. Tracks parts usage and optimizes stock levels.'}]
-[{'key_roles': 'Fuel Manager', 'responsibilities': "Develops and executes the company's fuel purchasing strategy. Analyzes fuel consumption data to identify savings opportunities. Manages relationships with fuel vendors and card providers."}, {'key_roles': 'Data Analyst', 'responsibilities': 'Monitors fuel efficiency metrics (e.g., MPG) across the fleet. Identifies trends and anomalies in fuel consumption. Generates reports on fuel costs and driver performance.'}, {'key_roles': 'Fleet Manager', 'responsibilities': 'Implements fuel-saving policies and procedures. Oversees driver training programs on fuel-efficient driving techniques. Evaluates and adopts new fuel-saving technologies.'}]
-[{'key_roles': 'Dispatcher', 'responsibilities': 'Assigns loads and routes drivers based on real-time asset location. Monitors vehicle progress and provides updates to customers. Adjusts schedules to account for delays or changing conditions.'}, {'key_roles': 'Fleet Analyst', 'responsibilities': 'Analyzes telematics data to identify operational inefficiencies. Develops reports on key performance indicators such as idle time, mileage, and asset uptime. Recommends strategies to improve asset utilization.'}, {'key_roles': 'Operations Manager', 'responsibilities': 'Oversees overall fleet productivity and asset allocation. Makes strategic decisions about fleet size and composition based on utilization data. Ensures technology for asset tracking is functioning correctly.'}]
-[{'key_roles': 'Safety and Compliance Manager', 'responsibilities': 'Oversees all regulatory adherence and safety programs. Manages driver qualification files and HOS logs. Conducts safety training and accident investigations.'}, {'key_roles': 'Fleet Administrator', 'responsibilities': 'Manages vehicle registrations, permits, and licensing. Maintains accurate and up-to-date compliance documentation. Schedules required vehicle inspections.'}, {'key_roles': 'Driver Trainer', 'responsibilities': 'Educates drivers on safety protocols, HOS rules, and other regulations. Conducts on-road training and performance evaluations. Promotes a culture of safety throughout the driver workforce.'}]
-[{'key_roles': 'FP&A Analyst', 'responsibilities': 'Develops and maintains complex financial models for forecasting and budgeting.\nPrepares monthly and quarterly financial reports for management, highlighting key trends and variances.\nAnalyzes financial and operational data to support departmental and project-level decision-making.\nAssists in the annual budgeting process and periodic forecasting cycles.'}, {'key_roles': 'Finance Manager', 'responsibilities': 'Oversees the FP&A function, ensuring the accuracy and timeliness of all financial plans and reports.\nActs as a strategic partner to business unit leaders, providing financial guidance and insights.\nPresents financial results, forecasts, and analyses to senior leadership and key stakeholders.\nDrives process improvements within the finance function to enhance efficiency and analytical capabilities.'}]
-[{'key_roles': 'Accountant', 'responsibilities': 'Prepares and posts journal entries to the general ledger.\nPerforms balance sheet account reconciliations to ensure accuracy.\nAssists in the month-end and year-end financial closing processes.\nSupports the preparation of financial statements and audit schedules.'}, {'key_roles': 'Corporate Controller', 'responsibilities': 'Oversees all accounting operations, including the general ledger, accounts payable, and accounts receivable.\nEnsures the timely and accurate preparation of all financial reports and statements.\nEstablishes and maintains internal controls to safeguard company assets and ensure compliance.\nServes as the primary point of contact for external auditors.'}]
-[{'key_roles': 'Accounts Receivable Specialist', 'responsibilities': 'Generates and issues customer invoices in a timely manner.\nMonitors customer accounts for overdue payments and initiates collection activities.\nApplies customer payments to outstanding invoices and resolves payment discrepancies.\nResponds to customer inquiries regarding billing and account status.'}, {'key_roles': 'Revenue Accountant', 'responsibilities': 'Ensures compliance with revenue recognition standards (e.g., ASC 606/IFRS 15).\nReviews contracts to determine the proper accounting for revenue.\nPrepares journal entries and reconciliations related to revenue and deferred revenue.\nCollaborates with sales and legal teams on contract structuring.'}]
-[{'key_roles': 'Accounts Payable Specialist', 'responsibilities': 'Processes supplier invoices, matching them to purchase orders and receiving documents.\nSchedules and prepares vendor payments via check, ACH, or wire transfer.\nResponds to vendor inquiries regarding invoice status and payment.\nReconciles vendor statements and resolves discrepancies.'}, {'key_roles': 'Procurement Manager', 'responsibilities': 'Develops and enforces procurement policies and procedures.\nNegotiates contracts and pricing with key suppliers to optimize costs.\nManages supplier relationships and performance.\nOversees the purchase order process to ensure proper authorization and coding of expenditures.'}]
-[{'key_roles': 'Treasury Analyst', 'responsibilities': 'Monitors daily cash balances and prepares cash position reports.\nDevelops short-term and long-term cash flow forecasts.\nExecutes electronic payments, such as wire transfers and ACHs.\nAssists in managing bank relationships and analyzing bank fees.'}, {'key_roles': 'Treasurer', 'responsibilities': "Develops and implements the company's overall treasury and risk management strategies.\nOversees all cash management, investment, and debt management activities.\nManages relationships with banks, credit rating agencies, and other financial institutions.\nAdvises senior management on capital structure and financing decisions."}]
-[{'key_roles': 'Project Accountant', 'responsibilities': 'Sets up new projects in the accounting system, including budgets and billing rules.\nTracks and analyzes project costs, including labor, materials, and overhead.\nPrepares and issues project-specific invoices to clients.\nGenerates project profitability reports and communicates findings to project managers.'}, {'key_roles': 'Project Manager', 'responsibilities': 'Develops the initial project budget and scope in collaboration with the sales and finance teams.\nMonitors project progress against budget and schedule, identifying and addressing variances.\nApproves project-related expenses and timesheets.\nServes as the primary point of contact for the client regarding project status and financial matters.'}]
-[{'key_roles': 'Recruiter', 'responsibilities': 'Manages job postings, sources and screens candidates, coordinates interviews, and extends employment offers.'}, {'key_roles': 'Hiring Manager', 'responsibilities': 'Defines position requirements, participates in the interview process, and makes the final hiring decision.'}, {'key_roles': 'HR Coordinator', 'responsibilities': 'Provides administrative support to the recruiting process, schedules interviews, and assists with pre-employment checks.'}]
-[{'key_roles': 'HR Specialist', 'responsibilities': 'Designs and manages the onboarding program, prepares new hire materials, and conducts orientation sessions.'}, {'key_roles': 'Hiring Manager', 'responsibilities': 'Develops a 30-60-90 day plan for new hires, facilitates team introductions, and provides role-specific training.'}, {'key_roles': 'IT Support Specialist', 'responsibilities': 'Sets up hardware and software access, including credentials for the Ascend platform and other development tools.'}]
-[{'key_roles': 'Manager', 'responsibilities': 'Sets performance expectations, provides regular feedback and coaching, and conducts formal performance reviews.'}, {'key_roles': 'Employee', 'responsibilities': 'Actively participates in goal setting, seeks constructive feedback, and pursues relevant development opportunities.'}, {'key_roles': 'Learning & Development Specialist', 'responsibilities': 'Identifies company-wide training needs and develops or sources programs to address skill gaps and promote career growth.'}]
-[{'key_roles': 'Compensation Analyst', 'responsibilities': 'Conducts market research, benchmarks salary ranges, and helps design and maintain compensation structures.'}, {'key_roles': 'Benefits Administrator', 'responsibilities': 'Manages employee benefits programs, handles enrollments and changes, and serves as a point of contact for employee inquiries.'}, {'key_roles': 'Payroll Specialist', 'responsibilities': 'Processes payroll accurately and on time, ensuring compliance with all applicable tax and labor laws.'}]
-[{'key_roles': 'HR Business Partner', 'responsibilities': 'Acts as a strategic partner to business units, providing guidance on employee relations issues and engagement strategies.'}, {'key_roles': 'Employee Relations Specialist', 'responsibilities': 'Investigates and resolves employee complaints and conflicts, ensuring compliance with labor laws and company policies.'}, {'key_roles': 'Engagement Coordinator', 'responsibilities': 'Plans and executes initiatives, events, and programs designed to boost morale and foster a positive company culture.'}]
-[{'key_roles': 'HR Generalist', 'responsibilities': 'Manages the offboarding checklist, conducts exit interviews, and processes all final separation paperwork.'}, {'key_roles': 'IT Administrator', 'responsibilities': "Revokes system access and secures company data upon an employee's departure in a timely manner."}, {'key_roles': 'Alumni Relations Coordinator', 'responsibilities': 'Manages the corporate alumni network, including communications, events, and engagement initiatives.'}]
-[{'key_roles': 'Compliance Officer', 'responsibilities': 'Monitors regulatory changes from agencies like the FMCSA and DOT. Develops and implements internal compliance policies and procedures. Conducts internal audits and risk assessments. Serves as the primary contact for regulatory agencies during inspections or inquiries.'}, {'key_roles': 'Legal Counsel', 'responsibilities': 'Provides legal interpretation of complex transportation regulations. Advises leadership on compliance strategies and potential legal risks. Represents the company in regulatory enforcement actions or disputes.'}]
-[{'key_roles': 'Contract Manager', 'responsibilities': 'Drafts, reviews, and negotiates standard commercial agreements (e.g., shipper, carrier, vendor contracts). Maintains the central contract repository and tracks key dates, renewals, and obligations. Works with business units to ensure operational terms are accurately reflected in contracts.'}, {'key_roles': 'Legal Counsel', 'responsibilities': 'Provides legal review and approval for all non-standard or high-value contracts. Leads negotiation on complex legal terms, such as liability, indemnity, and insurance. Advises on contractual disputes and remedies for breach of contract.'}]
-[{'key_roles': 'Litigation Counsel', 'responsibilities': "Manages the company's litigation portfolio and develops case strategy. Represents the company in legal proceedings or manages external counsel. Conducts early case assessment to determine risk and potential settlement value."}, {'key_roles': 'Paralegal', 'responsibilities': 'Assists with case management, including document collection and discovery (e-discovery). Conducts legal research and drafts legal documents. Coordinates with witnesses and external legal teams.'}, {'key_roles': 'Claims Adjuster', 'responsibilities': 'Investigates incidents, such as accidents or cargo damage, to assess liability. Negotiates settlements for smaller claims to avoid costly litigation. Documents all claim-related activities and evidence.'}]
-[{'key_roles': 'Risk Manager', 'responsibilities': 'Identifies and assesses insurable risks across the business. Manages relationships with insurance brokers and carriers to secure appropriate coverage. Analyzes loss data to identify trends and inform safety and loss prevention programs.'}, {'key_roles': 'Claims Manager', 'responsibilities': "Oversees the end-to-end claims process from first notice of loss to resolution. Ensures proper documentation and reporting of all claims to insurers. Works to control claim costs and advocates for the company's interests during the adjustment process."}]
-[{'key_roles': 'General Counsel', 'responsibilities': 'Oversees all corporate governance matters and advises the board of directors. Ensures the company complies with corporate law and its own bylaws. Manages the legal aspects of corporate structuring and transactions.'}, {'key_roles': 'Corporate Paralegal', 'responsibilities': 'Manages corporate records and the official minute book. Prepares and files annual reports and other required documents to maintain good standing. Assists with the formation or dissolution of legal entities as needed.'}]
-[{'key_roles': 'Privacy Counsel', 'responsibilities': 'Monitors and interprets data privacy laws and regulations. Develops and maintains internal and external privacy policies and notices. Manages the response to data subject access requests and other privacy-related inquiries.'}, {'key_roles': 'Chief Information Security Officer (CISO)', 'responsibilities': "Collaborates with legal counsel to align the company's cybersecurity strategy with legal requirements. Oversees the implementation of technical and administrative safeguards for data protection. Leads the technical response team in the event of a data breach."}]
-[{'key_roles': 'Sourcing Manager', 'responsibilities': 'Leads the strategic sourcing process from market analysis to supplier identification. Develops and implements sourcing strategies for various spend categories. Builds relationships with key suppliers and negotiates initial terms.'}, {'key_roles': 'Procurement Specialist', 'responsibilities': 'Manages the tactical request for proposal (RFP) and request for quotation (RFQ) processes. Analyzes supplier bids and proposals to determine the best value. Coordinates with internal stakeholders to gather business requirements for sourcing events.'}, {'key_roles': 'Category Manager', 'responsibilities': 'Develops deep expertise in specific spend categories (e.g., IT, logistics, professional services). Creates and executes long-term category strategies to optimize cost and quality. Monitors market trends and innovations within their assigned categories.'}]
-[{'key_roles': 'Supplier Relationship Manager', 'responsibilities': 'Oversees the end-to-end onboarding process for strategic suppliers. Acts as the main point of contact for new suppliers to ensure a smooth integration. Communicates company policies and performance expectations to new partners.'}, {'key_roles': 'Procurement Coordinator', 'responsibilities': 'Gathers, verifies, and maintains all required supplier documentation. Facilitates the setup of suppliers in enterprise resource planning (ERP) and other systems. Handles administrative tasks related to the onboarding workflow.'}, {'key_roles': 'Compliance Officer', 'responsibilities': 'Conducts due diligence to ensure suppliers meet all regulatory and company-specific compliance requirements. Assesses supplier risk related to legal, environmental, and social governance standards. Maintains records of supplier compliance certifications and audits.'}]
-[{'key_roles': 'Contract Manager', 'responsibilities': 'Drafts, reviews, and negotiates the terms and conditions of supplier contracts. Manages the contract lifecycle, including amendments, renewals, and terminations. Maintains a central repository of all supplier agreements and related documentation.'}, {'key_roles': 'Legal Counsel', 'responsibilities': 'Provides legal review and guidance on contract terms to ensure compliance and mitigate risk. Advises on intellectual property, liability, and indemnity clauses. Assists in resolving contractual disputes with suppliers.'}, {'key_roles': 'Procurement Manager', 'responsibilities': 'Oversees commercial negotiations to ensure alignment with business objectives and procurement policies. Approves final contract terms before execution. Ensures that contracts deliver the best possible value and service outcomes.'}]
-[{'key_roles': 'Supplier Performance Analyst', 'responsibilities': 'Develops and maintains supplier performance metrics (KPIs) and scorecards. Collects and analyzes performance data from various sources. Generates regular reports and dashboards for stakeholder review.'}, {'key_roles': 'Category Manager', 'responsibilities': 'Conducts formal business reviews with key suppliers to discuss performance and strategic alignment. Identifies and drives supplier-led continuous improvement initiatives. Manages action plans to address performance gaps.'}, {'key_roles': 'Operations Manager', 'responsibilities': 'Provides direct, day-to-day feedback on the performance of suppliers related to their specific business functions. Reports operational issues or successes related to supplier service delivery. Collaborates with procurement on resolving supplier performance problems.'}]
-[{'key_roles': 'Risk Manager', 'responsibilities': 'Develops and implements the overall supplier risk management framework. Oversees periodic risk assessments of the strategic supplier base. Reports on key risk exposures and mitigation plans to senior leadership.'}, {'key_roles': 'Supply Chain Analyst', 'responsibilities': 'Monitors the supply chain for potential risks and analyzes the business impact of disruptions. Tracks supplier financial health, geopolitical events, and other external risk factors. Supports the development of business continuity and contingency plans.'}, {'key_roles': 'Information Security Analyst', 'responsibilities': 'Assesses cybersecurity and data privacy risks associated with technology suppliers. Conducts security reviews and audits of vendors handling sensitive company data. Ensures supplier compliance with information security policies and standards.'}]
-[{'key_roles': 'Accounts Payable Specialist', 'responsibilities': 'Processes supplier invoices, verifies their accuracy against purchase orders, and codes them for payment. Manages the payment run schedule to ensure timely disbursement of funds. Serves as the primary point of contact for supplier payment inquiries.'}, {'key_roles': 'Procurement Coordinator', 'responsibilities': 'Assists in resolving discrepancies between purchase orders, receipts, and invoices. Ensures that purchase orders are correctly issued and communicated to suppliers. Facilitates communication between accounts payable and business stakeholders.'}, {'key_roles': 'Treasury Analyst', 'responsibilities': 'Manages daily cash flow to ensure sufficient funds are available for supplier payments. Executes electronic payments and other forms of fund transfers. Analyzes opportunities for optimizing payment terms and capturing early payment discounts.'}]
-[{'key_roles': 'Investor Relations Officer', 'responsibilities': 'Leads the IR program, Serves as the primary contact for the investment community, Develops key messaging'}, {'key_roles': 'Financial Analyst (IR)', 'responsibilities': 'Prepares financial models, Analyzes competitor performance, Supports the creation of earnings releases and presentations'}, {'key_roles': 'Communications Specialist', 'responsibilities': 'Drafts press releases, Scripts for investor calls, Content for the investor relations section of the company website'}]
-[{'key_roles': 'Public Relations Manager', 'responsibilities': 'Develops and executes PR strategies, Acts as a company spokesperson, Builds relationships with journalists'}, {'key_roles': 'Content Creator/Writer', 'responsibilities': 'Drafts press releases, articles, and social media content to communicate company news and initiatives'}, {'key_roles': 'Media Analyst', 'responsibilities': 'Monitors media coverage, Tracks key metrics, Provides insights on public perception and industry trends'}]
-[{'key_roles': 'Government Affairs Director', 'responsibilities': "Leads lobbying efforts, Builds relationships with policymakers, Develops the company's public policy positions"}, {'key_roles': 'Regulatory Compliance Specialist', 'responsibilities': 'Monitors new and existing regulations, Ensures company policies are compliant, Prepares regulatory filings and communications'}, {'key_roles': 'Policy Analyst', 'responsibilities': 'Researches and analyzes proposed legislation and regulations to assess their potential impact on the business'}]
-[{'key_roles': 'Crisis Communications Manager', 'responsibilities': 'Leads the crisis response team, Develops communication protocols, Serves as the lead spokesperson during an incident'}, {'key_roles': 'Legal Counsel', 'responsibilities': 'Advises on the legal implications of communications and ensures statements are accurate and do not create undue liability'}, {'key_roles': 'Operations Liaison', 'responsibilities': 'Provides real-time, accurate information from the field to the crisis communication team to ensure public statements are fact-based'}]
-[{'key_roles': 'Corporate Secretary', 'responsibilities': 'Oversees the administration of shareholder meetings, Maintains corporate records, Ensures compliance with securities laws and listing requirements'}, {'key_roles': 'Shareholder Services Coordinator', 'responsibilities': 'Manages day-to-day communications with shareholders, Responds to inquiries, Coordinates with the transfer agent'}, {'key_roles': 'Financial Reporting Accountant', 'responsibilities': 'Prepares the financial sections of the annual report and other shareholder communications to ensure accuracy and compliance with accounting standards'}]
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-E0000 00:00:1791973408.560693   21076 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+E0000 00:00:1791975310.101168   11880 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
 ========================================
 i =  0
-E0000 00:00:1791973408.584483   21076 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1791975310.106468   11880 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
 ========================================
 i =  1
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
 ========================================
 i =  2
 ========================================
 i =  3
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
 ========================================
 i =  4
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
 ========================================
 i =  5
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 5, 'jobMetadata': {'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
 ========================================
 i =  6
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 5, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+========================================
 ========================================
 i =  7
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 6, 'jobMetadata': {'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+========================================
+i =  8
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 6, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+========================================
+i =  9
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 7, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+========================================
+i =  10
+========================================
+i =  11
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 8, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+========================================
+i =  12
+========================================
+i =  13
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 9, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+========================================
+i =  14
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 10, 'jobMetadata': {'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'action': 'GENERATE_L2_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
 
 --- Starting database operations ---
 Getting database session...
@@ -713,61 +333,56 @@ Database session created.
 --- Running Update Operation ---
 
 --- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 934
+Successfully updated output record with key: 944
 Updated Description: L1L2 CAPABILITIES OPEX
 
 --- Operations finished ---
-2026-10-14 15:55:45,331 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+2026-10-14 16:28:40,365 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
 Request method: 'GET'
 Request headers:
     'x-ms-version': 'REDACTED'
     'Accept': 'application/xml'
     'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
     'x-ms-date': 'REDACTED'
-    'x-ms-client-request-id': '9dab42a8-c7b9-11f1-8b77-d4f32df15686'
+    'x-ms-client-request-id': '36e17462-c7be-11f1-a177-d4f32df15686'
     'Authorization': 'REDACTED'
 No body was attached to the request
-2026-10-14 15:55:47,986 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+2026-10-14 16:28:42,001 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
 Response headers:
     'Transfer-Encoding': 'chunked'
     'Content-Type': 'application/xml'
     'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
-    'x-ms-request-id': '9d990a29-201e-008f-30c6-5b7ed4000000'
-    'x-ms-client-request-id': '9dab42a8-c7b9-11f1-8b77-d4f32df15686'
+    'x-ms-request-id': '316baf4d-c01e-004c-78ca-5b678e000000'
+    'x-ms-client-request-id': '36e17462-c7be-11f1-a177-d4f32df15686'
     'x-ms-version': 'REDACTED'
-    'Date': 'Wed, 14 Oct 2026 10:25:47 GMT'
-2026-10-14 15:55:47,999 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/88/934/OPEX_Generation_Output_for_levels_L2_1e1c906e-b17d-4603-9d63-91ae65ddf98a.json'
+    'Date': 'Wed, 14 Oct 2026 10:58:40 GMT'
+2026-10-14 16:28:42,001 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/89/944/OPEX_Generation_Output_for_levels_L2_59569dfd-20f6-4b67-a228-cf39bb433b3d.json'
 Request method: 'PUT'
 Request headers:
-    'Content-Length': '358987'
+    'Content-Length': '207233'
     'x-ms-blob-type': 'REDACTED'
     'x-ms-version': 'REDACTED'
     'Content-Type': 'application/octet-stream'
     'Accept': 'application/xml'
     'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
     'x-ms-date': 'REDACTED'
-    'x-ms-client-request-id': '9f423c24-c7b9-11f1-ad6d-d4f32df15686'
+    'x-ms-client-request-id': '37db1789-c7be-11f1-95c0-d4f32df15686'
     'Authorization': 'REDACTED'
 A body is sent with the request
-2026-10-14 15:55:51,157 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+2026-10-14 16:28:44,538 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
 Response headers:
     'Content-Length': '0'
     'Content-MD5': 'REDACTED'
-    'Last-Modified': 'Wed, 14 Oct 2026 10:25:51 GMT'
-    'ETag': '"0x8DF29DD85435986"'
+    'Last-Modified': 'Wed, 14 Oct 2026 10:58:44 GMT'
+    'ETag': '"0x8DF29E21D7BED4D"'
     'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
-    'x-ms-request-id': 'ba71ad03-001e-000e-42c6-5bde0e000000'
-    'x-ms-client-request-id': '9f423c24-c7b9-11f1-ad6d-d4f32df15686'
+    'x-ms-request-id': 'c46cebcc-d01e-001d-4bca-5bfa02000000'
+    'x-ms-client-request-id': '37db1789-c7be-11f1-95c0-d4f32df15686'
     'x-ms-version': 'REDACTED'
     'x-ms-content-crc64': 'REDACTED'
     'x-ms-request-server-encrypted': 'REDACTED'
-    'Date': 'Wed, 14 Oct 2026 10:25:50 GMT'
-  'x-ms-client-request-id': '9f423c24-c7b9-11f1-ad6d-d4f32df15686'
-    'x-ms-version': 'REDACTED'
-    'x-ms-content-crc64': 'REDACTED'
-    'x-ms-request-server-encrypted': 'REDACTED'
-    'Date': 'Wed, 14 Oct 2026 10:25:50 GMT'
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'Inserting', 'Logs': ' IA total opex inserting into DB for action GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'missingFields': ['processKey']}}
+    'Date': 'Wed, 14 Oct 2026 10:58:43 GMT'
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'Inserting', 'Logs': ' IA total opex inserting into DB for action GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'missingFields': ['processKey']}}
 
 --- Starting database operations ---
 Getting database session...
@@ -777,12 +392,12 @@ Database session created.
 --- Running Update Operation ---
 
 --- Updating the sub_step_output record ---
-Successfully updated output record with key: 284
+Successfully updated output record with key: 293
 Updated Description: 
 Updated File Name: OPEX_Allocation_Output_for_levels_L2.json
 
 --- Operations finished ---
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'Generated', 'Logs': ' IA total opex inserted into DB for action GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Generated', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:934:293:l2-capability-opex-934-1791964919802', 'missingFields': ['processKey']}}
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'Generated', 'Logs': ' IA total opex inserted into DB for action GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Generated', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:944:299:l2-capability-opex-944-1791965596886', 'missingFields': ['processKey']}}
 
 --- Starting database operations ---
 Getting database session...
@@ -790,11 +405,11 @@ Database session created.
 --- Running Update Operation ---
 
 --- Updating the blueprinting_process_sub_step_output record ---
-Successfully updated output record with key: 934
+Successfully updated output record with key: 944
 Updated Description: L1L2 CAPABILITIES OPEX
 
 --- Operations finished ---
-{'ID': 'l2-capability-opex-934-1791964919802', 'Status': 'Completed', 'Logs': ' IA opex inserted into DB for action GENERATE_L2_OPEX', 'input_key': 293, 'substepkey': 934, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 100, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'processKey': 88, 'stepKey': 437, 'substepkey': 934, 'input_key': 293, 'ID': 'l2-capability-opex-934-1791964919802', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:01:59.802Z', 'channelName': 'impactAnalyzer_background_process', 'module': 'Impact Analyzer', 'subModule': None, 'action': 'GENERATE_L2_OPEX', 'jobId': 'genai:88:934:293:l2-capability-opex-934-1791964919802', 'missingFields': []}}
+{'ID': 'l2-capability-opex-944-1791965596886', 'Status': 'Completed', 'Logs': ' IA opex inserted into DB for action GENERATE_L2_OPEX', 'input_key': 299, 'substepkey': 944, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 100, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'processKey': 89, 'stepKey': 444, 'substepkey': 944, 'input_key': 299, 'ID': 'l2-capability-opex-944-1791965596886', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:13:16.886Z', 'channelName': 'impactAnalyzer_background_process', 'module': 'Impact Analyzer', 'subModule': None, 'action': 'GENERATE_L2_OPEX', 'jobId': 'genai:89:944:299:l2-capability-opex-944-1791965596886', 'missingFields': []}}
 Getting database session...
 Database session created.
 --- Reading app_user for email: gedchaitanya@deloitte.com ---
