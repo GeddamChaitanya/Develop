@@ -1,3 +1,44 @@
+## Summary
+L1/L2 OpEx generation could stay stuck in loading / at 5% forever. When the
+background job failed, the exception handler never reported it: the guard
+`"substepkey" in locals()` was always false, so the failed DB status and the
+Redis "Error" event were never sent and the UI kept waiting.
+
+## Changes (apis/v1/agentic_fit_allocator.py – exception handler only)
+- Use the real substepkey/input_key (job metadata, falling back to the payload)
+  for the failed status write and the Error event.
+- Safe defaults for action/client_info/receiver_email/channel when the failure
+  happens early.
+- Failed-status DB write is best-effort (own try/except); sub_step_name is only
+  sent when available (early failures previously hit a NOT NULL violation and
+  crashed the handler).
+- Redis "Error" event is always published, regardless of the DB write.
+- No changes to the success path.
+
+## Root cause context
+On dummy projects Total OpEx is empty (no client data), so generation fails
+without it. That failure was hidden by the handler bug, so the UI stayed stuck.
+With Total OpEx entered, L1 and L2 complete.
+
+## Github Issues Addressed
+- Deloitte-US-Consulting-HO/aai-bpt-maincodebase#1570
+
+## Testing (local, Ascend DB, real payloads)
+- Scenario 1 – AI Research: L1 (#88/932) and L2 (#88/934) Completed, 100%
+- Scenario 2 – Client Capability Map: L1 (#89/943) and L2 (#89/944) Completed, 100%
+- Early failure (non-existent input_key): Error published, DB status updated,
+  no handler crash
+- Heartbeats continue throughout long L2 runs
+
+## Out of scope / follow-ups (to be raised separately)
+- ORM still queries `survey_response.client_id` and
+  `project_supporting_file.client_supporting_file_key`, which don't exist in
+  the Ascend DB, so survey and file context are skipped (affects citations).
+- When the input record isn't found, the job continues instead of failing fast.
+- With company name missing, OpEx research falls back to a default company's
+  SEC data.
+- Email step fails locally with "Incorrect padding" (non-Ascend comm string).
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 l2 scenario output client capability 
 
 --- Reading app_user for email: gedchaitanya@deloitte.com ---
