@@ -1,15 +1,172 @@
-In utilities/cdc_export.py only, at the two places we changed earlier 
-(header in _add_header_footer and the Current State Pool label):
+I’ll confirm `get_workspace_name()` and inspect the two label locations, then edit only `cdc_export.py` and show the full diff.
 
-1. First confirm get_workspace_name() in utilities/project_compat.py:
-   - its signature (does it accept default=?)
-   - that it resolves workspaceName / WorkspaceName / workspace_name from the 
-     full json_obj, including top-level and nested projectInfo/clientInfo.
-2. Import get_workspace_name alongside get_project_name.
-3. Build: display_name = " - ".join(n for n in (project_name, workspace_name) if n)
-   - Header: use display_name, fallback "" if empty.
-   - Pool: use display_name, fallback "<< Add Pool Name >>" if empty.
-4. Change nothing else. Show the full diff.
+
+Ran terminal command: git diff -- utilities/cdc_export.py
+
+Searched for regex `def get_workspace_name|def get_project_name|workspaceName|WorkspaceName|workspace_name` (`**/utilities/project_compat.py`), 10 results
+
+Searched for regex `get_project_name|def _add_header_footer|Add Pool Name|Pool` (`**/utilities/cdc_export.py`), 5 results
+
+The existing diff contains the earlier project-name changes at both locations. I’ll inspect the helper’s normalization path to confirm how it handles top-level and nested workspace fields.
+
+
+Read , lines 20 to 85
+
+Read , lines 600 to 635
+
+Read , lines 1 to 130
+
+`get_workspace_name(payload_or_info: Any, default: str = "") -> str` accepts `default` and recognizes all three spellings. One caveat: it selects nested `projectInfo`/`clientInfo` when present, so it won’t fall back to a top-level workspace field in a mixed payload. I’ll use the existing helper unchanged and add the requested joined names at the two label locations.
+
+
+Generating patch (41 lines) in 
+
+
+```
+
+```
+The edits are in place. I’ll check the header and Pool labels with both names, either name alone, and neither name, without invoking LLM calls or document uploads.
+
+
+Ran terminal command: & '.\.venv\Scripts\python.exe' -B -c @'
+import ast
+from pathlib import Path
+from datetime import datetime
+from docx import Document
+from docx.shared import Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from utilities.project_compat import get_project_name, get_workspace_name
+source = Path('utilities/cdc_export.py').read_text(encoding='utf-8')
+tree = ast.parse(source)
+compile(tree, 'utilities/cdc_export.py', 'exec')
+header = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == '_add_header_footer')
+pool = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == '_generate_current_state_docx')
+stop = next(index for index, node in enumerate(pool.body) if isinstance(node, ast.Expr) and isinstance(node.value, ast.Call) and isinstance(node.value.func, ast.Name) and node.value.func.id == 'add_subheader' and len(node.value.args) > 1 and isinstance(node.value.args[1], ast.Constant) and node.value.args[1].value == 'Lanes')
+pool.body = pool.body[:stop] + [ast.Return(value=ast.Name(id='doc', ctx=ast.Load()))]
+module = ast.fix_missing_locations(ast.Module(body=[header, pool], type_ignores=[]))
+namespace = {'Document': Document, 'datetime': datetime, 'Pt': Pt, 'WD_ALIGN_PARAGRAPH': WD_ALIGN_PARAGRAPH, 'get_project_name': get_project_name, 'get_workspace_name': get_workspace_name, '_add_title_block': lambda *args, **kwargs: None, 'add_header': lambda doc, text: doc.add_paragraph(text), 'add_subheader': lambda doc, text: doc.add_paragraph(text)}
+exec(compile(module, '<isolated CDC label check>', 'exec'), namespace)
+cases = []
+for container in (None, 'projectInfo', 'clientInfo'):
+    for key in ('workspaceName', 'WorkspaceName', 'workspace_name'):
+        info = {'projectName': 'Project', key: 'Workspace'}
+        payload = info if container is None else {container: info}
+        cases.append((payload, 'Project - Workspace'))
+cases.extend([({'projectInfo': {'projectName': 'Project'}}, 'Project'), ({'workspaceName': 'Workspace'}, 'Workspace'), ({}, ''), ({'projectInfo': {'projectName': 'Project'}, 'workspaceName': 'Workspace'}, 'Project')])
+for payload, expected in cases:
+    doc = namespace['_generate_current_state_docx'](payload)
+    assert doc.sections[0].header.paragraphs[0].text == 'Capability Double Click  ' + expected
+    assert doc.paragraphs[-1].text == (expected or '<< Add Pool Name >>')
+assert get_workspace_name({}, default='fallback') == 'fallback'
+print(f'PASS: syntax and {len(cases)} header/Pool cases; default= supported; nested-info precedence confirmed.')
+'@
+
+All 13 header/Pool cases passed, and syntax validation passed. I’ll check editor diagnostics and retrieve the full file diff, including the earlier changes.
+
+
+Ran terminal command: git diff -- utilities/cdc_export.py
+
+Checked , 5 problems found
+
+Changed only `cdc_export.py`.
+
+Confirmed signature: `get_workspace_name(payload_or_info: Any, default: str = "") -> str`. It recognizes all three workspace spellings at top level or inside `projectInfo`/`clientInfo`. **Caveat:** nonempty nested info takes precedence; it does not fall back to top-level fields.
+
+Syntax and 13 header/Pool checks passed. Editor diagnostics still report unresolved `docx`/Azure imports.
+
+Full diff against HEAD, including the earlier changes:
+
+```diff
+diff --git a/utilities/cdc_export.py b/utilities/cdc_export.py
+index 421a5ee..b87e725 100644
+--- a/utilities/cdc_export.py
++++ b/utilities/cdc_export.py
+@@ -23,6 +23,7 @@ import re
+ 
+ from azure.storage.blob import BlobServiceClient
+ from utilities.telemetry import track_trace
++from utilities.project_compat import get_project_name, get_workspace_name
+ 
+ # Azure Storage Config
+ AZURE_CONTAINER_NAME = os.getenv("AZURE_INDUSTRIAL_MAP_CONTAINER")
+@@ -48,7 +49,9 @@ def _add_header_footer(doc, json_obj: dict):
+     Footer (every page):
+         Enterprise AI Navigator
+     """
+-    client_name = json_obj.get("clientInfo", {}).get("clientName", "")
++    project_name = get_project_name(json_obj, default="")
++    workspace_name = get_workspace_name(json_obj, default="")
++    display_name = " - ".join(n for n in (project_name, workspace_name) if n)
+     bg = json_obj.get("backgroundProcessingInfo", {})
+     analysis_name = bg.get("processName", bg.get("category", "Capability Double Click"))
+     export_date = datetime.now().strftime("%B %d, %Y")
+@@ -58,10 +61,10 @@ def _add_header_footer(doc, json_obj: dict):
+     header = section.header
+     header.is_linked_to_previous = False
+ 
+-    # Line 1: Analysis Name + Client Name
++    # Line 1: Analysis Name + Project Name
+     h_para = header.paragraphs[0] if header.paragraphs else header.add_paragraph()
+     h_para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+-    run1 = h_para.add_run(f"{analysis_name}  {client_name}")
++    run1 = h_para.add_run(f"{analysis_name}  {display_name or ''}")
+     run1.bold = True
+     run1.font.size = Pt(9)
+ 
+@@ -612,8 +615,10 @@ def _generate_current_state_docx(json_obj: dict) -> str:
+     # Participants (BPMN Mapping)
+     add_header(doc, "Participants (BPMN Mapping)")
+     add_subheader(doc, "Pool")
+-    client_name = json_obj.get("clientInfo", {}).get("clientName", "<< Add Pool Name >>")
+-    doc.add_paragraph(client_name)
++    project_name = get_project_name(json_obj, default="")
++    workspace_name = get_workspace_name(json_obj, default="")
++    display_name = " - ".join(n for n in (project_name, workspace_name) if n)
++    doc.add_paragraph(display_name or "<< Add Pool Name >>")
+ 
+     add_subheader(doc, "Lanes")
+     try:
+```
+
+Made changes.
+
+
+
+cdc default payload , 
+{
+  "stepKey": 0,
+  "substepkey": 0,
+  "processName": "string",
+  "processKey": 0,
+  "input_key": 0,
+  "input_name": "string",
+  "OutputKey": 0,
+  "ProjectKey": 0,
+  "WorkspaceName": "string",
+  "ParentWorkspaceName": "string",
+  "WorkspaceDescription": "string",
+  "discount_rate": 0.1,
+  "TwoByTwoOutPutKeys": [
+    0
+  ],
+  "receiverEmail": "string"
+}
+
+copilot generated payload for swagger 
+{
+  "stepKey": 441,
+  "substepkey": "<existing CDC substep key>",
+  "processName": "Blueprinting Analysis-#89",
+  "processKey": 89,
+  "input_key": "<existing CDC input key>",
+  "input_name": "Capability Double Click Input",
+  "ProjectKey": 1,
+  "TwoByTwoOutPutKeys": null
+}
+
+
+
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Read-only. Find which FastAPI endpoint/action calls generate_cdc_docs() in 
 utilities/cdc_export.py (likely in apis/v1/capability_double_click.py). 
