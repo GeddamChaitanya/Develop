@@ -1,3 +1,133 @@
+I’ll search for CDC/MAS download code that reconstructs paths from project or client IDs, then check the existing key helper. If no reconstruction is found, I’ll change only the CDC key lookup and show the full diff.
+
+
+Ran terminal command: git diff -- utilities/cdc_export.py
+
+Searched for regex `/cdc/|MAS/|[/\\]cdc[/\\]`, 9 results
+
+Read , lines 88 to 125
+
+The literal `/cdc/` and `MAS/` matches are in upload path builders and documentation, not download code. `get_project_key()` already prefers `projectKey` over `clientKey` and handles `projectInfo`/`clientInfo`. I’ll check generic blob readers for dynamically assembled paths before editing.
+
+
+Searched for regex `download_blob|get_blob_client|mas_process_file|["']cdc["']|["']MAS["']|NV_PoC_V1`, 29 results
+
+Read , lines 529 to 542
+
+The remaining matches are generic blob readers that accept paths. I’ll inspect their path handling to verify they don’t rebuild CDC/MAS paths from IDs.
+
+
+Read , lines 43 to 130
+
+Read , lines 192 to 251
+
+Read , lines 176 to 203
+
+No CDC/MAS path reconstruction was found in this repo’s read/download code; those readers use the supplied stored path. I’ll add the helper import and replace only `_extract_common()`’s key lookup with `get_project_key(json_obj) or "Unknown"`. `jsontodocx.py` will remain untouched.
+
+
+Generating patch (20 lines) in 
+
+
+```
+
+```
+I’ll validate the edited extraction function for project-key precedence, legacy client-key fallback, and missing or invalid keys, without generating or uploading documents.
+
+
+Ran terminal command: & '.\.venv\Scripts\python.exe' -B -c @'
+import ast
+from pathlib import Path
+from utilities.project_compat import get_project_key
+source = Path('utilities/cdc_export.py').read_text(encoding='utf-8')
+tree = ast.parse(source)
+compile(tree, 'utilities/cdc_export.py', 'exec')
+function = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == '_extract_common')
+namespace = {'get_project_key': get_project_key}
+exec(compile(ast.Module(body=[function], type_ignores=[]), '<CDC key extraction check>', 'exec'), namespace)
+cases = [({'projectInfo': {'projectKey': 1}}, 1), ({'projectInfo': {'projectKey': 2, 'clientKey': 3}}, 2), ({'projectInfo': {'clientKey': 4}}, 4), ({'clientInfo': {'projectKey': 5, 'clientKey': 6}}, 5), ({'clientInfo': {'clientKey': 7}}, 7), ({'projectInfo': {'projectKey': '8'}}, 8), ({}, 'Unknown'), ({'projectInfo': {}}, 'Unknown'), ({'projectInfo': {'projectKey': None}}, 'Unknown'), ({'projectInfo': {'projectKey': 'invalid'}}, 'Unknown')]
+for payload, expected in cases:
+    payload = {**payload, 'current_state': {'process_name': 'Sales Pipeline Management'}, 'selected_capability_map': [{'uniqueId': 'cap-1'}]}
+    assert namespace['_extract_common'](payload) == ('Sales Pipeline Management', expected, 'cap-1')
+print(f'PASS: syntax and {len(cases)} CDC key extraction cases. No generation or uploads invoked.')
+'@
+
+Syntax and all 10 extraction cases passed, including `projectInfo.projectKey = 1` resolving to `1`. I’ll retrieve the full diff and check editor diagnostics; the MAS exporter is unchanged.
+
+
+Ran terminal command: git diff -- utilities/cdc_export.py
+
+Checked , 5 problems found
+
+No CDC/MAS download-path reconstruction was found. Readers use supplied paths: `file_storage.py:222`, `file_loader.py:43`, and `client_file_context.py:176`. CDC/MAS path construction occurs only during export/upload.
+
+`project_compat.py:103` handles `projectInfo`/`clientInfo`, preferring `projectKey` over `clientKey`. Changed only the CDC import and lookup. MAS remains unchanged.
+
+Syntax and 10 focused checks passed. Existing editor import diagnostics remain. Full diff against HEAD, including earlier label changes:
+
+```diff
+diff --git a/utilities/cdc_export.py b/utilities/cdc_export.py
+index 421a5ee..2c74115 100644
+--- a/utilities/cdc_export.py
++++ b/utilities/cdc_export.py
+@@ -23,6 +23,7 @@ import re
+ 
+ from azure.storage.blob import BlobServiceClient
+ from utilities.telemetry import track_trace
++from utilities.project_compat import get_project_key, get_project_name, get_workspace_name
+ 
+ # Azure Storage Config
+ AZURE_CONTAINER_NAME = os.getenv("AZURE_INDUSTRIAL_MAP_CONTAINER")
+@@ -48,7 +49,9 @@ def _add_header_footer(doc, json_obj: dict):
+     Footer (every page):
+         Enterprise AI Navigator
+     """
+-    client_name = json_obj.get("clientInfo", {}).get("clientName", "")
++    project_name = get_project_name(json_obj, default="")
++    workspace_name = get_workspace_name(json_obj, default="")
++    display_name = " - ".join(n for n in (project_name, workspace_name) if n)
+     bg = json_obj.get("backgroundProcessingInfo", {})
+     analysis_name = bg.get("processName", bg.get("category", "Capability Double Click"))
+     export_date = datetime.now().strftime("%B %d, %Y")
+@@ -58,10 +61,10 @@ def _add_header_footer(doc, json_obj: dict):
+     header = section.header
+     header.is_linked_to_previous = False
+ 
+-    # Line 1: Analysis Name + Client Name
++    # Line 1: Analysis Name + Project Name
+     h_para = header.paragraphs[0] if header.paragraphs else header.add_paragraph()
+     h_para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+-    run1 = h_para.add_run(f"{analysis_name}  {client_name}")
++    run1 = h_para.add_run(f"{analysis_name}  {display_name or ''}")
+     run1.bold = True
+     run1.font.size = Pt(9)
+ 
+@@ -531,7 +534,7 @@ def _save_and_upload(doc, tab_suffix: str, client_key, unique_id: str,
+ def _extract_common(json_obj: dict) -> tuple:
+     """Return (process_name, client_key, unique_id) from the CDC response."""
+     process_name = json_obj.get("current_state", {}).get("process_name", "Business Process")
+-    client_key = json_obj.get("clientInfo", {}).get("clientKey", "Unknown")
++    client_key = get_project_key(json_obj) or "Unknown"
+     sel_cap = json_obj.get("selected_capability_map", [])
+     unique_id = sel_cap[0].get("uniqueId", "unknown") if sel_cap else "unknown"
+     return process_name, client_key, unique_id
+@@ -612,8 +615,10 @@ def _generate_current_state_docx(json_obj: dict) -> str:
+     # Participants (BPMN Mapping)
+     add_header(doc, "Participants (BPMN Mapping)")
+     add_subheader(doc, "Pool")
+-    client_name = json_obj.get("clientInfo", {}).get("clientName", "<< Add Pool Name >>")
+-    doc.add_paragraph(client_name)
++    project_name = get_project_name(json_obj, default="")
++    workspace_name = get_workspace_name(json_obj, default="")
++    display_name = " - ".join(n for n in (project_name, workspace_name) if n)
++    doc.add_paragraph(display_name or "<< Add Pool Name >>")
+ 
+     add_subheader(doc, "Lanes")
+     try:
+```
+
+Made changes.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------"
 1. Read-only first: search the repo for any code that reconstructs blob paths 
    containing "/cdc/" or "MAS/" from clientKey/projectKey (for download/read), 
    rather than using the stored path/URL. Report findings.
