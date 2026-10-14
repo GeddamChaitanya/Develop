@@ -1,3 +1,20 @@
+{
+  "stepKey": 437,
+  "substepkey": 932,
+  "processName": "Blueprinting Analysis-#88",
+  "processKey": 88,
+  "input_key": 292,
+  "input_name": "IA L1 Capabilities Opex",
+  "OutputKey": null,
+  "ProjectKey": 1,
+  "WorkspaceName": null,
+  "ParentWorkspaceName": null,
+  "WorkspaceDescription": null,
+  "discount_rate": 0.25,
+  "TwoByTwoOutPutKeys": [],
+  "receiverEmail": "gedchaitanya@deloitte.com"
+}
+-----------------------------------------------------------------------------------------------------------
 --- Reading app_user for email: gedchaitanya@deloitte.com ---
 Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
 Incorrect padding
