@@ -1,3 +1,11 @@
+Read-only. In the Capability Double Click export flow (apis/v1/capability_double_click.py
+and utilities/cdc_export.py), find where the blob path segment that came out as "Unknown"
+(e.g. NV_PoC_V1/MAS/Unknown/... and NV_PoC_V1/Unknown/cdc/...) is built. Which key does it
+read (clientName / projectName / clientInfo...)? Also show which top-level keys and
+projectInfo/clientInfo fields exist in the json_obj passed to generate_cdc_docs for
+substep 928, so we know whether projectName/workspaceName are present.
+---------------------------------------------------------------------------
+
 2026-10-14 19:00:44,286 - uvicorn.access - INFO - 127.0.0.1:57156 - "POST /api/v1/capability_double_click HTTP/1.1" 202
 Getting database session...
 Database session created.
