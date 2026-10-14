@@ -1,3 +1,107 @@
+I’ll inspect only the exception handler around the failed-status write, make the three requested changes there, then run a focused validation and show the complete diff.
+
+Checked , 6 problems found
+
+Searched for regex `run_operations_status|publish_message\(` (`**/apis/v1/agentic_fit_allocator.py`), 16 results
+
+Read , lines 585 to 640
+
+The handler currently includes `sub_step_name` even when empty and only publishes after a successful DB write. I’ll keep the existing guard on a valid substep key, but move the publish outside the DB-write `try` so a failed status write won’t suppress the error notification.
+
+Generating patch (38 lines) in 
+
+
+```
+
+```
+The exception block now treats the DB status write as best-effort and proceeds to publish the error event even if that write raises. I’m running a syntax check on the touched Python module next; afterward I’ll capture the full diff for you.
+
+Ran terminal command: python -m py_compile apis/v1/agentic_fit_allocator.py
+Completed with input: python -m py_compile apis/v1/agentic_fit_allocator.py
+Tool execution failed with exit code 1
+
+The `python` launcher isn’t available in this terminal, so that syntax check couldn’t run. I’ll try the Windows `py` launcher; if it’s unavailable too, I’ll use the editor diagnostics and report that limitation with the diff.
+
+Ran terminal command: py -3 -m py_compile apis/v1/agentic_fit_allocator.py
+
+`py -3 -m py_compile` passed. I’m retrieving the file’s complete Git diff now so I can show exactly what’s present, including any pre-existing changes in that same file.
+
+Ran terminal command: git diff -- apis/v1/agentic_fit_allocator.py
+
+Updated only the exception handler. The DB status write is now best-effort, an empty `step_name` is omitted, and error publishing still runs when the DB write fails. `py -3 -m py_compile` passed.
+
+The full Git diff includes other changes in this handler that were already present before this edit; I left them unchanged.
+
+```diff
+diff --git a/apis/v1/agentic_fit_allocator.py b/apis/v1/agentic_fit_allocator.py
+index df55428..3175a06 100644
+--- a/apis/v1/agentic_fit_allocator.py
++++ b/apis/v1/agentic_fit_allocator.py
+@@ -597,32 +597,42 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+         
+         return []
+     except Exception as e:
++        _bg = locals().get("background_processing_data") or {}
++        _action = locals().get("action")
++        _client_info = locals().get("client_info")
++        _receiver_email = locals().get("receiver_email") or input_data.receiverEmail or _bg.get("receiverEmail")
++        _failed_substepkey = _bg.get("substepkey") or input_data.substepkey
++        _failed_input_key = _bg.get("input_key") or input_data.input_key
+         track_operation_error("Agentic_Fit_Allocation", error=e,
+-                              properties={"action": action if 'action' in locals() else None})
++                              properties={"action": _action})
+         track_trace("Error in agentic fit allocation", severity="Error")
+         await monitor.stop_progress()
+-        _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else {}
+-        failed_status_written = False
+-        if "substepkey" in locals() and _bg.get("substepkey"):
+-            db_operations_orm.run_operations_status(
+-                sub_step_key=_bg.get("substepkey"),
+-                data={
+-                    "sub_step_name": _bg.get("step_name"),
+-                    "sub_step_status_key": 6,  # Error
+-                    "sub_step_progress_percentage": 0,
+-                    "sub_step_progress_message": f"Error occurred: {str(e)[:500]}",
+-                },
+-            )
+-            failed_status_written = True
+-        if failed_status_written:
++        if _failed_substepkey:
++            failed_status_data = {
++                "sub_step_status_key": 6,  # Error
++                "sub_step_progress_percentage": 0,
++                "sub_step_progress_message": f"Error occurred: {str(e)[:500]}",
++            }
++            if _bg.get("step_name"):
++                failed_status_data["sub_step_name"] = _bg.get("step_name")
++            try:
++                db_operations_orm.run_operations_status(
++                    sub_step_key=_failed_substepkey,
++                    data=failed_status_data,
++                )
++            except Exception as status_error:
++                track_trace(
++                    f"Failed to write agentic fit error status: {status_error}",
++                    severity="Error",
++                )
+             publish_message(
+                 _bg.get("ID"), "Error",
+                 f"Error in Agentic Fit Allocation: {str(e)[:500]}",
+-                _bg.get("input_key"), _bg.get("substepkey"),
+-                receiver_email, _bg.get("requestedOn"),
+-                channel_name=channel_name if "channel_name" in locals() else None,
++                _failed_input_key, _failed_substepkey,
++                _receiver_email, _bg.get("requestedOn"),
++                channel_name=locals().get("channel_name") or os.getenv('REDIS_channel_name_agenticfit'),
+             )
+-        email_send(receiver_email, action=action, process_name=background_processing_data.get('processName'),  client_name=client_info.get('clientName') if isinstance(client_info, dict) else None, from_exception=True, e=e)
++        email_send(_receiver_email, action=_action, process_name=_bg.get('processName'),  client_name=_client_info.get('clientName') if isinstance(_client_info, dict) else None, from_exception=True, e=e)
+ 
+         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+```
+
+Made changes.
+---------------------------------------------------------------------------------
 In apis/v1/agentic_fit_allocator.py, exception handler only (the block we 
 changed earlier, ~L599-L632):
 
