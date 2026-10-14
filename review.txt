@@ -1,3 +1,379 @@
+2026-10-14 16:14:23,689 - uvicorn.access - INFO - 127.0.0.1:56441 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
+Getting database session...
+Database session created.
+--- Reading input record for input_key: 298 ---
+Successfully retrieved input record with input_key: 298
+Details: Input Name: IA L1 Capabilities Opex, Sub Step Key: 943, Input Order: 1
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+Successfully updated output record with key: 943
+Updated Description: L1 CAPABILITIES OPEX
+
+--- Operations finished ---
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+Successfully updated output record with key: 943
+Updated Description: L1 CAPABILITIES OPEX
+
+--- Operations finished ---
+{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Started', 'Logs': ' Started generating for Impact Analyser for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'missingFields': ['processKey']}}
+Getting database session...
+Database session created.
+--- Reading survey responses for project_id: 1 ---
+[ERROR] CRUD_Get_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading survey responses: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch survey context for project 1: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Getting database session...
+Database session created.
+--- Reading supporting files for project_key: 1 ---
+[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_ProjectSupportingFiles - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading supporting files: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch file context for project 1: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+
+Allocating OPEX to capabilities...
+============================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'action': 'GENERATE_L1_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1791974804.172755   11880 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1791974804.184630   11880 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'In Progress', 'Logs': 'Generating Impact Analyser for action: GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'action': 'GENERATE_L1_OPEX', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey']}}
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+Successfully updated output record with key: 943
+Updated Description: L1 CAPABILITIES OPEX
+
+--- Operations finished ---
+2026-10-14 16:17:47,565 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'b1c824d2-c7bc-11f1-a052-d4f32df15686'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-14 16:17:50,012 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '42a1aaed-201e-007b-52c9-5bb522000000'
+    'x-ms-client-request-id': 'b1c824d2-c7bc-11f1-a052-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'Date': 'Wed, 14 Oct 2026 10:47:49 GMT'
+2026-10-14 16:17:50,019 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/89/943/OPEX_Generation_Output_for_levels_L1_2afd7df5-3b13-424d-bfe0-f43f8460f15d.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '151997'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'b33e724a-c7bc-11f1-8c33-d4f32df15686'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-14 16:17:52,743 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Wed, 14 Oct 2026 10:47:52 GMT'
+    'ETag': '"0x8DF29E098FAF7C2"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '0b253555-b01e-0069-38c9-5bcef2000000'
+    'x-ms-client-request-id': 'b33e724a-c7bc-11f1-8c33-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Wed, 14 Oct 2026 10:47:51 GMT'
+{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Inserting', 'Logs': ' IA total opex inserting into DB for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'missingFields': ['processKey']}}
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+--- Running Update Operation ---
+
+--- Updating the sub_step_output record ---
+Successfully updated output record with key: 292
+Updated Description: 
+Updated File Name: OPEX_Allocation_Output_for_levels_L1.json
+
+--- Operations finished ---
+{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Generated', 'Logs': ' IA total opex inserted into DB for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Generated', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:943:298:l1-capability-opex-943-1791965522221', 'missingFields': ['processKey']}}
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+Successfully updated output record with key: 943
+Updated Description: L1 CAPABILITIES OPEX
+
+--- Operations finished ---
+{'ID': 'l1-capability-opex-943-1791965522221', 'Status': 'Completed', 'Logs': ' IA opex inserted into DB for action GENERATE_L1_OPEX', 'input_key': 298, 'substepkey': 943, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 100, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'processKey': 89, 'stepKey': 444, 'substepkey': 943, 'input_key': 298, 'ID': 'l1-capability-opex-943-1791965522221', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-14T08:12:02.221Z', 'channelName': 'impactAnalyzer_background_process', 'module': 'Impact Analyzer', 'subModule': None, 'action': 'GENERATE_L1_OPEX', 'jobId': 'genai:89:943:298:l1-capability-opex-943-1791965522221', 'missingFields': []}}
+Getting database session...
+Database session created.
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+Incorrect padding
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 2026-10-14 15:51:08,983 - uvicorn.access - INFO - 127.0.0.1:49198 - "POST /api/v1/agentic_fit_allocator HTTP/1.1" 202
 Getting database session...
 Database session created.
