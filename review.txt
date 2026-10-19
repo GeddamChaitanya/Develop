@@ -1,29 +1,18 @@
-## Summary
-The CDC export (where citations/source reasoning are exported) still read old
-client fields that no longer exist in the payload (it now sends projectInfo only):
-- Header and Current State Pool read clientInfo.clientName → showed blank /
-  "<< Add Pool Name >>"
-- Storage folder read clientInfo.clientKey → files saved under NV_PoC_V1/Unknown/cdc/...
+Read-only, do not edit.
+Run: git diff --cached --stat   and   git diff --cached
+This is the GenAI events tracker (origin/Genai_events_tracker_dev) squashed onto the
+latest develop (f2e6310), staged but not committed.
 
-## Changes (utilities/cdc_export.py only)
-- Header + Pool: "Project Name - Workspace Name" via project_compat
-  get_project_name() / get_workspace_name() (shows whichever exists; legacy
-  clientName still resolves).
-- Storage folder: get_project_key() (projectKey first, clientKey fallback,
-  "Unknown" only if neither exists).
-
-## Github Issues Addressed
-- Deloitte-US-Consulting-HO/aai-bpt-maincodebase#1575
-
-## Testing
-- Unit-style checks: 13 header/Pool cases, 10 key-extraction cases passed.
-- Real CDC run on Ascend: header shows "Blueprinting Analysis-#86  Enterprise
-  Default Project_Testing" (previously blank); Pool shows project name;
-  CDC files stored under NV_PoC_V1/1/cdc/... (previously /Unknown/).
-- Workspace not shown in tests because test projects have no workspace set.
-
-## Notes / follow-ups
-- No path reconstruction found in this repo (readers use stored paths);
-  please confirm .NET also uses the stored path.
-- jsontodocx.py:1157 (MAS export) has the same clientInfo.clientKey read
-  (MAS/Unknown/...) — left unchanged pending confirmation.
+1. For every file, list REMOVED or MODIFIED existing lines (not purely new tracker code).
+   Show develop's version vs staged version. Focus especially on:
+   - api_v1.py: health check, status endpoints, startup/shutdown, routers, middleware
+   - db/crud.py, db/db_operations_orm.py: existing functions changed/removed
+   - each apis/v1/*.py file: existing status updates, publish_message, track_* calls,
+     email_send, exception handling
+2. Classify each as: (a) required for the tracker, (b) accidental overwrite/removal,
+   (c) unclear.
+3. Check for duplicate routes/handlers (e.g. two /health handlers).
+4. Summarise the NEW tracker pieces: files, DB table(s) with columns/types/indexes,
+   endpoints, and where events are recorded in each apis/v1 file.
+5. How does this repo handle DB migrations (alembic? SQL scripts in db/? pipelines)?
+Report as a table per file. Do not modify anything.
