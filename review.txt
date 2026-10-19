@@ -1,3 +1,5 @@
+git restore --source=HEAD --staged --worktree api_v1.py apis/base.py .gitignore apis/v1/workforce_analyzer.py
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the staged diff exactly as requested, then trace only the changed endpoints/DB surfaces and migration conventions needed to classify what’s pre-existing versus tracker code. I’ll keep the work read-only and won’t alter the index or working tree.
 
 Ran terminal command: git diff --cached --stat; git diff --cached
