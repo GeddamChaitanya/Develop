@@ -1,3 +1,223 @@
+Checked , , , , , no problems found
+
+Searched for text `is_start=True` (`**/apis/v1/**/*.py`), 8 results
+
+Read , lines 120 to 168
+
+Read , lines 35 to 90
+
+Read , lines 35 to 70
+
+Read , lines 45 to 90
+
+The audit lifecycle is now complete for the requested and already-tracked workflows, including explicit progress checkpoints. I’m tightening two final invariants before verification: non-start calls must never create rows if their ID/job key cannot resolve, and the persisted user fallback must be exactly `userId → receiverEmail → "0"`.
+
+Generating patch (18 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+Generating patch (16 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m pytest --version
+Completed with input: py -3 -m pytest --version
+Tool execution failed with exit code 1
+
+Ran terminal command: py -3 -m py_compile db/models.py db/crud.py db/db_operations_orm.py schemas/capability_maps_generator.py schemas/workforce_analyzer.py apis/v1/capability_maps_generator.py apis/v1/agentic_fit_allocator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git diff --check HEAD
+Completed with input: git diff --check HEAD
+Tool execution failed with exit code 1
+
+Ran terminal command: git status --short
+
+Searched for regex `get_genai_audit_log_by_step\(|except asyncio\.CancelledError|status="(Failed|Cancelled)"` (`**/apis/v1/**/*.py`), 25 results
+
+Python compilation succeeded for all edited modules. The remaining check flags are trailing spaces on a handful of tracker-only blank/comment lines, including some already-staged audit additions; I’m cleaning those lines and will rerun diff checks without changing behavior.
+
+Read , lines 715 to 775
+
+Read , lines 705 to 720
+
+Read , lines 230 to 283
+
+Read , lines 410 to 450
+
+Read , lines 380 to 394
+
+Generating patch (76 lines) in , , , , 
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: git diff --check HEAD
+Completed with input: git diff --check HEAD
+Tool execution failed with exit code 1
+
+Ran terminal command: py -3 -m py_compile db/models.py db/crud.py db/db_operations_orm.py schemas/capability_maps_generator.py schemas/workforce_analyzer.py apis/v1/capability_maps_generator.py apis/v1/agentic_fit_allocator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git diff --stat HEAD
+
+Checked , , no problems found
+
+Syntax compilation is clean, and diagnostics are clear except for workspace dependencies unavailable in the selected environment. The full diff check has one remaining trailing-space line at the end of the model file; I’m removing that final whitespace before capturing the diff.
+
+Generating patch (8 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: git diff --check HEAD
+
+Ran terminal command: py -3 -m py_compile db/models.py db/crud.py db/db_operations_orm.py schemas/capability_maps_generator.py schemas/workforce_analyzer.py apis/v1/capability_maps_generator.py apis/v1/agentic_fit_allocator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git status --short --branch
+
+Ran terminal command: git diff --stat HEAD
+
+Checked , , , , , , , , , , , , 7 problems found
+
+Generating patch (17 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 425 to 475
+
+Generating patch (55 lines) in 
+
+Generating patch (33 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+Generating patch (12 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+Generating patch (41 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+All requested audit changes are now in place, including the workforce-only salary triggers; unrelated workforce actions do not create audit rows. I’ve preserved the existing staged tracker baseline and am checking the final working diff, migration inclusion, syntax, and formatting before presenting the result.
+
+Ran terminal command: git diff --check HEAD
+
+Ran terminal command: py -3 -m py_compile db/models.py db/crud.py db/db_operations_orm.py schemas/capability_maps_generator.py schemas/workforce_analyzer.py apis/v1/capability_maps_generator.py apis/v1/agentic_fit_allocator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git diff --stat
+
+Ran terminal command: git diff --numstat HEAD
+
+Ran terminal command: Get-Content db/migrations/001_create_genai_audit_log.sql; Get-Content db/migrations/001_create_genai_audit_log_down.sql
+
+Ran terminal command: git status --short --branch
+
+Generating patch (16 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+The final review confirms the new tracker code is isolated from business status, publish, email, and router behavior. I’ve also added `Error`/`Failure` and running-state aliases to the four-status normalizer; I’m rerunning syntax and whitespace checks once more, then I’ll report the final endpoint mapping and diff summary.
+
+Ran terminal command: git diff --check HEAD
+
+Ran terminal command: py -3 -m py_compile db/models.py db/crud.py db/db_operations_orm.py schemas/capability_maps_generator.py schemas/workforce_analyzer.py apis/v1/capability_maps_generator.py apis/v1/agentic_fit_allocator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git diff --stat; git diff --stat HEAD; git status --short --branch
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Searched for regex `event_time.*=` (`**/db/db_operations_orm.py`), 1 result
+
+Completed: *Map tracker callers and conventions* (1/6)
+
+**Step A: Initial report**
+
+| Trigger | Endpoint | Audit before fixes | Existing step / sub-step | User metadata |
+|---|---|---|---|---|
+| Capability Generation Utility add/edit; Capability Setup generation | `POST /capability_maps_generator` | Yes | `Capability Setup` / `Generate L{level} Capabilities`; `GENERATE_ALL` used `Generate All Capabilities` | `receiverEmail`, `requestedOn`, and `ID`; audit calls used `requested_by="0"` |
+| Cost Savings Potential | `POST /agentic_fit_allocator` | Yes | `input_data.processName` / `input_data.input_name` | `userId`, `receiverEmail`, and `requestedOn` in request/background metadata |
+| L3 Capability Salary; Salary Cost Savings Potential | `POST /workforce_analyzer` | No | No audit calls | `receiverEmail` and request/background metadata; user ID was not previously modeled |
+
+`run_genai_audit_log` did not update `event_time`, since update payloads omitted it. Existing failure calls passed progress `0`.
+
+**Implemented**
+
+Audit inserts now create one row per trigger, with updates resolved only by audit ID or job ID. The helper persists the supplied job ID or the requested fallback, parses `requestedOn` to UTC, sets an aware UTC `event_time` on insert only, normalizes statuses to the four allowed values, and preserves the last progress on failure or cancellation.
+
+Added indexed `job_id` model support, the filtered `query_genai_audit_logs` CRUD helper, up/down SQL migrations, and audit lifecycle tracking for the workforce salary flows. Existing audited flows now use the specified PBI labels and have progress and cancellation checkpoints. Existing business status writes, publish calls, emails, and routers were left unchanged.
+
+The persistence changes are in `db_operations_orm.py`, `models.py`, and [db/crud.py). The migrations are up and down.
+
+**Validation and Diff**
+
+Python syntax compilation passed, as did `git diff --check HEAD`. Pytest is unavailable in this environment (`No module named pytest`). Workspace diagnostics show unresolved dependency imports in the selected environment, but no syntax errors in the edited API modules.
+
+The full tracked diff against `HEAD` is available with `git diff HEAD`; its summary is 1,430 insertions and 45 deletions across 14 tracked files. The two new migration files are untracked, so Git’s tracked diff does not include them yet. I left the existing staged changes and unrelated `run.ps1` untouched.
+
+Made changes.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 GenAI events tracker gap fixes on branch fix/genai-events-tracker (staged/committed tracker
 code on top of develop). Do NOT change any existing business logic, status writes,
 publish_message, email, or health/router code. Only tracker/audit code.
