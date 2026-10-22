@@ -1,3 +1,22 @@
+Tracker scope only, apis/v1/capability_maps_generator.py.
+Test evidence: for action GENERATE_L1 the job completes ("Capability maps inserted
+successfully into DB for action: GENERATE_L1", Redis "Completed", email sent, then
+"Completed operation: Capability_Map_Generation_Action_GENERATE_L1"), but NO
+run_genai_audit_log Success call executes (no "GenAI audit persisting" trace).
+The start entry is created, so the history stays "In Progress"/0.
+
+1. List every run_genai_audit_log call in this file with its line, branch (GENERATE_ALL,
+   per-level GENERATE_L1/L2/L3, UPDATE_*, runner wrapper) and status. Show which one
+   should fire for GENERATE_L1 success and why it is not reached.
+2. Add/move the Success checkpoint so it runs in EVERY successful path (per-level and
+   GENERATE_ALL), right after the existing "Completed" publish_message, using the stored
+   audit context (same step/sub_step), input_key, substep_key, receiver/user/client
+   metadata, status="Success", progress=100, message = the completed log text.
+   Wrap in try/except like the others.
+3. Check the same for Failed and Cancelled in the per-level path.
+No business logic changes. Show the diff.
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 A body is sent with the request
 2026-10-22 17:42:25,883 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
 Response headers:
