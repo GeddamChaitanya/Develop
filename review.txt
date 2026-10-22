@@ -1,3 +1,17 @@
+Tracker scope only. Bug from testing (Capability Setup, row id 9):
+log_history entry has "client_id": 1001 but the client_id COLUMN stays NULL.
+
+1. In run_genai_audit_log, add "client_id" (the run's resolved client_id) to update_data
+   so it is mirrored to the column on EVERY write, exactly like user_id. Check
+   crud.update_genai_audit_log and create path actually set client_id (not filtered out).
+2. Verify the success/failure update modifies the SAME version entry created at start
+   when substep_key is None (match on input_key alone if substep_key missing, else
+   fallback to last entry), so status/progress/message in the entry become
+   Success/100/message. Show that code path.
+3. Confirm user_id: when userId is absent, read_user_by_email(receiver_email) runs on the
+   MAIN DB session; log (track_trace) when no user is found.
+No other changes. Show the diff.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll audit the current worktree read-only against each requested check, including the full `db` and `v1` search and compile/diff validation. I won’t modify any files.
 
 Ran terminal command: git diff HEAD --stat
