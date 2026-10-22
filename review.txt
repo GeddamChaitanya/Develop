@@ -1,3 +1,24 @@
+Revert the audit step/sub_step labels to the original tracker behaviour. Tracker code only.
+
+1. For EVERY run_genai_audit_log call site in apis/v1/*.py, restore the step and sub_step
+   arguments to exactly what origin/Genai_events_tracker_dev used
+   (e.g. agentic_fit_allocator: step=input_data.processName, sub_step=input_data.input_name).
+   Check with: git show origin/Genai_events_tracker_dev:<file>
+2. For call sites that did not exist in origin/Genai_events_tracker_dev (workforce_analyzer
+   salary flows), use the same pattern: step = request processName, sub_step = request
+   input_name (or the closest equivalent field in that schema).
+3. Remove the now-unused label helpers (_agentic_audit_sub_step, _industry_map_audit_sub_step,
+   _client_capability_map_audit_sub_step, _workforce_audit_sub_step, _capmap_audit_identity)
+   and the PBI label mapping, if nothing else uses them.
+4. Keep everything else from the rework: one row per (step, sub_step), versions appended,
+   job_id matching, advisory lock, user_id integer, requested_time filled, Failed/Cancelled
+   keep last progress (do not pass progress=0 on failure), cancellation handling.
+5. Keep the restored develop status write in agentic_fit_allocator, and the failed-status DB
+   write must still exist but be safe (sub_step_name only when available, wrapped in
+   try/except) — do not delete it.
+6. Remove the empty db/migrations folder if it still exists.
+Show the diff for these changes.-
+---------------------------------------------------------------------------------
 I’ll verify the exact HEAD status block and the client-capability request fields, then make only these two tracker-scope follow-ups. I’ll preserve the unconditional error publish and limit the exception-path change to making the existing failed-status write safe.
 
 Ran terminal command: git show HEAD:apis/v1/agentic_fit_allocator.py | Select-String -Pattern 'status_data = \{|Generating \{action\} via LLM|run_operations_status\(sub_step_key=input_data.substepkey' -Context 3,10
