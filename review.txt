@@ -1,3 +1,131 @@
+I’ll inspect the current diff and the nearby control flow in those four files, then make only the requested reversions while preserving audit/tracker additions. I’ll finish by showing the exact `git diff HEAD` for those paths.
+
+Ran terminal command: git diff HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+
+The targeted diff is larger than the inline terminal view, so I’m opening its captured output to identify each precise hunk before changing anything.
+
+Read 
+
+Ran terminal command: git status --short -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+
+Searched for regex `requested_output_key|input_data\.OutputKey|action =|missing capability|capability map|receiverEmail` (`**/apis/v1/agentic_fit_allocator.py`), 30 results
+
+Searched for regex `receiverEmail|raise e` (`**/schemas/agentic_fit_allocator.py`), 2 results
+
+Searched for regex `get_survey_responses_by_client_id|raise e|create_genai_audit_log` (`**/db/crud.py`), 78 results
+
+Searched for regex `generate_capability_kpi|impact_analyzer_lookup|run_genai_audit_log|publish_message` (`**/apis/v1/capability_double_click.py`), 17 results
+
+All four files are staged, with no separate unstaged edits reported. The diff confirms the audit CRUD/checkpoints are additions; I’m now checking the allocator’s exact changed lines against `HEAD` so the output-key and action behavior land precisely on the requested baseline.
+
+Ran terminal command: git show HEAD:apis/v1/agentic_fit_allocator.py | Select-String -Pattern 'requested_output_key|action =|Capability map not found|if not input_data.OutputKey|OutputKey' -Context 4,5
+
+Read , lines 275 to 310
+
+Read , lines 410 to 445
+
+Read , lines 535 to 565
+
+Read , lines 1345 to 1425
+
+Read , lines 20 to 48
+
+Ran terminal command: git diff HEAD --unified=5 -- apis/v1/agentic_fit_allocator.py | Select-String -Pattern '^@@|requested_output_key|OutputKey|order =|Capability map not found|capability_info' -Context 5,7
+
+Ran terminal command: git show HEAD:apis/v1/agentic_fit_allocator.py | Select-String -Pattern 'output_key\s*=|requested_output_key|order =' -Context 3,4
+
+Searched for regex `requested_output_key|output_key\s*=|OutputKey` (`**/apis/v1/agentic_fit_allocator.py`), 19 results
+
+Read , lines 595 to 660
+
+The baseline confirms the required allocator changes: `order` defaults to `None`, and database writes use `requested_output_key` for OPEX paths but `input_data.OutputKey` for the final output path. I’ll make those targeted reversions, remove only the extra KPI argument, duplicate schema field, map guard, and survey `raise`; audit checkpoints and enriched publishing stay untouched.
+
+Read , lines 398 to 412
+
+Read , lines 487 to 501
+
+Read , lines 670 to 684
+
+Read , lines 486 to 495
+
+Generating patch (54 lines) in , , , 
+
+The first patch attempt hit an ordering constraint in the patch format before completing the allocator hunks. I’m splitting the allocator edits into source order now; the requested changes remain narrowly scoped, and I’ll verify every path afterward.
+
+Generating patch (30 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: python -m py_compile db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+Completed with input: python -m py_compile db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+Tool execution failed with exit code 1
+
+The syntax check is blocked because this terminal has no `python` executable on `PATH`. I’ll use the workspace diagnostics for these exact files, then inspect the final diff to ensure the audit additions remain and only the listed behavior changes were reversed.
+
+Checked , , , , 6 problems found
+
+Ran terminal command: git diff HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+
+Ran terminal command: git diff --check HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+Completed with input: git diff --check HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+Tool execution failed with exit code 1
+
+Ran terminal command: git status --short -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+
+Ran terminal command: git diff --unified=0 HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py | Select-String -Pattern '^@@|^[+-].*(get_survey_responses|raise e|impact_analyzer_lookup|receiverEmail|order =|requested_output_key|input_data\.OutputKey|run_operations\(|Capability map not found|run_genai_audit_log|publish_message)'
+
+Searched for regex `run_genai_audit_log|_publish_agentic_message\(|publish_message\(` (`**/apis/v1/agentic_fit_allocator.py`), 18 results
+
+The final check shows the allocator edits are present, while the first multi-file patch was atomic and left the other three staged files unchanged. I’m applying those three small removals now; the whitespace warnings are on existing audit-added blank lines, which I’ll leave intact.
+
+Generating patch (22 lines) in , , 
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+
+Checked , , , no problems found
+
+Those three files now pass workspace diagnostics. I’m rerunning the exact requested diff against `HEAD` and confirming the tracked-path status; I’ll call out the pre-existing whitespace warnings separately from the requested reversions.
+
+Ran terminal command: git diff HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+
+Ran terminal command: git status --short -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+
+Ran terminal command: git diff --check HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+Completed with input: git diff --check HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+Tool execution failed with exit code 1
+
+Searched for regex `receiverEmail|order =|requested_output_key|run_operations\(output_key=|Capability map not found|impact_analyzer_lookup|raise e` (`**/apis/v1/agentic_fit_allocator.py`), 28 results
+
+Done. Only the four requested files changed. The reversions are applied, and the GenAI audit CRUD, checkpoints, and enriched tracker publishing remain intact.
+
+I ran the requested diff:
+
+```powershell
+git diff HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+```
+
+It now shows the retained audit/tracker additions, without the survey rethrow, KPI lookup argument, duplicate schema field, allocator map guard, or changed output-key/action-order behavior. The worktree status is `MM` for these files: existing staged changes remain, with my corrections unstaged.
+
+Validation: workspace diagnostics found no issues in three files; the allocator file has unresolved dependency imports in this environment. Python is unavailable on `PATH`, so `py_compile` could not run. `git diff --check` reports three trailing-whitespace-only lines in retained audit additions.
+
+Made changes.
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 Edit only these staged files; keep all genai audit-log / tracker additions intact:
 1. db/crud.py: in the survey-response lookup, remove the newly added `raise e` so the
    function behaves exactly like develop (HEAD). Keep all new audit CRUD functions.
