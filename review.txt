@@ -1,3 +1,188 @@
+I’ll inspect the unstaged `git diff -- apis/v1` and enumerate matching changed lines, excluding audit-call blocks and their own exception wrappers. I’ll also verify the unmatched-version branch’s `total_runs` update; this is read-only.
+
+Ran terminal command: @'
+import re, subprocess
+pattern = re.compile(r'publish_message|run_operations_status|email_send|\braise\b|\breturn\b|HTTPException')
+diff = subprocess.check_output(['git', 'diff', '--unified=0', '--', 'apis/v1'], text=True)
+path = ''
+for line in diff.splitlines():
+    if line.startswith('+++ b/'):
+        path = line[6:]
+    elif line.startswith('@@'):
+        hunk = line
+    elif line.startswith(('+', '-')) and not line.startswith(('+++', '---')) and pattern.search(line[1:]):
+        print(f'{path} | {hunk} | {line}')
+'@ | py -3 -
+
+Read , lines 505 to 590
+
+The diff contains a few candidates outside the audit wrappers, including status updates, re-raises, a helper return, and the per-level `Completed` publish. I’m checking their surrounding hunks now to distinguish unrelated control-flow changes from lines that belong to the audit checkpoints.
+
+Ran terminal command: @'
+import re, subprocess
+pattern = re.compile(r'publish_message|run_operations_status|email_send|\braise\b|\breturn\b|HTTPException')
+lines = subprocess.check_output(['git', 'diff', '--unified=4', '--', 'apis/v1'], text=True).splitlines()
+path = ''
+i = 0
+while i < len(lines):
+    line = lines[i]
+    if line.startswith('+++ b/'):
+        path = line[6:]
+    if line.startswith('@@'):
+        j = i + 1
+        while j < len(lines) and not lines[j].startswith('@@') and not lines[j].startswith('diff --git '):
+            j += 1
+        hunk = lines[i:j]
+        hits = [item for item in hunk if item.startswith(('+', '-')) and not item.startswith(('+++', '---')) and pattern.search(item[1:])]
+        if hits:
+            print(f'--- {path} {line}')
+            print('\n'.join(hunk))
+        i = j
+        continue
+    i += 1
+'@ | py -3 -
+
+Read , lines 1 to 140
+
+I’ve separated likely candidates from audit-owned lines: the changed `Completed` publish, `run_operations_status`, helper `return`, and post-audit `raise`/HTTPException control flow need classification. I’m retrieving exact old/new line numbers and the `total_runs` increment evidence for the read-only summary.
+
+Ran terminal command: @'
+import re, subprocess
+pattern = re.compile(r'publish_message|run_operations_status|email_send|\braise\b|\breturn\b|HTTPException')
+lines = subprocess.check_output(['git', 'diff', '--unified=0', '--', 'apis/v1'], text=True).splitlines()
+path = ''
+old_no = new_no = None
+for line in lines:
+    if line.startswith('+++ b/'):
+        path = line[6:]
+    elif line.startswith('@@'):
+        match = re.search(r'@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@', line)
+        old_no, new_no = map(int, match.groups())
+    elif line.startswith('\'):
+        continue
+    elif line.startswith('+') and not line.startswith('+++'):
+        if pattern.search(line[1:]):
+            print(f'{path}: new line {new_no}: {line}')
+        new_no += 1
+    elif line.startswith('-') and not line.startswith('---'):
+        if pattern.search(line[1:]):
+            print(f'{path}: old line {old_no}: {line}')
+        old_no += 1
+    else:
+        old_no += 1
+        new_no += 1
+'@ | py -3 -
+Completed with input: @'
+import re, subprocess
+pattern = re.compile(r'publish_message|run_operations_status|email_send|\braise\b|\breturn\b|HTTPException')
+lines = subprocess.check_output(['git', 'diff', '--unified=0', '--', 'apis/v1'], text=True).splitlines()
+path = ''
+old_no = new_no = None
+for line in lines:
+    if line.startswith('+++ b/'):
+        path = line[6:]
+    elif line.startswith('@@'):
+        match = re.search(r'@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@', line)
+        old_no, new_no = map(int, match.groups())
+    elif line.startswith('\'):
+        continue
+    elif line.startswith('+') and not line.startswith('+++'):
+        if pattern.search(line[1:]):
+            print(f'{path}: new line {new_no}: {line}')
+        new_no += 1
+    elif line.startswith('-') and not line.startswith('---'):
+        if pattern.search(line[1:]):
+            print(f'{path}: old line {old_no}: {line}')
+        old_no += 1
+    else:
+        old_no += 1
+        new_no += 1
+'@ | py -3 -
+Tool execution failed with exit code 1
+
+Searched for text `current_history\["total_runs"\] = max` (`**/db/db_operations_orm.py`), 2 results
+
+Read , lines 535 to 558
+
+The exact-number script hit a parsing edge case outside diff hunks; it changed nothing. The code confirms the unmatched branch increments `total_runs` with the same max-plus-one pattern as the start branch; I’m rerunning the line-number extraction with hunk-only parsing.
+
+Ran terminal command: @'
+import re, subprocess
+pattern = re.compile(r'publish_message|run_operations_status|email_send|\braise\b|\breturn\b|HTTPException')
+lines = subprocess.check_output(['git', 'diff', '--unified=0', '--', 'apis/v1'], text=True).splitlines()
+path = ''
+old_no = new_no = None
+for line in lines:
+    if line.startswith('+++ b/'):
+        path = line[6:]
+        continue
+    if line.startswith('@@'):
+        match = re.search(r'@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@', line)
+        old_no, new_no = map(int, match.groups())
+        continue
+    if old_no is None or new_no is None or line.startswith(('diff --git ', 'index ', '--- ')):
+        continue
+    if line.startswith('\'):
+        continue
+    if line.startswith('+'):
+        if pattern.search(line[1:]):
+            print(f'{path}: new line {new_no}: {line}')
+        new_no += 1
+    elif line.startswith('-'):
+        if pattern.search(line[1:]):
+            print(f'{path}: old line {old_no}: {line}')
+        old_no += 1
+    else:
+        old_no += 1
+        new_no += 1
+'@ | py -3 -
+
+Exact locations are now recovered. The candidates are outside audit calls themselves; I’m doing one final context check around the `raise`/`HTTPException` lines so the list excludes any lines that belong to an audit wrapper’s own exception handling.
+
+Read , lines 728 to 788
+
+Read , lines 700 to 717
+
+Read , lines 565 to 585
+
+Read , lines 420 to 438
+
+Read , lines 1024 to 1044
+
+Read , lines 325 to 342
+
+Read , lines 920 to 945
+
+Read , lines 334 to 355
+
+The final classification is complete. The `total_runs` increment is present at the unmatched-append branch; I’m reporting only changed workflow-keyword lines outside the audit calls and their own exception wrappers.
+
+**Changed API Lines Outside Audit Wrappers**
+
+These are the matching changed lines outside a `run_genai_audit_log` call or its own try/except. `old` numbers refer to the removed line; `new` numbers refer to the added line.
+
+- `agentic_fit_allocator.py`: new line 346 adds `run_operations_status`; new line 736 re-raises after the cancellation audit wrapper; old line 742 removes a `run_operations_status` block and new line 780 adds its replacement in the failure path.
+- `capability_double_click.py`: new line 711 re-raises after the cancellation audit wrapper.
+- `capability_maps_generator.py`: new line 31 adds the metadata helper’s `return`; old line 472 and new line 523 change the `Completed` `publish_message`; new line 578 re-raises after the cancellation audit wrapper.
+- `industrial_map.py`: new line 432 re-raises after the cancellation audit wrapper.
+- `missing_client_capabilities.py`: new line 1040 re-raises after the cancellation audit wrapper.
+- `two_by_two.py`: new line 338 re-raises after the cancellation audit wrapper.
+- `workforce_analyzer.py`: old line 830 changes `except HTTPException:`; new line 936 adds a re-raise and new line 937 changes the handler to `except HTTPException as exc:`.
+
+No changed `email_send` lines appeared in the `git diff -- apis/v1` scan.
+
+**Unmatched Run Count**
+
+Confirmed. When no history entry matches, `run_genai_audit_log` appends a version and increments `total_runs` with:
+
+```python
+current_history["total_runs"] = max(
+    int(current_history.get("total_runs", 0)), len(versions) - 1
+) + 1
+```
+
+This is at line 561 in `db_operations_orm.py`.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Read-only. In the working diff of apis/v1/*.py (git diff -- apis/v1), list any changed
 line that contains publish_message, run_operations_status, email_send, raise,
 return, or HTTPException and is NOT inside a run_genai_audit_log call or its own
