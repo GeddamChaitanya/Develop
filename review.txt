@@ -1,3 +1,16 @@
+Edit only these staged files; keep all genai audit-log / tracker additions intact:
+1. db/crud.py: in the survey-response lookup, remove the newly added `raise e` so the
+   function behaves exactly like develop (HEAD). Keep all new audit CRUD functions.
+2. apis/v1/capability_double_click.py: remove `impact_analyzer_lookup=_ia_lookup` from
+   the generate_capability_kpi call (match HEAD). Keep audit checkpoints/error publish.
+3. schemas/agentic_fit_allocator.py: remove the duplicate `receiverEmail` declaration
+   (keep the original one from HEAD).
+4. apis/v1/agentic_fit_allocator.py: keep all run_genai_audit_log checkpoints and the
+   enriched error publish. Revert to HEAD behaviour: the outputKey source
+   (requested_output_key / input_data.OutputKey), missing action order (None), and
+   remove the new missing-capability-map ValueError guard.
+Then show `git diff HEAD -- <each file>` so I can verify only tracker additions remain.
+-------------------------------------------------------------------------------------------------------------------------------------------
 git restore --source=HEAD --staged --worktree api_v1.py apis/base.py .gitignore apis/v1/workforce_analyzer.py
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the staged diff exactly as requested, then trace only the changed endpoints/DB surfaces and migration conventions needed to classify what’s pre-existing versus tracker code. I’ll keep the work read-only and won’t alter the index or working tree.
