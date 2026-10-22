@@ -1,3 +1,43 @@
+GenAI events tracker gap fixes on branch fix/genai-events-tracker (staged/committed tracker
+code on top of develop). Do NOT change any existing business logic, status writes,
+publish_message, email, or health/router code. Only tracker/audit code.
+
+STEP A – report first (short table), then continue:
+ 1. Which endpoints implement: Capability Generation Utility (add/edit), Cost Savings Potential,
+    L3 Capability Salary, Salary Cost Savings Potential? Do they call run_genai_audit_log?
+ 2. Exact step/sub_step strings each module passes to run_genai_audit_log.
+ 3. Does run_genai_audit_log overwrite event_time on updates? What progress does the failure path log?
+ 4. Where is the triggering user available in each module (userId, receiverEmail, background
+    metadata)?
+
+STEP B – fixes:
+ 1. One record per trigger: add column job_id (String(255), nullable, indexed) to GenAIAuditLog.
+    run_genai_audit_log must INSERT a new row at job start (job_id = background job ID, or
+    f"{substepkey}:{input_key}:{requested time}" fallback) and return its id; all later updates
+    must target that row by audit id or job_id — never look up by (step, sub_step) alone.
+ 2. Populate user_id (userId → receiverEmail → '0') and requested_time (requestedOn, parsed to UTC).
+    event_time = timezone-aware UTC now at insert only; never update it afterwards.
+ 3. Progress/status: updates set the latest progress; Failed keeps the last progress reached (not 0);
+    allowed statuses exactly: 'In Progress', 'Success', 'Failed', 'Cancelled'. Normalise any other
+    values (e.g. 'Completed' -> 'Success').
+ 4. Cancellation: in each tracked job, catch asyncio.CancelledError separately, log status
+    'Cancelled' with last progress, then re-raise.
+ 5. Standardise step/sub_step to the PBI names:
+    Industry Map / Add|Update Industry Map; Capability Generation Utility / Add|Edit Capability
+    Generation Utility; Client Capability Map / Add|Edit Client Capability Map;
+    Capability Setup / Generate L1|L2|L3 Capabilities; AI Identifier / L1|L2|L3 Capabilities OpEx,
+    Cost Savings Potential, L3 Capability Salary, Salary Cost Savings Potential;
+    AI Prioritization / Add AI Prioritization; Capability Double Click / Add Capability Double Click.
+    Use None for sub_step only where the PBI has no sub step.
+ 6. Add audit tracking (start/progress/success/failed/cancelled) to any trigger from STEP A.1 that
+    is missing it (expected: workforce_analyzer salary flows), same pattern as other modules,
+    wrapped so audit failures never break the job.
+ 7. Add a read helper in crud.py: query_genai_audit_logs(user_id=None, step=None, sub_step=None,
+    status=None, start_time=None, end_time=None) – no endpoint.
+ 8. Create db/migrations/001_create_genai_audit_log.sql and
+    db/migrations/001_create_genai_audit_log_down.sql with the SQL below (keep models.py in sync).
+Show the full diff when done.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 description : As a system, I want to record every Gen AI event with its user, step, sub step, progress, status, and timestamp into a dedicated database table so that all AI-triggered actions are traceable and available for future reporting and auditing.
 
 
