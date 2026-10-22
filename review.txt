@@ -1,3 +1,19 @@
+Read-only, do not edit.
+1. Run: git diff HEAD --unified=0 | Select-String '^-[^-]'
+   List EVERY deleted line (45) with file and classify: tracker-only change vs
+   existing business logic (status writes, publish_message, email_send, OutputKey,
+   exception raise, return values). Flag any business-logic deletion.
+2. Label mapping table: for each endpoint + action/input_name, show the exact step and
+   sub_step logged. Specifically confirm:
+   - /capability_maps_generator: how Capability Setup vs Capability Generation Utility
+     are distinguished, and what GENERATE_ALL logs.
+   - /agentic_fit_allocator: every input_name (L1/L2/L3 OpEx, "IA L1l2 Capabilities Opex",
+     Total OpEx, Cost Savings Potential) -> step/sub_step.
+   - Industry Map Add vs Update, Client Capability Map Add vs Edit: how decided.
+   - workforce_analyzer: which actions create rows (salary, salary cost savings only).
+3. schemas/capability_maps_generator.py and schemas/workforce_analyzer.py: list new
+   fields; confirm all are Optional with default None (no breaking request change).
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Checked , , , , , no problems found
 
 Searched for text `is_start=True` (`**/apis/v1/**/*.py`), 8 results
