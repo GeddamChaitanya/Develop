@@ -1,5 +1,192 @@
 Tracker scope only.
+I’ll inspect the current writer and each named guarded call, then make only those tracker changes. I’ll preserve surrounding try/except blocks and business flow, and verify the per-file compile result afterward.
 
+Searched for regex `if genai_audit_log_id|genai_audit_log_id.*in locals|run_genai_audit_log\(` (`**/apis/v1/{agentic_fit_allocator,capability_double_click,capability_maps_generator,industrial_map,two_by_two,workforce_analyzer}.py`), 61 results
+
+Read , lines 470 to 625
+
+Read , lines 250 to 285
+
+Read , lines 680 to 745
+
+Generating patch (110 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile db/db_operations_orm.py
+
+The writer change compiles. For unmatched updates it now creates a fresh version with the incoming status/progress/message; matched updates still mutate only their copied history. I’m now removing only the named ID guards, keeping calls inside their existing try/except blocks and using safe local/registry lookups where IDs or contexts may not exist.
+
+Read , lines 112 to 145
+
+Read , lines 688 to 765
+
+Read , lines 255 to 280
+
+Read , lines 450 to 485
+
+Read , lines 376 to 410
+
+Read , lines 58 to 85
+
+Read , lines 278 to 310
+
+Read , lines 825 to 900
+
+Read , lines 382 to 460
+
+Read , lines 580 to 690
+
+Read , lines 695 to 750
+
+Read , lines 910 to 975
+
+Generating patch (53 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/agentic_fit_allocator.py
+
+Generating patch (99 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_maps_generator.py
+
+Agentic-fit and capability-map guards are removed and each module compiles. Next I’m handling the other named paths: industrial-map’s shared progress/success block, two-by-two’s runner/success calls, workforce progress/success, and CDC’s guarded checkpoints plus registry-context fallback.
+
+Generating patch (205 lines) in , , 
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/industrial_map.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Industrial-map, two-by-two, and workforce modules compile with their named guards removed. I’m finishing CDC now; its outer failure path will retain the request-ID registry lookup but resolve `step` and `sub_step` through stored-context `.get()` fallbacks, and the audit write will run even when the ID is `None`.
+
+Generating patch (43 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_double_click.py
+
+Generating patch (103 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_double_click.py
+
+CDC’s runner, progress, success, second-failure, and cancellation paths compile without audit-ID gates. I’m applying the special outer-failure change now: preserve the registry lookup, derive the context via `.get()` fallbacks, and always attempt the audit write inside its existing try/except.
+
+Read , lines 710 to 754
+
+Generating patch (48 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_double_click.py
+
+All requested guards have now been removed, including the CDC outer failure gate; its registry ID lookup remains and its context uses `.get()` fallbacks. I’m running compilation across the ORM and all six API modules, then checking the named calls for any remaining audit-ID gating.
+
+Ran terminal command: py -3 -m py_compile db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+for path in sorted(Path('apis/v1').glob('*.py')):
+    tree = ast.parse(path.read_text(encoding='utf-8'))
+    parents = {}
+    for parent in ast.walk(tree):
+        for child in ast.iter_child_nodes(parent):
+            parents[child] = parent
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or getattr(node.func, 'attr', None) != 'run_genai_audit_log':
+            continue
+        guards = []
+        parent = parents.get(node)
+        while parent is not None:
+            if isinstance(parent, ast.If):
+                names = {item.id.lower() for item in ast.walk(parent.test) if isinstance(item, ast.Name)}
+                if any('audit' in name and 'id' in name for name in names):
+                    guards.append(ast.unparse(parent.test))
+            parent = parents.get(parent)
+        if guards:
+            print(f'{path}:{node.lineno}: {" AND ".join(reversed(guards))}')
+'@ | py -3 -
+
+Ran terminal command: git diff --check -- db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Searched for regex `if genai_audit_log_id|if "genai_audit_log_id" in locals\(\)` (`**/apis/v1/{agentic_fit_allocator,capability_double_click,capability_maps_generator,industrial_map,two_by_two,workforce_analyzer}.py`), 5 results
+
+Implemented the requested tracker changes in `db_operations_orm.py` and the six named API modules. Audit updates now return the existing row ID directly; creates return the created row ID. If an update can’t match a history version, it appends a new version instead of overwriting the last run.
+
+Removed the specified audit-ID guards while keeping calls inside their existing try/except blocks. The CDC outer failure handler retains the registry lookup, uses `.get()` fallbacks for stored audit context, and attempts the write without gating on the ID. Remaining `if genai_audit_log_id` checks are for storing returned IDs in registries, not for the specified audit calls.
+
+**Diff excerpt**
+```diff
+-        return updated.genai_audit_log_id if updated else None
++        return existing_record.genai_audit_log_id
+
+-            version_entry = versions[-1]
++            version_entry = None
+             ...
+-            # unmatched update falls back to last entry
++            if version_entry is None:
++                version_entry = { ... incoming status, progress, message ... }
++                versions.append(version_entry)
+
+-        if genai_audit_log_id:
+-            try:
+-                db_operations_orm.run_genai_audit_log(...)
++        try:
++            db_operations_orm.run_genai_audit_log(
++                genai_audit_log_id=locals().get("genai_audit_log_id"),
++                ...
++            )
+         except Exception as audit_err:
+             ...
+```
+
+**Validation**
+`py -3 -m py_compile` passed for `db_operations_orm.py` and all six modified API modules. `git diff --check` passed for those files.
+
+Made changes.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. db/db_operations_orm.py run_genai_audit_log: always return the row id —
    for the update path return existing_record.genai_audit_log_id (do not depend on what
    crud.update_genai_audit_log returns); for create return created.genai_audit_log_id.
