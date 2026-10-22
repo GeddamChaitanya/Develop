@@ -1,3 +1,82 @@
+I’ll inspect the writer, CRUD update/create paths, and the email lookup helper first. My working hypothesis is that updates either aren’t persisting `client_id` through CRUD or are falling back to the wrong history version when `substep_key` is absent; I’ll verify both before making the smallest tracker-only fix.
+
+Read , lines 425 to 595
+
+Read , lines 1415 to 1468
+
+Read , lines 775 to 830
+
+Read , lines 378 to 394
+
+Searched for regex `def read_user_by_email|def get_db|def get_audit_db` (`**/db/{db_operations_orm,database}.py`), 3 results
+
+Read , lines 540 to 590
+
+Confirmed `client_id` is already included in `update_data`; creation passes that mapping into `GenAIAuditLog`, and CRUD applies every update field with `setattr`, so it isn’t being filtered there. The verified mismatch is version selection: it currently requires a non-null substep key, causing keyless-substep updates to fall back to the last version; I’ll change that to match by `input_key` alone when the substep key is `None`.
+
+Generating patch (27 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile db/db_operations_orm.py
+
+The modified writer compiles. I’m confirming the main-DB session and no-user trace path, then I’ll capture the exact focused diff and whitespace check for the final report.
+
+Read , lines 435 to 565
+
+Read , lines 840 to 880
+
+Read , lines 1437 to 1465
+
+Read , lines 30 to 59
+
+The no-user case is already logged by `read_user_by_email` via `track_trace`, and that helper opens `get_db()` (the main session factory), not `get_audit_db()`. I’ve confirmed the update branch changes the selected entry’s status, progress, and message; I’m capturing the narrow diff and final whitespace check now.
+
+Ran terminal command: git diff -- db/db_operations_orm.py
+
+Ran terminal command: git diff --check -- db/db_operations_orm.py
+
+Read , lines 1 to 60
+
+Read , lines 90 to 180
+
+Read , lines 190 to 280
+
+Updated only the version-selection logic in `db_operations_orm.py`.
+
+**Diff**
+```diff
+-            if numeric_input_key is not None and numeric_substep_key is not None:
++            if numeric_input_key is not None and substep_key is None:
++                version_entry = next(
++                    (
++                        entry for entry in reversed(versions)
++                        if _genai_audit_user_id(entry.get("input_key")) == numeric_input_key
++                    ),
++                    version_entry,
++                )
++            elif numeric_input_key is not None and numeric_substep_key is not None:
+                 version_entry = next(
+                     (
+                         entry for entry in reversed(versions)
+                         if _genai_audit_user_id(entry.get("substep_key")) == numeric_substep_key
+                         and _genai_audit_user_id(entry.get("input_key")) == numeric_input_key
+```
+
+When `substep_key` is `None`, updates now match by `input_key`; when supplied, they match by both keys. If no match is found, selection still falls back to the last entry. The selected entry then receives the status, progress, and message update, so a success update writes `Success`, `100`, and its message to the started version.
+
+`client_id` was already included in `update_data` from the selected version’s `client_id`. The create path passes that mapping to `GenAIAuditLog`, and `crud.update_genai_audit_log` applies all fields with `setattr`; neither path filters it out.
+
+When `userId` is absent, `read_user_by_email(receiver_email)` uses `get_db()` and the main `SessionLocal`. The helper calls `track_trace` when no user is found; lookup exceptions are caught by the audit resolver.
+
+Validation passed: `py_compile db/db_operations_orm.py` and `git diff --check -- db/db_operations_orm.py`. No other files were edited in this turn.
+
+Made changes.
+-----------------------------------------------------------------------------------------------------------------------------------
 Tracker scope only. Bug from testing (Capability Setup, row id 9):
 log_history entry has "client_id": 1001 but the client_id COLUMN stays NULL.
 
