@@ -1,3 +1,18 @@
+Read-only, do not edit.
+1. git diff HEAD --stat  and  git status --short
+2. Show the final run_genai_audit_log signature and the version-entry dict it builds.
+3. Confirm: no "job_id" remains anywhere (grep job_id in db/ and apis/v1/).
+4. Show how updates are matched to the run (substep_key + input_key, fallback last entry).
+5. Show the user_id resolution: userId -> app_user lookup by receiver_email -> NULL.
+   Which existing helper is used, and is it inside try/except?
+6. Show the client_id resolution per module (clientInfo.clientKey -> ClientKey ->
+   projectInfo.projectKey) and that it is int-only.
+7. models.py: show GenAIAuditLog (client_id Integer nullable, user_id Integer nullable).
+8. Confirm no changes outside tracker code: list every deleted line (git diff HEAD
+   --unified=0 | Select-String '^-[^-]') that is NOT in run_genai_audit_log, models.py,
+   crud audit functions, or run_genai_audit_log call arguments.
+9. py_compile on all changed files and git diff --check.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Ran terminal command: py -3 -m pytest --version
 Completed with input: py -3 -m pytest --version
 Tool execution failed with exit code 1
