@@ -1,3 +1,30 @@
+Tracker scope only.
+
+1. db/db_operations_orm.py run_genai_audit_log: always return the row id —
+   for the update path return existing_record.genai_audit_log_id (do not depend on what
+   crud.update_genai_audit_log returns); for create return created.genai_audit_log_id.
+
+2. apis/v1/*.py: remove the `if genai_audit_log_id` (and
+   `'genai_audit_log_id' in locals() and genai_audit_log_id`) guards around these
+   run_genai_audit_log calls, keeping each call inside its existing try/except:
+   agentic_fit_allocator.py 701, 725, 748
+   capability_double_click.py 265, 592, 631, 674, 700
+   capability_maps_generator.py 128, 267, 464
+   industrial_map.py 386, 399
+   two_by_two.py 68, 289
+   workforce_analyzer.py 838, 878
+   Where genai_audit_log_id may be undefined (e.g. failure before start), pass
+   locals().get("genai_audit_log_id") instead.
+   For capability_double_click.py 724 keep the runner lookup but use the stored audit
+   context with .get() fallbacks; do not gate on the id.
+3. Do not change anything else (no business logic). Show the diff and py_compile result.
+4. In run_genai_audit_log (update path, is_start=False): if no version entry matches
+   this run (by substep_key+input_key, or input_key when substep_key is None), APPEND a
+   new version entry for this run (with the given status/progress/message) instead of
+   falling back to the last entry, so a failure before start never overwrites a
+   previous run.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 I’ll scan all `apis/v1/*.py` audit calls and report only those nested under a condition that checks an audit ID, including the guarding condition, source line, and status. I’ll keep this read-only.
 
 Ran terminal command: @'
