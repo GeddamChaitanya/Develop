@@ -1,3 +1,30 @@
+Rework the GenAI audit log to match the EXISTING table in the audit DB. Tracker code only;
+do not touch business logic, status writes, publish_message, email or routers.
+
+Existing table genai_audit_log: genai_audit_log_id bigint PK, user_id INTEGER (nullable),
+step varchar(255), sub_step varchar(255) nullable, progress integer, status varchar(50),
+event_time timestamptz, requested_time timestamptz, log_history jsonb with format:
+{"versions":[{"status","message","version","progress","input_key","substep_key",
+ "requested_by","requested_on","recorded_time","receiver_email"}], "total_runs": N}
+
+1. ONE ROW PER (step, sub_step): remove "new row per trigger" logic and the job_id COLUMN
+   from the model. Find the row with SELECT ... FOR UPDATE (if several exist, use the lowest
+   genai_audit_log_id); create it only if none exists.
+2. On each trigger: append a new entry to log_history["versions"] with the existing keys
+   plus "job_id", set "version" = len(versions)+1, increment "total_runs".
+3. On progress/success/failed/cancelled: update the versions entry whose job_id matches
+   this run (fallback: last entry) under the row lock. Failed/Cancelled keep last progress.
+4. Top-level columns mirror the latest run on EVERY write:
+   progress, status, user_id = int(userId) if numeric else NULL (email stays only in
+   receiver_email), requested_time = requestedOn parsed to UTC (NOT null when provided),
+   event_time = that run's initiation time (UTC).
+5. models.py: user_id must be Integer (nullable), matching the DB. Remove job_id column.
+6. query_genai_audit_logs: filter step/sub_step/status/user_id/time range on columns, and
+   optionally search log_history->'versions' for per-run filters.
+7. Keep: status normalisation, PBI labels, cancellation handling, workforce salary tracking.
+8. Delete db/migrations/001_create_genai_audit_log.sql and its _down file.
+Show the full diff and explain how a re-trigger and two concurrent runs are handled.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the current diff and the action/label helpers without editing anything. I’ll extract all deleted lines with their file/hunk context, then verify the mapping and schema fields directly against the current source.
 
 Ran terminal command: git diff HEAD --unified=0 | Select-String '^-([^-])'
