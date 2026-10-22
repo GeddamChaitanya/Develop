@@ -1,3 +1,20 @@
+Tracker scope only, db/db_operations_orm.py run_genai_audit_log.
+Bug from testing (row id 9): columns show Success/100 but the matching log_history
+version (version 25) stays "In Progress"/0/message null, and event_time column stays
+at an older run's time instead of version 25's recorded_time.
+
+1. At the start of the function, take current_history = copy.deepcopy(existing_record.log_history
+   or {"versions": [], "total_runs": 0}); mutate only this copy, then assign it as a NEW object
+   in update_data["log_history"] (and keep flag_modified). Never mutate existing_record.log_history
+   in place.
+2. Ensure update_data always includes event_time = the selected run's recorded_time (initiation),
+   so the column reflects the latest run.
+3. Check crud.update_genai_audit_log does not skip any keys (log_history, event_time, client_id,
+   user_id) and commits.
+4. Add a temporary track_trace showing the selected version number, its status and progress
+   just before commit.
+No other changes. Show the diff.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll trace the three request schemas, their input-loading paths, and every audit call in those modules. I’ll only change these tracker call sites and, if needed to retain nested IDs, the capability-map input schema; first I’m checking what the models actually expose.
 
 Searched for text `run_genai_audit_log\(` (`**/apis/v1/{capability_maps_generator,missing_client_capabilities,industrial_map}.py`), 18 results
