@@ -1,3 +1,6 @@
+   git add db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+   git status --short
+---------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the current diff and the nearby control flow in those four files, then make only the requested reversions while preserving audit/tracker additions. I’ll finish by showing the exact `git diff HEAD` for those paths.
 
 Ran terminal command: git diff HEAD -- db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
