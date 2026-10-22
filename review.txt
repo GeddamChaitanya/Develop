@@ -193,6 +193,202 @@ The restored Agentic Fit 25% status write and safe failed-status DB write remain
 All seven affected API modules passed `py_compile`, and `git diff --check` passed. Existing unresolved workspace dependency diagnostics remain environmental.
 
 Made changes.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Generating patch (33 lines) in 
+
+
+```
+
+```
+The new workforce labels now derive from `processName`/`process_name` and `input_name`, falling back to the request action when no input name exists. I’m checking every current audit call against the origin inventory, ensuring terminal workforce calls remain limited to salary actions, and checking whether `migrations` is empty before removing it.
+
+Ran terminal command: Get-ChildItem db/migrations -Force | Select-Object Name,Length,Mode
+
+Searched for regex `_agentic_audit_sub_step|_industry_map_audit_sub_step|_client_capability_map_audit_sub_step|_workforce_audit_sub_step|_capmap_audit_identity|step="(AI Identifier|Industry Map|Client Capability Map|Capability Double Click|Capability Setup|AI Prioritization)"` (`**/apis/v1/**/*.py`), 9 results
+
+Searched for regex `run_genai_audit_log\(|step=|sub_step=` (`**/apis/v1/{agentic_fit_allocator.py,capability_double_click.py,capability_maps_generator.py,industrial_map.py,missing_client_capabilities.py,two_by_two.py,workforce_analyzer.py}`), 132 results
+
+Read , lines 345 to 385
+
+Read , lines 910 to 975
+
+The audit pass found one stale Capability Maps helper reference in its background failure wrapper, plus workforce failure/cancellation calls that should be gated so unrelated actions do not start audit rows. I’m correcting those now and will also verify there are no leftover PBI labels or `progress=0` arguments on failed/cancelled checkpoints.
+
+Generating patch (14 lines) in 
+
+Read , lines 95 to 125
+
+Generating patch (9 lines) in 
+
+
+```
+
+```
+
+
+Generating patch (109 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+Workforce audit failures and cancellations are now guarded by `audit_sub_step`, so only salary-related actions can create those rows. I’m checking all remaining audit call-site labels against the origin list and locating explicit zero-progress terminal arguments before the final cleanup.
+
+Ran terminal command: Get-ChildItem db/migrations -Force | Select-Object Name,Length,Mode
+
+Ran terminal command: git status --short -- apis/v1 db/migrations
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Searched for text `progress=0` (`**/apis/v1/{agentic_fit_allocator.py,capability_double_click.py,capability_maps_generator.py,industrial_map.py,missing_client_capabilities.py,two_by_two.py,workforce_analyzer.py}`), 17 results
+
+Searched for text `run_genai_audit_log\(` (`**/apis/v1/**/*.py`), 44 results
+
+The label-helper/PBI grep is clean. I found explicit `progress=0` on failure/cancellation calls; I’m removing those terminal arguments while retaining zero progress on genuine start checkpoints, so the shared helper can preserve each run’s last progress.
+
+Generating patch (81 lines) in , , , , , 
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+
+Checked , , , , , , 12 problems found
+
+The origin-label check is now clean for the six pre-existing modules, and terminal failure/cancellation calls no longer pass `progress=0`; start checkpoints that intentionally begin at zero remain unchanged. I’m removing the empty migrations directory as requested, then I’ll run final branch comparisons and compile checks across all affected API files.
+
+Ran terminal command: if (Test-Path -LiteralPath db/migrations) { Remove-Item -LiteralPath db/migrations }
+
+Ran terminal command: py -3 -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git diff --check HEAD -- apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: Test-Path db/migrations; git status --short -- db/migrations apis/v1
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Searched for text `progress=0` (`**/apis/v1/{agentic_fit_allocator.py,capability_double_click.py,capability_maps_generator.py,industrial_map.py,missing_client_capabilities.py,two_by_two.py,workforce_analyzer.py}`), 3 results
+
+Final checks show no old helper names or PBI-only labels remain, and the only `progress=0` arguments left are the three intentional start checkpoints. All seven affected API modules compile, the focused diff is whitespace-clean, and `db/migrations` is removed; I’m confirming the preserved Agentic Fit status/error handling before wrapping up.
+
+Ran terminal command: git diff --stat -- apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py; git status --short -- db/migrations
+
+Searched for regex `run_genai_audit_log\(|step=|sub_step=` (`**/apis/v1/workforce_analyzer.py`), 18 results
+
+Read , lines 340 to 380
+
+Read , lines 355 to 382
+
+Read , lines 755 to 805
+
+Agentic Fit’s restored status block and safe failed-status write are present; the Error publish still precedes the guarded DB update. Workforce calls use the derived process/input values and remain gated to salary sub-steps. I’m doing one final compile/whitespace pass and checking that no helper labels remain.
+
+Ran terminal command: py -3 -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git diff --check HEAD -- apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: Test-Path db/migrations; git status --short -- db/migrations apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Searched for text `progress=0` (`**/apis/v1/{agentic_fit_allocator.py,capability_double_click.py,capability_maps_generator.py,industrial_map.py,missing_client_capabilities.py,two_by_two.py,workforce_analyzer.py}`), 3 results
+
+Completed: *Align model and CRUD locking* (1/4)
+
+Restored audit `step`/`sub_step` arguments to the origin branch at every existing call site. Removed the five PBI label helpers. The added workforce calls now use the closest request fields: process name from background/request metadata and input name from background/request metadata, falling back to `request.action`.
+
+**Argument Changes**
+
+| API module | Restored arguments |
+|---|---|
+| `agentic_fit_allocator` | Every call: `input_data.processName` / `input_data.input_name` |
+| `capability_double_click` | Background runner failure: `getattr(payload, 'processName', None) or "Capability Double Click"` / `None`. Async lifecycle: background `step_name` or request `processName` / background `category` or request `input_name` |
+| `capability_maps_generator` | Background failure: `"Capability Setup"` / `Generate L{_ACTION_LEVEL...} Capabilities`. Generate-all calls: `"Capability Setup"` / `"Generate All Capabilities"`. Level calls: `"Capability Setup"` / `f"Generate L{level} Capabilities"` |
+| `industrial_map` | Background `step_name` or `"Industrial Map Generation"` / `None` |
+| `missing_client_capabilities` | `"Client Capability Map Generation"` / `None` |
+| `two_by_two` | Runner failure: `payload.processName` / `None`. Analysis lifecycle: `step_name` / `analysis_type` |
+| `workforce_analyzer` | `audit_step` from request/background `processName` or `process_name`; `audit_sub_step` from request/background `input_name`, falling back to `request.action` |
+
+**Diff**
+
+```diff
+- step="AI Identifier",
+- sub_step=audit_sub_step,
++ step=input_data.processName,
++ sub_step=input_data.input_name,
+```
+
+Applied to every Agentic Fit start, progress, success, failure, and cancellation audit call.
+
+```diff
+- audit_step, audit_sub_step = _capmap_audit_identity(...)
+- step=audit_step,
+- sub_step=audit_sub_step,
++ step="Capability Setup",
++ sub_step="Generate All Capabilities",
+```
+
+Level-generation calls use the origin `f"Generate L{level} Capabilities"` expression; the background failure call uses the origin `_ACTION_LEVEL` expression.
+
+```diff
+- step="Industry Map",
+- sub_step=_industry_map_audit_sub_step(input_data),
++ step=background_processing_data.get("step_name") or "Industrial Map Generation",
++ sub_step=None
+```
+
+```diff
+- step="Client Capability Map",
+- sub_step=_client_capability_map_audit_sub_step(input_data),
++ step="Client Capability Map Generation",
++ sub_step=None
+```
+
+```diff
+- step="AI Prioritization",
+- sub_step="Add AI Prioritization",
++ step=step_name,
++ sub_step=analysis_type,
+```
+
+The Two-by-Two background failure call is restored to `payload.processName` / `None`.
+
+The restored Agentic Fit 25% status write and safe failed-status DB write remain. The Error publish remains unconditional. Failed/cancelled audit calls no longer pass `progress=0`; the three remaining zero-progress arguments are start checkpoints. The empty `db/migrations` directory is removed.
+
+All seven affected API modules passed `py_compile`, and `git diff --check` passed. Existing unresolved workspace dependency diagnostics remain environmental.
+
+Made changes.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Revert the audit step/sub_step labels to the original tracker behaviour. Tracker code only.
 
