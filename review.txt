@@ -1,4 +1,274 @@
-   git add db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
+description : As a system, I want to record every Gen AI event with its user, step, sub step, progress, status, and timestamp into a dedicated database table so that all AI-triggered actions are traceable and available for future reporting and auditing.
+
+
+
+System should capture GenAI event tracker log in the backend with below mentioned information for all the processes where we trigger the Gen AI. 
+
+
+User
+
+Step/Module
+
+Sub Step
+
+Progress
+
+Status
+
+Timestamp
+
+J. Miller
+
+Capability double clicks
+
+NA
+
+42%
+
+In progress
+
+2026-06-02 01:58
+
+S. Rao
+
+AI prioritization
+
+NA
+
+100%
+
+Success
+
+2026-06-02 01:45
+
+A. Khan
+
+AI identifier
+
+L3 Capabilities Opex
+
+100%
+
+Success
+
+2026-06-02 01:30
+
+L. Park
+
+Impact analyzer
+
+NA
+
+67%
+
+Failed
+
+2026-06-02 01:12
+
+T. Nguyen
+
+CDC step
+
+NA
+
+100%
+
+Success
+
+2026-06-02 00:58
+
+J. Miller
+
+Capability setup
+
+Generate L2 Capabilities
+
+100%
+
+Success
+
+2026-06-02 00:41
+
+S. Rao
+
+Capability setup
+
+Generate L3 Capabilities
+
+30%
+
+Cancelled
+
+2026-06-02 00:25
+
+J. Miller
+
+Industry Map
+
+Add/Update Industry Map
+
+100%
+
+Success
+
+2026-06-02 01:30
+
+S. Rao
+
+Client Capability Map
+
+Add/Update Client Capability Map
+
+100%
+
+Success
+
+2026-06-02 01:30
+
+A. Khan
+
+Capability Generation Utility
+
+Add/Update Client Capability Map
+
+100%
+
+Success
+
+2026-06-02 01:30
+
+ 
+
+A dedicated log table must be created in the database to capture all Gen AI events triggered across the application.
+The following fields must be stored for every audit log entry:
+User (the user who triggered the event)
+Step (e.g., Capability Setup, AI Identifier, Impact Analyzer, AI Prioritization, Capability Double Click, CDC Step)
+Sub step (e.g., L3 Capabilities Opex, Generate L2 Capabilities, Generate L3 Capabilities; nullable where not applicable)
+Progress % (numeric value representing the completion percentage at the time of logging)
+Status (e.g., In Progress, Success, Failed, Cancelled)
+Timestamp (date and time the event was triggered, stored in UTC)
+A new record must be inserted into the audit log table every time a Gen AI event is triggered, regardless of its outcome.
+The status field must be updated in real time as the event progresses (e.g., from In Progress → Success or Failed).
+The progress % field must be updated incrementally as the event advances, reflecting the latest known completion state.
+If a Gen AI event is cancelled mid-execution, the audit log record must capture the progress % at the point of cancellation along with a Cancelled status.
+If a Gen AI event fails, the audit log record must be updated to reflect the Failed status and the progress % reached before failure.
+The sub step field must allow null values for steps that do not have an associated sub step.
+The timestamp must be recorded at the moment the event is initiated, not at completion.
+The audit log table must not be used for any delete operations — records must be retained permanently for traceability.
+Business Rule:
+
+No front-end integration is in scope at this time; the requirement is limited to backend data capture and DB storage only.
+The audit log table must be queryable by any combination of user, step, sub step, status, and timestamp range to support future reporting needs.
+
+GenAI Process Trigger Reference:
+
+Module
+
+Sub Module
+
+Step
+
+Grid
+
+Administration
+
+Industry Map
+
+Add Industry Map
+
+Industry Map Generation
+
+Update Industry Map
+
+Industry Map Generation
+
+Capability Generation Utility
+
+Add Capability Generation Utility
+
+ 
+
+Capability Generation Utility Generation
+
+Edit Capability Generation Utility
+
+ 
+
+Capability Generation Utility Generation
+
+Client Data
+
+Client Capability Map
+
+Add Client Capability Map
+
+Client Capability Map Generation
+
+Edit Client Capability Map
+
+Client Capability Map Generation
+
+Analysis Library
+
+ 
+
+Capability Setup
+
+Generate L1 Capabilities
+
+L1 Capability Generation
+
+Generate L2 Capabilities
+
+L2 Capability Generation
+
+Generate L3 Capabilities
+
+L3 Capability Generation
+
+AI Identifier
+
+L1 Capabilities OpEx
+
+L1 Capability OpEx Generation
+
+L2 Capabilities OpEx
+
+L2 Capability OpEx Generation
+
+L3 Capabilities OpEx
+
+L3 Capability OpEx Generation
+
+Cost Savings Potential
+
+Cost Savings Generation
+
+L3 Capability Salary
+
+L3 Capability Salary Generation
+
+Salary Cost Savings Potential
+
+Salary Cost Savings Generation
+
+AI Prioritization
+
+Add AI Prioritization
+
+2X2 Generation
+
+Capability Double Click
+
+Add Capability Double Click
+
+CDC Generation
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+git add db/crud.py apis/v1/capability_double_click.py schemas/agentic_fit_allocator.py apis/v1/agentic_fit_allocator.py
    git status --short
 ---------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the current diff and the nearby control flow in those four files, then make only the requested reversions while preserving audit/tracker additions. I’ll finish by showing the exact `git diff HEAD` for those paths.
