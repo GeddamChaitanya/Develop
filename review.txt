@@ -1,3 +1,19 @@
+Tracker scope only. File: apis/v1/agentic_fit_allocator.py, the `except Exception as e:`
+handler of agentic_fit_allocation (and nothing else).
+
+Revert the business part of this handler EXACTLY to develop (git show HEAD:apis/v1/agentic_fit_allocator.py):
+- the original `failed_status_written = False` / `if "substepkey" in locals() and _bg.get("substepkey"):`
+  run_operations_status block with sub_step_name / status 6 / progress 0 / message
+- the original `if failed_status_written:` publish_message(... "Error" ...) call
+  (plain publish_message, not _publish_agentic_message)
+- the original email_send call and the final raise HTTPException
+Keep ONLY the run_genai_audit_log Failed checkpoint in this handler, inside its own
+try/except, placed right after the existing track_trace/monitor.stop_progress lines.
+
+Do not touch any other part of the file. Then show:
+1. git diff HEAD -- apis/v1/agentic_fit_allocator.py, limited to this handler
+2. py_compile result
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the unstaged `git diff -- apis/v1` and enumerate matching changed lines, excluding audit-call blocks and their own exception wrappers. I’ll also verify the unmatched-version branch’s `total_runs` update; this is read-only.
 
 Ran terminal command: @'
