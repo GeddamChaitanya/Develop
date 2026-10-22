@@ -1,3 +1,165 @@
+I’ll inspect the current diff and the action/label helpers without editing anything. I’ll extract all deleted lines with their file/hunk context, then verify the mapping and schema fields directly against the current source.
+
+Ran terminal command: git diff HEAD --unified=0 | Select-String '^-([^-])'
+
+Ran terminal command: git diff HEAD --unified=0 | Select-String '^(diff --git|@@|-[^-])'
+
+Ran terminal command: git diff HEAD --unified=0 -- schemas/capability_maps_generator.py schemas/workforce_analyzer.py
+
+Read , lines 25 to 95
+
+Read , lines 30 to 65
+
+Read , lines 80 to 110
+
+The schema diff shows four newly added optional fields, all with `None` defaults. The initial deletion-only output omits filenames, so I’m opening the file/hunk-tagged extraction and checking the three decision helpers to classify every deleted line accurately.
+
+Ran terminal command: git diff HEAD --unified=0 | Select-String '^diff --git|^@@|^-[^-]'
+
+Read , lines 95 to 125
+
+Read , lines 25 to 50
+
+Read , lines 35 to 65
+
+Read , lines 345 to 380
+
+Read 
+
+I’ve confirmed the current mappings, including `GENERATE_ALL` resolving through the same helper as other capability actions. I’m generating a path-prefixed deletion list now; that will make the 45-line business-logic audit explicit rather than relying on wrapped terminal output.
+
+Ran terminal command: $currentFile = ''; git diff HEAD --unified=0 | ForEach-Object { if ($_ -match '^diff --git a/(.+) b/') { $currentFile = $Matches[1] } elseif ($_ -match '^-[^-]') { "$currentFile`t$_" } } | Out-String -Width 4096
+
+The deletion list contains apparent removals of progress/status and publish calls in `agentic_fit_allocator.py`, plus a `raise` in the client-capability handler. Some may have replacements, but I won’t classify them as harmless until I compare the full hunks and current control flow; I’m checking those specific cases now.
+
+Ran terminal command: $currentFile = ''; $deleted = git diff HEAD --unified=0 | ForEach-Object { if ($_ -match '^diff --git a/(.+) b/') { $currentFile = $Matches[1] } elseif ($_ -eq '-') { "$currentFile`t-<blank>" } elseif ($_ -match '^-' -and $_ -notmatch '^---') { "$currentFile`t$_" } }; $deleted; "DELETION_COUNT=$($deleted.Count)"
+
+Ran terminal command: git diff HEAD --unified=4 -- apis/v1/agentic_fit_allocator.py | Select-String '^@@ -20|^@@ -21|^@@ -23|^@@ -27|^@@ -30|^@@ -33|^@@ -37|^@@ -38|^@@ -51|^@@ -52|^@@ -53' -Context 0,45
+
+Ran terminal command: git diff HEAD --unified=5 -- apis/v1/missing_client_capabilities.py apis/v1/workforce_analyzer.py | Select-String '^diff --git|^@@|^[-+].*(raise|HTTPException|run_operations_status|publish_message|email_send|return)' -Context 2,5
+
+Searched for regex `run_operations_status|publish_message\(|_publish_agentic_message\(|raise HTTPException|\braise\b|email_send\(` (`**/apis/v1/agentic_fit_allocator.py`), 24 results
+
+Read 
+
+The path-prefixed extraction confirms exactly 45 deletions, including two blank lines. Most `publish_message` removals in Agentic Fit are replaced by `_publish_agentic_message` (which still calls `publish_message`); I’m checking the remaining input-resolution and exception changes to identify any genuine business-logic behavior change.
+
+Read , lines 120 to 290
+
+Searched for text `UUID` (`**/db/models.py`), 5 results
+
+Read , lines 250 to 375
+
+Read , lines 735 to 815
+
+Read , lines 1 to 24
+
+Ran terminal command: $currentFile = ''; $index = 0; git diff HEAD --unified=0 | ForEach-Object { if ($_ -match '^diff --git a/(.+) b/') { $currentFile = $Matches[1] } elseif ($_ -eq '-') { $index++; '{0,2}. {1} | -<blank>' -f $index, $currentFile } elseif ($_ -match '^-' -and $_ -notmatch '^---') { $index++; '{0,2}. {1} | {2}' -f $index, $currentFile, $_ } }; "DELETION_COUNT=$index"
+
+Ran terminal command: git show HEAD:apis/v1/agentic_fit_allocator.py | Select-String -Pattern 'except HTTPException|failed_status_written|publish_message\(|raise$|client_info =|background_processing_data =' -Context 1,2
+
+Ran terminal command: git diff HEAD --unified=3 -- apis/v1/agentic_fit_allocator.py | Select-String -Pattern '^@@ -53|^@@ -54|^@@ -55|^@@ -56|^-\s+raise|^-\s+except HTTPException|^-\s+if failed_status_written|^-\s+publish_message' -Context 4,15
+
+Searched for regex `def _agentic_audit_sub_step|def _industry_map_audit_sub_step|def _client_capability_map_audit_sub_step|def _workforce_audit_sub_step|def _capmap_audit_identity` (`**/apis/v1/**/*.py`), 5 results
+
+No files were edited. I ran the requested extraction; it reports **45 deleted lines**, counting blank lines.
+
+**1. Deleted Lines**
+
+Tags: **T** = tracker/metadata replacement; **B** = business-flow behavior; **F** = formatting/comment/import replacement. The status and error-publish changes marked **B** are the business-logic changes to note.
+
+1. `agentic_fit_allocator.py` **[F]** `client_info = input_data_client.get('clientInfo') if isinstance(input_data_client, dict) else None ` (trailing whitespace only)
+2. `agentic_fit_allocator.py` **[T]** `background_processing_data = input_data_db.get('backgroundProcessingInfo') if input_data_db and input_data_db.get('backgroundProcessingInfo') else {}` (replaced by metadata helper)
+3. `agentic_fit_allocator.py` **[F]** `order = order_[input_data.input_name] if input_data.input_name in order_ else None` (replaced by equivalent `.get` lookup)
+4. `agentic_fit_allocator.py` **[B]** `status_data = {`
+5. `agentic_fit_allocator.py` **[B]** blank line
+6. `agentic_fit_allocator.py` **[B]** `"sub_step_name": background_processing_data.get('step_name') if background_processing_data else "Agentic Fit Allocation",`
+7. `agentic_fit_allocator.py` **[B]** `"sub_step_order": order ,`
+8. `agentic_fit_allocator.py` **[B]** `"sub_step_status_key": 2,`
+9. `agentic_fit_allocator.py` **[B]** `"sub_step_progress_percentage": 25,`
+10. `agentic_fit_allocator.py` **[B]** `"sub_step_progress_message": f"Generating {action} via LLM..."`
+11. `agentic_fit_allocator.py` **[B]** blank line
+12. `agentic_fit_allocator.py` **[B]** `}`
+13. `agentic_fit_allocator.py` **[B]** `db_operations_orm.run_operations_status(sub_step_key=input_data.substepkey, data=status_data)` (this removes a duplicate progress/status write; another write remains)
+14. `agentic_fit_allocator.py` **[T]** `publish_message(background_processing_data.get('ID'), "Started", f" Started generating for Impact Analyser for action {action}", background_processing_data.get('input_key'), background_processing_data.get('substepkey'), receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)` (replaced by `_publish_agentic_message`, which calls `publish_message`)
+15. `agentic_fit_allocator.py` **[T]** `await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating Impact Analyser for action: {action}", input_key=background_processing_data.get('input_key'), sub_step_key=background_processing_data.get('substepkey'), receivers_email=background_processing_data.get('receiverEmail'), requested_on=background_processing_data.get('requestedOn'),action=action,channel_name=channel_name)` (replaced with extended metadata)
+16. `agentic_fit_allocator.py` **[T]** `publish_message(background_processing_data.get('ID'), "Inserting", f" IA total opex inserting into DB for action {action}", background_processing_data.get('input_key'), background_processing_data.get('substepkey'), receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)` (wrapper replacement)
+17. `agentic_fit_allocator.py` **[T]** `publish_message(background_processing_data.get('ID'), "Completed", f" IA total opex inserted into DB for action {action}", background_processing_data.get('input_key'), background_processing_data.get('substepkey'), receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)` (wrapper replacement)
+18. `agentic_fit_allocator.py` **[T]** `await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating Impact Analyser for action: {action}", input_key=background_processing_data.get('input_key'), sub_step_key=background_processing_data.get('substepkey'), receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=action,channel_name=channel_name)` (extended call replaces it)
+19. `agentic_fit_allocator.py` **[T]** same `"Inserting"` `publish_message` line as item 16 (wrapper replacement)
+20. `agentic_fit_allocator.py` **[T]** same `"Completed"` `publish_message` line as item 17 (wrapper replacement)
+21. `agentic_fit_allocator.py` **[T]** same `monitor.start_progress` call as item 18 (extended call replaces it)
+22. `agentic_fit_allocator.py` **[T]** same `monitor.start_progress` call as item 18 (extended call replaces it)
+23. `agentic_fit_allocator.py` **[F]** `# TODO: Remove testing code - load from example.json instead of generating` (comment only)
+24. `agentic_fit_allocator.py` **[T]** same `"Inserting"` `publish_message` line as item 16 (wrapper replacement)
+25. `agentic_fit_allocator.py` **[T]** same `"Completed"` `publish_message` line as item 17 (wrapper replacement)
+26. `agentic_fit_allocator.py` **[B]** `failed_status_written = False`
+27. `agentic_fit_allocator.py` **[B]** `if "substepkey" in locals() and _bg.get("substepkey"):`
+28. `agentic_fit_allocator.py` **[B]** `failed_status_written = True`
+29. `agentic_fit_allocator.py` **[B]** `if failed_status_written:`
+30. `agentic_fit_allocator.py` **[B]** `publish_message(`
+31. `agentic_fit_allocator.py` **[B]** `_bg.get("ID"), "Error",`
+32. `agentic_fit_allocator.py` **[B]** `f"Error in Agentic Fit Allocation: {str(e)[:500]}",`
+33. `agentic_fit_allocator.py` **[B]** `_bg.get("input_key"), _bg.get("substepkey"),`
+34. `agentic_fit_allocator.py` **[B]** `receiver_email, _bg.get("requestedOn"),`
+35. `agentic_fit_allocator.py` **[B]** `channel_name=channel_name if "channel_name" in locals() else None,`
+36. `agentic_fit_allocator.py` **[B]** `)`  
+   Items 26–36 remove the guard: the error event is now published unconditionally through `_publish_agentic_message`; previously it depended on `substepkey`.
+37. `capability_double_click.py` **[F]** blank line
+38. `capability_maps_generator.py` **[F]** blank line
+39. `capability_maps_generator.py` **[F]** whitespace-only line
+40. `capability_maps_generator.py` **[F]** blank line
+41. `missing_client_capabilities.py` **[F]** `raise` (same bare re-raise remains; the diff reflects the final newline)
+42. `two_by_two.py` **[F]** whitespace-only line
+43. `workforce_analyzer.py` **[T]** `except HTTPException:` (expanded to audit the failure and then re-raise; exception propagation remains)
+44. `db_operations_orm.py` **[F]** `from database import get_db` (combined import retains `get_db` and adds `get_audit_db`)
+45. `models.py` **[F]** `from sqlalchemy.dialects.postgresql import UUID` (combined import retains `UUID` and adds `JSONB`)
+
+**Business-Logic Flags**
+
+There is one deleted DB status write, but it is a duplicate: the earlier status write remains. The Agentic Fit failure event’s condition was removed, so the event can now publish in cases where it previously did not. Direct Agentic Fit `publish_message` calls at start/progress/completion are replaced by a wrapper that still calls `publish_message`. No deleted line removes an `email_send`, `OutputKey` use, return value, or effective exception re-raise.
+
+**2. Label Mapping**
+
+All labels below are the exact step/sub-step values passed to audit logging.
+
+| Endpoint / input action | Step | Sub-step |
+|---|---|---|
+| `/capability_maps_generator`, generate action with no “Capability Generation Utility” process/step hint | `Capability Setup` | `Generate L1 Capabilities`, `Generate L2 Capabilities`, or `Generate L3 Capabilities` based on the action level |
+| `/capability_maps_generator`, `GENERATE_ALL` with the normal setup hint | `Capability Setup` | `Generate L3 Capabilities` |
+| `/capability_maps_generator`, process/step hint contains “Capability Generation Utility”, generate action | `Capability Generation Utility` | `Add Capability Generation Utility` |
+| `/capability_maps_generator`, any `UPDATE_*` action | `Capability Generation Utility` | `Edit Capability Generation Utility` |
+
+The distinction is implemented in `_capmap_audit_identity`: a process/step hint containing “Capability Generation Utility” selects that module; any `UPDATE_*` action also selects it. Otherwise the helper uses Capability Setup. Thus normal `GENERATE_ALL` logs **Capability Setup / Generate L3 Capabilities**, not “Generate All Capabilities.”
+
+For `/agentic_fit_allocator`, the step is always `AI Identifier`:
+
+| `input_name` | Sub-step |
+|---|---|
+| `IA L1 Capabilities Opex`; `IA Update L1 Opex` | `L1 Capabilities OpEx` |
+| `IA L2 Capabilities Opex`; `IA L1l2 Capabilities Opex`; `IA Update L2 Opex` | `L2 Capabilities OpEx` |
+| `IA L3 Capabilities Opex`; `IA L1l2l3 Capabilities Opex`; `IA L2 and L3 Capabilities Opex`; `IA L1, L2, and L3 Capabilities Opex`; `IA Update L3 Opex` | `L3 Capabilities OpEx` |
+| `IA Total Opex`; `Update total OPEX for the company` | `None` |
+| `IA Cost Savings Potential`; `Perform all actions: generate total OPEX, allocate OPEX to capabilities, determine agentic fit, and create heatmaps` | `Cost Savings Potential` |
+| `IA Agentic Fit`; `IA Update Agentic Fit`; `IA L1 to L2 Heatmap`; `IA L2 to L3 Heatmap` | `None` |
+
+Industry Map logs step `Industry Map`. Its sub-step is `Update Industry Map` if the action/input/process string contains “update” or `outputKey` is truthy; otherwise it is `Add Industry Map`.
+
+Client Capability Map logs step `Client Capability Map`. Its sub-step is `Add Client Capability Map` if action, input name, or map name contains “add” or “create”; otherwise it is `Edit Client Capability Map`.
+
+Workforce Analyzer logs step `AI Identifier` only for these actions:
+- Salary: `GENERATE_L1_L2_L3_SALARY`, `GENERATE_L3_SALARY`, `UPDATE_L3_SALARY` → `L3 Capability Salary`.
+- Salary cost savings: `GENERATE_COST_SAVING_POTENTIAL`, `GENERATE_ALL` → `Salary Cost Savings Potential`.
+
+Other workforce actions return no audit sub-step and do not create start rows.
+
+**3. Schema Fields**
+
+All listed fields are `Optional` with `Field(None, ...)`, so they do not make existing requests require new data.
+
+- `capability_maps_generator.py`: `userId`.
+- `workforce_analyzer.py`: `WorkforceBackgroundInfo.ID`, `WorkforceBackgroundInfo.jobId`, `WorkforceBackgroundInfo.userId`, and `WorkforceAnalyzerRequest.userId`.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Read-only, do not edit.
 1. Run: git diff HEAD --unified=0 | Select-String '^-[^-]'
    List EVERY deleted line (45) with file and classify: tracker-only change vs
