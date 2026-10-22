@@ -1,3 +1,250 @@
+I’ll inspect the start and background-runner audit calls in those three modules, including how their request-ID registries are used. Then I’ll make the smallest tracker-only change so runner terminal calls reuse the exact identity captured when that job started.
+
+Read , lines 35 to 60
+
+Read , lines 250 to 285
+
+Read , lines 410 to 445
+
+Read , lines 25 to 80
+
+Read , lines 145 to 190
+
+Read , lines 20 to 140
+
+The runners currently store only the audit row ID, which is why their failure labels/job IDs can diverge from starts (notably `GENERATE_ALL`). I’ll add a small per-request identity registry beside each existing ID registry, populate it once at start, and have runner/async terminal checkpoints reuse it; no other logic changes.
+
+Searched for regex `_AUDIT_LOG_BY_REQUEST_ID|run_genai_audit_log\(|step=|sub_step=` (`**/apis/v1/capability_double_click.py`), 29 results
+
+Searched for regex `_AUDIT_LOG_BY_REQUEST_ID|run_genai_audit_log\(|step=|sub_step=` (`**/apis/v1/two_by_two.py`), 20 results
+
+Searched for regex `_AUDIT_LOG_BY_REQUEST_ID|run_genai_audit_log\(|step=|sub_step=` (`**/apis/v1/capability_maps_generator.py`), 33 results
+
+Read , lines 255 to 280
+
+Read , lines 60 to 75
+
+Read , lines 100 to 120
+
+The existing ID registries are used only to correlate each runner with its async start, so I can add a sibling identity registry without changing job control. I’m locating the current cleanup points in all three modules so the saved identity is removed alongside the audit ID on success, failure, or cancellation.
+
+Read , lines 570 to 735
+
+Read , lines 212 to 325
+
+Read , lines 185 to 285
+
+Read , lines 375 to 465
+
+Read , lines 520 to 599
+
+Generating patch (52 lines) in 
+
+
+```
+
+```
+
+
+Generating patch (76 lines) in 
+
+Generating patch (75 lines) in 
+
+The first multi-hunk CDC patch was rejected because the patch tool requires stricter source ordering; no partial change was applied. I’m splitting the CDC updates into smaller ordered edits so each checkpoint reuses the stored identity without touching surrounding job flow.
+
+Generating patch (25 lines) in 
+
+Generating patch (16 lines) in 
+
+
+```
+
+```
+
+
+Checked , 6 problems found
+
+Generating patch (17 lines) in 
+
+Searched for regex `CDC generation completed|job_id=|_AUDIT_LOG_BY_REQUEST_ID.pop` (`**/apis/v1/capability_double_click.py`), 12 results
+
+Generating patch (17 lines) in 
+
+
+```
+
+```
+
+
+Checked , 6 problems found
+
+The stored CDC identity is now reused for start, progress, and success; cleanup also clears it on successful completion. I’m finishing the failed/cancelled paths and then will apply the same pattern to Two-by-Two and Capability Maps.
+
+Generating patch (17 lines) in 
+
+
+```
+
+```
+
+
+Checked , 6 problems found
+
+Generating patch (20 lines) in 
+
+
+```
+
+```
+
+
+Checked , 6 problems found
+
+Generating patch (16 lines) in 
+
+
+```
+
+```
+
+
+Checked , 6 problems found
+
+CDC start now stores its step, sub-step, and background job ID once; every in-task checkpoint plus runner failure/cancellation path reuses that tuple. The registry is cleared alongside the existing audit-ID mapping on completion and terminal paths. I’m applying the same minimal registry pattern to Two-by-Two next.
+
+Generating patch (89 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+Generating patch (125 lines) in 
+
+
+```
+
+```
+
+
+Checked , no problems found
+
+All three modules now keep a sibling context entry containing the exact start `step`, `sub_step`, and `job_id`; runner failure handlers read that context instead of reconstructing labels from payload fields. Success, failure, and cancellation cleanup remove the context alongside the existing audit ID. I’m checking each call site for any remaining independently computed identity.
+
+Checked , , , 6 problems found
+
+Searched for regex `_AUDIT_CONTEXT_BY_REQUEST_ID|run_genai_audit_log\(|step=|sub_step=|job_id=` (`**/apis/v1/capability_double_click.py`), 36 results
+
+Searched for regex `_AUDIT_CONTEXT_BY_REQUEST_ID|run_genai_audit_log\(|step=|sub_step=|job_id=` (`**/apis/v1/two_by_two.py`), 26 results
+
+Searched for regex `_AUDIT_CONTEXT_BY_REQUEST_ID|run_genai_audit_log\(|step=|sub_step=|job_id=` (`**/apis/v1/capability_maps_generator.py`), 41 results
+
+Generating patch (16 lines) in , 
+
+
+```
+
+```
+
+```
+
+```
+
+
+Checked , , 6 problems found
+
+The saved identity now drives all three modules’ progress, success, failure, and cancellation checkpoints, while existing ID/context registries are cleaned together on terminal exits. I’m doing the final audit-ID/job-ID consistency checks, compiling the three modules, and reviewing only their focused diff.
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_double_click.py apis/v1/two_by_two.py apis/v1/capability_maps_generator.py
+
+Ran terminal command: git diff --check -- apis/v1/capability_double_click.py apis/v1/two_by_two.py apis/v1/capability_maps_generator.py
+
+Ran terminal command: git diff --stat -- apis/v1/capability_double_click.py apis/v1/two_by_two.py apis/v1/capability_maps_generator.py; git status --short -- apis/v1/capability_double_click.py apis/v1/two_by_two.py apis/v1/capability_maps_generator.py
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Searched for text `_AUDIT_CONTEXT_BY_REQUEST_ID` (`**/apis/v1/{capability_double_click.py,two_by_two.py,capability_maps_generator.py}`), 23 results
+
+Each start call now computes and stores its audit identity once. Its progress, success, failure, and cancellation calls reuse that context, and runner failures retrieve the same context by request key. The existing ID/context registries are cleaned together on terminal paths.
+
+```diff
+# capability_double_click.py
++_AUDIT_CONTEXT_BY_REQUEST_ID = {}
++
++audit_context = {
++    "step": background_processing_data.get("step_name") or input_data.processName,
++    "sub_step": background_processing_data.get("category") or input_data.input_name,
++    "job_id": (background_processing_data or {}).get("ID") or input_data.ID,
++}
+ genai_audit_log_id = db_operations_orm.run_genai_audit_log(
+-    step=background_processing_data.get("step_name") or input_data.processName,
+-    sub_step=background_processing_data.get("category") or input_data.input_name,
++    step=audit_context["step"],
++    sub_step=audit_context["sub_step"],
+     ...
+-    job_id=(background_processing_data or {}).get("ID") or input_data.ID,
++    job_id=audit_context["job_id"],
+ )
++_AUDIT_CONTEXT_BY_REQUEST_ID[str(input_data.input_key)] = audit_context
+
+# Runner failure and async terminal checkpoints
+-    step=payload.processName or ...,
+-    sub_step=None,
+-    job_id=payload.ID,
++    step=audit_context["step"],
++    sub_step=audit_context["sub_step"],
++    job_id=audit_context["job_id"],
+
+# two_by_two.py
++audit_context = {
++    "step": step_name,
++    "sub_step": analysis_type,
++    "job_id": background_processing_data.get("ID") or input_data.ID,
++}
+ genai_audit_log_id = db_operations_orm.run_genai_audit_log(
+-    step=step_name,
+-    sub_step=analysis_type,
++    step=audit_context["step"],
++    sub_step=audit_context["sub_step"],
+     ...
+-    job_id=background_processing_data.get("ID") or input_data.ID,
++    job_id=audit_context["job_id"],
+ )
++_AUDIT_CONTEXT_BY_REQUEST_ID[str(input_data.input_key)] = audit_context
+
+# capability_maps_generator.py
++audit_context = {
++    "step": "Capability Setup",
++    "sub_step": "Generate All Capabilities",  # Generate All branch
++    "job_id": input_data.ID,
++}
++# L-level branch instead uses:
++audit_context = {
++    "step": "Capability Setup",
++    "sub_step": f"Generate L{level} Capabilities",
++    "job_id": input_data.ID,
++}
+ genai_audit_log_id = db_operations_orm.run_genai_audit_log(
+-    step="Capability Setup",
+-    sub_step=...,
++    step=audit_context["step"],
++    sub_step=audit_context["sub_step"],
+     ...
+-    job_id=input_data.ID,
++    job_id=audit_context["job_id"],
+ )
++_AUDIT_CONTEXT_BY_REQUEST_ID[str(input_data.ID)] = audit_context
+```
+
+All three modules compile, and `git diff --check` passes. The workspace diagnostics still report unavailable third-party imports for `capability_double_click.py`.
+
+Made changes.
+------------------------------------------------------------------------------------------------------------------------------------------
 Tracker scope only. In capability_double_click.py, two_by_two.py and
 capability_maps_generator.py, make the background-runner failure/cancel
 run_genai_audit_log calls use the SAME step, sub_step and job_id as that job's start
