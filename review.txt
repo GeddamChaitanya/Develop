@@ -1,3 +1,161 @@
+I’ll trace the three request schemas, their input-loading paths, and every audit call in those modules. I’ll only change these tracker call sites and, if needed to retain nested IDs, the capability-map input schema; first I’m checking what the models actually expose.
+
+Searched for text `run_genai_audit_log\(` (`**/apis/v1/{capability_maps_generator,missing_client_capabilities,industrial_map}.py`), 18 results
+
+Read 
+
+Read , lines 150 to 235
+
+Read , lines 20 to 65
+
+`CapabilityMapGeneratorInput` currently retains only top-level `clientKey`; it has no `ClientKey`, `clientInfo`, or `projectInfo` fields, and the endpoint doesn’t load the stored input row. I’ll add optional request fields (with `ClientKey` accepted as an alias), then pass them into all capability-map audit calls and check email/user metadata on every call in the other two modules.
+
+Read , lines 108 to 135
+
+Read , lines 245 to 290
+
+Read , lines 400 to 585
+
+Read , lines 155 to 185
+
+Read , lines 550 to 585
+
+Read , lines 165 to 200
+
+Read , lines 965 to 1085
+
+Read , lines 380 to 460
+
+Read , lines 580 to 620
+
+The local fix is clear: nested client/project data is currently discarded by the Pydantic model, and two capability-map audit calls omit receiver/user metadata. I’ll expose the request fields (accepting both `clientKey` and `ClientKey`) and use one small audit-metadata helper consistently at each call; for missing-capabilities I’ll also pass its existing `ClientKey` on every update.
+
+Read , lines 1 to 45
+
+Read , lines 155 to 180
+
+Read , lines 970 to 1080
+
+Generating patch (32 lines) in , 
+
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile schemas/capability_maps_generator.py apis/v1/capability_maps_generator.py
+
+Generating patch (74 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_maps_generator.py
+
+The capability-map schema and endpoint compile with both client-key spellings and nested identity objects retained; every audit checkpoint now receives that metadata plus request `receiverEmail`/`userId`. Missing-capabilities already supplies receiver/user on every call and has `ClientKey`, so I’m propagating that key to its update checkpoints; industrial-map has no client identifier in its request schema.
+
+Generating patch (27 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile schemas/capability_maps_generator.py apis/v1/capability_maps_generator.py apis/v1/missing_client_capabilities.py apis/v1/industrial_map.py
+
+The missing-capabilities audit updates now all carry its existing `ClientKey`; all three modules compile. I’m running a call-site completeness check now and confirming whether the industrial-map schema has any client/project fields before I summarize the diff.
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+modules = ('capability_maps_generator', 'missing_client_capabilities', 'industrial_map')
+for module in modules:
+    path = Path(f'apis/v1/{module}.py')
+    tree = ast.parse(path.read_text(encoding='utf-8'))
+    calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and getattr(n.func, 'attr', None) == 'run_genai_audit_log']
+    problems = []
+    for call in calls:
+        names = {kw.arg for kw in call.keywords if kw.arg}
+        has_meta = any(kw.arg is None and isinstance(kw.value, ast.Call) and getattr(kw.value.func, 'id', None) == '_capmap_audit_metadata' for kw in call.keywords)
+        if module == 'capability_maps_generator':
+            if not has_meta:
+                problems.append(f'{call.lineno}: missing _capmap_audit_metadata')
+        elif not {'receiver_email', 'user_id'} <= names:
+            problems.append(f'{call.lineno}: missing receiver/user fields')
+    print(f'{module}: {len(calls)} audit calls; ' + ('all required metadata passed' if not problems else '; '.join(problems)))
+'@ | py -3 -
+
+Read , lines 40 to 90
+
+Read , lines 35 to 78
+
+Ran terminal command: @'
+from schemas.capability_maps_generator import CapabilityMapGeneratorInput
+base = {"ID": "x", "clientName": "Demo", "substepkey": 1, "input_key": 2, "input_name": "Generate L1"}
+for key in ("clientKey", "ClientKey"):
+    payload = CapabilityMapGeneratorInput.model_validate({**base, key: 1001, "clientInfo": {"clientKey": 1002}, "projectInfo": {"projectKey": 1003}})
+    print(key, payload.clientKey, payload.clientInfo, payload.projectInfo)
+'@ | py -3 -
+Completed with input: @'
+from schemas.capability_maps_generator import CapabilityMapGeneratorInput
+base = {"ID": "x", "clientName": "Demo", "substepkey": 1, "input_key": 2, "input_name": "Generate L1"}
+for key in ("clientKey", "ClientKey"):
+    payload = CapabilityMapGeneratorInput.model_validate({**base, key: 1001, "clientInfo": {"clientKey": 1002}, "projectInfo": {"projectKey": 1003}})
+    print(key, payload.clientKey, payload.clientInfo, payload.projectInfo)
+'@ | py -3 -
+Tool execution failed with exit code 1
+
+The AST check confirms all 8 capability-map calls pass the shared identity metadata, all 5 missing-capabilities calls pass receiver/user fields, and all 5 industrial-map calls do too. The system Python lacks Pydantic, so I’m checking whether the running app’s interpreter is available for a schema smoke test; I won’t install anything.
+
+Ran terminal command: Get-Command uvicorn, pytest, python, py -ErrorAction SilentlyContinue | Select-Object Name, Source
+Completed with input: Get-Command uvicorn, pytest, python, py -ErrorAction SilentlyContinue | Select-Object Name, Source
+Tool execution failed with exit code 1
+
+Ran terminal command: Get-ChildItem -Force -Directory | Select-Object -ExpandProperty Name
+
+Read , lines 1 to 80
+
+Ran terminal command: git diff --check -- schemas/capability_maps_generator.py apis/v1/capability_maps_generator.py apis/v1/missing_client_capabilities.py
+
+Updated tracker metadata in `capability_maps_generator.py`, `capability_maps_generator.py`, and `missing_client_capabilities.py`. No changes were needed in `industrial_map.py`.
+
+The capability-map request now accepts both `clientKey` and `ClientKey`, plus nested `clientInfo` and `projectInfo`. Its endpoint does **not** load the stored input record, so audit identity comes from the request. All 8 audit calls pass the shared request metadata: `clientInfo.clientKey`, normalized top-level client key, `projectInfo.projectKey`, `receiverEmail`, and `userId`.
+
+Missing client capabilities has `ClientKey`, but no nested client/project fields. All 5 audit calls now pass that key; they already passed `receiver_email` and `user_id`. Industrial map’s request schema has no client/project ID fields; all 5 audit calls already pass receiver email and user ID from request/background data.
+
+```diff
++clientKey: Optional[int] = Field(
++    None,
++    validation_alias=AliasChoices("clientKey", "ClientKey"),
++)
++clientInfo: Optional[Dict[str, Any]] = Field(None, ...)
++projectInfo: Optional[Dict[str, Any]] = Field(None, ...)
+
++def _capmap_audit_metadata(input_data):
++    return {
++        "receiver_email": ...,
++        "user_id": ...,
++        "client_info": ...,
++        "client_key": ...,
++        "project_info": ...,
++    }
+```
+
+Missing-capabilities progress, success, cancellation, and failure updates now also pass `client_key=input_data.ClientKey`.
+
+`py_compile` and `git diff --check` passed for the changed files. A runtime Pydantic validation smoke test wasn’t available because Pydantic isn’t installed in the system Python.
+
+Made changes.
+================================================================================================
 Tracker scope only. client_id is populated for agentic_fit_allocator but stays NULL for
 capability_maps_generator (Capability Setup).
 
