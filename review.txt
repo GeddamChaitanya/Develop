@@ -1,3 +1,15 @@
+Small follow-ups, tracker scope only:
+1. apis/v1/agentic_fit_allocator.py: restore the existing status_data block and
+   db_operations_orm.run_operations_status(... status 2, 25%, "Generating {action} via LLM...")
+   exactly as in develop (HEAD). Do not remove existing business status writes.
+2. In the exception path: keep the unconditional Error publish, but make the failed-status
+   DB write safe: only include sub_step_name when available, wrap run_operations_status in
+   try/except with track_trace, so the handler can never crash after publishing.
+3. _client_capability_map_audit_sub_step: show me which payload fields distinguish Add vs
+   Edit in the real request (e.g. outputKey/ClientCapabilityMapKey present => Edit), and use
+   that instead of defaulting to Edit.
+Show the diff for these changes only.
+--------------------------------------8------------------------------------------------------------------------------------------------------------------------------------------------------------
 Rework the GenAI audit log to match the EXISTING table in the audit DB. Tracker code only;
 do not touch business logic, status writes, publish_message, email or routers.
 
