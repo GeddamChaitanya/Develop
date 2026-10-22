@@ -1,3 +1,21 @@
+Tracker scope only. client_id is populated for agentic_fit_allocator but stays NULL for
+capability_maps_generator (Capability Setup).
+
+1. Show the CapabilityMapsGeneratorInput schema fields that carry the client/project
+   (top-level clientKey/ClientKey/projectKey, nested clientInfo/projectInfo, input record
+   in DB?).
+2. Make the capability_maps_generator audit calls pass client_info / client_key /
+   project_info the same way agentic_fit_allocator does: from the request (and the stored
+   input record if the endpoint loads one), covering clientInfo.clientKey, clientKey,
+   ClientKey, projectInfo.projectKey.
+3. Do the same check for missing_client_capabilities.py and industrial_map.py (say if
+   no client field exists at all).
+4. In capability_maps_generator.py, missing_client_capabilities.py and industrial_map.py,
+   confirm every run_genai_audit_log call passes receiver_email (request or background
+   receiverEmail) and user_id (request/background userId), like agentic_fit_allocator.
+   Fix if missing.
+No other changes. Show the diff.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the writer, CRUD update/create paths, and the email lookup helper first. My working hypothesis is that updates either aren’t persisting `client_id` through CRUD or are falling back to the wrong history version when `substep_key` is absent; I’ll verify both before making the smallest tracker-only fix.
 
 Read , lines 425 to 595
