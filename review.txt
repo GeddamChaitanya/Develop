@@ -1,4 +1,81 @@
-Tracker scope only, db/db_operations_orm.py run_genai_audit_log.
+I’ll inspect the current writer and CRUD commit path, then make the single-file change. I’ll preserve the existing row-locking and version selection, isolate history mutations with a deep copy, and trace the selected version immediately before the CRUD commit call.
+
+Read , lines 1 to 24
+
+Read , lines 450 to 605
+
+Read , lines 1430 to 1468
+
+Generating patch (45 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile db/db_operations_orm.py
+
+The writer now deep-copies history before `setdefault` or entry mutation, passes another fresh history object to CRUD, and derives `event_time` from the selected entry’s `recorded_time`. The trace is immediately before the CRUD create/update calls that commit; I’m checking diagnostics and the focused diff formatting now.
+
+Ran terminal command: git diff --check -- db/db_operations_orm.py
+
+Checked , 1 problem found
+
+Searched for regex `copy.deepcopy|run_event_time|GenAI audit persisting version|flag_modified\(existing_record, "log_history"\)` (`**/db/db_operations_orm.py`), 7 results
+
+One small placement refinement: the trace currently precedes the branch, not the actual CRUD call. I’ll move it immediately before each create/update CRUD call so it records the selected version at the commit boundary in both paths.
+
+Generating patch (26 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile db/db_operations_orm.py; git diff --check -- db/db_operations_orm.py
+
+Updated only `run_genai_audit_log` in `db_operations_orm.py`.
+
+```diff
++import copy
+...
+-        current_history = (existing_record.log_history or {}) if existing_record else {}
++        current_history = (
++            copy.deepcopy(existing_record.log_history or {"versions": [], "total_runs": 0})
++            if existing_record
++            else {"versions": [], "total_runs": 0}
++        )
+...
+-        initiated_at = _parse_genai_requested_time(version_entry.get("recorded_time")) or initiated_at
++        run_event_time = _parse_genai_requested_time(version_entry.get("recorded_time")) or initiated_at
+...
+-            run_requested_time = initiated_at
++            run_requested_time = run_event_time
+...
+-            "event_time": initiated_at,
++            "event_time": run_event_time,
+...
+-            "log_history": current_history,
++            "log_history": copy.deepcopy(current_history),
+...
+         flag_modified(existing_record, "log_history")
++        track_trace(
++            f"GenAI audit persisting version {version_entry.get('version')} "
++            f"status={version_entry.get('status')} progress={version_entry.get('progress')}",
++            severity="Information",
++        )
+         updated = crud.update_genai_audit_log(...)
+```
+
+The same trace is immediately before the create CRUD call as well. History mutations happen only on the deep copy; `update_data["log_history"]` gets a fresh object. `event_time` now comes from the selected version’s `recorded_time`.
+
+`py_compile` and the focused `git diff --check` passed.
+
+Made changes.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-Tracker scope only, db/db_operations_orm.py run_genai_audit_log.
 Bug from testing (row id 9): columns show Success/100 but the matching log_history
 version (version 25) stays "In Progress"/0/message null, and event_time column stays
 at an older run's time instead of version 25's recorded_time.
