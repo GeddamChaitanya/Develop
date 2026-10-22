@@ -1,3 +1,9 @@
+Read-only. In the working diff of apis/v1/*.py (git diff -- apis/v1), list any changed
+line that contains publish_message, run_operations_status, email_send, raise,
+return, or HTTPException and is NOT inside a run_genai_audit_log call or its own
+try/except. Also confirm total_runs is incremented when an unmatched update appends a
+new version. Do not edit.
+=-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Tracker scope only.
 I’ll inspect the current writer and each named guarded call, then make only those tracker changes. I’ll preserve surrounding try/except blocks and business flow, and verify the per-file compile result afterward.
 
