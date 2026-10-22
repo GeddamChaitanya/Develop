@@ -1,3 +1,28 @@
+Tracker scope only (run_genai_audit_log, GenAIAuditLog model, call sites). No business logic changes.
+
+1. client_id column:
+   - Add client_id = Column(Integer, nullable=True) to GenAIAuditLog.
+   - Resolve at each call site from the request/background data:
+     clientInfo.clientKey -> ClientKey (payload) -> projectInfo.projectKey -> None (int only).
+   - Store "client_id" in each log_history version entry and mirror the latest run's
+     client_id into the column on every write (like user_id).
+
+2. user_id must be captured:
+   - Use numeric userId from payload/background metadata if present.
+   - Otherwise look up user_key from the main DB app_user table by receiver_email
+     (reuse the existing "Reading app_user for email" helper).
+   - Store as requested_by in the entry and mirror to user_id column. try/except around
+     the lookup; NULL only if nothing found. Never break the audit write.
+
+3. Replace job_id with analysis_name:
+   - Remove "job_id" from version entries and from the _AUDIT_CONTEXT registries.
+   - Add "analysis_name" = request/background processName.
+   - Match progress/success/failed/cancelled updates by (substep_key, input_key);
+     fallback to the last entry. Keep advisory lock + FOR UPDATE.
+
+Keep the {"versions": [...], "total_runs": N} format and existing keys.
+Show the diff and a table per module: where user_id, client_id, analysis_name come from.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the three runner exception handlers. If they index a missing context, I’ll make only the requested tracker fallback change so absent context falls back to each payload’s origin identity.
 
 Read , lines 250 to 285
