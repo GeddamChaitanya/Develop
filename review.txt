@@ -1,3 +1,95 @@
+Ran terminal command: py -3 -m pytest --version
+Completed with input: py -3 -m pytest --version
+Tool execution failed with exit code 1
+
+Read 
+
+All touched Python files compile, and `git diff --check` is clean. `pytest` isn’t installed in the available Python, so I’m doing one final AST check that every audit call uses a supported keyword and that the removed job ID has no remaining references.
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+files = [
+    Path('apis/v1/agentic_fit_allocator.py'),
+    Path('apis/v1/capability_double_click.py'),
+    Path('apis/v1/capability_maps_generator.py'),
+    Path('apis/v1/industrial_map.py'),
+    Path('apis/v1/missing_client_capabilities.py'),
+    Path('apis/v1/two_by_two.py'),
+    Path('apis/v1/workforce_analyzer.py'),
+]
+allowed = {'step', 'sub_step', 'status', 'progress', 'message', 'input_key', 'receiver_email', 'requested_by', 'requested_on', 'genai_audit_log_id', 'substep_key', 'user_id', 'client_info', 'client_key', 'project_info', 'analysis_name', 'is_start'}
+issues = []
+for path in files:
+    tree = ast.parse(path.read_text(encoding='utf-8'))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and getattr(node.func, 'attr', None) == 'run_genai_audit_log':
+            unknown = {kw.arg for kw in node.keywords if kw.arg is not None} - allowed
+            if unknown:
+                issues.append(f'{path}:{node.lineno}: unsupported keywords {sorted(unknown)}')
+print('\n'.join(issues) if issues else 'All run_genai_audit_log call keywords are supported.')
+'@ | py -3 -
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+files = [Path(f'apis/v1/{name}.py') for name in ('agentic_fit_allocator', 'capability_double_click', 'capability_maps_generator', 'industrial_map', 'missing_client_capabilities', 'two_by_two', 'workforce_analyzer')]
+missing = []
+for path in files:
+    tree = ast.parse(path.read_text(encoding='utf-8'))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call) and getattr(node.func, 'attr', None) == 'run_genai_audit_log':
+            keywords = {kw.arg for kw in node.keywords}
+            if 'is_start' not in keywords and not {'input_key', 'substep_key'} <= keywords:
+                missing.append(f'{path}:{node.lineno}')
+print('\n'.join(missing) if missing else 'All update calls provide both correlation keys.')
+'@ | py -3 -
+
+Implemented the tracker-only changes. The advisory lock and `FOR UPDATE` remain in place; status updates now select versions by `(substep_key, input_key)`, falling back to the last version when both keys aren’t available. No `job_id` references remain in the audit writer or the seven API call-site modules.
+
+**Core Diff**
+```diff
+ class GenAIAuditLog(Base):
+     user_id = Column(Integer, nullable=True)
++    client_id = Column(Integer, nullable=True)
+
+-    # Match updates using job_id
++    # Match updates using (substep_key, input_key); fall back to last version
+
+     version_entry = {
+         ...
+         "requested_by": ...,
+-        "job_id": effective_job_id,
++        "client_id": resolved_client_id,
++        "analysis_name": analysis_name,
+     }
+
+     update_data = {
+         "user_id": run_user_id,
++        "client_id": run_client_id,
+         ...
+     }
+```
+
+**Metadata Sources**
+
+| Module | `user_id` source | `client_id` source | `analysis_name` source |
+|---|---|---|---|
+| `agentic_fit_allocator.py` | Background `userId`, falling back to request `userId`; otherwise email lookup | Stored `clientInfo.clientKey`, payload `ClientKey`, then stored `projectInfo.projectKey` | Background `processName`, then request `processName` |
+| `capability_double_click.py` | Background `userId`, then request `userId`; otherwise email lookup | Stored `clientInfo.clientKey`, payload `ClientKey`, then stored `projectInfo.projectKey` | Background `processName`, then request `processName` |
+| `capability_maps_generator.py` | Request `userId`; otherwise email lookup | Payload `clientKey` | Request `processName`, then `process_name` |
+| `industrial_map.py` | `CreatedByUserKey` copied into background `userId`; otherwise email lookup | No client/project ID in this request model, so `None` | Request `process_name` |
+| `missing_client_capabilities.py` | Payload `CreatedByUserKey`; otherwise email lookup | Payload `ClientKey` | No `processName` field in this request model, so `None` |
+| `two_by_two.py` | Background `userId`, then request `userId`; otherwise email lookup | Stored `clientInfo.clientKey`, payload `ClientKey`, then stored `projectInfo.projectKey` | Background `processName`, then request `processName` |
+| `workforce_analyzer.py` | Background `userId`, then request `userId`; otherwise email lookup | Request/DB `clientInfo.clientKey`, background `ClientKey`/`clientKey`, then DB `projectInfo.projectKey` | Background `processName`/`process_name`, then request background `process_name` |
+
+The shared writer and model are in `db_operations_orm.py` and `models.py`.
+
+**Validation**
+`compileall`, `git diff --check`, and AST checks for supported call keywords and correlation keys passed. Pytest could not run because it isn’t installed in the available Python environment. The repository has no migration setup; the existing audit table will need `client_id INTEGER NULL` added in the deployed database.
+
+Separate note: I noticed the untracked `run.ps1` contains credentials. I left it untouched; rotate them if they’re valid.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Tracker scope only (run_genai_audit_log, GenAIAuditLog model, call sites). No business logic changes.
 
 1. client_id column:
