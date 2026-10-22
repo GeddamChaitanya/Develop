@@ -1,3 +1,951 @@
+A body is sent with the request
+2026-10-22 17:42:25,883 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:25 GMT'
+2026-10-22 17:42:25,883 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 7. Items accepted: 7
+[TELEMETRY TRACE] Completed operation: DB_Update_SubStep
+
+--- Operations finished ---
+{'ID': 'demo-request-001', 'Status': 'InsertionProcessing', 'Logs': 'Capability maps started insertion into DB for action: GENERATE_L1', 'input_key': 6001, 'substepkey': 5001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-22T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 85, 'stage': 'capability-map-db-insertion', 'stageStatus': 'heartbeat', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:3001:5001:6001:demo-request-001', 'processKey': 3001, 'processName': 'Manage Supply Chain', 'stepKey': 4001, 'stepName': 'Plan Materials', 'substepkey': 5001, 'input_key': 6001, 'input_name': 'Material demand forecast', 'outputKey': 7001, 'ID': 'demo-request-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-22T12:00:00Z', 'clientName': 'Contoso Manufacturing', 'clientKey': 1001, 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TELEMETRY TRACE] Attempting Redis publish: InsertionProcessing
+2026-10-22 17:42:30,906 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '2652'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'dafe701f-ce11-11f1-ba02-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:42:31,506 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:30 GMT'
+2026-10-22 17:42:31,506 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 3. Items accepted: 3
+[TELEMETRY TRACE] Redis message published successfully: InsertionProcessing
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TELEMETRY TRACE] DB_Operations: Running UPDATE operation for output
+--- Running Update Operation ---
+[TELEMETRY TRACE] Starting operation: DB_Update_SubStepOutput
+
+--- Updating the sub_step_output record ---
+[TELEMETRY TRACE] Starting operation: CRUD_Update_SubStepOutput
+2026-10-22 17:42:36,523 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '4454'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'de5765bf-ce11-11f1-b200-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:42:36,981 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:36 GMT'
+2026-10-22 17:42:36,981 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 5. Items accepted: 5
+2026-10-22 17:42:41,994 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '4294'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e19a47af-ce11-11f1-ae6e-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+[TELEMETRY TRACE] Error in operation: CRUD_Update_SubStepOutput - Output not found: 7001
+Failed to update the output record with key: 7001.
+2026-10-22 17:42:42,431 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:41 GMT'
+2026-10-22 17:42:42,431 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 3. Items accepted: 3
+[TELEMETRY TRACE] Error in operation: DB_Update_SubStepOutput - Failed to update output with key: 7001
+2026-10-22 17:42:47,447 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '3553'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e4da4941-ce11-11f1-b406-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+[TELEMETRY TRACE] DB_Operations: Marking sub-step completed after output write
+2026-10-22 17:42:47,892 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:46 GMT'
+2026-10-22 17:42:47,892 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 4. Items accepted: 4
+[TELEMETRY TRACE] Starting operation: DB_Update_SubStep
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TELEMETRY TRACE] Starting operation: CRUD_Update_SubStep
+2026-10-22 17:42:50,716 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:42:51,006 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:50 GMT'
+    'Content-Length': '0'
+2026-10-22 17:42:52,909 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '8769'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e81bc7c2-ce11-11f1-8eef-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:42:53,502 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:52 GMT'
+2026-10-22 17:42:53,502 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+[TELEMETRY TRACE] Completed operation: CRUD_Update_SubStep
+2026-10-22 17:42:54,242 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '6054'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e8e7251a-ce11-11f1-b30e-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:42:54,730 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:54 GMT'
+2026-10-22 17:42:54,730 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 9. Items accepted: 9
+[TELEMETRY TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 5001
+Updated Description: L1 Capability step
+[TELEMETRY TRACE] Completed operation: DB_Update_SubStep
+
+--- Operations finished ---
+[TELEMETRY TRACE] Completed operation: DB_Insertion
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+2026-10-22 17:42:58,526 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '4454'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'eb74e216-ce11-11f1-ba6f-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:42:58,945 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:12:57 GMT'
+2026-10-22 17:42:58,945 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 5. Items accepted: 5
+[TELEMETRY TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+[TELEMETRY TRACE] Starting operation: DB_Update_SubStep
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TELEMETRY TRACE] Starting operation: CRUD_Update_SubStep
+2026-10-22 17:43:03,960 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '7332'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'eeb2013d-ce11-11f1-99f0-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:43:04,393 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:04 GMT'
+2026-10-22 17:43:04,393 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 7. Items accepted: 7
+[TELEMETRY TRACE] Completed operation: CRUD_Update_SubStep
+[TELEMETRY TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 5001
+Updated Description: L1 Capability step
+2026-10-22 17:43:09,404 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '4872'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'f1f0bfcf-ce11-11f1-bf85-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:43:09,837 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:09 GMT'
+2026-10-22 17:43:09,837 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 5. Items accepted: 5
+[TELEMETRY TRACE] Completed operation: DB_Update_SubStep
+
+--- Operations finished ---
+{'ID': 'demo-request-001', 'Status': 'Completed', 'Logs': 'Capability maps inserted successfully into DB for action: GENERATE_L1', 'input_key': 6001, 'substepkey': 5001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-22T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 5001, 'input_key': 6001, 'outputKey': 7001, 'ID': 'demo-request-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-22T12:00:00Z', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:5001:6001:demo-request-001', 'missingFields': ['processKey']}}
+[TELEMETRY TRACE] Attempting Redis publish: Completed
+[TELEMETRY TRACE] Redis message published successfully: Completed
+Getting database session...
+Database session created.
+2026-10-22 17:43:14,840 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '3553'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'f52e1b03-ce11-11f1-9d01-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+[TELEMETRY TRACE] Starting operation: DB_Read_User_ByEmail
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+2026-10-22 17:43:15,300 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:14 GMT'
+2026-10-22 17:43:15,301 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 4. Items accepted: 4
+Successfully retrieved user_key: 64 for email: gedchaitanya@deloitte.com
+[TELEMETRY TRACE] Completed operation: DB_Read_User_ByEmail
+2026-10-22 17:43:18,130 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14167'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'f723fa84-ce11-11f1-8989-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+    'traceparent': '00-15e7726f006f8c0d9d67aef9c2d54c46-1eb5272c5bd034dc-03'
+A body is sent with the request
+2026-10-22 17:43:20,311 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5247'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'f870f856-ce11-11f1-bed7-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:43:20,586 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Thu, 22 Oct 2026 12:13:20 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-22 17:43:20,589 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/da451856-db17-404f-bf1b-8a1c53be68a9?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'f723fa84-ce11-11f1-8989-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+    'traceparent': '00-15e7726f006f8c0d9d67aef9c2d54c46-338dc71458bcb7c0-03'
+No body was attached to the request
+2026-10-22 17:43:20,724 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:20 GMT'
+2026-10-22 17:43:20,724 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 5. Items accepted: 5
+2026-10-22 17:43:20,976 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Thu, 22 Oct 2026 12:13:20 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-22 17:43:23,979 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/da451856-db17-404f-bf1b-8a1c53be68a9?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'f723fa84-ce11-11f1-8989-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+    'traceparent': '00-15e7726f006f8c0d9d67aef9c2d54c46-0fe149ec2aa0389f-03'
+No body was attached to the request
+2026-10-22 17:43:24,361 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Thu, 22 Oct 2026 12:13:24 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+Email send operation status:  {'id': 'da451856-db17-404f-bf1b-8a1c53be68a9', 'status': 'Succeeded', 'error': None}
+Message sent with ID:  da451856-db17-404f-bf1b-8a1c53be68a9
+Status:  Succeeded
+2026-10-22 17:43:25,732 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '6584'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'fbac215f-ce11-11f1-8153-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+[TELEMETRY TRACE] Completed operation: Capability_Map_Generation_Action_GENERATE_L1
+2026-10-22 17:43:26,098 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:25 GMT'
+2026-10-22 17:43:26,098 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 6. Items accepted: 6
+2026-10-22 17:43:31,112 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '1751'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'fee10b34-ce11-11f1-85ac-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:43:31,679 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:30 GMT'
+2026-10-22 17:43:31,679 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 2. Items accepted: 2
+2026-10-22 17:43:51,100 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:43:51,503 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:50 GMT'
+    'Content-Length': '0'
+2026-10-22 17:43:54,738 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '6055'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '0cf617f6-ce12-11f1-91f6-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:43:55,140 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:13:54 GMT'
+2026-10-22 17:43:55,140 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 9. Items accepted: 9
+2026-10-22 17:44:51,460 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:44:51,771 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:14:51 GMT'
+    'Content-Length': '0'
+2026-10-22 17:44:55,151 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5104'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '30f8774e-ce12-11f1-86fe-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:44:55,804 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:14:55 GMT'
+2026-10-22 17:44:55,812 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:45:51,840 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:45:52,126 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:15:51 GMT'
+    'Content-Length': '0'
+2026-10-22 17:45:55,813 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5105'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '55209daa-ce12-11f1-8476-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:45:56,270 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:15:55 GMT'
+2026-10-22 17:45:56,272 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:46:52,270 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:46:52,647 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:16:52 GMT'
+    'Content-Length': '0'
+2026-10-22 17:46:56,286 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5104'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '792c16dc-ce12-11f1-93be-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:46:56,807 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:16:56 GMT'
+2026-10-22 17:46:56,807 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:47:52,590 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:47:52,897 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:17:51 GMT'
+    'Content-Length': '0'
+2026-10-22 17:47:56,823 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5105'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '9d414c69-ce12-11f1-8928-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:47:57,266 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:17:56 GMT'
+2026-10-22 17:47:57,267 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:48:52,980 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:48:53,270 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:18:52 GMT'
+    'Content-Length': '0'
+2026-10-22 17:48:57,282 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5104'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'c14a78a8-ce12-11f1-a4d9-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:48:57,653 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:18:57 GMT'
+2026-10-22 17:48:57,654 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:49:53,276 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:49:53,888 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:19:52 GMT'
+    'Content-Length': '0'
+2026-10-22 17:49:57,659 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5104'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e5478182-ce12-11f1-8b8b-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:50:02,690 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:20:02 GMT'
+2026-10-22 17:50:02,691 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:50:53,580 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:50:53,863 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:20:53 GMT'
+    'Content-Length': '0'
+2026-10-22 17:51:02,695 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5105'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '0c0b2483-ce13-11f1-9687-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:51:03,330 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:21:02 GMT'
+2026-10-22 17:51:03,330 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:51:46,034 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '2109'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '25e01c49-ce13-11f1-bf58-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:51:48,772 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:21:47 GMT'
+2026-10-22 17:51:48,772 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 3. Items accepted: 3
+2026-10-22 17:51:53,905 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:52:03,339 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5118'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '3030c8a3-ce13-11f1-a948-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:52:22,019 - azure.monitor.opentelemetry.exporter._quickpulse._exporter - ERROR - Exception occurred while pinging live metrics.
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\monitor\opentelemetry\exporter\_quickpulse\_exporter.py", line 246, in _ping
+    ping_response = self._client.is_subscribed(  # type: ignore
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\monitor\opentelemetry\exporter\_quickpulse\_generated\livemetrics\_operations\_operations.py", line 381, in is_subscribed
+    pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\core\pipeline\_base.py", line 242, in run
+    return first_node.send(pipeline_request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\core\pipeline\policies\_redirect.py", line 205, in send
+    response = self.next.send(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\core\pipeline\_base.py", line 98, in send
+    response = self.next.send(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\core\pipeline\_base.py", line 98, in send
+    response = self.next.send(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\core\pipeline\_base.py", line 130, in send
+    self._sender.send(request.http_request, **request.context.options),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\azure\core\pipeline\transport\_requests_basic.py", line 428, in send
+    raise error
+azure.core.exceptions.ServiceResponseError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-10-22 17:52:35,583 - azure.monitor.opentelemetry.exporter.export._base - WARNING - Retrying due to server response error: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')).
+2026-10-22 17:53:21,475 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:53:24,082 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:23:23 GMT'
+    'Content-Length': '0'
+2026-10-22 17:53:35,598 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5118'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '672e5484-ce13-11f1-b57e-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:53:38,157 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:23:37 GMT'
+2026-10-22 17:53:38,157 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:53:38,213 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5118'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '68bd50c2-ce13-11f1-b82d-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:53:38,578 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:23:37 GMT'
+2026-10-22 17:53:38,578 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:54:23,433 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:54:23,750 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:24:23 GMT'
+    'Content-Length': '0'
+2026-10-22 17:54:38,584 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.com//v2.1/track'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5117'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '8cb92ffd-ce13-11f1-ba1d-d4f32df15685'
+    'User-Agent': 'azsdk-python-monitor-opentelemetry-exporter/1.0.0b1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+A body is sent with the request
+2026-10-22 17:54:38,949 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Server': 'Microsoft-HTTPAPI/2.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:24:38 GMT'
+2026-10-22 17:54:38,949 - azure.monitor.opentelemetry.exporter.export._base - INFO - Transmission succeeded: Item received: 8. Items accepted: 8
+2026-10-22 17:55:23,824 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus.livediagnostics.monitor.azure.com/QuickPulseService.svc/ping?api-version=2024-04-01-preview&ikey=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '289'
+    'x-ms-qps-transmission-time': 'REDACTED'
+    'x-ms-qps-machine-name': 'REDACTED'
+    'x-ms-qps-instance-name': 'REDACTED'
+    'x-ms-qps-stream-id': 'REDACTED'
+    'x-ms-qps-role-name': 'REDACTED'
+    'x-ms-qps-invariant-version': 'REDACTED'
+    'x-ms-qps-configuration-etag': 'REDACTED'
+    'Accept': 'application/json'
+A body is sent with the request
+2026-10-22 17:55:24,322 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Server': 'Microsoft-IIS/10.0'
+    'x-ms-qps-subscribed': 'REDACTED'
+    'Request-Context': 'REDACTED'
+    'Access-Control-Expose-Headers': 'REDACTED'
+    'X-Powered-By': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Date': 'Thu, 22 Oct 2026 12:25:23 GMT'
+    'Content-Length': '0'
+2026-10-22 17:55:38,969 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://eastus-8.in.applicationinsights.azure.co
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the current writer and CRUD commit path, then make the single-file change. I’ll preserve the existing row-locking and version selection, isolate history mutations with a deep copy, and trace the selected version immediately before the CRUD commit call.
 
 Read , lines 1 to 24
