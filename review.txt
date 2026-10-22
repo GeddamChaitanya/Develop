@@ -1,3 +1,7 @@
+Read-only. In apis/v1/*.py list every run_genai_audit_log call that is wrapped in
+`if genai_audit_log_id` (or any condition on the audit id), with file, line and status.
+Do not edit.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll map every audit call and the exact success/cancellation/error control flow in this module first. The likely cause is that the current success audit is placed before the final “Completed” publish (or inside a branch that returns early); I’ll verify where each successful path exits, then place checkpoints at the requested boundary.
 
 Searched for regex `run_genai_audit_log\(|publish_message\(|return CapabilityMapGeneratorOutput|return \[\]|except asyncio.CancelledError|except Exception` (`**/apis/v1/capability_maps_generator.py`), 29 results
