@@ -1,3 +1,138 @@
+I’ll verify the exact HEAD status block and the client-capability request fields, then make only these two tracker-scope follow-ups. I’ll preserve the unconditional error publish and limit the exception-path change to making the existing failed-status write safe.
+
+Ran terminal command: git show HEAD:apis/v1/agentic_fit_allocator.py | Select-String -Pattern 'status_data = \{|Generating \{action\} via LLM|run_operations_status\(sub_step_key=input_data.substepkey' -Context 3,10
+
+Searched for regex `ClientCapabilityMapKey|outputKey|output_key|action|MapName` (`**/apis/v1/missing_client_capabilities.py`), 23 results
+
+Read , lines 335 to 380
+
+Read , lines 770 to 825
+
+Read , lines 45 to 81
+
+The HEAD version contains a second 25% `status_data` write after the trace line; the current tracker diff replaced that write with the event publish, so I’ll restore it while leaving the earlier status write intact. For client-map classification, this endpoint’s schema requires `CapabilityMapKey` and has no `outputKey`/`ClientCapabilityMapKey` field, so key presence is the reliable Edit signal; I’ll support those aliases too without relying on `MapName` text.
+
+Generating patch (69 lines) in , 
+
+
+```
+
+```
+
+```
+
+```
+
+
+Checked , , 6 problems found
+
+The HEAD status write is restored after the existing trace, and the error status update now conditionally includes `sub_step_name` and catches DB-write failures after the unconditional Error publish. Client-map labels now use existing-key presence; the actual schema’s required `CapabilityMapKey` makes valid requests to this endpoint classify as Edit. I’m checking syntax and isolating just these hunks for the diff.
+
+Ran terminal command: py -3 -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/missing_client_capabilities.py
+
+Ran terminal command: git diff --check -- apis/v1/agentic_fit_allocator.py apis/v1/missing_client_capabilities.py
+Completed with input: git diff --check -- apis/v1/agentic_fit_allocator.py apis/v1/missing_client_capabilities.py
+Tool execution failed with exit code 1
+
+Read , lines 350 to 380
+
+Read , lines 790 to 825
+
+Read , lines 30 to 60
+
+Generating patch (10 lines) in 
+
+
+```
+
+```
+
+
+Checked , 6 problems found
+
+The two source files compile; workspace diagnostics only report unavailable third-party imports in Agentic Fit. I removed the one whitespace-only issue from the restored status block and am running the final formatting check before showing only the requested hunks.
+
+Ran terminal command: py -3 -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/missing_client_capabilities.py
+
+Ran terminal command: git diff --check -- apis/v1/agentic_fit_allocator.py apis/v1/missing_client_capabilities.py
+
+Ran terminal command: git status --short -- apis/v1/agentic_fit_allocator.py apis/v1/missing_client_capabilities.py
+
+Restored the additional HEAD 25% status write after the trace; the earlier status write remains. The Error publish remains unconditional, and a failed DB status update can no longer interrupt the exception handler.
+
+For client-map classification, the real schema requires `CapabilityMapKey`; it has no `outputKey` or `ClientCapabilityMapKey` field. The helper recognizes those aliases if supplied, but valid requests to this endpoint currently always indicate Edit. `MapName` is no longer used as an action signal.
+
+```diff
+diff --follow-up a/apis/v1/agentic_fit_allocator.py
+@@ after the existing progress write and trace
+         track_trace(f"Starting agentic fit allocation for action: {action}", severity="Information")
++        status_data = {
++            
++            "sub_step_name": background_processing_data.get('step_name') if background_processing_data else "Agentic Fit Allocation",
++            "sub_step_order": order ,
++            "sub_step_status_key": 2,
++            "sub_step_progress_percentage": 25,
++            "sub_step_progress_message": f"Generating {action} via LLM..."
++
++        }
++        db_operations_orm.run_operations_status(sub_step_key=input_data.substepkey, data=status_data)
+         _publish_agentic_message(background_processing_data, "Started", ...)
+
+@@ exception path after the Error publish
+-            db_operations_orm.run_operations_status(
+-                sub_step_key=_bg.get("substepkey"),
+-                data={
+-                    "sub_step_name": _bg.get("step_name"),
+-                    "sub_step_status_key": 6,
+-                    "sub_step_progress_percentage": 0,
+-                    "sub_step_progress_message": f"Error occurred: {str(e)[:500]}",
+-                },
+-            )
++            failed_status_data = {
++                "sub_step_status_key": 6,  # Error
++                "sub_step_progress_percentage": 0,
++                "sub_step_progress_message": f"Error occurred: {str(e)[:500]}",
++            }
++            if _bg.get("step_name"):
++                failed_status_data["sub_step_name"] = _bg.get("step_name")
++            try:
++                db_operations_orm.run_operations_status(
++                    sub_step_key=_bg.get("substepkey"),
++                    data=failed_status_data,
++                )
++            except Exception as status_err:
++                track_trace(f"Failed to update Agentic Fit error status: {status_err}", severity="Warning")
+
+diff --follow-up b/apis/v1/missing_client_capabilities.py
+ def _client_capability_map_audit_sub_step(input_data):
+-    action_hint = " ".join(
+-        str(value or "")
+-        for value in (
+-            getattr(input_data, "action", None),
+-            getattr(input_data, "input_name", None),
+-            input_data.MapName,
+-        )
+-    ).casefold()
+-    if "add" in action_hint or "create" in action_hint:
+-        return "Add Client Capability Map"
+-    return "Edit Client Capability Map"
++    existing_map_keys = (
++        "CapabilityMapKey",
++        "ClientCapabilityMapKey",
++        "outputKey",
++        "OutputKey",
++    )
++    has_existing_map = any(
++        getattr(input_data, field_name, None) not in (None, "", 0)
++        for field_name in existing_map_keys
++    )
++    return "Edit Client Capability Map" if has_existing_map else "Add Client Capability Map"
+```
+
+`py_compile` and `git diff --check` passed for both files.
+
+Made changes.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll reshape the shared audit persistence around the existing table: lock the `(step, sub_step)` row, append once per trigger, then update the matching history entry and mirror that run to columns. I’ll also remove the `job_id` model column and both migration files, keeping the PBI labels and existing tracker call sites intact.
 
 Ran terminal command: Get-ChildItem db/migrations
