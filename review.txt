@@ -1,3 +1,89 @@
+I’ll map every audit call and the exact success/cancellation/error control flow in this module first. The likely cause is that the current success audit is placed before the final “Completed” publish (or inside a branch that returns early); I’ll verify where each successful path exits, then place checkpoints at the requested boundary.
+
+Searched for regex `run_genai_audit_log\(|publish_message\(|return CapabilityMapGeneratorOutput|return \[\]|except asyncio.CancelledError|except Exception` (`**/apis/v1/capability_maps_generator.py`), 29 results
+
+Read , lines 95 to 300
+
+Read , lines 390 to 624
+
+The per-level Success call is currently before output insertion and the `Completed` publish; it must move after that publish. `GENERATE_ALL` has no `Completed` `publish_message` in this file, so I’ll keep its Success checkpoint at the end of that branch, immediately before cleanup/return, and make it attempt regardless of whether the start call returned an ID. I’ll also ensure cancellation attempts the same-context update; failures are handled by the runner wrapper.
+
+Generating patch (114 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_maps_generator.py
+
+The edited module compiles. I spotted one empty exception wrapper left where the old Generate-All Success call was removed; I’m removing that no-op wrapper before the focused control-flow review.
+
+Read , lines 250 to 315
+
+Generating patch (11 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -3 -m py_compile apis/v1/capability_maps_generator.py; git diff --check -- apis/v1/capability_maps_generator.py
+
+Success now runs after the per-level `Completed` Redis publish, and Generate-All success is attempted immediately before return; cancellation is also attempted even if the start call didn’t return an ID. The module compiles and its diff check is clean; I’m doing a final line-by-line audit of Success/Failed/Cancelled call placement.
+
+Searched for regex `run_genai_audit_log\(|status="Success"|status="Failed"|status="Cancelled"|publish_message\(input_data.ID, "Completed"` (`**/apis/v1/capability_maps_generator.py`), 13 results
+
+Read , lines 260 to 310
+
+Read , lines 525 to 622
+
+In `capability_maps_generator.py`, the per-level Success checkpoint was inside the earlier progress block, before DB insertion and the `Completed` publish. It now runs immediately after that publish, with the same stored audit context and request identity metadata. The Generate-All branch has no `Completed` publish in this file, so its Success checkpoint runs just before cleanup and return.
+
+**Audit Calls**
+- Line 128: runner wrapper, `Failed`.
+- Line 226: Generate-All start, `In Progress`.
+- Line 267: Generate-All progress, `In Progress`.
+- Line 281: Generate-All completion, `Success`.
+- Line 416: per-level start (`GENERATE_L1`/`L2`/`L3`, including `UPDATE_*`), `In Progress`.
+- Line 464: per-level progress, `In Progress`.
+- Line 528: per-level completion, `Success`.
+- Line 567: cancellation handler, `Cancelled`.
+
+The old per-level Success call ran only inside `if genai_audit_log_id`, before the operation reached its final completion publish. The new checkpoint is after `Completed` and is attempted even if the start call didn’t return an ID. The Failed checkpoint remains in the runner wrapper, which catches exceptions raised by the background coroutine and uses its stored audit context. Cancelled is now attempted without that ID guard.
+
+```diff
+-        if genai_audit_log_id:
+-            try:
+-                db_operations_orm.run_genai_audit_log(... status="Success" ...)
+-            except Exception as audit_err:
+-                ...
+...
+-        publish_message(..., "Completed", f"Capability maps inserted successfully into DB for action: {action.value}", ...)
++        completed_message = f"Capability maps inserted successfully into DB for action: {action.value}"
++        publish_message(..., "Completed", completed_message, ...)
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step=audit_context["step"],
++                sub_step=audit_context["sub_step"],
++                status="Success",
++                progress=100,
++                message=completed_message,
++                input_key=input_data.input_key,
++                genai_audit_log_id=genai_audit_log_id,
++                substep_key=input_data.substepkey,
++                **_capmap_audit_metadata(input_data),
++            )
++        except Exception as audit_err:
++            track_trace(...)
+```
+
+The Generate-All Success checkpoint is also no longer gated on the audit ID. Cancellation uses the same context and metadata. `py_compile` and `git diff --check` passed for this file.
+
+Made changes.-
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Tracker scope only, apis/v1/capability_maps_generator.py.
 Test evidence: for action GENERATE_L1 the job completes ("Capability maps inserted
 successfully into DB for action: GENERATE_L1", Redis "Completed", email sent, then
