@@ -1,3 +1,61 @@
+I’ll scan all `apis/v1/*.py` audit calls and report only those nested under a condition that checks an audit ID, including the guarding condition, source line, and status. I’ll keep this read-only.
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+root = Path('apis/v1')
+for path in sorted(root.glob('*.py')):
+    try:
+        tree = ast.parse(path.read_text(encoding='utf-8'))
+    except (OSError, SyntaxError):
+        continue
+    parents = {}
+    for parent in ast.walk(tree):
+        for child in ast.iter_child_nodes(parent):
+            parents[child] = parent
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or getattr(node.func, 'attr', None) != 'run_genai_audit_log':
+            continue
+        conditions = []
+        ancestor = parents.get(node)
+        while ancestor is not None:
+            if isinstance(ancestor, ast.If):
+                test = ast.unparse(ancestor.test)
+                names = {item.id.lower() for item in ast.walk(ancestor.test) if isinstance(item, ast.Name)}
+                if any('audit' in name and 'id' in name for name in names):
+                    conditions.append(test)
+            ancestor = parents.get(ancestor)
+        if not conditions:
+            continue
+        status = next((ast.unparse(kw.value) for kw in node.keywords if kw.arg == 'status'), '<default>')
+        print(f'{path}:{node.lineno} | status={status} | guard={" AND ".join(reversed(conditions))}')
+'@ | py -3 -
+
+Read-only scan results for calls guarded by an audit-ID condition:
+
+| File | Line | Status | Guard |
+|---|---:|---|---|
+| `agentic_fit_allocator.py` | 701 | Success | `genai_audit_log_id` |
+| `agentic_fit_allocator.py` | 725 | Cancelled | `'genai_audit_log_id' in locals() and genai_audit_log_id` |
+| `agentic_fit_allocator.py` | 748 | Failed | `genai_audit_log_id` |
+| `capability_double_click.py` | 265 | Failed | `genai_audit_log_id` |
+| `capability_double_click.py` | 592 | In Progress | `genai_audit_log_id` |
+| `capability_double_click.py` | 631 | Success | `genai_audit_log_id` |
+| `capability_double_click.py` | 674 | Failed | `genai_audit_log_id` |
+| `capability_double_click.py` | 700 | Cancelled | `genai_audit_log_id` |
+| `capability_double_click.py` | 724 | Failed | `genai_audit_log_id and _AUDIT_LOG_BY_REQUEST_ID.get(...)` |
+| `capability_maps_generator.py` | 128 | Failed | `genai_audit_log_id` |
+| `capability_maps_generator.py` | 267 | In Progress | `genai_audit_log_id` |
+| `capability_maps_generator.py` | 464 | In Progress | `genai_audit_log_id` |
+| `industrial_map.py` | 386 | In Progress | `genai_audit_log_id` |
+| `industrial_map.py` | 399 | Success | `genai_audit_log_id` |
+| `two_by_two.py` | 68 | Failed | `genai_audit_log_id` |
+| `two_by_two.py` | 289 | Success | `genai_audit_log_id` |
+| `workforce_analyzer.py` | 838 | In Progress | `genai_audit_log_id` |
+| `workforce_analyzer.py` | 878 | Success | `genai_audit_log_id` |
+
+No files were edited.
+---------------------------------------
 Read-only. In apis/v1/*.py list every run_genai_audit_log call that is wrapped in
 `if genai_audit_log_id` (or any condition on the audit id), with file, line and status.
 Do not edit.
