@@ -1,3 +1,5 @@
+git --no-pager diff --cached -U0 | Select-String '^-[^-]' > deleted_e352.txt
+-------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll verify the two exact assignments and any existing diffs in those files first, then make only the requested line changes and run the specified diff and compile commands.
 
 Ran terminal command: git --no-pager diff -- db/db_operations_orm.py apis/v1/agentic_fit_allocator.py
