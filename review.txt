@@ -1,3 +1,235 @@
+nothing added to commit but untracked files present (use "git add" to track)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git fetch origin
+info: please complete authentication in your browser...
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git log --oneline -1
+9cc1ad4 (HEAD -> fix_asc_events_tracker, origin/fix_asc_events_tracker, origin/ascend/develop) Merge pull request #239 from Deloitte-US-Consulting-HO/ascend/shubham/snykIssues
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git show --stat f809e1e                              
+commit f809e1e29dd72a8ca69104fb7fd467232d958a77
+Author: Chaitanya <gedchaitanya@deloitte.com>
+Date:   Wed Jun 24 17:30:09 2026 +0530
+
+    feat: PBI 88921 - GEN AI Events Tracker - initial implementation
+    
+    - Added GenAIAuditLog model in db/models.py
+    - Added create/update CRUD functions in db/crud.py
+    - Added run_genai_audit_log orchestration in db/db_operations_orm.py
+    - Added get_audit_db session factory in db/database.py
+    - Wired audit logging into agentic_fit_allocator.py
+    - Table created in aab_db_auditlog_dev
+
+ .gitignore                           | Bin 267 -> 373 bytes
+ apis/v1/agentic_fit_allocator.py     |  88 ++++++++++++++++++++++++++++++++++-
+ apis/v1/capability_maps_generator.py |   8 ++++
+ db/crud.py                           |  48 +++++++++++++++++++
+ db/database.py                       |  21 +++++++++
+ db/db_operations_orm.py              |  60 +++++++++++++++++++++++-
+ db/models.py                         |  14 ++++++
+ 7 files changed, 236 insertions(+), 3 deletions(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git cherry-pick -n f809e1e                                           
+Auto-merging apis/v1/agentic_fit_allocator.py
+Auto-merging apis/v1/capability_maps_generator.py
+Auto-merging db/crud.py
+Auto-merging db/db_operations_orm.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status                
+On branch fix_asc_events_tracker
+Your branch is up to date with 'origin/fix_asc_events_tracker'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   .gitignore
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   apis/v1/capability_maps_generator.py
+        modified:   db/crud.py
+        modified:   db/database.py
+        modified:   db/db_operations_orm.py
+        modified:   db/models.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git diff --cached -- .gitignore             
+diff --git a/.gitignore b/.gitignore
+index e03c0b2..b18cd0f 100644
+Binary files a/.gitignore and b/.gitignore differ
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git restore --staged --worktree --source=HEAD .gitignore 
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status                                              
+On branch fix_asc_events_tracker
+Your branch is up to date with 'origin/fix_asc_events_tracker'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   apis/v1/capability_maps_generator.py
+        modified:   db/crud.py
+        modified:   db/database.py
+        modified:   db/db_operations_orm.py
+        modified:   db/models.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git diff --cached -U0 | Select-String '^-[^-]'
+
+-            impact_analyzer = input_data.impact_analyzer or []
+-from database import get_db
+-    db_session_generator = get_db()
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git diff --cached -- apis/v1/capability_maps_generator.py
+diff --git a/apis/v1/capability_maps_generator.py b/apis/v1/capability_maps_generator.py
+index 5ea9377..5d8fea0 100644
+--- a/apis/v1/capability_maps_generator.py
++++ b/apis/v1/capability_maps_generator.py
+@@ -6,6 +6,7 @@ from fastapi import APIRouter, BackgroundTasks
+ from fastapi.exceptions import HTTPException
+ from fastapi import status
+ from db import db_operations_orm
++
+ import json
+ import redis
+ from utilities.email_send import email_send
+@@ -103,6 +104,8 @@ def _capmap_runner(payload: CapabilityMapGeneratorInput):
+         asyncio.run(generate_capability_map(payload))
+     except Exception as e:
+         traceback.print_exc()
++        
++            
+         try:
+             track_operation_error(
+                 "Capability_Map_Generation_Background",
+@@ -332,6 +335,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+         
+         track_trace(f"Starting L{level} generation for {input_data.projectName}", 
+:...skipping...
+diff --git a/apis/v1/capability_maps_generator.py b/apis/v1/capability_maps_generator.py
+index 5ea9377..5d8fea0 100644
+--- a/apis/v1/capability_maps_generator.py
++++ b/apis/v1/capability_maps_generator.py
+@@ -6,6 +6,7 @@ from fastapi import APIRouter, BackgroundTasks
+ from fastapi.exceptions import HTTPException
+ from fastapi import status
+ from db import db_operations_orm
++
+ import json
+ import redis
+ from utilities.email_send import email_send
+@@ -103,6 +104,8 @@ def _capmap_runner(payload: CapabilityMapGeneratorInput):
+         asyncio.run(generate_capability_map(payload))
+     except Exception as e:
+         traceback.print_exc()
++        
++            
+         try:
+             track_operation_error(
+                 "Capability_Map_Generation_Background",
+@@ -332,6 +335,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+         
+         track_trace(f"Starting L{level} generation for {input_data.projectName}", 
+                    properties={"level": level, "action": action.value})
++        
+         generated_capabilities = await generation.generate_capability_maps_for_level(level, selection_key,df_file,selected_capabilities,survey_ctx,file_ctx)
+         generated_capabilities = add_id(generated_capabilities, f"L{level}-")
+         await monitor.stop_progress()
+@@ -351,9 +355,13 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+ 
+ 
+         
++        
+         track_operation_complete(f"Generate_L{level}_Capabilities",
+                                properties={"company_name": input_data.projectName, 
+                                          "capabilities_count": len(generated_capabilities)})
++        
+:...skipping...
+diff --git a/apis/v1/capability_maps_generator.py b/apis/v1/capability_maps_generator.py
+index 5ea9377..5d8fea0 100644
+--- a/apis/v1/capability_maps_generator.py
++++ b/apis/v1/capability_maps_generator.py
+@@ -6,6 +6,7 @@ from fastapi import APIRouter, BackgroundTasks
+ from fastapi.exceptions import HTTPException
+ from fastapi import status
+ from db import db_operations_orm
++
+ import json
+ import redis
+ from utilities.email_send import email_send
+@@ -103,6 +104,8 @@ def _capmap_runner(payload: CapabilityMapGeneratorInput):
+         asyncio.run(generate_capability_map(payload))
+     except Exception as e:
+         traceback.print_exc()
++        
++            
+         try:
+             track_operation_error(
+                 "Capability_Map_Generation_Background",
+@@ -332,6 +335,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+         
+         track_trace(f"Starting L{level} generation for {input_data.projectName}", 
+                    properties={"level": level, "action": action.value})
++        
+         generated_capabilities = await generation.generate_capability_maps_for_level(level, selection_key,df_file,selected_capabilities,survey_ctx,file_ctx)
+         generated_capabilities = add_id(generated_capabilities, f"L{level}-")
+         await monitor.stop_progress()
+@@ -351,9 +355,13 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+ 
+ 
+         
++        
+         track_operation_complete(f"Generate_L{level}_Capabilities",
+                                properties={"company_name": input_data.projectName, 
+                                          "capabilities_count": len(generated_capabilities)})
++        
++      
++
+         track_metric(f"L{level}_Capabilities_Count", len(generated_capabilities),
+                    properties={"company_name": input_data.projectName})
+         
+~
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git diff --cached -- apis/v1/agentic_fit_allocator.py    
+diff --git a/apis/v1/agentic_fit_allocator.py b/apis/v1/agentic_fit_allocator.py
+index df55428..5e5f3c0 100644
+--- a/apis/v1/agentic_fit_allocator.py
++++ b/apis/v1/agentic_fit_allocator.py
+@@ -187,6 +187,7 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+     # (via asyncio.run in the BackgroundTasks threadpool); sharing a module-level
+     # monitor across loops raises "await wasn't used with future".
+     monitor = ProgressMonitor()
++    genai_audit_log_id = None
+ 
+     try:
+         # Track API call
+@@ -228,6 +229,18 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+         order = order_[input_data.input_name] if input_data.input_name in order_ else None
+         if not receiver_email:
+             receiver_email = background_processing_data.get('receiverEmail') if background_processing_data and background_processing_data.get('receiverEmail') else None
++
++        try:
++            genai_audit_log_id = db_operations_orm.run_genai_audit_log(
++                user_id=(background_processing_data or {}).get("userId") or 0,
++                step=input_data.processName,
++                sub_step=input_data.input_name,
++                progress=10,
++                status="In Progress",
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log create skipped: {audit_err}", severity="Warning")
++
+         track_operation_start("Agentic_Fit_Allocation",
+                             properties={"action": action, "client_name": client_info.get('clientName') if client_info else None})
+         status_data = {
+@@ -293,6 +306,18 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+                                  ]:
+             track_trace(f"Generating total OPEX for {client_info.get('clientName') if client_info else 'Unknown Company'}", severity="Information")
+             await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating Impact Analyser for action: {action}", input_key=_job_input_key, substep_key=_job_substepkey, receivers_email=background_processing_data.get('receiverEmail'), requested_on=background_processing_data.get('requestedOn'),action=action,channel_name=channel_name)
++            try:
++                db_operations_orm.run_genai_audit_log(
++                    user_id=(background_processing_data or {}).get("userId") or 0,
++                    step=input_data.processName,
++                    sub_step=input_data.input_name,
++                    progress=25,
+:
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Tracker scope only. File: apis/v1/agentic_fit_allocator.py, the `except Exception as e:`
 handler of agentic_fit_allocation (and nothing else).
 
