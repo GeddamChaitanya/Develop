@@ -1,3 +1,45 @@
+
+-                user_id=(background_processing_data or {}).get("userId") or 0,
+-                    user_id=(background_processing_data or {}).get("userId") or 0,
+-                    requested_time=(background_processing_data or {}).get("requestedOn"),
+-                    user_id=(background_processing_data or {}).get("userId") or 0,
+-                    requested_time=(background_processing_data or {}).get("requestedOn"),
+-                    user_id=(background_processing_data or {}).get("userId") or 0,
+-                    requested_time=(background_processing_data or {}).get("requestedOn"),
+-                    user_id=(background_processing_data or {}).get("userId") or 0,
+-                    requested_time=(background_processing_data or {}).get("requestedOn"),
+-                    user_id=(background_processing_data or {}).get("userId") or 0,
+-                    user_id=(_bg or {}).get("userId") or 0,
+-                    
+-        
+-    user_id,
+-    progress=0,
+-    requested_time=None,
+-    """Create or update a genai_audit_log row.
+-    If genai_audit_log_id is not provided, this inserts a new row and returns
+-    the created ID. If provided, this updates the existing row and returns the
+-    same ID on success.
+-    """
+-        parsed_requested_time = requested_time
+-        if isinstance(requested_time, str) and requested_time.strip():
+-            normalized_requested_time = requested_time.strip().replace("Z", "+00:00")
+-            try:
+-                parsed_requested_time = datetime.datetime.fromisoformat(normalized_requested_time)
+-            except ValueError:
+-                parsed_requested_time = None
+-        if not genai_audit_log_id:
+-                user_id=str(user_id or 0),
+-                progress=int(progress or 0),
+-                requested_time=parsed_requested_time,
+-            log_id=int(genai_audit_log_id),
+-                "progress": int(progress or 0),
+-                "sub_step": sub_step,
+-                "requested_time": parsed_requested_time,
+-from sqlalchemy.dialects.postgresql import UUID
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
 git --no-pager diff --cached -U0 | Select-String '^-[^-]' > deleted_e352.txt
 -------------------------------------------------------------------------------------------------------------------------------------------------
 I’ll verify the two exact assignments and any existing diffs in those files first, then make only the requested line changes and run the specified diff and compile commands.
