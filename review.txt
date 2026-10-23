@@ -1,8 +1,29 @@
+Make exactly these 2 one-line edits. Do not change anything else in any file.
+
+1. db/db_operations_orm.py
+   Inside the function run_operations_status ONLY, change:
+       db_session_generator = get_audit_db()
+   back to:
+       db_session_generator = get_db()
+   Do NOT touch run_genai_audit_log or any other function. They must keep get_audit_db().
+
+2. apis/v1/agentic_fit_allocator.py
+   Change:
+       impact_analyzer = locals().get('impact_analyzer') or []
+   back to:
+       impact_analyzer = input_data.impact_analyzer or []
+   Keep the same indentation.
+
+After editing, run and show the output of:
+   git --no-pager diff -- db/db_operations_orm.py apis/v1/agentic_fit_allocator.py
+   python -m py_compile db/db_operations_orm.py apis/v1/agentic_fit_allocator.py
+Do not run git add or git commit.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 afa.diff.txt
 
 diff --git a/apis/v1/agentic_fit_allocator.py b/apis/v1/agentic_fit_allocator.py
 index df55428..5e5f3c0 100644
---- a/apis/v1/agentic_fit_allocator.py
+--- a/apis/v1/agentic_fit_allocator.py---------------------
 +++ b/apis/v1/agentic_fit_allocator.py
 @@ -187,6 +187,7 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
      # (via asyncio.run in the BackgroundTasks threadpool); sharing a module-level
