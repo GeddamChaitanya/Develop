@@ -1,3 +1,177 @@
+I’ll compare the specified lines against the current files and `9cc1ad4` first, including the exact EOF whitespace in `models.py`. Then I’ll remove only the requested whitespace, leave lines 301–302 untouched, and run the two requested checks.
+
+Ran terminal command: git status --short --branch; git --no-pager diff -- apis/v1/capability_maps_generator.py db/models.py
+
+Ran terminal command: git show 9cc1ad4:apis/v1/capability_maps_generator.py | Select-Object -First 160; git show 9cc1ad4:db/models.py | Select-Object -Last 20
+
+Read , lines 136 to 145
+
+Read , lines 446 to 477
+
+Read , lines 394 to 401
+
+The current file contains several whitespace-only lines in the requested regions, and `models.py` appears to end with extra blank whitespace. I’m checking the baseline dump now to distinguish lines that should be deleted from lines that should remain, without touching unrelated spacing.
+
+Ran terminal command: git --no-pager diff --check 9cc1ad4 -- apis/v1/capability_maps_generator.py db/models.py
+Completed with input: git --no-pager diff --check 9cc1ad4 -- apis/v1/capability_maps_generator.py db/models.py
+Tool execution failed with exit code 1
+
+Ran terminal command: git show 9cc1ad4:db/models.py | Select-Object -Last 12
+
+Read 
+
+Read 
+
+`git diff --check 9cc1ad4` isolates whitespace errors at the requested locations plus the model EOF. I’m measuring those exact current lines and comparing whitespace-only lines with the baseline so only lines absent from `9cc1ad4` are removed.
+
+Ran terminal command: Get-Content apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -in 140,141,450,470,474,301,302) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Ran terminal command: git show 9cc1ad4:apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($_ -match '^\s+$') { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Ran terminal command: Get-Content db/models.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -ge ((Get-Content db/models.py | Measure-Object -Line).Lines - 8)) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+The baseline contains 8-space and 12-space blank lines, but no 6-space blank line. I’ll turn the first four requested whitespace-only lines into empty lines, delete the 6-space line absent from baseline, preserve protected lines 301–302 exactly, and normalize the model EOF. I’m mapping immediate surrounding code to target only those lines.
+
+Ran terminal command: Get-Content apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -ge 440 -and $i -le 478) { '{0}: [{1}]' -f $i, $_.Replace(' ','·') } }
+
+The targeted lines are now precisely identified: four whitespace-only lines match indentation widths present in the baseline and will become empty lines; the 6-space line does not occur in the baseline and will be deleted. I’ll remove the model’s two extra EOF lines while preserving the newline after its last code line.
+
+Generating patch (31 lines) in , 
+
+
+```
+
+```
+
+```
+
+```
+The whitespace edits are applied only to the listed locations, and lines 301–302 were not touched. I’m running the exact baseline diff check and the requested compile command now.
+
+Ran terminal command: git --no-pager diff --check 9cc1ad4
+Completed with input: git --no-pager diff --check 9cc1ad4
+Tool execution failed with exit code 1
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+Completed with input: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+Tool execution failed with exit code 1
+
+Ran terminal command: git --no-pager diff --unified=0 9cc1ad4 -- apis/v1/capability_maps_generator.py db/models.py
+
+The first validation shows the patch did not clean two requested whitespace entries and it also introduced a syntax error near the following blob-storage call. I’m inspecting the exact current lines and diff to repair only the whitespace patch without touching business logic or protected lines.
+
+Ran terminal command: git --no-pager diff --unified=0 9cc1ad4 -- apis/v1/capability_maps_generator.py db/models.py
+
+Read , lines 455 to 490
+
+Read , lines 396 to 402
+
+Read 
+
+The whitespace patch unintentionally removed the closing `)` after `store_json_to_blob`; that is the syntax error. I’m restoring that exact original line first, then I’ll finish only the specified whitespace/EOF cleanup and recheck the diff.
+
+Generating patch (7 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+
+Ran terminal command: Get-Content apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -in 140,141,301,302,450,470,474,475,480,481,482) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Ran terminal command: Get-Content db/models.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -ge 398) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Ran terminal command: git --no-pager diff --check 9cc1ad4
+Completed with input: git --no-pager diff --check 9cc1ad4
+Tool execution failed with exit code 1
+
+The API file now has clean lines 140, 141, and 450, and protected lines 301–302 remain byte-for-byte unchanged. Remaining work is line 470, removal of the extra blank originating at old line 474, and the model EOF lines; I’m confirming local context before the final targeted patch.
+
+Ran terminal command: Get-Content apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -ge 464 -and $i -le 478) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Generating patch (18 lines) in , 
+
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: git --no-pager diff --check 9cc1ad4
+Completed with input: git --no-pager diff --check 9cc1ad4
+Tool execution failed with exit code 1
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+Completed with input: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+Tool execution failed with exit code 1
+
+Ran terminal command: git --no-pager diff --unified=0 9cc1ad4 -- apis/v1/capability_maps_generator.py db/models.py
+
+Ran terminal command: Get-Content apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -in 140,141,301,302,450,470,474) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }; Get-Content db/models.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -ge 398) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+The second patch still failed: it removed another closing parenthesis near the output dictionary, and `models.py` still has trailing EOF whitespace. I’m inspecting those exact regions now; I’ll repair the lost syntax first, then use an exact byte-preserving whitespace edit for the EOF and requested blank lines.
+
+Ran terminal command: git --no-pager diff --unified=0 -- apis/v1/capability_maps_generator.py db/models.py
+
+Read , lines 464 to 510
+
+Read , lines 395 to 404
+
+Generating patch (10 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+
+The generation code is restored and both files compile again. I’m checking the remaining baseline diff-check output and exact line markers so the final cleanup can target only what still remains.
+
+Ran terminal command: git --no-pager diff --check 9cc1ad4
+Completed with input: git --no-pager diff --check 9cc1ad4
+Tool execution failed with exit code 1
+
+Ran terminal command: Get-Content apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -in 140,141,301,302,450,470,474,475,476) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Ran terminal command: Get-Content db/models.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -ge 398) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Generating patch (10 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+
+The capability-map diff check is now clean and the file compiles; the extra target blank has been removed. The only remaining failure is the model’s EOF whitespace, so I’m normalizing just the file’s terminal blank lines to one newline, preserving UTF-8 without a BOM.
+
+Ran terminal command: $path = 'db/models.py'
+$text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
+$text = [regex]::Replace($text, '(?:\r?\n[ \t]*)+\z', "`r`n")
+$encoding = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($path, $text, $encoding)
+
+Ran terminal command: git --no-pager diff --check 9cc1ad4
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py db/models.py
+
+Ran terminal command: Get-Content db/models.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -ge ((Get-Content db/models.py | Measure-Object -Line).Lines - 3)) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }; Get-Content apis/v1/capability_maps_generator.py | ForEach-Object -Begin {$i=0} -Process { $i++; if ($i -in 140,141,301,302,450,470,474) { '{0}: [{1}] length={2}' -f $i, $_.Replace(' ','·'), $_.Length } }
+
+Whitespace cleanup is complete. `git --no-pager diff --check 9cc1ad4` printed nothing; `py -m py_compile `capability_maps_generator.py` db/models.py` passed. Protected lines 301–302 remain unchanged, and `models.py` now ends with exactly one newline. No staging or commit was performed.
+
+Made changes.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Whitespace cleanup only, no logic changes. Fix exactly these lines and nothing else:
 - apis/v1/capability_maps_generator.py lines 140, 141, 450, 470, 474: remove trailing
   whitespace; if the line is whitespace-only and not present in `git show 9cc1ad4:<file>`,
