@@ -1,3 +1,405 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> uvicorn api_v1:app --host 0.0.0.0 --port 8080 --reload --log-level info --log-config config/logging.yaml
+2026-10-25 15:42:40,102 - uvicorn.error - INFO - Will watch for changes in these directories: ['C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi']
+2026-10-25 15:42:40,103 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+2026-10-25 15:42:40,104 - uvicorn.error - INFO - Started reloader process [34304] using WatchFiles
+DB_string: postgresql://svc_user:7bcGN83H77JF@10.185.87.8:5432/aab_db_dev
+DB_string: postgresql://svc_user:7bcGN83H77JF@10.185.87.8:5432/aab_db_dev
+2026-10-25 15:42:52,395 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-25 15:42:52,423 - uvicorn.error - INFO - Started server process [34336]
+2026-10-25 15:42:52,428 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-25 15:42:52,433 - uvicorn.error - INFO - Application startup complete.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-25 15:44:35,865 - uvicorn.access - INFO - 127.0.0.1:58277 - "POST /api/v1/capability_maps_generator HTTP/1.1" 202
+[TRACE] Received input_data: {"ID":"capmap-l1-test-20261025-001","projectKey":12345,"projectCapabilityMapKey":null,"projectName"
+Getting database session...
+Database session created.
+--- Reading survey responses for project_id: 12345 ---
+Retrieved 20 survey question(s), 0 answered for project_id: 12345
+Getting database session...
+Database session created.
+--- Reading supporting files for project_key: 12345 ---
+[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_ProjectSupportingFiles - (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading supporting files: (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch file context for project 12345: (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'Started', 'Logs': 'Capability maps started  GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 12345, 'input_key': 12345, 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+Getting audit database session...
+Audit database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'Started', 'Logs': 'Starting capability map generation for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 25, 'stage': 'capability-map-l1-generation', 'stageStatus': 'started', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+[TRACE] Progress monitor started for ID: capmap-l1-test-20261025-001
+[TRACE] Starting L1 generation for Northstar Health Services
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1792923292.164039   15868 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+E0000 00:00:1792923292.203303   15868 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 5, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+E0000 00:00:1792923334.132342   15868 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1792923334.148196   15868 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 6, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+TEMP DEBUG: L1 written to test_output_l1_capabilities.json
+[TRACE] Progress monitor stopped for ID: capmap-l1-test-20261025-001
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+2026-10-25 15:45:48,875 - watchfiles.main - INFO - 1 change detected
+2026-10-25 15:45:49,235 - watchfiles.main - INFO - 1 change detected
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generated L1 capabilities for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 75, 'stage': 'capability-map-l1-generation', 'stageStatus': 'completed', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'InProgress', 'Logs': 'Data Inserting into DB for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'InProgress', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 12345, 'input_key': 12345, 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: InProgress
+[TRACE] Redis message published successfully: InProgress
+Getting audit database session...
+Audit database session created.
+2026-10-25 15:45:52,731 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '0efede76-d05d-11f1-b62c-d4f32df15685'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 15:45:54,368 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'caa5418b-701e-0082-5a69-64b600000000'
+    'x-ms-client-request-id': '0efede76-d05d-11f1-b62c-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 10:15:54 GMT'
+2026-10-25 15:45:54,376 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/12345/None/12345/L1_Capability_Generation_Output_4e6b150a-42c3-40d6-88f2-7b0a7dc388b7.json'
+Request method: 'DELETE'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '0ff9e5b9-d05d-11f1-b9ef-d4f32df15685'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 15:45:54,586 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Content-Length': '0'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'caa54234-701e-0082-6a69-64b600000000'
+    'x-ms-client-request-id': '0ff9e5b9-d05d-11f1-b9ef-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-delete-type-permanent': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 10:15:54 GMT'
+[TRACE] 🗑️ Deleted existing blob: NV_PoC_V1/outputs/12345/None/12345/L1_Capability_Generation_Output_4e6b150a-42c3-40d6-88f2-7b0
+2026-10-25 15:45:54,588 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/12345/None/12345/L1_Capability_Generation_Output_06b8d548-fa20-4c3a-9e8a-2fc546ed0380.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '6097'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '101a2b11-d05d-11f1-8050-d4f32df15685'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-25 15:45:56,143 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Sun, 25 Oct 2026 10:15:56 GMT'
+    'ETag': '"0x8DF3280F52FCADE"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'b8e6775b-201e-0009-3869-64b26d000000'
+    'x-ms-client-request-id': '101a2b11-d05d-11f1-8050-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 10:15:55 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/12345/None/12345/L1_Capability_Generation_Ou
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'InsertionProcessing', 'Logs': 'Capability maps started insertion into DB for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 85, 'stage': 'capability-map-db-insertion', 'stageStatus': 'heartbeat', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: InsertionProcessing
+[TRACE] Redis message published successfully: InsertionProcessing
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running INSERT operation for output
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+[ERROR] DB_Insert_SubStepOutput - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] DB_Operations_Output - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+An error occurred during operations: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+[ERROR] Capability_Map_Generation - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[TRACE] Progress monitor stopped for ID: capmap-l1-test-20261025-001
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'Error', 'Logs': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 0, 'stage': 'capability-map-generation', 'stageStatus': 'failed', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Error
+[TRACE] Redis message published successfully: Error
+Getting database session...
+Database session created.
+--- Reading app_user for email: None ---
+No app_user found for email: None
+[TRACE] DB_Read: No app_user found for email: None
+2026-10-25 15:46:01,975 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '1560'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '14812af5-d05d-11f1-ab09-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-25 15:46:04,125 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 10:16:03 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-25 15:46:04,129 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/2d3b842e-8ec7-437a-aff9-db8cf228d4a2?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '14812af5-d05d-11f1-ab09-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 15:46:04,459 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 10:16:04 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-25 15:46:07,461 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/2d3b842e-8ec7-437a-aff9-db8cf228d4a2?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '14812af5-d05d-11f1-ab09-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 15:46:07,790 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 10:16:07 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-25 15:46:07,808 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14247'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '17fb10cc-d05d-11f1-8da4-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-25 15:46:08,132 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 400
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 10:16:08 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '138'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'x-ms-error-code': 'InvalidEmailAddress'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+(InvalidEmailAddress) Invalid format for email address: None
+Code: InvalidEmailAddress
+Message: Invalid format for email address: None
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 495, in generate_capability_map
+    output_key = db_operations_orm.run_operations(output_key=input_data.outputKey, data=db_data)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 414, in run_operations
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 395, in run_operations
+    output_record = insert_sub_step_output(db, data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 312, in insert_sub_step_output
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 292, in insert_sub_step_output
+    validate_sub_step_output_references(db, sub_step_output_data)
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 63, in validate_sub_step_output_references
+    raise ValueError(
+ValueError: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 105, in _capmap_runner
+    asyncio.run(generate_capability_map(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 577, in generate_capability_map
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+fastapi.exceptions.HTTPException: 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] Capability_Map_Generation_Background - 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 SELECT genai_audit_log_id, user_id, step, sub_step, progress, status,
        requested_time, event_time, log_history
 FROM genai_audit_log
