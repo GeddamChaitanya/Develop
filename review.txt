@@ -1,4 +1,147 @@
+c5apiv1.txt code : 
 
+diff --git a/api_v1.py b/api_v1.py
+index b87706d..92ab1a7 100644
+--- a/api_v1.py
++++ b/api_v1.py
+@@ -1,16 +1,14 @@
+ from contextlib import asynccontextmanager
+ import os
+-import os
+ import uvicorn
+ from apis.base import api_router
+-from fastapi import Depends, Depends, FastAPI
++from fastapi import Depends, FastAPI
+ from fastapi.middleware.cors import CORSMiddleware
+ from fastapi.responses import JSONResponse
+ 
+ from auth import auth_settings, get_current_user, AuthenticatedUser
+ from utilities.genai_health import job_health_summary, readiness_summary
+ from utilities.genai_startup_recovery import schedule_startup_recovery_scan
+-from auth import auth_settings, get_current_user, AuthenticatedUser
+ 
+ 
+ origins = [
+@@ -151,33 +149,5 @@ async def whoami(user: AuthenticatedUser = Depends(get_current_user)):
+         "is_authenticated": user.is_authenticated,
+     }
+ 
+-
+-
+-@app.get("/health", tags=["Health"])
+-def health_check():
+-    """Liveness / readiness probe ΓÇö always public, no auth."""
+-    return {
+-        "status": "healthy",
+-        "auth_enabled": auth_settings.enabled,
+-        "version": "1.0.0",
+-    }
+-
+-
+-# ΓöÇΓöÇ Authenticated utility endpoints ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+-@app.get("/api/v1/me", tags=["Auth"], summary="Return current user info")
+-async def whoami(user: AuthenticatedUser = Depends(get_current_user)):
+-    """
+-    Returns the decoded identity of the caller.
+-    Useful for front-end token validation and debugging.
+-    """
+-    return {
+-        "user_id": user.user_id,
+-        "display_name": user.display_name,
+-        "email": user.email,
+-        "tenant_id": user.tenant_id,
+-        "is_authenticated": user.is_authenticated,
+-    }
+-
+-
+ if __name__ == "__main__":
+     uvicorn.run("api_v1:app", host="0.0.0.0", port=8080, reload=True, log_level="info", log_config="config/logging.yaml")
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git commit -C 566f71d -- apis/v1/capability_maps_generator.py
+[fix_asc_events_tracker 7693c13] feat: add receiverEmail and requestedOn to audit log in capability map generation
+ Author: Kumar Shubham <kshubham2@deloitte.com>
+ Date: Mon Jul 6 16:45:47 2026 +0530
+ 1 file changed, 2 insertions(+)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 4 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   api_v1.py
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   schemas/agentic_fit_allocator.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -- api_v1.py > c5_api_v1.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -- schemas/agentic_fit_allocator.py
+diff --git a/schemas/agentic_fit_allocator.py b/schemas/agentic_fit_allocator.py
+index 0156992..345383d 100644
+--- a/schemas/agentic_fit_allocator.py
++++ b/schemas/agentic_fit_allocator.py
+@@ -24,7 +24,9 @@ class AgenticFitAction(str, Enum):
+ class AgenticFitAllocatorInput(BaseModel):
+     """Schema for a Capability Map."""
+ 
++    ID: Optional[str] = Field(None, description="Unique request/event identifier for progress tracking")
+     stepKey: int = Field(..., description="Step key for tracking purposes")
++    stepName: Optional[str] = Field(None, description="Step name for GenAI event tracking")
+     substepkey: int = Field(..., description="Substep key for tracking purposes")
+     processName:str = Field(..., description="Name of the process associated with this request")
+     processKey: int = Field(..., description="Process key for tracking")
+@@ -35,6 +37,8 @@ class AgenticFitAllocatorInput(BaseModel):
+     WorkspaceName: Optional[str] = Field(None, description="Name of the workspace that groups related projects")
+     ParentWorkspaceName: Optional[str] = Field(None, description="Studio label of the workspace (e.g. Ascend)")
+     WorkspaceDescription: Optional[str] = Field(None, description="Description of the workspace that groups related projects")
++    requestedOn: Optional[str] = Field(None, description="Timestamp when the request was made")
++    userId: Optional[str] = Field(None, description="User identifier for audit/event tracking")
+     discount_rate: Optional[float] = Field(0.1, description="Discount rate to be applied to future cost savings (default is 0.1 or 10%)")
+     TwoByTwoOutPutKeys: Optional[List[int]] = Field(None, description="List of output keys for 2x2 outputs to be used as input context for agentic fit allocation")
+     receiverEmail: Optional[str] = Field(None, description="Email to send the results to (if applicable)")
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -U0 -- apis/v1/agentic_fit_allocator.py | Select-String '^-[^-]'
+   
+-        client_info = input_data_client.get('projectInfo') if isinstance(input_data_client, dict) else None 
+-        background_processing_data = input_data_db.get('backgroundProcessingInfo') if input_data_db and input_data_db.get('backgroundProcessingInfo') else {}
+-        publish_message(background_processing_data.get('ID'), "Started", f" Started generating for Impact Analyser for action {action}", _job_input_key, _job_substepkey, 
+receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
+-            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating Impact Analyser for action: {action}", input_key=_job_input_key, 
+substep_key=_job_substepkey, receivers_email=background_processing_data.get('receiverEmail'), 
+requested_on=background_processing_data.get('requestedOn'),action=action,channel_name=channel_name)
+-            publish_message(background_processing_data.get('ID'), "Inserting", f" IA total opex inserting into DB for action {action}", _job_input_key, _job_substepkey, 
+receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
+-            publish_message(background_processing_data.get('ID'), "Generated", f" IA total opex inserted into DB for action {action}", _job_input_key, _job_substepkey, 
+receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
+-            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating Impact Analyser for action: {action}", input_key=_job_input_key, 
+substep_key=_job_substepkey, receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=action,channel_name=channel_name)
+-            publish_message(background_processing_data.get('ID'), "Inserting", f" IA total opex inserting into DB for action {action}", _job_input_key, _job_substepkey, 
+receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
+-            publish_message(background_processing_data.get('ID'), "Generated", f" IA total opex inserted into DB for action {action}", _job_input_key, _job_substepkey, 
+receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
+-            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating Impact Analyser for action: {action}", input_key=_job_input_key, 
+substep_key=_job_substepkey, receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=action,channel_name=channel_name)
+-            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating Impact Analyser for action: {action}", input_key=_job_input_key, 
+substep_key=_job_substepkey, receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=action,channel_name=channel_name)
+-            publish_message(background_processing_data.get('ID'), "Inserting", f" IA total opex inserting into DB for action {action}", _job_input_key, _job_substepkey, 
+receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
+-            publish_message(background_processing_data.get('ID'), "Generated", f" IA total opex inserted into DB for action {action}", _job_input_key, _job_substepkey, 
+receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
+-        if "substepkey" in locals() and _bg.get("substepkey"):
+-            publish_message(
+-                _bg.get("ID"), "Error",
+-                _bg.get("input_key"), _bg.get("substepkey"),
+-                receiver_email, _bg.get("requestedOn"),
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 git --no-pager diff --cached -- api_v1.py > c5_api_v1.txt
 git --no-pager diff --cached -- schemas/agentic_fit_allocator.py
 git --no-pager diff --cached -U0 -- apis/v1/agentic_fit_allocator.py | Select-String '^-[^-]'
