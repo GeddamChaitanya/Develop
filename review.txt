@@ -1,3 +1,25 @@
+Use exactly this mapping (fallback only where listed). Never use clientInfo.clientKey.
+- agentic_fit_allocator.py, capability_double_click.py, two_by_two.py:
+  analysis_name = input_data.processName or backgroundProcessingInfo.processName
+  client_id = normalized projectInfo.projectKey or input_data.ProjectKey
+  user_id = backgroundProcessingInfo.userId
+  requested_time = backgroundProcessingInfo.requestedOn
+  substep_key / input_key = backgroundProcessingInfo values, fallback request values
+- capability_maps_generator.py:
+  analysis_name = input_data.processName or input_data.process_name
+  client_id = input_data.projectKey ; user_id = None (email lookup in run_genai_audit_log)
+  requested_time = input_data.requestedOn ; substep_key/input_key = request values
+- missing_client_capabilities.py:
+  analysis_name = None ; client_id = input_data.ProjectKey
+  user_id = input_data.CreatedByUserKey ; requested_time = input_data.requestedOn
+- industrial_map.py:
+  analysis_name = input_data.process_name ; client_id = None
+  user_id = input_data.CreatedByUserKey ; requested_time = input_data.requestedOn
+Read these values once near the start of each function into local variables, inside the
+existing audit try/except style, and reuse them in every checkpoint.
+Now proceed with points 1–8 under the same HARD RULES. Show git --no-pager diff --stat,
+the full diff, and py -m py_compile on every changed file. Do not git add or commit.
+-------------------------------------------------------------------------------------------------------------------------------
 I’ll keep this read-only and trace each route’s typed schema plus the raw/background payload it actually reads. I’ll report literal payload keys only, marking absent fields as `NOT IN PAYLOAD`, and won’t infer `client_id` from `clientInfo.clientKey`.
 
 Read , lines 175 to 255
