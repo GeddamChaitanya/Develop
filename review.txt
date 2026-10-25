@@ -1,3 +1,7 @@
+git --no-pager diff -U0 9cc1ad4 -- apis/v1/capability_maps_generator.py | Select-String '^[-+].*(store_json_to_blob|output|CapabilityMapGeneratorOutput|run_operations\()'
+
+git --no-pager diff 9cc1ad4 -- db/models.py
+------------------------------------------------------------------------------------------
 Comments/docstrings ONLY. Do NOT change any code logic, names, or indentation of code lines.
 File: db/db_operations_orm.py (run_genai_audit_log) and db/crud.py (query_genai_audit_logs).
 
