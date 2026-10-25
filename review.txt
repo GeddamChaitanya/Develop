@@ -1,3 +1,36 @@
+2026-10-25 21:23:57,199 - uvicorn.error - INFO - Stopping reloader process [34860]
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path apis/v1/capability_maps_generator.py -Pattern 'audit_requested_time|requested_time='
+   
+apis\v1\capability_maps_generator.py:107:    audit_requested_time = getattr(payload, "requestedOn", None)
+apis\v1\capability_maps_generator.py:131:                requested_time=audit_requested_time,
+apis\v1\capability_maps_generator.py:187:    audit_requested_time = None
+apis\v1\capability_maps_generator.py:196:            audit_requested_time = input_data.requestedOn
+apis\v1\capability_maps_generator.py:253:                    requested_time=audit_requested_time,
+apis\v1\capability_maps_generator.py:297:                    requested_time=audit_requested_time,
+apis\v1\capability_maps_generator.py:397:                requested_time=audit_requested_time,
+apis\v1\capability_maps_generator.py:455:                requested_time=audit_requested_time,
+apis\v1\capability_maps_generator.py:495:                requested_time=audit_requested_time,
+apis\v1\capability_maps_generator.py:565:                requested_time=audit_requested_time,
+apis\v1\capability_maps_generator.py:585:                requested_time=audit_requested_time,
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path db/db_operations_orm.py -Pattern 'requested_time|requested_on|legacy_kwargs'
+   
+db\db_operations_orm.py:429:    requested_time=None,
+db\db_operations_orm.py:449:      - Row columns (user_id, client_id, status, progress, requested_time) always 
+mirror
+db\db_operations_orm.py:457:      requested_time: requestedOn from the UI (UTC); stored in requested_time.
+db\db_operations_orm.py:474:    def parse_requested_time(value):
+db\db_operations_orm.py:500:    parsed_requested_time = parse_requested_time(requested_time)
+db\db_operations_orm.py:569:            "requested_on": parsed_requested_time.isoformat() if 
+parsed_requested_time is not None else None,
+db\db_operations_orm.py:591:        latest_requested_time = 
+parse_requested_time(latest_version.get("requested_on"))
+db\db_operations_orm.py:604:        record.requested_time = latest_requested_time
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 2026-10-25 20:59:14,384 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
 2026-10-25 20:59:14,420 - uvicorn.error - INFO - Started server process [35956]
 2026-10-25 20:59:14,420 - uvicorn.error - INFO - Waiting for application startup.
