@@ -1,3 +1,30 @@
+I’ll keep this read-only and trace each route’s typed schema plus the raw/background payload it actually reads. I’ll report literal payload keys only, marking absent fields as `NOT IN PAYLOAD`, and won’t infer `client_id` from `clientInfo.clientKey`.
+
+Read , lines 175 to 255
+
+Read , lines 225 to 465
+
+Read , lines 35 to 205
+
+Read , lines 90 to 225
+
+Read , lines 80 to 180
+
+Read , lines 90 to 200
+
+Read 
+
+The schemas and payload reads confirm project keys in four routes, but none in industrial-map input. `userId` is present in the stored background payloads for the three agentic-fit-backed routes; the other routes expose creator-key fields or no user field. I’m summarizing exact field paths now, distinguishing process names from analysis categories and map titles.
+
+| file | analysis_name source | client_id source | user_id source | requested_time source | substep_key / input_key sources |
+|---|---|---|---|---|---|
+| `agentic_fit_allocator.py` | `processName` in the request schema; raw job payload may also have `backgroundProcessingInfo.processName`. | Request schema: `ProjectKey` (optional). Stored raw payload: `projectInfo.projectKey`, normalized by `normalize_project_payload`. | `backgroundProcessingInfo.userId` in the stored raw payload; no `userId` field in the request schema. | `backgroundProcessingInfo.requestedOn` in the stored raw payload. | `substep_key`: `backgroundProcessingInfo.substepkey`, with request `substepkey` fallback. `input_key`: `backgroundProcessingInfo.input_key`, with request `input_key` fallback. |
+| `capability_double_click.py` | Request `processName`; raw `backgroundProcessingInfo.processName`. `backgroundProcessingInfo.category` identifies the analysis category. | Request schema: optional `ProjectKey`. Stored raw payload: `projectInfo.projectKey`, normalized by `normalize_project_payload`. | `backgroundProcessingInfo.userId` in the stored raw payload; no `userId` field in the request schema. | `backgroundProcessingInfo.requestedOn` in the stored raw payload. | `substep_key`: `backgroundProcessingInfo.substepkey` for audit; request `substepkey` also exists. `input_key`: request `input_key` and raw `backgroundProcessingInfo.input_key`. |
+| `capability_maps_generator.py` | Both schema fields are described as process names: `processName` (“Blueprinting process name for durable GenAI recovery tracking”) and `process_name` (“Name of the process associated with this request”). No separate background payload schema is defined here. | Request `projectKey`. | NOT IN PAYLOAD | Request `requestedOn`. | Request `substepkey` / `input_key`. |
+| `industrial_map.py` | Request `process_name`; copied into the background dictionary as `step_name` (with a fallback label if absent). | NOT IN PAYLOAD. `IndustryMapsFileKey` and `processKey` are not project-key fields. | `CreatedByUserKey` is present; the code copies it into its internal background dictionary as `userId`. There is no request field literally named `userId`. | Request `requestedOn`; copied into the background dictionary. | Request `substepkey` / `input_key`; copied into the background dictionary. |
+| `missing_client_capabilities.py` | NOT IN PAYLOAD. `MapName` is the capability-map name, not a process name. | Request `ProjectKey`. | `CreatedByUserKey` is present; there is no request field named `userId`. | Request `requestedOn` (the schema also has `CreatedDate`, but that is not the audit timestamp source). | Request `substepkey` / `input_key`. |
+| `two_by_two.py` | Request `processName`; raw `backgroundProcessingInfo.processName`. `backgroundProcessingInfo.category` identifies the analysis category. | Request schema: optional `ProjectKey`. Stored raw payload: `projectInfo.projectKey`, normalized by `normalize_project_payload`. | `backgroundProcessingInfo.userId` in the stored raw payload; no `userId` field in the request schema. | `backgroundProcessingInfo.requestedOn` in the stored raw payload. | `substep_key`: `backgroundProcessingInfo.substepkey`; request `substepkey` also exists. `input_key`: request `input_key` and raw `backgroundProcessingInfo.input_key`. |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 READ-ONLY. Do not edit any file.
 For each file: agentic_fit_allocator.py, capability_double_click.py,
 capability_maps_generator.py, industrial_map.py, missing_client_capabilities.py, two_by_two.py
