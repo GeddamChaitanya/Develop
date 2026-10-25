@@ -1,4 +1,7 @@
-I’ll inspect the current `missing_capabilities` write/except boundary and the full workforce action branches to place each Success checkpoint after the correct last write—especially `GENERATE_ALL`, which may run salary and cost-saving work in one request.
+Select-String -Path apis/v1/workforce_analyzer.py -Pattern 'client_info\s*='
+
+-----------------------------------------------------------------------------------------
+--I’ll inspect the current `missing_capabilities` write/except boundary and the full workforce action branches to place each Success checkpoint after the correct last write—especially `GENERATE_ALL`, which may run salary and cost-saving work in one request.
 
 Ran terminal command: git --no-pager diff --stat -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py; git --no-pager diff -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
 
