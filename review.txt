@@ -1,3 +1,35 @@
+HARD RULES: audit code only. Do NOT modify business logic or teammates' code (generation,
+run_operations*, status updates, Redis publish, progress monitor, email, blob storage,
+schemas, routes, existing error handling). No refactors or formatting changes.
+If anything needs non-audit code, STOP and tell me.
+
+Add GenAI audit checkpoints, in exactly the same style as agentic_fit_allocator.py
+(each call inside its own try/except that only logs a warning via track_trace), to:
+A) apis/v1/missing_capabilities.py – generate_missing_capabilities (Capability Generation Utility)
+B) apis/v1/workforce_analyzer.py – workforce_analyzer (L3 Capability Salary and
+   Salary Cost Savings Potential flows)
+
+For each flow:
+- Start: status "In Progress" near the start of the job (after the request values are read).
+- Success: progress 100, placed AFTER the final DB write (missing_capabilities:
+  after run_operations_workflow_utility_capability_map_data; workforce_analyzer: after the
+  final write of each salary / cost-savings flow).
+- Failed: in the existing except path, without passing progress. Do not change the
+  existing except logic, only add the audit call.
+- Read the audit values once into local variables near the start (same pattern as the
+  other files): step (request processName / step name; if none, use
+  "Capability Generation Utility" for A), sub_step (request input_name / action label),
+  analysis_name (process name from the payload, else None), client_id (Ascend project key
+  from the payload, else None; never clientInfo.clientKey), user_id (userId /
+  CreatedByUserKey from the payload, else None), requested_time (requestedOn),
+  input_key, substep_key, receiver_email.
+- FIRST, without editing anything, show me a table of which payload field you will use
+  for each value in both files ("NOT IN PAYLOAD" where it does not exist), then STOP and
+  wait for my confirmation before making any change.
+
+Show: git --no-pager diff --stat, the full diff of the two files, and
+py -m py_compile on both. Do not git add or commit.
+-----------------------------------------------------------------------------------------------------------
 I’ll trace each PBI trigger to its current route/function, then inspect audit checkpoints relative to the final database write. I’ll also search explicitly for cancellation endpoints, status values, Redis flags, and task-cancellation code; this is read-only.
 
 Searched for regex `run_genai_audit_log\(|status="Cancelled"|status='Cancelled'|Cancelled` (`**/apis/v1/**`), 26 results
