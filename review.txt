@@ -1,3 +1,47 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --stat -- db/db_operations_orm.py
+ db/db_operations_orm.py | 267 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 173 insertions(+), 94 deletions(-)                ^C                                                                              
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff 9cc1ad4 --ignore-all-space --stat -- db/db_operations_orm.py
+ db/db_operations_orm.py | 204 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 203 insertions(+), 1 deletion(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 9cc1ad4 -- apis/v1/capability_maps_generator.py | Select-String '^[-+].*(store_json_to_blob|output|CapabilityMapGeneratorOutput|run_operations\()'
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff 9cc1ad4 -- db/models.py
+diff --git a/db/models.py b/db/models.py
+index 252b787..7c6eca8 100644
+--- a/db/models.py
++++ b/db/models.py
+@@ -2,7 +2,7 @@
+ import datetime
+ import uuid
+ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, ForeignKey, Text, BigInteger, Numeric
+-from sqlalchemy.dialects.postgresql import UUID
++from sqlalchemy.dialects.postgresql import UUID, JSONB
+ from sqlalchemy.orm import relationship, sessionmaker
+ from sqlalchemy.ext.declarative import declarative_base
+ 
+@@ -383,3 +383,17 @@ class WorkflowUtilities(Base):
+     created_by = relationship("AppUser")
+     file_category = relationship("FileCategory")
+ 
++
++class GenAIAuditLog(Base):
++    __tablename__ = 'genai_audit_log'
++
++    genai_audit_log_id = Column(BigInteger, primary_key=True, autoincrement=True)
++    user_id = Column(Integer, nullable=True)
++    client_id = Column(Integer, nullable=True)
++    step = Column(String(255), nullable=False)
++    sub_step = Column(String(255))
++    progress = Column(Integer, nullable=False, server_default='0')
++    status = Column(String(50), nullable=False, server_default='In Progress')
++    requested_time = Column(DateTime(timezone=True), nullable=True)
++    event_time = Column(DateTime(timezone=True), nullable=False, default=datetime.datetime.utcnow)
++    log_history = Column(JSONB, nullable=True)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 git --no-pager diff --stat -- db/db_operations_orm.py
 git --no-pager diff 9cc1ad4 --ignore-all-space --stat -- db/db_operations_orm.py
 git --no-pager diff -U0 9cc1ad4 -- apis/v1/capability_maps_generator.py | Select-String '^[-+].*(store_json_to_blob|output|CapabilityMapGeneratorOutput|run_operations\()'
