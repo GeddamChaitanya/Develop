@@ -1,5 +1,7 @@
+git --no-pager diff -U0 -- apis | Select-String '^-[^-]' | Select-String -NotMatch 'audit|run_genai_audit_log|step=|sub_step=|progress=|status=|message=|requested_|user_id=|client_id=|input_key=|substep_key=|receiver_email=|analysis_name=|genai_audit_log_id|^-\s*$|^-\s*\)\s*$|^-\s*try:\s*$|^-\s*except' > suspicious.txt
 
-
+git --no-pager diff -U0 -- apis | Select-String '^[-+]\s+step='
+-------------------------------------------------------------------------------------------------------------------
 
 ```
 
