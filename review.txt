@@ -1,3 +1,9 @@
+git --no-pager diff --cached -U4 | Select-String -Context 4,8 '^-\s+try:'
+Select-String -Path db/db_operations_orm.py -Pattern 'flag_modified'
+py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py db/db_operations_orm.py
+
+
+------------------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git show --stat ab51a4e
 commit ab51a4e2e77ae40f66d255d74f0789bd9ec4b2ca
 Author: Chaitanya <gedchaitanya@deloitte.com>
