@@ -1,3 +1,73 @@
+I’ll inspect the current audit call sites and Ascend payload/schema fields first, especially the analysis-name candidates. If a file has no unambiguous process/analysis name, I’ll stop and identify the candidates before editing as requested.
+
+Ran terminal command: git status --short --branch; git --no-pager diff --stat
+
+Searched for regex `run_genai_audit_log\(|genai_audit_log_id|processName|process_name|analysis_name|analysisName|analysisType` (`**/apis/v1/agentic_fit_allocator.py`), 25 results
+
+Searched for regex `run_genai_audit_log\(|genai_audit_log_id|processName|process_name|analysis_name|analysisName|analysisType` (`**/apis/v1/capability_double_click.py`), 26 results
+
+Searched for regex `run_genai_audit_log\(|genai_audit_log_id|processName|process_name|analysis_name|analysisName|analysisType` (`**/apis/v1/capability_maps_generator.py`), 19 results
+
+Searched for regex `run_genai_audit_log\(|genai_audit_log_id|processName|process_name|analysis_name|analysisName|analysisType` (`**/apis/v1/industrial_map.py`), 11 results
+
+Searched for regex `run_genai_audit_log\(|genai_audit_log_id|processName|process_name|analysis_name|analysisName|analysisType` (`**/apis/v1/missing_client_capabilities.py`), 8 results
+
+Searched for regex `run_genai_audit_log\(|genai_audit_log_id|processName|process_name|analysis_name|analysisName|analysisType` (`**/apis/v1/two_by_two.py`), 16 results
+
+Searched for regex `class AppUser|def get_user_by_email|run_genai_audit_log` (`**/db/{models.py,crud.py,db_operations_orm.py}`), 4 results
+
+The call-site search shows likely analysis-name fields such as `processName`, `process_name`, and `MapName`; these need to be distinguished from UI/action labels before I change anything. I’m opening the request models and nearby audit checkpoints for each listed route to verify the right field and the position of each final database write.
+
+Searched for regex `class .*Input|processName|process_name|MapName|analysis` (`**/schemas/**`), 54 results
+
+Read , lines 220 to 335
+
+Read , lines 420 to 700
+
+Read , lines 120 to 190
+
+Read , lines 360 to 430
+
+Read , lines 195 to 275
+
+Read , lines 330 to 465
+
+Read , lines 160 to 205
+
+Read , lines 950 to 1060
+
+Read , lines 155 to 305
+
+Two fields look potentially ambiguous: capability-map input exposes both `processName` and `process_name`, while missing-client-capabilities exposes `MapName` but describes it as a capability-map name. I’m checking their full schemas and the corresponding request handling to decide whether either has a clear canonical process-name field; I’ll pause without edits if not.
+
+Searched for regex `CapabilityDoubleClickInput|TwoByTwoGeneratorInput|CapabilityMapGeneratorInput|IndustrialMapInput|MissingClientCapabilitiesInput|AgenticFitAllocatorInput` (`**/apis/v1/{agentic_fit_allocator.py,capability_double_click.py,capability_maps_generator.py,industrial_map.py,missing_client_capabilities.py,two_by_two.py}`), 28 results
+
+Read , lines 1 to 90
+
+Read , lines 1 to 150
+
+Read 
+
+Read , lines 1 to 110
+
+Read 
+
+Schema review resolves four routes to an explicit `processName`/`process_name`, but two routes remain ambiguous: capability maps has two competing process-name fields, and missing-client-capabilities has only a capability-map title. Per your hard rule, I’m stopping before edits and will list those candidates rather than choose one.
+
+I made no edits for this request. The analysis-name fields are clear in four files:
+
+- `agentic_fit_allocator.py`: `input_data.processName`
+- `capability_double_click.py`: `input_data.processName`
+- `industrial_map.py`: `input_data.process_name`
+- `two_by_two.py`: `input_data.processName`
+
+Two files need your direction before I can safely update every audit call:
+
+- `capability_maps_generator.py`: `processName` is described as the blueprinting process name for audit tracking; `process_name` is also described as the name of the process associated with the request. Both are present in `capability_maps_generator.py:50`.
+- `missing_client_capabilities.py`: the schema has `MapName`, explicitly described as the capability-map name, but no process-name field. The current audit step label is `"Client Capability Map Generation"`, but that is hard-coded rather than a request field.
+
+Please specify which field/value to use as `analysis_name` for those two routes.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HARD RULES: same as before – audit code only. Do NOT modify business logic or teammates'
 code (generation, run_operations/run_operations_status, Redis publish, progress monitor,
 email, blob storage, schemas, routes, project_compat). No refactors or formatting changes.
