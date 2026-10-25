@@ -1,3 +1,6 @@
+git restore --staged --worktree --source=HEAD apis/v1/workforce_analyzer.py
+py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py db/db_operations_orm.py
+----------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -U0 | Select-String '^-[^-]' > deleted_ab51.txt
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> code deleted_ab51.txt
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -- apis/v1/workforce_analyzer.py
