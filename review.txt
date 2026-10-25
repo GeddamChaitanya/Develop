@@ -1,3 +1,7 @@
+git --no-pager diff -- db/db_operations_orm.py | Select-String '^@@'
+git --no-pager diff -U0 | Select-String '^-[^-]'
+
+-----------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the current branch state and the existing audit model, CRUD helpers, and tracker function first. I’ll keep every edit inside the three allowed files and will stop if the required behavior would force a change outside audit code.
 
 Ran terminal command: git status --short --branch
