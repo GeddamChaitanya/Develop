@@ -1,3 +1,578 @@
+I’ll inspect the current branch state and the existing audit model, CRUD helpers, and tracker function first. I’ll keep every edit inside the three allowed files and will stop if the required behavior would force a change outside audit code.
+
+Ran terminal command: git status --short --branch
+
+Ran terminal command: git --no-pager diff -- db/models.py db/crud.py db/db_operations_orm.py
+
+Searched for regex `class GenAIAuditLog|genai_audit_log|def run_genai_audit_log|flag_modified` (`**/db/{models.py,crud.py,db_operations_orm.py}`), 34 results
+
+Searched for regex `get_audit_db\(\)|run_operations_status|run_genai_audit_log` (`**/db/db_operations_orm.py`), 4 results
+
+The active branch is `fix_asc_events_tracker`; the three permitted files have no existing local diff. There are unrelated untracked `.vscode` and `run.ps1` items, which I’ll leave untouched. Next I’m reading the audit-specific definitions and session handling so the locking and version updates fit the current SQLAlchemy setup.
+
+Read , lines 1 to 35
+
+Read , lines 400 to 565
+
+Read , lines 370 to 400
+
+Read , lines 1390 to 1491
+
+Read 
+
+The current audit model still has `user_id` as a required string and lacks `client_id`; the tracker currently appends every callback as a new run. I also see it already uses `get_audit_db()`, which I’ll preserve. Before editing, I’m checking call sites for legacy keyword arguments because the requested signature renames two of them, and I need to avoid touching the API files.
+
+Searched for text `run_genai_audit_log\(`, 27 results
+
+Searched for regex `requested_by=|requested_on=|requested_time=|user_id=|client_id=|analysis_name=` (`**/apis/**`), 82 results
+
+Searched for regex `genai_audit_log\.(user_id|client_id|event_time|requested_time)|GenAIAuditLog`, 25 results
+
+Read , lines 1 to 70
+
+Existing API audit checkpoints still pass `requested_by` and `requested_on`; changing their call sites is out of scope. I’ll accept those two legacy names only inside the audit function while implementing the requested parameters, keeping callers intact. The tracker will hold the advisory lock through the single commit, update matching versions in place, and append only when a new run is needed; CRUD gains a locked lookup and the requested filtered query.
+
+Generating patch (325 lines) in , , 
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Completed with input: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Tool execution failed with exit code 1
+
+The first compile found an indentation error reported near the module imports, so I’m checking that narrow region and will fix only the audit-related import placement before rerunning the same compile command.
+
+Read , lines 1 to 45
+
+Read , lines 20 to 125
+
+Read , lines 400 to 610
+
+Read , lines 1415 to 1525
+
+Read , lines 385 to 401
+
+The patch landed parts of the replacement in the wrong location, damaging non-audit code in `db_operations_orm.py`; I’m not going to leave that in place. That file was clean before my edit, so I’m comparing its current diff against the baseline and will restore only the misplaced fragments while keeping the audit changes confined to `run_genai_audit_log`.
+
+Ran terminal command: git --no-pager diff -- db/db_operations_orm.py
+
+Read , lines 25 to 240
+
+Read , lines 420 to 555
+
+Read , lines 85 to 255
+
+Read , lines 555 to 710
+
+Read , lines 1 to 260
+
+Ran terminal command: git show HEAD:db/db_operations_orm.py | Select-Object -First 250
+Completed with input: git show HEAD:db/db_operations_orm.py | Select-Object -First 250
+Tool execution failed with exit code 1
+
+Read , lines 1 to 250
+
+Read , lines 25 to 215
+
+Read , lines 215 to 345
+
+Generating patch (354 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Completed with input: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Tool execution failed with exit code 1
+
+The recovery patch didn’t match the malformed section, so the syntax error remains. I’m checking the exact current diff once more; if the patch tool can’t safely restore this block with the available context, I’ll stop before risking further changes and report the precise blocker.
+
+Ran terminal command: git --no-pager diff --stat -- db/db_operations_orm.py db/models.py db/crud.py
+
+Read , lines 20 to 55
+
+Ran terminal command: git --no-pager diff -- db/db_operations_orm.py
+
+Read , lines 20 to 200
+
+Generating patch (57 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Completed with input: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Tool execution failed with exit code 1
+
+The misplaced module-scope fragment is gone; compilation now advances to a second malformed insertion near the update helper. I’m inspecting that exact spot and will restore its original lines before continuing.
+
+Read , lines 160 to 205
+
+Generating patch (42 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+
+Syntax now passes after restoring the displaced helper. I’m verifying the ORM diff against its original non-audit functions before reapplying the tracker using uniquely anchored hunks; then I’ll run the requested final diff and compile commands.
+
+Ran terminal command: git --no-pager diff -- db/db_operations_orm.py
+
+Searched for regex `def run_operations_status|def insert_industry_map_|def run_genai_audit_log` (`**/db/db_operations_orm.py`), 2 results
+
+Generating patch (45 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+
+The ORM diff showed one pre-existing `run_operations_status` function had been removed by the malformed hunk; I restored it unchanged, and the three modules compile again. I’m now replacing only `run_genai_audit_log` with the row-locking/version behavior, using the function name as the patch anchor so no neighboring function is included.
+
+Generating patch (262 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Completed with input: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Tool execution failed with exit code 1
+
+The tracker replacement is in place, but compilation found a syntax error at its declaration. I’m checking only the surrounding function boundary to determine whether the old header or adjacent code was left behind, then I’ll repair that same audit slice.
+
+Read , lines 405 to 455
+
+Read , lines 430 to 625
+
+Ran terminal command: git show HEAD:db/db_operations_orm.py | Select-Object -Skip 400 -First 280
+Completed with input: git show HEAD:db/db_operations_orm.py | Select-Object -Skip 400 -First 280
+Tool execution failed with exit code 1
+
+Ran terminal command: git --no-pager diff --stat -- db/db_operations_orm.py
+
+Read , lines 375 to 640
+
+Read , lines 1 to 280
+
+The current issue is localized to the audit-function boundary: the old parameter list remains and the new definition was inserted beneath it, while the following non-audit function header was displaced. I’ve got the clean baseline for that neighboring function; I’m restoring that boundary and will then validate the diff for scope before proceeding.
+
+Searched for regex `^def run_genai_audit_log|^def run_operations_industry_map` (`**/db/db_operations_orm.py`), 2 results
+
+Read , lines 425 to 710
+
+Generating patch (366 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+
+The tracker replacement now compiles. I’m checking the complete diff against the original branch to ensure only the audit model, CRUD helpers, and `run_genai_audit_log` changed; then I’ll provide the exact requested command outputs.
+
+Ran terminal command: git --no-pager diff --stat
+
+Ran terminal command: git --no-pager diff -- db/models.py db/crud.py db/db_operations_orm.py
+
+Ran terminal command: git status --short --branch
+
+Read 
+
+Generating patch (9 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+
+The syntax check passes, and the ORM diff now excludes the restored non-audit functions. I’m rerunning the three exact requested commands against the final state so the output I report matches the files as they stand now.
+
+Ran terminal command: git --no-pager diff --stat
+
+Ran terminal command: git --no-pager diff -- db/models.py db/crud.py db/db_operations_orm.py
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+
+Read 
+
+**1. Diff Stat**
+```text
+ db/crud.py              |  36 +++++++-
+ db/db_operations_orm.py | 220 ++++++++++++++++++++++++++----------------------
+ db/models.py            |   3 +-
+ 3 files changed, 158 insertions(+), 101 deletions(-)
+```
+
+**2. Full Diff**
+```diff
+diff --git a/db/crud.py b/db/crud.py
+index 673ba50..75b17e1 100644
+--- a/db/crud.py
++++ b/db/crud.py
+@@ -1474,7 +1474,7 @@ def get_genai_audit_log_by_id(db: Session, log_id: int):
+         raise e
+ 
+ 
+-def get_genai_audit_log_by_step(db: Session, step: str, sub_step: str = None):
++def get_genai_audit_log_by_step(db: Session, step: str, sub_step: str = None, for_update: bool = False):
+     try:
+         track_operation_start("CRUD_Get_GenAIAuditLog_ByStep", {"step": step, "sub_step": sub_step})
+         query = db.query(models.GenAIAuditLog).filter(models.GenAIAuditLog.step == step)
+@@ -1482,9 +1482,43 @@ def get_genai_audit_log_by_step(db: Session, step: str, sub_step: str = None):
+             query = query.filter(models.GenAIAuditLog.sub_step == sub_step)
+         else:
+             query = query.filter(models.GenAIAuditLog.sub_step.is_(None))
++        if for_update:
++            query = query.with_for_update()
+         record = query.first()
+         track_operation_complete("CRUD_Get_GenAIAuditLog_ByStep", {"found": record is not None})
+         return record
+     except Exception as e:
+         track_operation_error("CRUD_Get_GenAIAuditLog_ByStep", str(e))
+         raise e
++
++
++def query_genai_audit_logs(
++    db: Session,
++    user_id=None,
++    step=None,
++    sub_step=None,
++    status=None,
++    start_time=None,
++    end_time=None,
++):
++    try:
++        track_operation_start("CRUD_Query_GenAIAuditLogs", {"step": step, "sub_step": sub_step})
++        query = db.query(models.GenAIAuditLog)
++        if user_id is not None:
++            query = query.filter(models.GenAIAuditLog.user_id == user_id)
++        if step is not None:
++            query = query.filter(models.GenAIAuditLog.step == step)
++        if sub_step is not None:
++            query = query.filter(models.GenAIAuditLog.sub_step == sub_step)
++        if status is not None:
++            query = query.filter(models.GenAIAuditLog.status == status)
++        if start_time is not None:
++            query = query.filter(models.GenAIAuditLog.event_time >= start_time)
++        if end_time is not None:
++            query = query.filter(models.GenAIAuditLog.event_time <= end_time)
++        records = query.order_by(models.GenAIAuditLog.event_time.desc()).all()
++        track_operation_complete("CRUD_Query_GenAIAuditLogs", {"count": len(records)})
++        return records
++    except Exception as e:
++        track_operation_error("CRUD_Query_GenAIAuditLogs", str(e))
++        raise e
+diff --git a/db/db_operations_orm.py b/db/db_operations_orm.py
+index 853776f..bd66e12 100644
+--- a/db/db_operations_orm.py
++++ b/db/db_operations_orm.py
+@@ -15,6 +15,7 @@ from models import ClientMasterData, DimensionMaster, HrDocumentFiles, IndustryM
+ from models import CapabilityMap, SurveyQuestionMaster, SurveyResponse
+ from models import GenAIAuditLog
+ import crud
++from sqlalchemy import text
+ from sqlalchemy.orm.attributes import flag_modified
+ 
+ # Add parent directory to sys.path to import utilities
+@@ -419,121 +420,142 @@ def run_operations(output_key, data):
+ 
+ 
+ def run_genai_audit_log(
+-    step,
++    user_id=None,
++    step=None,
+     sub_step=None,
++    progress=None,
+     status="In Progress",
+-    progress=0,
+     message=None,
++    requested_time=None,
+     input_key=None,
++    substep_key=None,
+     receiver_email=None,
+-    requested_by=None,
+-    requested_on=None,
++    client_id=None,
++    analysis_name=None,
+     genai_audit_log_id=None,
+-    substep_key=None,
++    **legacy_kwargs,
+ ):
+-    """
+-    Create or update GenAI audit log records with versioned history tracking.
+-    
+-    This function implements a versioning pattern where each audit log record maintains a complete 
+-    history of all status updates (versions) in a JSONB column. Use this function to track 
+-    critical checkpoints: CREATE (job start), SUCCESS (completion), and FAILED (error).
+-    
+-    Three code paths are supported:
+-    
+-    PATH 1 - CREATE NEW RECORD (no existing record found):
+-      When called without genai_audit_log_id and no existing record matches (step, sub_step),
+-      creates a new GenAIAuditLog row with version 1 and returns the new ID. Use this 
+-      checkpoint to signal job start and initialize audit trail.
+-    
+-    PATH 2 - UPDATE BY ID (genai_audit_log_id provided):
+-      When genai_audit_log_id is provided, appends a new version entry to the existing record's
+-      log_history and increments total_runs. Use this for SUCCESS/FAILED checkpoints when 
+-      you have the ID from CREATE.
+-    
+-    PATH 3 - UPDATE BY LOOKUP (no ID, but step/sub_step match):
+-      If no genai_audit_log_id is provided but an existing record matches (step, sub_step),
+-      updates that record. Fallback for scenarios where ID tracking is lost.
+-    
+-    Parameters:
+-      step (str): Workflow step name, e.g., "Capability Setup", "Workforce Analysis"
+-      sub_step (str, optional): Specific substep, e.g., "Generate L1 Capabilities"
+-      status (str): Status string: "In Progress", "Success", "Failed", etc.
+-      progress (int): 0-100 progress percentage
+-      message (str, optional): Human-readable status message, e.g., "Generation started..."
+-      input_key (int, optional): Associated input record key for traceability
+-      receiver_email (str, optional): Email of the user who requested the job
+-      requested_by (str, optional): User ID string (maps to user_id column as String(255))
+-      requested_on (str, optional): ISO timestamp of request (maps to requested_time column)
+-      genai_audit_log_id (int, optional): Existing record ID from a prior CREATE call
+-      substep_key (int, optional): Associated substep key for orchestration
+-    
+-    Returns:
+-      int: The genai_audit_log_id (newly created or existing), or None on error
+-    
+-    Special implementation notes:
+-      - Uses get_audit_db() instead of get_db() because audit logs are stored in a 
+-        separate audit database for compliance and retention policies.
+-      - JSONB log_history column requires flag_modified() after in-place mutations 
+-        so SQLAlchemy detects the change and persists it to PostgreSQL. Without this,
+-        appended version entries would be silently discarded.
+-    """
++    if user_id is None:
++        user_id = legacy_kwargs.pop("requested_by", None)
++    if requested_time is None:
++        requested_time = legacy_kwargs.pop("requested_on", None)
++    if legacy_kwargs:
++        unexpected_argument = next(iter(legacy_kwargs))
++        raise TypeError(f"run_genai_audit_log() got an unexpected keyword argument '{unexpected_argument}'")
++
++    def parse_requested_time(value):
++        if isinstance(value, datetime.datetime):
++            parsed_value = value
++        elif isinstance(value, str):
++            value = value.strip()
++            if value.endswith("Z"):
++                value = value[:-1] + "+00:00"
++            try:
++                parsed_value = datetime.datetime.fromisoformat(value)
++            except ValueError:
++                return None
++        else:
++            return None
++        if parsed_value.tzinfo is None:
++            parsed_value = parsed_value.replace(tzinfo=datetime.timezone.utc)
++        return parsed_value.astimezone(datetime.timezone.utc)
++
++    def parse_integer(value):
++        if value is None or not str(value).strip().lstrip("+-").isdigit():
++            return None
++        try:
++            return int(value)
++        except (TypeError, ValueError):
++            return None
++
++    parsed_requested_time = parse_requested_time(requested_time)
++    normalized_client_id = parse_integer(client_id)
++    normalized_step = step if step is not None else ""
++    now = datetime.datetime.now(datetime.timezone.utc)
++
+     db_session_generator = get_audit_db()
+     db = next(db_session_generator)
+     try:
+-        now_iso = datetime.datetime.utcnow().isoformat() + "Z"
+-        new_version_entry = {
++        db.execute(
++            text("SELECT pg_advisory_xact_lock(hashtext(:step || '|' || coalesce(:sub_step, '')))"),
++            {"step": normalized_step, "sub_step": sub_step},
++        )
++        record = crud.get_genai_audit_log_by_step(db, normalized_step, sub_step, for_update=True)
++        current_history = record.log_history if record and isinstance(record.log_history, dict) else {}
++        versions = current_history.get("versions", [])
++        if not isinstance(versions, list):
++            versions = []
++        versions = [version for version in versions if isinstance(version, dict)]
++        try:
++            total_runs = int(current_history.get("total_runs", len(versions)))
++        except (TypeError, ValueError):
++            total_runs = len(versions)
++
++        matching_index = next(
++            (
++                index for index in range(len(versions) - 1, -1, -1)
++                if versions[index].get("substep_key") == substep_key
++                and versions[index].get("input_key") == input_key
++            ),
++            None,
++        )
++        matching_version = versions[matching_index] if matching_index is not None else None
++        starts_new_run = str(status).lower() == "in progress" and (
++            matching_version is None or str(matching_version.get("status", "")).lower() != "in progress"
++        )
++
++        if str(status).lower() == "success":
++            effective_progress = 100
++        elif progress is None:
++            effective_progress = matching_version.get("progress", 0) if matching_version else 0
++        else:
++            effective_progress = progress
++
++        version_entry = {
+             "status": status,
++            "progress": effective_progress,
+             "message": message,
+             "input_key": input_key,
+             "substep_key": substep_key,
++            "requested_by": str(user_id) if user_id is not None else None,
+             "receiver_email": receiver_email,
+-            "requested_on": requested_on,
+-            "recorded_time": now_iso,
+-            "requested_by": requested_by,
+-            "progress": progress,
++            "client_id": normalized_client_id,
++            "analysis_name": analysis_name,
++            "requested_on": parsed_requested_time.isoformat() if parsed_requested_time is not None else None,
++            "recorded_time": now.isoformat(),
+         }
+-        existing_record = None
+-        # PATH 2: Try lookup by provided genai_audit_log_id
+-        if genai_audit_log_id:
+-            existing_record = crud.get_genai_audit_log_by_id(db, int(genai_audit_log_id))
+-        # PATH 3: Fallback lookup by (step, sub_step) pair
+-        if not existing_record:
+-            existing_record = crud.get_genai_audit_log_by_step(db, step, sub_step)
+-        # PATH 1: Create new record if not found
+-        if not existing_record:
+-            new_version_entry["version"] = 1
+-            log_history = {"versions": [new_version_entry], "total_runs": 1}
+-            log_obj = GenAIAuditLog(
+-                step=step,
+-                sub_step=sub_step,
+-                status=status,
+-                progress=int(progress or 0),
+-                log_history=log_history,
+-            )
+-            created = crud.create_genai_audit_log(db, log_obj)
+-            return created.genai_audit_log_id if created else None
+-        # PATH 2/3: Append new version to existing record's history
+-        current_history = existing_record.log_history or {"versions": [], "total_runs": 0}
+-        next_version = current_history.get("total_runs", 0) + 1
+-        new_version_entry["version"] = next_version
+-        current_history["versions"].append(new_version_entry)
+-        current_history["total_runs"] = next_version
+-        
+-        # CRITICAL: Use flag_modified() to tell SQLAlchemy the JSONB column changed.
+-        # Without this, in-place mutations to dicts don't persist in PostgreSQL JSONB columns.
+-        # SQLAlchemy only sees column object changes, not mutations to nested Python dicts.
+-        flag_modified(existing_record, "log_history")
+-        
+-        updated = crud.update_genai_audit_log(
+-            db,
+-            log_id=existing_record.genai_audit_log_id,
+-            update_data={
+-                "status": status,
+-                "progress": int(progress or 0),
+-                "log_history": current_history,
+-            },
+-        )
+-        return updated.genai_audit_log_id if updated else None
++
++        if starts_new_run or matching_version is None:
++            versions.append(version_entry)
++            total_runs += 1
++        else:
++            versions[matching_index].update(version_entry)
++
++        latest_version = versions[-1]
++        latest_requested_time = parse_requested_time(latest_version.get("requested_on"))
++        history = {"versions": versions, "total_runs": total_runs}
++
++        if record is None:
++            record = GenAIAuditLog(step=normalized_step, sub_step=sub_step)
++            db.add(record)
++            db.flush()
++
++        record.user_id = parse_integer(latest_version.get("requested_by"))
++        record.client_id = latest_version.get("client_id")
++        record.status = latest_version.get("status")
++        record.progress = latest_version.get("progress") or 0
++        record.requested_time = latest_requested_time
++        record.sub_step = sub_step
++        if starts_new_run:
++            record.event_time = now
++        record.log_history = history
++        flag_modified(record, "log_history")
++        db.commit()
++        db.refresh(record)
++        return record.genai_audit_log_id
++    except Exception:
++        db.rollback()
++        raise
+     finally:
+         db.close()
+diff --git a/db/models.py b/db/models.py
+index 066f63a..fad18ce 100644
+--- a/db/models.py
++++ b/db/models.py
+@@ -388,7 +388,8 @@ class GenAIAuditLog(Base):
+     __tablename__ = 'genai_audit_log'
+ 
+     genai_audit_log_id = Column(BigInteger, primary_key=True, autoincrement=True)
+-    user_id = Column(String(255), nullable=False, server_default='0')
++    user_id = Column(Integer, nullable=True)
++    client_id = Column(Integer, nullable=True)
+     step = Column(String(255), nullable=False)
+     sub_step = Column(String(255))
+     progress = Column(Integer, nullable=False, server_default='0')
+```
+
+**3. Compile**
+```text
+(no output; exit code 0)
+```
+
+No API files were modified. The tracker also accepts legacy `requested_by` and `requested_on` keyword arguments so existing callers continue to work. No `git add` or commit was run.
+
+Made changes.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HARD RULES (apply to every change):
 - Do NOT modify any business logic or any teammate's code: no changes to generation,
   status updates (run_operations_status / run_operations), Redis publish, progress
