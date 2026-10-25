@@ -1,3 +1,95 @@
+I’ll trace each PBI trigger to its current route/function, then inspect audit checkpoints relative to the final database write. I’ll also search explicitly for cancellation endpoints, status values, Redis flags, and task-cancellation code; this is read-only.
+
+Searched for regex `run_genai_audit_log\(|status="Cancelled"|status='Cancelled'|Cancelled` (`**/apis/v1/**`), 26 results
+
+Searched for regex `cancel.*job|cancel.*task|task.*cancel|Cancelled|cancelled|cancellation|cancel_flag|cancelFlag`, 8 results
+
+Searched for regex `@router\.(post|put|patch).*capability|Capability Generation Utility|Capability Setup|Industry Map|Client Capability Map|AI Prioritization|Cost Savings Potential|Salary Cost Savings Potential|L3 Capability Salary|Add CDC|Add AI Prioritization` (`**/apis/v1/**`), 46 results
+
+Searched for text `run_genai_audit_log\(` (`**/*.py`), 27 results
+
+Initial search shows tracker checkpoints in industrial-map, capability-map generation, missing-client capabilities, agentic fit, CDC, and two-by-two; no audit calls appear in `workforce_analyzer.py`. I’m resolving the “Capability Generation Utility” route name and inspecting each relevant checkpoint’s surrounding persistence calls and cancellation pathways.
+
+Searched for regex `Capability Generation Utility|capability_generation_utility|capability.*utility|workflow_utility|WorkflowUtility` (`**/apis/**`), 33 results
+
+Searched for regex `cancel|cancelled|canceled|abort|terminate|task\.cancel|cancel_task|cancel_job|is_cancel` (`**/*.py`), 13 results
+
+Searched for regex `workforce_analyzer|SALARY|Salary|Cost Savings Potential|COST_SAVING_POTENTIAL|GENERATE_L[123]_OPEX` (`**/apis/v1/{workforce_analyzer.py,agentic_fit_allocator.py}`), 139 results
+
+Searched for regex `@router\.(post|put|patch)|run_operations\(|run_operations_industry_map_|update_capability_map_json|run_genai_audit_log` (`**/apis/v1/{industrial_map.py,missing_client_capabilities.py,capability_maps_generator.py,agentic_fit_allocator.py,two_by_two.py,capability_double_click.py}`), 41 results
+
+The cancellation search found no job-cancel endpoint, Redis cancellation flag, or task-cancel code; “Cancelled” appears only in tracker documentation. I’ve identified the utility route candidate as `missing_capabilities.py` and am checking its endpoint and write path alongside the audit checkpoint/persistence ordering for each covered trigger.
+
+Read , lines 150 to 195
+
+Read , lines 385 to 445
+
+Read , lines 185 to 215
+
+Read , lines 945 to 1075
+
+Read , lines 70 to 180
+
+`missing_capabilities.py` performs the workflow-utility write through `run_operations_workflow_utility_capability_map_data` and has no audit calls, making it a likely match for the Capability Generation Utility trigger. I’m validating route names and the success/failure ordering for all remaining audited triggers, plus the salary route.
+
+Read , lines 235 to 305
+
+Read , lines 35 to 80
+
+Read , lines 380 to 535
+
+Read , lines 245 to 275
+
+Read , lines 675 to 765
+
+Read , lines 450 to 480
+
+Read , lines 610 to 725
+
+Read , lines 195 to 315
+
+Read , lines 200 to 250
+
+Read , lines 375 to 490
+
+The persistence ordering is clear: the audited routes write their final output before Success, except `GENERATE_ALL`, which returns generated output without a DB write. Workforce salary flows and the workflow-utility generation route have no audit calls; I’m collecting precise route/write line references for the coverage table.
+
+Searched for regex `@router.post|run_operations_workflow_utility_capability_map_data|run_genai_audit_log` (`**/apis/v1/missing_capabilities.py`), 2 results
+
+Searched for regex `@router.post|run_genai_audit_log|run_operations\(|GENERATE_COST_SAVING_POTENTIAL|GENERATE_L3_SALARY` (`**/apis/v1/workforce_analyzer.py`), 20 results
+
+Searched for regex `@router.post|run_genai_audit_log|run_operations_industry_map_|status="Success"|status="Failed"` (`**/apis/v1/industrial_map.py`), 7 results
+
+Searched for regex `@router.post|run_genai_audit_log|update_capability_map_json|status="Success"|status="Failed"` (`**/apis/v1/missing_client_capabilities.py`), 8 results
+
+Searched for regex `@router.post|run_genai_audit_log|generate_all_levels_hierarchy|run_operations\(|status="Success"|status="Failed"` (`**/apis/v1/capability_maps_generator.py`), 13 results
+
+Searched for regex `@router.post|run_genai_audit_log|run_operations\(|status="Success"|status="Failed"` (`**/apis/v1/agentic_fit_allocator.py`), 13 results
+
+Searched for regex `@router.post|run_genai_audit_log|run_operations\(|status="Success"|status="Failed"` (`**/apis/v1/two_by_two.py`), 7 results
+
+Searched for regex `@router.post|run_genai_audit_log|run_operations\(|status="Success"|status="Failed"` (`**/apis/v1/capability_double_click.py`), 11 results
+
+On `fix_asc_events_tracker`, audit coverage is as follows. “Failed checkpoint” includes wrapper-level failure handlers where present.
+
+| Trigger | File / function | Start checkpoint? | Success checkpoint after final write? | Failed checkpoint? | Cancelled handled? |
+|---|---|---|---|---|---|
+| Administration: Industry Map (Add/Update) | `industrial_map.py:84`, `industrial_map_generator` | Yes, `industrial_map.py:183` | Yes, after `run_operations_industry_map_` at `industrial_map.py:397`; Success at `industrial_map.py:404` | Yes, `industrial_map.py:427` | No |
+| Administration: Capability Generation Utility (Add/Edit) | `missing_capabilities.py:50`, `generate_missing_capabilities` | No audit checkpoint | No audit checkpoint; workflow-utility write is at `missing_capabilities.py:164` | No audit checkpoint | No |
+| Client Data: Client Capability Map (Add/Edit) | `missing_client_capabilities.py:89`, `generate_missing_client_capabilities` | Yes, `missing_client_capabilities.py:198` | Yes, after `update_capability_map_json` at `missing_client_capabilities.py:966`; Success at `missing_client_capabilities.py:1009` | Yes, `missing_client_capabilities.py:1057` | No |
+| Capability Setup: Generate L1/L2/L3 | `capability_maps_generator.py:154`, `generate_capability_map` | Yes, `capability_maps_generator.py:388` | Yes, after `run_operations` at `capability_maps_generator.py:518`; Success at `capability_maps_generator.py:521` | Yes, wrapper at `capability_maps_generator.py:118` | No |
+| Capability Setup: Generate All | `capability_maps_generator.py:154`, `generate_capability_map` | Yes, `capability_maps_generator.py:243` | Success at `capability_maps_generator.py:287`, after hierarchy generation. This flow has no DB write before returning. | Yes, wrapper at `capability_maps_generator.py:118` | No |
+| AI Identifier: L1/L2/L3 OpEx and Cost Savings Potential | `agentic_fit_allocator.py:154`, `agentic_fit_allocation` | Yes, `agentic_fit_allocator.py:262` | Yes, final output writes include `agentic_fit_allocator.py:394`, `agentic_fit_allocator.py:480`, and `agentic_fit_allocator.py:696`; Success at `agentic_fit_allocator.py:721` | Yes, `agentic_fit_allocator.py:751` | No |
+| AI Identifier: L3 Capability Salary and Salary Cost Savings Potential | `workforce_analyzer.py:205`, `workforce_analyzer` | No audit checkpoint | No audit checkpoint; salary/cost-saving writes occur at `workforce_analyzer.py:486`, `workforce_analyzer.py:593`, and `workforce_analyzer.py:778` | No audit checkpoint | No |
+| AI Prioritization: Add AI Prioritization (2x2) | `two_by_two.py:41`, `generate_two_by_two` | Yes, `two_by_two.py:207` | Yes, after `run_operations` at `two_by_two.py:285`; Success at `two_by_two.py:302` | Yes, wrapper at `two_by_two.py:72` | No |
+| Capability Double Click: Add CDC | `capability_double_click.py:237`, `generate_capability_double_click` | Yes, `capability_double_click.py:463` | Yes, after `run_operations` at `capability_double_click.py:619`; Success at `capability_double_click.py:641` | Yes, wrapper at `capability_double_click.py:270` and route handlers at `capability_double_click.py:683` and `capability_double_click.py:709` | No |
+
+The Capability Generation Utility route is `/missing_capabilities` in `missing_capabilities.py:50`. It writes to `workflow_utility_capability_map_data` but has no GenAI audit checkpoints.
+
+`workforce_analyzer.py` has no `run_genai_audit_log` calls for salary or salary cost-savings flows.
+
+I found no cancel endpoint, job-cancel flag, Redis cancellation signal, or task-cancellation mechanism in the codebase. The tracker mentions `Cancelled` in documentation, but no route emits that status.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 READ-ONLY. Do not edit any file.
 Compare the GenAI audit coverage on this branch against this PBI trigger list and report a
 table: trigger | file/function | start checkpoint? | success checkpoint (after final write)?
