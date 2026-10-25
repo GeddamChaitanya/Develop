@@ -1,3 +1,11 @@
+SELECT genai_audit_log_id, user_id, step, sub_step, progress, status,
+       requested_time, event_time, log_history
+FROM genai_audit_log
+ORDER BY event_time DESC
+LIMIT 5;
+
+------------------------------------------------------------------------------------
+
 [TRACE] Redis message published successfully: In Progress
 {'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 11, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
 [TRACE] Attempting Redis publish: In Progress
