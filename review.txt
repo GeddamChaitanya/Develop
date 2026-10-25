@@ -1,4 +1,72 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py db/crud.py db/db_operations_orm.py db/models.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git commit -C e352dcb
+[fix_asc_events_tracker 8568ead] WIP: PBI 88921 GenAI Event Tracker audit logging implementation
+ Author: Chaitanya <gedchaitanya@deloitte.com>
+ Date: Wed Jul 1 21:49:10 2026 +0530
+ 7 files changed, 317 insertions(+), 42 deletions(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git log --oneline -3
+8568ead (HEAD -> fix_asc_events_tracker) WIP: PBI 88921 GenAI Event Tracker audit logging implementation
+fbeeb51 feat: PBI 88921 - GEN AI Events Tracker - initial implementation
+9cc1ad4 (origin/fix_asc_events_tracker) Merge pull request #239 from Deloitte-US-Consulting-HO/ascend/shubham/snykIssues
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git show --stat ab51a4e
+commit ab51a4e2e77ae40f66d255d74f0789bd9ec4b2ca
+Author: Chaitanya <gedchaitanya@deloitte.com>
+Date:   Fri Jul 3 18:55:53 2026 +0530
 
+    feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files
+
+ .gitignore                             | Bin 373 -> 332 bytes
+ apis/v1/agentic_fit_allocator.py       |  11 ++++--
+ apis/v1/capability_double_click.py     |   7 +++-
+ apis/v1/capability_maps_generator.py   |  47 +++++++++++++++++++++++--
+ apis/v1/industrial_map.py              |  62 +++++++++++++++++++++++++++++++++
+ apis/v1/missing_client_capabilities.py |  52 +++++++++++++++++++++++++++
+ apis/v1/two_by_two.py                  |   3 ++
+ apis/v1/workforce_analyzer.py          |   2 +-
+ db/db_operations_orm.py                |  55 +++++++++++++++++++++++++++--
+ 9 files changed, 230 insertions(+), 9 deletions(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git cherry-pick -n ab51a4e
+warning: Cannot merge binary files: .gitignore (HEAD vs. ab51a4e (feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files))
+Auto-merging .gitignore
+CONFLICT (content): Merge conflict in .gitignore
+Auto-merging apis/v1/agentic_fit_allocator.py
+Auto-merging apis/v1/capability_double_click.py
+Auto-merging apis/v1/capability_maps_generator.py
+Auto-merging apis/v1/industrial_map.py
+Auto-merging apis/v1/missing_client_capabilities.py
+Auto-merging db/db_operations_orm.py
+error: could not apply ab51a4e... feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: Disable this message with "git config set advice.mergeConflict false"
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status 
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   apis/v1/capability_double_click.py
+        modified:   apis/v1/capability_maps_generator.py
+        modified:   apis/v1/industrial_map.py
+        modified:   apis/v1/missing_client_capabilities.py
+        modified:   apis/v1/two_by_two.py
+        modified:   apis/v1/workforce_analyzer.py
+        modified:   db/db_operations_orm.py
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+        both modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py db/crud.py db/db_operations_orm.py db/models.py
 ------------------------------------------------------------------------------
 
