@@ -1,3 +1,5 @@
+git --no-pager diff --check 9cc1ad4 -- apis/v1/capability_maps_generator.py
+-------------------------------------------------------------------------------------------------
 I’ll verify the current `GENERATE_ALL` start/failure checkpoints, the two-by-two wrapper’s `step`, and the tracker’s version-number logic before making these three narrowly scoped audit edits. I’ll preserve all current working-tree changes and won’t touch the generation flow, telemetry, or return value.
 
 Ran terminal command: git --no-pager diff -- apis/v1/capability_maps_generator.py apis/v1/two_by_two.py db/db_operations_orm.py
