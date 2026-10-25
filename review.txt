@@ -1,3 +1,32 @@
+I’ll inspect the two request schemas and the payload extraction near each target function, then report only the field mapping table. I will not edit anything or run the requested diff/compile until you confirm.
+
+Read , lines 65 to 125
+
+Read , lines 125 to 185
+
+Read 
+
+Read , lines 1 to 110
+
+Read , lines 205 to 345
+
+Read , lines 1 to 130
+
+The missing-capabilities schema provides `process_name`, `input_name`, `CreatedByUserKey`, `requestedOn`, `input_key`, `substepkey`, and `receiverEmail`, but no project key. Workforce’s model includes `projectInfo.projectKey` and background fields; I’m checking its raw-data handling and exact process/user key names before finalizing that row.
+
+Searched for regex `userId|CreatedByUserKey|ProjectKey|projectKey|processName|process_name|stepName|step_name|input_name|substepkey|requestedOn|receiverEmail` (`**/apis/v1/workforce_analyzer.py`), 74 results
+
+Searched for regex `class WorkforceBackgroundInfo|class WorkforceProjectInfo|class WorkforceAnalyzerRequest|userId|CreatedByUserKey|processName|process_name|stepName|input_name|projectKey|requestedOn` (`**/schemas/workforce_analyzer.py`), 9 results
+
+Searched for regex `MissingCapabilitiesInput|process_name|input_name|CreatedByUserKey|projectKey|ProjectKey|userId` (`**/apis/v1/missing_capabilities.py`), 10 results
+
+| File | `step` | `sub_step` | `analysis_name` | `client_id` | `user_id` | `requested_time` | `input_key` | `substep_key` | `receiver_email` |
+|---|---|---|---|---|---|---|---|---|---|
+| `missing_capabilities.py` | `input_data.process_name`; fallback `"Capability Generation Utility"` | `input_data.input_name` | `input_data.process_name`, else `None` | NOT IN PAYLOAD (`projectName` is a name; `WorkflowUtilityKey` is not the project key) | `input_data.CreatedByUserKey` | `input_data.requestedOn` | `input_data.input_key` | `input_data.substepkey` | `input_data.receiverEmail` |
+| `workforce_analyzer.py` | Raw background payload `step_name`; typed schema field is `backgroundInfo.stepName` or `BackgroundProcessingInfo.stepName` | `backgroundProcessingInfo.input_name`; fallback `request.action` | `backgroundProcessingInfo.processName` or `backgroundProcessingInfo.process_name`; schema field is `backgroundInfo.process_name` / `BackgroundProcessingInfo.process_name` | `projectInfo.projectKey` | NOT IN PAYLOAD (no `userId` or `CreatedByUserKey` in the request schema or fields read by this function) | `backgroundProcessingInfo.requestedOn`; typed fallback is `request.background_info.requestedOn` | `backgroundProcessingInfo.input_key`; typed fallback is `request.background_info.input_key` | `backgroundProcessingInfo.substepkey`; typed fallback is `request.background_info.substepkey` | `backgroundProcessingInfo.receiverEmail`; typed fallback is `request.background_info.receiverEmail` |
+
+No files were edited.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HARD RULES: audit code only. Do NOT modify business logic or teammates' code (generation,
 run_operations*, status updates, Redis publish, progress monitor, email, blob storage,
 schemas, routes, existing error handling). No refactors or formatting changes.
