@@ -1,3 +1,7 @@
+
+git log --oneline HEAD..origin/ascend/develop
+git diff origin/ascend/develop...HEAD --stat
+------------------------------------------------
 git restore --staged --worktree --source=HEAD api_v1.py apis/v1/agentic_fit_allocator.py schemas/agentic_fit_allocator.py
 git diff origin/ascend/develop --stat
 
