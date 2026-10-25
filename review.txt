@@ -1,3 +1,221 @@
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 11, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 12, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 13, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 14, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 15, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 16, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 17, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 18, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 19, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 20, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 21, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+E0000 00:00:1792921979.187904   31036 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1792921979.199719   31036 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 22, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+TEMP DEBUG: L1 written to test_output_l1_capabilities.json
+[TRACE] Progress monitor stopped for ID: capmap-l1-test-20261025-001
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+2026-10-25 15:23:37,843 - watchfiles.main - INFO - 1 change detected
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+2026-10-25 15:23:38,615 - watchfiles.main - INFO - 1 change detected
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generated L1 capabilities for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 75, 'stage': 'capability-map-l1-generation', 'stageStatus': 'completed', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'InProgress', 'Logs': 'Data Inserting into DB for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'InProgress', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 12345, 'input_key': 12345, 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: InProgress
+[TRACE] Redis message published successfully: InProgress
+Getting audit database session...
+Audit database session created.
+2026-10-25 15:23:42,159 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'f5e9badd-d059-11f1-b2ca-d4f32df15685'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 15:23:43,807 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'cc0c2b61-401e-007d-1166-64869d000000'
+    'x-ms-client-request-id': 'f5e9badd-d059-11f1-b2ca-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 09:53:43 GMT'
+2026-10-25 15:23:43,814 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/12345/None/12345/L1_Capability_Generation_Output_4e6b150a-42c3-40d6-88f2-7b0a7dc388b7.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '6616'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'f6e6392f-d059-11f1-bee6-d4f32df15685'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-25 15:23:45,376 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Sun, 25 Oct 2026 09:53:45 GMT'
+    'ETag': '"0x8DF327DDC0240E4"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'a5b0053e-401e-006d-5c66-6443f5000000'
+    'x-ms-client-request-id': 'f6e6392f-d059-11f1-bee6-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 09:53:45 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/12345/None/12345/L1_Capability_Generation_Ou
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'InsertionProcessing', 'Logs': 'Capability maps started insertion into DBfor action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 85, 'stage': 'capability-map-db-insertion', 'stageStatus': 'heartbeat', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: InsertionProcessing
+[TRACE] Redis message published successfully: InsertionProcessing
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running INSERT operation for output
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+[ERROR] DB_Insert_SubStepOutput - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] DB_Operations_Output - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records beforegenerating the output.
+An error occurred during operations: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+[ERROR] Capability_Map_Generation - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[TRACE] Progress monitor stopped for ID: capmap-l1-test-20261025-001
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'Error', 'Logs': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 0, 'stage': 'capability-map-generation', 'stageStatus': 'failed', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Error
+[TRACE] Redis message published successfully: Error
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 495, in generate_capability_map
+    output_key = db_operations_orm.run_operations(output_key=input_data.outputKey, data=db_data)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 414, in run_operations
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 395, in run_operations
+    output_record = insert_sub_step_output(db, data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 312, in insert_sub_step_output
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 292, in insert_sub_step_output
+    validate_sub_step_output_references(db, sub_step_output_data)
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 63, in validate_sub_step_output_references
+    raise ValueError(
+ValueError: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 105, in _capmap_runner
+    asyncio.run(generate_capability_map(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 577, in generate_capability_map
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+fastapi.exceptions.HTTPException: 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] Capability_Map_Generation_Background - 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=12345 not found in blueprinting_process_sub_step; generated_for_input_key=12345 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step andinput records before generating the output.
+2026-10-25 15:26:20,614 - uvicorn.error - INFO - Shutting down
+2026-10-25 15:26:20,718 - uvicorn.error - INFO - Waiting for application shutdown.
+2026-10-25 15:26:20,718 - uvicorn.error - INFO - Application shutdown complete.
+2026-10-25 15:26:20,718 - uvicorn.error - INFO - Finished server process [14440]
+2026-10-25 15:26:21,412 - uvicorn.error - INFO - Stopping reloader process [5768]
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 4 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        c5_api_v1.txt
+        run.ps1
+        test_output_l1_capabilities.json
+
+nothing added to commit but untracked files present (use "git add" to track)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --stat
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+------------------------------------------------------------------------------------------------------------------------------------------
 pyaload used : 
 
 {
