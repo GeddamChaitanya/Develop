@@ -1,4 +1,51 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git cherry-pick -n 566f71d
+Auto-merging apis/v1/capability_maps_generator.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 3 commits.
+  (use "git push" to publish your local commits)
 
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   apis/v1/capability_maps_generator.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git show --stat 2467780 
+commit 24677806dc163f6f927f686b81763415815a1c1a
+Author: Kumar Shubham <kshubham2@deloitte.com>
+Date:   Mon Jul 6 20:56:35 2026 +0530
+
+    fix: preserve GenAI event metadata for agentic fit
+
+ api_v1.py                        |  32 +---------
+ apis/v1/agentic_fit_allocator.py | 122 +++++++++++++++++++++++++++++++++------
+ schemas/agentic_fit_allocator.py |   4 ++
+ 3 files changed, 109 insertions(+), 49 deletions(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git cherry-pick -n 2467780
+Auto-merging apis/v1/agentic_fit_allocator.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   api_v1.py
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   apis/v1/capability_maps_generator.py
+        modified:   schemas/agentic_fit_allocator.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git restore --staged --worktree --source=HEAD apis/v1/workforce_analyzer.py
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
 On branch fix_asc_events_tracker
