@@ -1,3 +1,5 @@
+
+-------------------------------------------------------------------------------------------------------
 I’ll compare the specified lines against the current files and `9cc1ad4` first, including the exact EOF whitespace in `models.py`. Then I’ll remove only the requested whitespace, leave lines 301–302 untouched, and run the two requested checks.
 
 Ran terminal command: git status --short --branch; git --no-pager diff -- apis/v1/capability_maps_generator.py db/models.py
