@@ -1,3 +1,488 @@
+2026-10-25 20:59:14,384 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-25 20:59:14,420 - uvicorn.error - INFO - Started server process [35956]
+2026-10-25 20:59:14,420 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-25 20:59:14,425 - uvicorn.error - INFO - Application startup complete.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-25 21:01:15,815 - uvicorn.access - INFO - 127.0.0.1:62374 - "POST /api/v1/capability_maps_generator HTTP/1.1" 202
+[TRACE] Received input_data: {"ID":"cap-l1-test-001","projectKey":101,"projectCapabilityMapKey":null,"projectName":"Northstar He
+Getting database session...
+Database session created.
+--- Reading survey responses for project_id: 101 ---
+[ERROR] CRUD_Get_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading survey responses: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch survey context for project 101: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
+
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Getting database session...
+Database session created.
+--- Reading supporting files for project_key: 101 ---
+[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_ProjectSupportingFiles - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading supporting files: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch file context for project 101: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 101}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+{'ID': 'cap-l1-test-001', 'Status': 'Started', 'Logs': 'Capability maps started  GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1001, 'input_key': 2001, 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1001:2001:cap-l1-test-001', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 1001
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 1001.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 1001
+
+--- Operations finished ---
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 1001
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 1001.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 1001
+
+--- Operations finished ---
+{'ID': 'cap-l1-test-001', 'Status': 'Started', 'Logs': 'Starting capability map generation for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 25, 'stage': 'capability-map-l1-generation', 'stageStatus': 'started', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+[TRACE] Progress monitor started for ID: cap-l1-test-001
+[TRACE] Starting L1 generation for Northstar Health Services
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1792942302.571456    2144 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'cap-l1-test-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+E0000 00:00:1792942303.361708    2144 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'cap-l1-test-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'cap-l1-test-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'cap-l1-test-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+E0000 00:00:1792942339.348945    2144 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1792942339.364339    2144 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+TEMP DEBUG: L1 written to test_output_l1_capabilities.json
+2026-10-25 21:02:27,047 - watchfiles.main - INFO - 1 change detected
+[TRACE] Progress monitor stopped for ID: cap-l1-test-001
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 1001
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 1001.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 1001
+
+--- Operations finished ---
+{'ID': 'cap-l1-test-001', 'Status': 'In Progress', 'Logs': 'Generated L1 capabilities for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 75, 'stage': 'capability-map-l1-generation', 'stageStatus': 'completed', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+{'ID': 'cap-l1-test-001', 'Status': 'InProgress', 'Logs': 'Data Inserting into DB for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'InProgress', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1001, 'input_key': 2001, 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1001:2001:cap-l1-test-001', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: InProgress
+[TRACE] Redis message published successfully: InProgress
+2026-10-25 21:02:35,115 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '4d4c9bd9-d089-11f1-b197-d4f32df15685'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 21:02:37,133 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '9bbd1e3b-901e-0033-2f96-64a815000000'
+    'x-ms-client-request-id': '4d4c9bd9-d089-11f1-b197-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 15:32:36 GMT'
+2026-10-25 21:02:37,138 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/101/100/1001/L1_Capability_Generation_Output_810ea8b3-18f1-4ebd-8f50-cbd4542e16dd.json'
+Request method: 'DELETE'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '4e8080a3-d089-11f1-ba13-d4f32df15685'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 21:02:37,408 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Content-Length': '0'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '9bbd1eba-901e-0033-1496-64a815000000'
+    'x-ms-client-request-id': '4e8080a3-d089-11f1-ba13-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-delete-type-permanent': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 15:32:36 GMT'
+[TRACE] 🗑️ Deleted existing blob: NV_PoC_V1/outputs/101/100/1001/L1_Capability_Generation_Output_810ea8b3-18f1-4ebd-8f50-cbd4542
+2026-10-25 21:02:37,413 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/101/100/1001/L1_Capability_Generation_Output_19ebd22b-a1f0-4ce9-83e6-9e76885905ef.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '4743'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '4eaab6be-d089-11f1-a848-d4f32df15685'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-25 21:02:39,020 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Sun, 25 Oct 2026 15:32:38 GMT'
+    'ETag': '"0x8DF32AD33C497EB"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'a6975433-401e-006d-5096-6443f5000000'
+    'x-ms-client-request-id': '4eaab6be-d089-11f1-a848-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Sun, 25 Oct 2026 15:32:38 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/101/100/1001/L1_Capability_Generation_Output
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 1001
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 1001.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 1001
+
+--- Operations finished ---
+{'ID': 'cap-l1-test-001', 'Status': 'InsertionProcessing', 'Logs': 'Capability maps started insertion into DB for action: GENERATE_L1', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 85, 'stage': 'capability-map-db-insertion', 'stageStatus': 'heartbeat', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: InsertionProcessing
+[TRACE] Redis message published successfully: InsertionProcessing
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running INSERT operation for output
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+[ERROR] DB_Insert_SubStepOutput - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] DB_Operations_Output - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+An error occurred during operations: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+[ERROR] Capability_Map_Generation - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[TRACE] Progress monitor stopped for ID: cap-l1-test-001
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 1001
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 1001.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 1001
+
+--- Operations finished ---
+{'ID': 'cap-l1-test-001', 'Status': 'Error', 'Logs': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'input_key': 2001, 'substepkey': 1001, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 0, 'stage': 'capability-map-generation', 'stageStatus': 'failed', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:100:1001:2001:cap-l1-test-001', 'processKey': 100, 'processName': 'Capability Setup', 'stepKey': 10, 'stepName': 'Generate L1 Capabilities', 'substepkey': 1001, 'input_key': 2001, 'input_name': 'Generate L1 Capabilities', 'ID': 'cap-l1-test-001', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-10-25T8:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': []}}
+[TRACE] Attempting Redis publish: Error
+[TRACE] Redis message published successfully: Error
+Getting database session...
+Database session created.
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+2026-10-25 21:02:52,795 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '1558'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '57d65cff-d089-11f1-b48e-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-25 21:02:54,880 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 15:32:54 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-25 21:02:54,883 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/91bb6432-3299-4831-83dd-1eb4585cec7c?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '57d65cff-d089-11f1-b48e-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 21:02:55,117 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 15:32:54 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-25 21:02:58,133 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/91bb6432-3299-4831-83dd-1eb4585cec7c?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '57d65cff-d089-11f1-b48e-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 21:02:58,378 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 15:32:58 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-25 21:02:58,385 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14300'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '5b2b55ab-d089-11f1-9c6f-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-25 21:02:58,712 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 15:32:58 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-10-25 21:02:58,712 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/191f7b75-995f-4b60-aaf4-8b0d48cdfb88?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '5b2b55ab-d089-11f1-9c6f-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 21:02:58,961 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 15:32:58 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-10-25 21:03:01,963 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/191f7b75-995f-4b60-aaf4-8b0d48cdfb88?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': '5b2b55ab-d089-11f1-9c6f-d4f32df15685'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-25 21:03:02,217 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Sun, 25 Oct 2026 15:33:02 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+Email send operation status:  {'id': '191f7b75-995f-4b60-aaf4-8b0d48cdfb88', 'status': 'Succeeded', 'error': None}
+Message sent with ID:  191f7b75-995f-4b60-aaf4-8b0d48cdfb88
+Status:  Succeeded
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 572, in generate_capability_map
+    output_key = db_operations_orm.run_operations(output_key=input_data.outputKey, data=db_data)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 415, in run_operations
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 396, in run_operations
+    output_record = insert_sub_step_output(db, data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 313, in insert_sub_step_output
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 293, in insert_sub_step_output
+    validate_sub_step_output_references(db, sub_step_output_data)
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 64, in validate_sub_step_output_references
+    raise ValueError(
+ValueError: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 112, in _capmap_runner
+    asyncio.run(generate_capability_map(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 673, in generate_capability_map
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+fastapi.exceptions.HTTPException: 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+[ERROR] Capability_Map_Generation_Background - 500: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): sub_step_key=1001 not found in blueprinting_process_sub_step; generated_for_input_key=2001 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Select-String -Path apis/v1/capability_maps_generator.py -Pattern 'audit_requested_time|requested_time='
 Select-String -Path db/db_operations_orm.py -Pattern 'requested_time|requested_on|legacy_kwargs'
 -----------------------------------------------------------------------------------
