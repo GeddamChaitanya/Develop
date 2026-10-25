@@ -1,3 +1,104 @@
+I’ll verify the current `GENERATE_ALL` start/failure checkpoints, the two-by-two wrapper’s `step`, and the tracker’s version-number logic before making these three narrowly scoped audit edits. I’ll preserve all current working-tree changes and won’t touch the generation flow, telemetry, or return value.
+
+Ran terminal command: git --no-pager diff -- apis/v1/capability_maps_generator.py apis/v1/two_by_two.py db/db_operations_orm.py
+
+Read , lines 95 to 130
+
+Read , lines 170 to 300
+
+Read , lines 475 to 565
+
+Read , lines 48 to 88
+
+The current flow has both a `GENERATE_ALL` In Progress checkpoint and a wrapper Failed checkpoint. The tracker already numbers appended versions as highest existing plus one and preserves the matched version’s number, so I’ll leave it unchanged. I’ll add the `GENERATE_ALL` Success checkpoint after generation and change only the two-by-two wrapper’s `step` expression.
+
+Generating patch (32 lines) in , 
+
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py apis/v1/two_by_two.py
+
+The two edits are applied and both files compile. I’m retrieving the diff limited to those two files now; it may include earlier uncommitted audit changes already present in them, so I’ll distinguish the new hunks from that existing diff.
+
+Ran terminal command: git --no-pager diff -- apis/v1/capability_maps_generator.py apis/v1/two_by_two.py
+
+Ran terminal command: git --no-pager diff --check -- apis/v1/capability_maps_generator.py apis/v1/two_by_two.py
+Completed with input: git --no-pager diff --check -- apis/v1/capability_maps_generator.py apis/v1/two_by_two.py
+Tool execution failed with exit code 1
+
+Searched for regex `version_entry\["version"\]|matching_version\["version"\]` (`**/db/db_operations_orm.py`), 2 results
+
+The `GENERATE_ALL` start is keyed as `"Generate All Capabilities"`, but the existing wrapper failure path labels that action `"Generate L3 Capabilities"`, which would leave the start checkpoint unmatched. I’m correcting only that audit sub-step selection so a failure updates the same run; the adjacent whitespace warnings are pre-existing and I’ll leave them untouched.
+
+Generating patch (11 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py apis/v1/two_by_two.py
+
+The failure checkpoint now uses `"Generate All Capabilities"` for `GENERATE_ALL`, matching its start and success entries; all tracker version-number behavior remains unchanged. Both modified files compile, and I’m collecting the final two-file diff now.
+
+Ran terminal command: git --no-pager diff -- apis/v1/capability_maps_generator.py apis/v1/two_by_two.py
+
+Ran terminal command: git status --short --branch
+
+Added the `GENERATE_ALL` Success checkpoint after generation and aligned its wrapper Failed checkpoint with the same sub-step. Updated the two-by-two wrapper `step` as requested. The tracker already increments new version numbers from the highest existing value and preserves the matched version’s number, so it was not changed.
+
+The file-limited `git diff` also includes earlier uncommitted edits in these files. These are the hunks added for this request:
+
+```diff
+diff --git a/apis/v1/capability_maps_generator.py b/apis/v1/capability_maps_generator.py
+@@
+-                sub_step=f"Generate L{_ACTION_LEVEL.get(getattr(payload, 'action', None), 0)} Capabilities",
++                sub_step=(
++                    "Generate All Capabilities"
++                    if getattr(payload, "action", None) == CapabilityMapAction.GENERATE_ALL
++                    else f"Generate L{_ACTION_LEVEL.get(getattr(payload, 'action', None), 0)} Capabilities"
++                ),
+@@
+             flattened = await generation.generate_all_levels_hierarchy()
++            try:
++                # Audit checkpoint: SUCCESS (GENERATE_ALL job completed)
++                db_operations_orm.run_genai_audit_log(
++                    step="Capability Setup",
++                    sub_step="Generate All Capabilities",
++                    status="Success",
++                    progress=100,
++                    message="Generate All capabilities completed",
++                    input_key=audit_input_key,
++                    substep_key=audit_substep_key,
++                    user_id=audit_user_id,
++                    client_id=audit_client_id,
++                    requested_time=audit_requested_time,
++                    receiver_email=audit_receiver_email,
++                    analysis_name=audit_analysis_name,
++                    genai_audit_log_id=genai_audit_log_id,
++                )
++            except Exception as audit_err:
++                track_trace(f"Audit log completion update skipped: {audit_err}", severity="Warning")
+
+diff --git a/apis/v1/two_by_two.py b/apis/v1/two_by_two.py
+@@
+-                step=audit_analysis_name,
++                step=getattr(payload, "processName", None),
+```
+
+`py -m py_compile `capability_maps_generator.py` apis/v1/two_by_two.py` passed with no output. A supplemental `git diff --check` reported trailing whitespace on existing capability-map lines 301–302; I left those lines unchanged. No staging or commit was performed.
+
+Made changes.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Understood. For GENERATE_ALL there is no DB write in this file, so:
 1. Add the Success audit checkpoint right after generate_all_levels_hierarchy() completes
    and before the return (same audit locals and try/except style, progress=100,
