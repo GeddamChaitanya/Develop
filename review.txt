@@ -1,4 +1,64 @@
+Comments/docstrings ONLY. Do NOT change any code logic, names, or indentation of code lines.
+File: db/db_operations_orm.py (run_genai_audit_log) and db/crud.py (query_genai_audit_logs).
 
+1. Add this docstring as the first statement inside run_genai_audit_log:
+    """
+    Create or update the GenAI audit log for one step / sub step, with per-run version history.
+
+    Design (agreed with TL to save storage):
+      - ONE row per (step, sub_step). Every GenAI run is stored as a version entry in
+        log_history = {"versions": [...], "total_runs": N}.
+      - "In Progress" with no open run for the same substep_key + input_key -> appends a
+        new version (new run) and sets event_time (backend start time, UTC).
+      - Progress / Success / Failed / Cancelled -> updates the latest version with the same
+        substep_key + input_key; if none matches, a new version is appended so older runs
+        are never overwritten.
+      - Failed / Cancelled keep the last known progress (never reset to 0). Success = 100.
+      - Row columns (user_id, client_id, status, progress, requested_time) always mirror
+        the latest run, so the table stays queryable for reporting.
+
+    Parameters:
+      user_id: app user key (userId / CreatedByUserKey); if missing, looked up from
+               receiver_email via app_user. Stored as int.
+      step / sub_step: names from the request (processName, step name, input name).
+      progress / status / message: current checkpoint state.
+      requested_time: requestedOn from the UI (UTC); stored in requested_time.
+      input_key / substep_key: identify the run inside the step's history.
+      receiver_email: requester email (also used for the user lookup).
+      client_id: Ascend project key (projectKey / projectInfo.projectKey).
+      analysis_name: process / analysis name from the payload (replaces job_id).
+      genai_audit_log_id: kept for backward compatibility; matching uses step/sub_step.
+
+    Returns:
+      int: genai_audit_log_id of the row.
+
+    Notes:
+      - Uses get_audit_db(), not get_db(): audit logs live in the separate audit database
+        (different connection string), business data stays in the main DB.
+      - Callers wrap this in try/except, so an audit failure never breaks the GenAI job.
+      - No delete operations: audit records are retained permanently (PBI requirement).
+    """
+
+2. Add these short inline comments above the matching code (comment lines only):
+   - above parse_requested_time:  # Normalize requestedOn (ISO string / datetime) to aware UTC.
+   - above parse_integer:         # Safely convert ids (user_id / client_id) to int; None if not numeric.
+   - above the app_user lookup:   # user_id fallback: resolve app_user.user_key from receiver_email (read-only, main DB).
+   - above pg_advisory_xact_lock: # Serialize concurrent runs of the same step/sub_step (lock released at commit).
+   - above matching_index:        # Find the latest version of THIS run (same substep_key + input_key).
+   - above starts_new_run:        # A new run starts when "In Progress" arrives and no open run exists for these keys.
+   - above effective_progress:    # Success = 100; Failed/Cancelled without progress keep the last known progress.
+   - above the version number:    # Version numbers continue from the highest existing one.
+   - above the row column updates:# Row columns mirror the latest run for reporting queries.
+   - above flag_modified:
+       # CRITICAL: flag_modified() tells SQLAlchemy the JSONB column changed.
+       # Without it, in-place changes to log_history are not persisted to PostgreSQL.
+
+3. db/crud.py: add as the first statement of query_genai_audit_logs:
+    """Read-only reporting query on genai_audit_log; filter by any combination of
+    user_id, step, sub_step, status and event_time range. Newest first."""
+
+Then run py -m py_compile db/db_operations_orm.py db/crud.py and show
+git --no-pager diff -U0 for these comment additions only. Do not git add or commit.
 -------------------------------------------------------------------------------------------------------
 I’ll compare the specified lines against the current files and `9cc1ad4` first, including the exact EOF whitespace in `models.py`. Then I’ll remove only the requested whitespace, leave lines 301–302 untouched, and run the two requested checks.
 
