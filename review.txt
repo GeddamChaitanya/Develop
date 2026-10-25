@@ -1,3 +1,20 @@
+HARD RULES: audit code only. Do NOT change business logic or teammates' code.
+No refactors, no formatting changes. If anything needs non-audit code, STOP and tell me.
+
+1. capability_maps_generator.py – GENERATE_ALL: add a Success audit checkpoint at the
+   point where the GENERATE_ALL flow has completed its final persistence (whatever it uses
+   instead of run_operations), using the same audit locals and try/except style as the
+   other Success checkpoints. If GENERATE_ALL has no final write in this file, STOP and
+   show me where the flow ends instead of guessing.
+2. two_by_two.py wrapper failure handler: change step=audit_analysis_name to
+   step=getattr(payload, "processName", None) (same value, keeps step and analysis_name
+   clearly separate). analysis_name stays audit_analysis_name.
+3. db/db_operations_orm.py run_genai_audit_log: confirm a NEW appended version gets
+   "version": <highest existing version> + 1 and an updated version keeps its number.
+   If missing, add it (audit function only).
+Show git --no-pager diff of only these changes and py -m py_compile on the changed files.
+Do not git add or commit.
+-------------------------------------------------------------------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 -- apis/v1/capability_double_click.py | Select-String '^\+\s+raise\s*$'
    
 +            raise
