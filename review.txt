@@ -1,4 +1,17 @@
-I’ll inspect the two request schemas and the payload extraction near each target function, then report only the field mapping table. I will not edit anything or run the requested diff/compile until you confirm.
+Confirmed, with these adjustments:
+- missing_capabilities.py: use your mapping as proposed (client_id=None, user_id=CreatedByUserKey).
+- workforce_analyzer.py:
+  step = backgroundProcessingInfo step_name, fallback backgroundProcessingInfo processName
+         (or process_name), fallback request.background_info values; never empty
+         (final fallback "Workforce Analyzer").
+  user_id = None (run_genai_audit_log resolves it from receiver_email).
+  All other values exactly as in your table.
+Now implement under the same HARD RULES: Start after the request values are read,
+Success (progress 100) after the final DB write of each flow, Failed in the existing
+except path without progress, each call in its own try/except. Show git --no-pager diff
+--stat, the full diff of the two files, and py -m py_compile on both. Do not git add or commit.
+-----------------------------------------------------------------------------------------------------------------
+-I’ll inspect the two request schemas and the payload extraction near each target function, then report only the field mapping table. I will not edit anything or run the requested diff/compile until you confirm.
 
 Read , lines 65 to 125
 
