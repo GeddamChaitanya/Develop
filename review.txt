@@ -1,3 +1,11 @@
+Select-String -Path db/db_operations_orm.py -Pattern 'def run_|get_audit_db\(\)|get_db\(\)'
+
+git --no-pager diff --cached -- db/models.py
+
+git show HEAD:db/models.py | Select-String 'UUID'
+
+py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py db/crud.py db/db_operations_orm.py db/models.py
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -                user_id=(background_processing_data or {}).get("userId") or 0,
 -                    user_id=(background_processing_data or {}).get("userId") or 0,
