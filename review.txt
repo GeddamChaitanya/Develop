@@ -1,3 +1,39 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 -- apis/v1/capability_double_click.py | Select-String '^\+\s+raise\s*$'
+   
++            raise
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path apis/v1/*.py -Pattern '_AUDIT_LOG_BY_REQUEST_ID'
+   
+apis\v1\capability_double_click.py:44:_AUDIT_LOG_BY_REQUEST_ID = {}
+apis\v1\capability_double_click.py:267:        genai_audit_log_id = _AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, 
+"input_key", "")))
+apis\v1\capability_double_click.py:287:            _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "input_key", 
+"")), None)
+apis\v1\capability_double_click.py:478:                _AUDIT_LOG_BY_REQUEST_ID[str(input_data.input_key)] = 
+genai_audit_log_id
+apis\v1\capability_double_click.py:659:                _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+apis\v1\capability_double_click.py:700:                _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+apis\v1\capability_double_click.py:726:            _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+apis\v1\capability_maps_generator.py:29:_AUDIT_LOG_BY_REQUEST_ID = {}
+apis\v1\capability_maps_generator.py:115:        genai_audit_log_id = 
+_AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, "ID", "")))
+apis\v1\capability_maps_generator.py:135:            _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "ID", "")), 
+None)
+apis\v1\capability_maps_generator.py:380:                _AUDIT_LOG_BY_REQUEST_ID[str(input_data.ID)] = 
+genai_audit_log_id
+apis\v1\capability_maps_generator.py:551:        _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.ID), None)
+apis\v1\capability_maps_generator.py:594:        _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.ID), None)
+apis\v1\two_by_two.py:35:_AUDIT_LOG_BY_REQUEST_ID = {}
+apis\v1\two_by_two.py:69:        genai_audit_log_id = _AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, "input_key", 
+"")))
+apis\v1\two_by_two.py:89:            _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "input_key", "")), None)
+apis\v1\two_by_two.py:222:                _AUDIT_LOG_BY_REQUEST_ID[str(input_data.input_key)] = genai_audit_log_id
+apis\v1\two_by_two.py:319:            _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 git --no-pager diff -U0 -- apis/v1/capability_double_click.py | Select-String '^\+\s+raise\s*$'
 
 
