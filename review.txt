@@ -1,3 +1,9 @@
+
+git --no-pager diff --cached -- api_v1.py > c5_api_v1.txt
+git --no-pager diff --cached -- schemas/agentic_fit_allocator.py
+git --no-pager diff --cached -U0 -- apis/v1/agentic_fit_allocator.py | Select-String '^-[^-]'
+code c5_api_v1.txt
+---------------------------------------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git cherry-pick -n 566f71d
 Auto-merging apis/v1/capability_maps_generator.py
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
