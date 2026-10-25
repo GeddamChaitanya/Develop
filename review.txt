@@ -1,3 +1,114 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git show --stat ab51a4e
+commit ab51a4e2e77ae40f66d255d74f0789bd9ec4b2ca
+Author: Chaitanya <gedchaitanya@deloitte.com>
+Date:   Fri Jul 3 18:55:53 2026 +0530
+
+    feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files
+
+ .gitignore                             | Bin 373 -> 332 bytes
+ apis/v1/agentic_fit_allocator.py       |  11 ++++--
+ apis/v1/capability_double_click.py     |   7 +++-
+ apis/v1/capability_maps_generator.py   |  47 +++++++++++++++++++++++--
+ apis/v1/industrial_map.py              |  62 +++++++++++++++++++++++++++++++++
+ apis/v1/missing_client_capabilities.py |  52 +++++++++++++++++++++++++++
+ apis/v1/two_by_two.py                  |   3 ++
+ apis/v1/workforce_analyzer.py          |   2 +-
+ db/db_operations_orm.py                |  55 +++++++++++++++++++++++++++--
+ 9 files changed, 230 insertions(+), 9 deletions(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git cherry-pick -n ab51a4e
+warning: Cannot merge binary files: .gitignore (HEAD vs. ab51a4e (feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files))
+Auto-merging .gitignore
+CONFLICT (content): Merge conflict in .gitignore
+Auto-merging apis/v1/agentic_fit_allocator.py
+Auto-merging apis/v1/capability_double_click.py
+Auto-merging apis/v1/capability_maps_generator.py
+Auto-merging apis/v1/industrial_map.py
+Auto-merging apis/v1/missing_client_capabilities.py
+Auto-merging db/db_operations_orm.py
+error: could not apply ab51a4e... feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: Disable this message with "git config set advice.mergeConflict false"
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status 
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   apis/v1/capability_double_click.py
+        modified:   apis/v1/capability_maps_generator.py
+        modified:   apis/v1/industrial_map.py
+        modified:   apis/v1/missing_client_capabilities.py
+        modified:   apis/v1/two_by_two.py
+        modified:   apis/v1/workforce_analyzer.py
+        modified:   db/db_operations_orm.py
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+        both modified:   .gitignore
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git chekcout --ours .gitignore
+git: 'chekcout' is not a git command. See 'git --help'.
+
+The most similar command is
+        checkout
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git checkout --ours .gitignore
+Updated 1 path from the index
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git add .gitignore
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   apis/v1/capability_double_click.py
+        modified:   apis/v1/capability_maps_generator.py
+        modified:   apis/v1/industrial_map.py
+        modified:   apis/v1/missing_client_capabilities.py
+        modified:   apis/v1/two_by_two.py
+        modified:   apis/v1/workforce_analyzer.py
+        modified:   db/db_operations_orm.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        run.ps1                                                    ^C                                                     
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> ^C                                                     
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -U0 | Select-String '^-[^-]' > deleted_ab51.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> code deleted_ab51.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -- apis/v1/workforce_analyzer.py
+diff --git a/apis/v1/workforce_analyzer.py b/apis/v1/workforce_analyzer.py
+index 348167e..6a2eaa4 100644
+--- a/apis/v1/workforce_analyzer.py
++++ b/apis/v1/workforce_analyzer.py
+@@ -862,6 +862,7 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+     except HTTPException:
+         raise
+     except Exception as exc:
++        _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else{}
+         track_operation_error(
+             "Workforce_Analyzer_API",
+             error=exc,
+@@ -869,7 +870,6 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+         )
+         track_trace("Error in workforce analyzer", severity="Error")
+         await monitor.stop_progress()
+-        _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else{}
+         # Update substep status to error
+         failed_status_written = False
+         if "substepkey" in locals() and substepkey:
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 git --no-pager diff --cached -U0 | Select-String '^-[^-]' > deleted_ab51.txt
 
 code deleted_ab51.txt
