@@ -1,3 +1,134 @@
+
+  -                    receiver_email=None,
+  -                    requested_by="0",
+  -                    requested_on=None,
+  -                    genai_audit_log_id=genai_audit_log_id,
+  -                    substep_key=getattr(payload, 'substepkey', None),
+  -                )
+  -            except Exception as audit_err:
+  -                track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+> -            finally:
+  -                _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "input_key", "")), None)
+  +        try:
+  +            # Audit checkpoint: FAILED (first exception handler)
+  +            db_operations_orm.run_genai_audit_log(
+  +                step=audit_step,
+  +                sub_step=None,
+  +                status="Failed",
+  +                message=f"Error in CDC Generation: {str(e)[:500]}",
+  -                        receiver_email=(background_processing_data or {}).get('receiverEmail'),
+  -                        requested_by=str((background_processing_data or {}).get('userId') or 0),
+  -                        requested_on=(background_processing_data or {}).get('requestedOn'),
+  -                        genai_audit_log_id=genai_audit_log_id,
+  -                        substep_key=(background_processing_data or {}).get('substepkey'),
+  -                    )
+  -                except Exception as audit_err:
+  -                    track_trace(f"Audit log completion update skipped: {audit_err}", severity="Warning")
+> -                finally:
+  -                    _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+  +            try:
+  +                # Audit checkpoint: SUCCESS (capability double-click analysis completed)
+  +                db_operations_orm.run_genai_audit_log(
+  +                    step=audit_step,
+  +                    sub_step=audit_sub_step,
+  +                    progress=100,
+  +                    status="Success",
+  -                        receiver_email=(background_processing_data or {}).get('receiverEmail'),
+  -                        requested_by=str((background_processing_data or {}).get('userId') or 0),
+  -                        requested_on=(background_processing_data or {}).get('requestedOn'),
+  -                        genai_audit_log_id=genai_audit_log_id,
+  -                        substep_key=(background_processing_data or {}).get('substepkey'),
+  -                    )
+  -                except Exception as audit_err:
+  -                    track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+> -                finally:
+  -                    _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+  -
+> -            raise
+  -
+  -    
+  -    except Exception as e:
+> -        error_message = f"Error processing input data: {str(e)}"
+> -        track_operation_error("CAPABILITY_DOUBLE_CLICK", error_message)
+  -        if genai_audit_log_id and _AUDIT_LOG_BY_REQUEST_ID.get(str(input_data.input_key)):
+  -            try:# Audit checkpoint: FAILED (third/outer exception handler)
+  -                
+  +            try:
+  +                # Audit checkpoint: FAILED (second exception handler)
+                   db_operations_orm.run_genai_audit_log(
+  -                    step=background_processing_data.get('step_name') or input_data.processName,
+  -                    sub_step=background_processing_data.get('category') or input_data.input_name,
+  -                    sub_step=f"Generate L{_ACTION_LEVEL.get(getattr(payload, 'action', None), 0)} Capabilities",
+  -                    progress=0,
+  -                    status="Failed",
+  -                    requested_by="0",
+  -                    genai_audit_log_id=genai_audit_log_id,
+  -                )
+  -            except Exception as audit_err:
+  -                track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+> -            finally:
+  -                _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "ID", "")), None)
+  +        try:
+  +            # Audit checkpoint: FAILED (exception handler)
+  +            db_operations_orm.run_genai_audit_log(
+  +                step="Capability Setup",
+  +                sub_step=f"Generate L{_ACTION_LEVEL.get(getattr(payload, 'action', None), 0)} Capabilities",
+  +                status="Failed",
+  +                message=f"Capability map generation failed for action: {getattr(payload, 'action', None)}",
+  -                    sub_step=None,
+  -                    progress=0,
+  -                    status="Failed",
+  -                    requested_by="0",
+  -                    genai_audit_log_id=genai_audit_log_id,
+  -                )
+  -            except Exception as audit_err:
+  -                track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+> -            finally:
+  -                _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "input_key", "")), None)
+  +        try:
+  +            # Audit checkpoint: FAILED (exception handler)
+  +            db_operations_orm.run_genai_audit_log(
+  +                step=audit_analysis_name,
+  +                sub_step=None,
+  +                status="Failed",
+  +                message="Two by two analysis failed",
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -- apis | Select-String -Context 8,8 '^-\s+finally:|^-\s+raise\s*$|^-\s+error_message = f"Error processing|^-\s+track_operation_error\("CAPABILITY_DOUBLE_CLICK"' > suspicious_ctx.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> code suspicious_ctx.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 -- apis/v1/capability_double_click.py | Select-String 'error_message|track_operation_error'
+   
+-        error_message = f"Error processing input data: {str(e)}"
+-        track_operation_error("CAPABILITY_DOUBLE_CLICK", error_message)
++        error_message = f"Error processing input data: {str(e)}"
++        track_operation_error("CAPABILITY_DOUBLE_CLICK", error_message)
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path apis/v1/capability_double_click.py,apis/v1/industrial_map.py,apis/v1/two_by_two.py -Pattern 'audit_step =|audit_analysis_name ='
+   
+apis\v1\capability_double_click.py:255:    audit_analysis_name = getattr(payload, "processName", None)
+apis\v1\capability_double_click.py:256:    audit_step = audit_analysis_name or "Capability Double Click"
+apis\v1\capability_double_click.py:308:    audit_analysis_name = None
+apis\v1\capability_double_click.py:309:    audit_step = None
+apis\v1\capability_double_click.py:341:            audit_analysis_name = input_data.processName or 
+background_processing_data.get("processName")
+apis\v1\capability_double_click.py:342:            audit_step = background_processing_data.get("step_name") or 
+input_data.processName
+apis\v1\industrial_map.py:125:    audit_analysis_name = None
+apis\v1\industrial_map.py:126:    audit_step = None
+apis\v1\industrial_map.py:154:            audit_analysis_name = input_data.process_name
+apis\v1\industrial_map.py:155:            audit_step = background_processing_data.get("step_name") or "Industrial Map 
+Generation"
+apis\v1\two_by_two.py:59:    audit_analysis_name = getattr(payload, "processName", None)
+apis\v1\two_by_two.py:109:    audit_analysis_name = None
+apis\v1\two_by_two.py:144:            audit_analysis_name = input_data.processName or 
+background_processing_data.get("processName")
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 git --no-pager diff -- apis | Select-String -Context 8,8 '^-\s+finally:|^-\s+raise\s*$|^-\s+error_message = f"Error processing|^-\s+track_operation_error\("CAPABILITY_DOUBLE_CLICK"' > suspicious_ctx.txt
 
 code suspicious_ctx.txt
