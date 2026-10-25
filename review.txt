@@ -1,3 +1,13 @@
+Whitespace cleanup only, no logic changes. Fix exactly these lines and nothing else:
+- apis/v1/capability_maps_generator.py lines 140, 141, 450, 470, 474: remove trailing
+  whitespace; if the line is whitespace-only and not present in `git show 9cc1ad4:<file>`,
+  delete the line.
+- db/models.py line 401: remove trailing whitespace; line 400: remove the extra blank
+  line at end of file (keep exactly one newline at EOF).
+Do NOT touch capability_maps_generator.py lines 301-302 or any other line.
+Then run `git --no-pager diff --check 9cc1ad4` (must print nothing) and
+py -m py_compile apis/v1/capability_maps_generator.py db/models.py. Do not git add or commit.
+-----------------------------------------------------
 git --no-pager diff --check 9cc1ad4 -- apis/v1/capability_maps_generator.py
 -------------------------------------------------------------------------------------------------
 I’ll verify the current `GENERATE_ALL` start/failure checkpoints, the two-by-two wrapper’s `step`, and the tracker’s version-number logic before making these three narrowly scoped audit edits. I’ll preserve all current working-tree changes and won’t touch the generation flow, telemetry, or return value.
