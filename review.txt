@@ -1,3 +1,201 @@
+pyaload used : 
+
+{
+  "ID": "capmap-l1-test-20261025-001",
+  "projectKey": 12345,
+  "projectCapabilityMapKey": null,
+  "projectName": "Northstar Health Services",
+  "projectDescription": "A regional provider of outpatient and diagnostic care.",
+  "industry": "Healthcare",
+  "sector": "Health Services",
+  "subSector": "Outpatient Care",
+  "industryClassificationCode": "621498",
+  "action": "GENERATE_L1",
+  "capabilities": [],
+  "userInstructions": "Generate 6 to 8 clear, non-overlapping L1 business capabilities for this organization.",
+  "receiverEmail": null,
+  "processKey": null,
+  "processName": "Capability Setup",
+  "stepKey": null,
+  "stepName": "Generate L1 Capabilities",
+  "substepkey": 12345,
+  "input_key": 12345,
+  "input_name": "Generate L1 capabilities test",
+  "requestedOn": "2026-10-25T12:00:00Z",
+  "outputKey": null,
+  "link": "",
+  "process_name": "Capability Setup",
+  "capabilityMapInputSelectionKey": null,
+  "FileContainerPath": null
+}
+-------------------------------------------------------------------------------------------------------------------------------
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> .\run.ps1                                                                                                       
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> uvicorn api_v1:app --host 0.0.0.0 --port 8080 --reload --log-level info --log-config config/logging.yaml        
+2026-10-25 15:15:40,381 - uvicorn.error - INFO - Will watch for changes in these directories: ['C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi']
+2026-10-25 15:15:40,381 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+2026-10-25 15:15:40,381 - uvicorn.error - INFO - Started reloader process [5768] using WatchFiles
+2026-10-25 15:15:41,103 - watchfiles.main - INFO - 8 changes detected
+2026-10-25 15:15:41,713 - watchfiles.main - INFO - 1 change detected
+2026-10-25 15:15:43,132 - watchfiles.main - INFO - 9 changes detected
+DB_string: postgresql://svc_user:7bcGN83H77JF@10.185.87.8:5432/aab_db_dev
+2026-10-25 15:15:44,298 - watchfiles.main - INFO - 5 changes detected
+2026-10-25 15:15:44,656 - watchfiles.main - INFO - 19 changes detected
+2026-10-25 15:15:45,010 - watchfiles.main - INFO - 7 changes detected
+2026-10-25 15:15:45,368 - watchfiles.main - INFO - 20 changes detected
+2026-10-25 15:15:47,389 - watchfiles.main - INFO - 26 changes detected
+2026-10-25 15:15:50,870 - watchfiles.main - INFO - 20 changes detected
+2026-10-25 15:15:51,337 - watchfiles.main - INFO - 25 changes detected
+2026-10-25 15:15:51,948 - watchfiles.main - INFO - 133 changes detected
+DB_string: postgresql://svc_user:7bcGN83H77JF@10.185.87.8:5432/aab_db_dev
+2026-10-25 15:15:52,225 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-25 15:15:52,255 - uvicorn.error - INFO - Started server process [2692]
+2026-10-25 15:15:52,255 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-25 15:15:52,258 - uvicorn.error - INFO - Application startup complete.
+2026-10-25 15:15:52,306 - watchfiles.main - INFO - 63 changes detected
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-25 15:17:07,432 - watchfiles.main - INFO - 2 changes detected
+2026-10-25 15:17:07,433 - uvicorn.error - WARNING - WatchFiles detected changes in 'db\db_operations_orm.py', 'apis\v1\agentic_fit_allocator.py'. Reloading...
+ 2026-10-25 15:17:07,539 - uvicorn.error - INFO - Shutting down
+2026-10-25 15:17:07,645 - uvicorn.error - INFO - Waiting for application shutdown.
+2026-10-25 15:17:07,645 - uvicorn.error - INFO - Application shutdown complete.
+2026-10-25 15:17:07,645 - uvicorn.error - INFO - Finished server process [2692]
+2026-10-25 15:17:09,455 - watchfiles.main - INFO - 5 changes detected
+DB_string: postgresql://svc_user:7bcGN83H77JF@10.185.87.8:5432/aab_db_dev
+2026-10-25 15:17:12,687 - watchfiles.main - INFO - 5 changes detected
+DB_string: postgresql://svc_user:7bcGN83H77JF@10.185.87.8:5432/aab_db_dev
+2026-10-25 15:17:13,526 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-25 15:17:13,545 - uvicorn.error - INFO - Started server process [14440]
+2026-10-25 15:17:13,545 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-25 15:17:13,550 - uvicorn.error - INFO - Application startup complete.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-25 15:19:15,337 - uvicorn.access - INFO - 127.0.0.1:57389 - "POST /api/v1/capability_maps_generator HTTP/1.1" 202
+[TRACE] Received input_data: {"ID":"capmap-l1-test-20261025-001","projectKey":12345,"projectCapabilityMapKey":null,"projectName"
+Getting database session...
+Database session created.
+--- Reading survey responses for project_id: 12345 ---
+Retrieved 20 survey question(s), 0 answered for project_id: 12345
+Getting database session...
+Database session created.
+--- Reading supporting files for project_key: 12345 ---
+[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_ProjectSupportingFiles - (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading supporting files: (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch file context for project 12345: (psycopg2.errors.UndefinedTable) relation "project_supporting_file" does not exist
+LINE 2: FROM project_supporting_file 
+             ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 12345}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'Started', 'Logs': 'Capability maps started  GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 12345, 'input_key': 12345, 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+Getting audit database session...
+Audit database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - SubStep not found: 12345
+[TRACE] DB_Update: Completed crud operation
+Failed to update the output record with key: 12345.
+[ERROR] DB_Update_SubStep - Failed to update sub step with key: 12345
+
+--- Operations finished ---
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'Started', 'Logs': 'Starting capability map generation for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 25, 'stage': 'capability-map-l1-generation', 'stageStatus': 'started', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+[TRACE] Progress monitor started for ID: capmap-l1-test-20261025-001
+[TRACE] Starting L1 generation for Northstar Health Services
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1792921771.677968   31036 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+E0000 00:00:1792921771.713467   31036 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 5, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 6, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 7, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 8, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 9, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 10, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 11, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 12, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capmap-l1-test-20261025-001', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 12345, 'substepkey': 12345, 'receiverEmail': None, 'requestedOn': '2026-10-25T12:00:00Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 13, 'jobMetadata': {'jobId': 'genai:12345:12345:capmap-l1-test-20261025-001', 'processName': 'Capability Setup', 'stepName': 'Generate L1 Capabilities', 'substepkey': 12345, 'input_key': 12345, 'input_name': 'Generate L1 capabilities test', 'ID': 'capmap-l1-test-20261025-001', 'requestedOn': '2026-10-25T12:00:00Z', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 git log --oneline HEAD..origin/ascend/develop
 git diff origin/ascend/develop...HEAD --stat
