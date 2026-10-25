@@ -1,3 +1,477 @@
+I’ll inspect the current `missing_capabilities` write/except boundary and the full workforce action branches to place each Success checkpoint after the correct last write—especially `GENERATE_ALL`, which may run salary and cost-saving work in one request.
+
+Ran terminal command: git --no-pager diff --stat -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py; git --no-pager diff -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Read , lines 55 to 208
+
+Read , lines 243 to 380
+
+Read , lines 379 to 620
+
+Read , lines 620 to 898
+
+The field mapping is confirmed. I’ll add the utility start/failure/success checkpoints around the existing write, then add one workforce start and failure checkpoint plus Success checkpoints at the salary-update, salary-generation, or cost-saving final write that applies to the action. All audit calls will use isolated try/except blocks that only warn.
+
+Generating patch (77 lines) in 
+
+Read , lines 58 to 85
+
+Generating patch (35 lines) in 
+
+
+```
+
+```
+The patch tool auto-expanded the missing-capabilities edit into a much larger replacement after a context mismatch. I’m checking its diff now; if any non-audit lines changed, I’ll stop rather than proceed with workforce changes and identify exactly what was altered.
+
+Ran terminal command: git --no-pager diff -- apis/v1/missing_capabilities.py
+
+The diff shows only audit locals and a start checkpoint were added; no existing business-operation lines changed. However, the locals landed at the wrong indentation and the success/failed calls are still absent. I’ll correct the audit-only placement first, then add the two checkpoints at their existing write and except boundaries.
+
+Read , lines 65 to 112
+
+Generating patch (23 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/missing_capabilities.py
+
+The utility route compiles with the audit locals correctly scoped. Its In Progress checkpoint is present and isolated; I’m now adding Success immediately after the workflow-utility DB write and Failed inside the existing exception handler, each with its own warning-only audit try/except.
+
+Read , lines 185 to 230
+
+Read , lines 145 to 185
+
+Generating patch (43 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/missing_capabilities.py
+
+I’ll add workforce audit metadata locals immediately after action resolution, using only `projectInfo.projectKey` for `client_id` and `user_id=None` as confirmed. A single In Progress checkpoint will cover the selected salary/cost-saving job; Success will be emitted after the corresponding final DB write, with `GENERATE_ALL` waiting for the cost-saving output write.
+
+Generating patch (85 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/workforce_analyzer.py
+
+Workforce start metadata and checkpoint compile cleanly. I’m inserting Success after the salary-generation write (except `GENERATE_ALL`, whose final write is later), after salary-update persistence, and after cost-saving persistence; then I’ll add one warning-isolated Failed checkpoint to the existing exception path.
+
+Read , lines 470 to 515
+
+Read , lines 585 to 635
+
+Read , lines 785 to 830
+
+Read , lines 880 to 930
+
+Read , lines 450 to 520
+
+Read , lines 560 to 625
+
+Read , lines 755 to 820
+
+Read , lines 930 to 972
+
+The salary-generation path writes once, salary updates write once, and Cost Saving Potential writes once; `GENERATE_ALL` executes both salary and cost-saving branches, so its sole Success checkpoint belongs after the latter write. I’m checking the exact insertion points for update and cost-saving writes before patching.
+
+Read , lines 520 to 615
+
+Read , lines 740 to 820
+
+Read , lines 900 to 945
+
+Read , lines 625 to 710
+
+Read , lines 820 to 890
+
+I’m adding the salary-generation Success checkpoint immediately after its `run_operations` call, gated off for `GENERATE_ALL` so that action is recorded only after the later cost-saving write. No status, publish, or persistence code will be changed.
+
+Generating patch (26 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/workforce_analyzer.py
+
+Salary-generation audit compiles and remains after its output write. I’m adding the same isolated Success checkpoint after the salary-update branch’s `run_operations` write.
+
+Generating patch (26 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/workforce_analyzer.py
+
+Salary-update audit compiles after its final write. I’m adding the cost-saving Success checkpoint after that branch’s `run_operations` call; this is also where `GENERATE_ALL` will record its final success.
+
+Generating patch (26 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/workforce_analyzer.py
+
+All three workforce Success placements compile: salary generation (except `GENERATE_ALL`), salary update, and cost-saving output. `GENERATE_ALL` now reaches Success only after the cost-saving write. I’m adding the warning-isolated Failed call in the existing outer exception path, with no `progress` argument and no changes to its existing handling.
+
+Generating patch (23 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/workforce_analyzer.py apis/v1/missing_capabilities.py
+
+Both files compile with the new checkpoints. I’m reviewing the two-file diff now to confirm it contains only audit locals/calls and that each Success follows its write; then I’ll provide the requested stat, full diff, and compile result.
+
+Ran terminal command: git --no-pager diff --stat -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git --no-pager diff -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git --no-pager diff --check -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: py -m py_compile apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git status --short --branch
+
+The diff is limited to additions in the two requested files, `git diff --check` is clean, and both modules compile. I’m reading the captured full diff once to confirm there are no edits to existing business statements before reporting it.
+
+Read 
+
+The diff contains only new audit locals and calls in the two requested routes; existing generation, write, status, publish, email, and error-handling statements are unchanged. I’m running the exact requested stat, two-file diff, and compile commands for the final record.
+
+Ran terminal command: git --no-pager diff --stat -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git --no-pager diff -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: py -m py_compile apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git --no-pager diff --check -- apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Read 
+
+Implemented audit-only checkpoints in both routes. `GENERATE_ALL` workforce runs defer Success until after the cost-saving write; salary-only and salary-update flows record Success after their own writes. No existing business statements were changed.
+
+**Diff Stat**
+```text
+ apis/v1/missing_capabilities.py |  59 ++++++++++++++++
+ apis/v1/workforce_analyzer.py   | 145 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 204 insertions(+)
+```
+
+**Full Diff**
+```diff
+diff --git a/apis/v1/missing_capabilities.py b/apis/v1/missing_capabilities.py
+index c997290..93e4988 100644
+--- a/apis/v1/missing_capabilities.py
++++ b/apis/v1/missing_capabilities.py
+@@ -73,6 +73,15 @@ async def generate_missing_capabilities(input_data: MissingCapabilitiesInput):
+         
+         # Track API call
+         track_api_call("missing_capabilities", input_data.ID)
++        audit_step = input_data.process_name or "Capability Generation Utility"
++        audit_sub_step = input_data.input_name or "Missing Capabilities"
++        audit_analysis_name = input_data.process_name or None
++        audit_client_id = None
++        audit_user_id = input_data.CreatedByUserKey
++        audit_requested_time = input_data.requestedOn
++        audit_input_key = input_data.input_key
++        audit_substep_key = input_data.substepkey
++        audit_receiver_email = input_data.receiverEmail
+         
+         track_operation_start("Missing_Capabilities_Generation",
+                             properties={"company_name": input_data.input_name})
+@@ -87,6 +96,23 @@ async def generate_missing_capabilities(input_data: MissingCapabilitiesInput):
+         
+         # Use the file information from input_data
+         # Assuming FileStorageName contains the blob name and you have a container name
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step=audit_step,
++                sub_step=audit_sub_step,
++                status="In Progress",
++                progress=10,
++                message="Started Capability Generation Utility",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log start skipped: {audit_err}", severity="Warning")
+ 
+         container_name = os.getenv('AZURE_INDUSTRIAL_MAP_CONTAINER', 'industrial-maps')
+         blob_name = input_data.FileContainerPath
+@@ -162,6 +188,23 @@ async def generate_missing_capabilities(input_data: MissingCapabilitiesInput):
+         
+         # Insert data into workflow_utility_capability_map_data table
+         output_record = db_operations_orm.run_operations_workflow_utility_capability_map_data(data_industrial_map)
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step=audit_step,
++                sub_step=audit_sub_step,
++                status="Success",
++                progress=100,
++                message="Capability Generation Utility completed successfully",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log success update skipped: {audit_err}", severity="Warning")
+         track_trace(f"Inserted workflow_utility_capability_map_data with key: {output_record.workflow_utility_capability_map_data_key if output_record else None}", severity="Information")
+         
+         track_trace(f"Loaded file with {len(df_file)} rows and {len(df_file.columns)} columns", severity="Information")
+@@ -177,6 +220,22 @@ async def generate_missing_capabilities(input_data: MissingCapabilitiesInput):
+                               properties={"company_name": input_data.input_name, "workflowutilitykey": input_data.WorkflowUtilityKey})
+         track_trace(traceback.format_exc(), severity="Error")
+         traceback.print_exc()
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step=audit_step,
++                sub_step=audit_sub_step,
++                status="Failed",
++                message=f"Capability Generation Utility failed: {str(e)[:500]}",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log failure update skipped: {audit_err}", severity="Warning")
+         try:
+             await monitor.stop_progress()
+         except Exception:
+diff --git a/apis/v1/workforce_analyzer.py b/apis/v1/workforce_analyzer.py
+index 348167e..2630b00 100644
+--- a/apis/v1/workforce_analyzer.py
++++ b/apis/v1/workforce_analyzer.py
+@@ -266,6 +266,16 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+     l2_l3_heatmap = []
+     l1_allocations = []
+     l2_allocations = []
++    audit_enabled = False
++    audit_step = "Workforce Analyzer"
++    audit_sub_step = None
++    audit_analysis_name = None
++    audit_client_id = None
++    audit_user_id = None
++    audit_requested_time = None
++    audit_input_key = None
++    audit_substep_key = None
++    audit_receiver_email = None
+ 
+     try:
+         # ── 1. Resolve input from DB (like agentic_fit_allocator) ──────────
+@@ -337,6 +347,70 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+         # Normalize: .NET may send action with spaces instead of underscores
+         action = action.strip().replace(" ", "_")
+ 
++        request_background_info = request.background_info
++        audit_step = (
++            background_processing_data.get("step_name")
++            or background_processing_data.get("processName")
++            or background_processing_data.get("process_name")
++            or (request_background_info.stepName if request_background_info else None)
++            or (request_background_info.process_name if request_background_info else None)
++            or "Workforce Analyzer"
++        )
++        audit_sub_step = background_processing_data.get("input_name") or input_name or action
++        audit_analysis_name = (
++            background_processing_data.get("processName")
++            or background_processing_data.get("process_name")
++            or (request_background_info.process_name if request_background_info else None)
++        )
++        audit_client_id = client_info.get("projectKey") if isinstance(client_info, dict) else None
++        audit_user_id = None
++        audit_requested_time = (
++            background_processing_data.get("requestedOn")
++            or (request_background_info.requestedOn if request_background_info else None)
++        )
++        audit_input_key = (
++            background_processing_data.get("input_key")
++            or (request_background_info.input_key if request_background_info else None)
++        )
++        audit_substep_key = (
++            background_processing_data.get("substepkey")
++            or (request_background_info.substepkey if request_background_info else None)
++        )
++        audit_receiver_email = (
++            background_processing_data.get("receiverEmail")
++            or request.receiverEmail
++            or (request_background_info.receiverEmail if request_background_info else None)
++        )
++        audit_enabled = action in {
++            "GENERATE_L1_L2_L3_SALARY",
++            "GENERATE_L1_SALARY",
++            "GENERATE_L2_SALARY",
++            "GENERATE_L3_SALARY",
++            "UPDATE_L1_SALARY",
++            "UPDATE_L2_SALARY",
++            "UPDATE_L3_SALARY",
++            "GENERATE_COST_SAVING_POTENTIAL",
++            "GENERATE_ALL",
++        }
++        if audit_enabled:
++            try:
++                db_operations_orm.run_genai_audit_log(
++                    step=audit_step,
++                    sub_step=audit_sub_step,
++                    status="In Progress",
++                    progress=10,
++                    message=f"Started workforce analyzer for action: {action}",
++                    input_key=audit_input_key,
++                    substep_key=audit_substep_key,
++                    user_id=audit_user_id,
++                    client_id=audit_client_id,
++                    requested_time=audit_requested_time,
++                    receiver_email=audit_receiver_email,
++                    analysis_name=audit_analysis_name,
++                )
++            except Exception as audit_err:
++                track_trace(f"Audit log start skipped: {audit_err}", severity="Warning")
++
+         track_operation_start(
+             "Workforce_Analyzer_API",
+             properties={"action": action, "client_name": client_name},
+@@ -487,6 +561,24 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+                 output_key=background_processing_data.get("outputKey"),
+                 data=db_data,
+             )
++            if audit_enabled and action != "GENERATE_ALL":
++                try:
++                    db_operations_orm.run_genai_audit_log(
++                        step=audit_step,
++                        sub_step=audit_sub_step,
++                        status="Success",
++                        progress=100,
++                        message=f"Workforce salary generation completed for action: {action}",
++                        input_key=audit_input_key,
++                        substep_key=audit_substep_key,
++                        user_id=audit_user_id,
++                        client_id=audit_client_id,
++                        requested_time=audit_requested_time,
++                        receiver_email=audit_receiver_email,
++                        analysis_name=audit_analysis_name,
++                    )
++                except Exception as audit_err:
++                    track_trace(f"Audit log success update skipped: {audit_err}", severity="Warning")
+             publish_message(
+                 background_processing_data.get("ID") or background_processing_data.get("stepKey"),
+                 "Completed",
+@@ -594,6 +686,24 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+                 output_key=background_processing_data.get("outputKey"),
+                 data=db_data,
+             )
++            if audit_enabled:
++                try:
++                    db_operations_orm.run_genai_audit_log(
++                        step=audit_step,
++                        sub_step=audit_sub_step,
++                        status="Success",
++                        progress=100,
++                        message=f"Workforce salary update completed for action: {action}",
++                        input_key=audit_input_key,
++                        substep_key=audit_substep_key,
++                        user_id=audit_user_id,
++                        client_id=audit_client_id,
++                        requested_time=audit_requested_time,
++                        receiver_email=audit_receiver_email,
++                        analysis_name=audit_analysis_name,
++                    )
++                except Exception as audit_err:
++                    track_trace(f"Audit log success update skipped: {audit_err}", severity="Warning")
+             publish_message(
+                 background_processing_data.get("ID") or background_processing_data.get("stepKey"),
+                 "Completed",
+@@ -779,6 +889,24 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+                 output_key=background_processing_data.get("outputKey") or None,
+                 data=db_data,
+             )
++            if audit_enabled:
++                try:
++                    db_operations_orm.run_genai_audit_log(
++                        step=audit_step,
++                        sub_step=audit_sub_step,
++                        status="Success",
++                        progress=100,
++                        message=f"Workforce cost-saving generation completed for action: {action}",
++                        input_key=audit_input_key,
++                        substep_key=audit_substep_key,
++                        user_id=audit_user_id,
++                        client_id=audit_client_id,
++                        requested_time=audit_requested_time,
++                        receiver_email=audit_receiver_email,
++                        analysis_name=audit_analysis_name,
++                    )
++                except Exception as audit_err:
++                    track_trace(f"Audit log success update skipped: {audit_err}", severity="Warning")
+             publish_message(
+                 background_processing_data.get("ID") or background_processing_data.get("stepKey"),
+                 "Completed",
+@@ -868,6 +996,23 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+             properties={"action": action if "action" in locals() else None},
+         )
+         track_trace("Error in workforce analyzer", severity="Error")
++        if audit_enabled:
++            try:
++                db_operations_orm.run_genai_audit_log(
++                    step=audit_step,
++                    sub_step=audit_sub_step,
++                    status="Failed",
++                    message=f"Workforce analyzer failed: {str(exc)[:500]}",
++                    input_key=audit_input_key,
++                    substep_key=audit_substep_key,
++                    user_id=audit_user_id,
++                    client_id=audit_client_id,
++                    requested_time=audit_requested_time,
++                    receiver_email=audit_receiver_email,
++                    analysis_name=audit_analysis_name,
++                )
++            except Exception as audit_err:
++                track_trace(f"Audit log failure update skipped: {audit_err}", severity="Warning")
+         await monitor.stop_progress()
+         _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else {}
+```
+
+`py -m py_compile `missing_capabilities.py` apis/v1/workforce_analyzer.py` passed with no output. No files were staged or committed.
+
+Made changes.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Confirmed, with these adjustments:
 - missing_capabilities.py: use your mapping as proposed (client_id=None, user_id=CreatedByUserKey).
 - workforce_analyzer.py:
