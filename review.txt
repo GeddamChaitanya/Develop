@@ -1,3 +1,400 @@
+
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/missing_client_capabilities.py
+
+Generating patch (41 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/missing_client_capabilities.py
+
+Missing-client audit calls now use its request fields, with `analysis_name=None`; the success checkpoint follows `update_capability_map_json`, and failure leaves progress to the tracker. The route compiles. I’m updating two-by-two next, including its background runner failure checkpoint and success after its final `run_operations` write.
+
+Read , lines 48 to 80
+
+Read , lines 90 to 190
+
+Read , lines 248 to 290
+
+Generating patch (81 lines) in 
+
+Generating patch (41 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/two_by_two.py
+
+Generating patch (27 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/two_by_two.py
+
+The two-by-two wrapper failure checkpoint is now unconditional and uses only its request-model values; the main route captures background/project audit values once and compiles. I’m replacing its remaining old start/success arguments and then will verify all six files for any stale names or gated checkpoints.
+
+Generating patch (56 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/two_by_two.py
+
+Searched for regex `requested_by=|requested_on=|if genai_audit_log_id|if genai_audit_log_id and|run_genai_audit_log\(` (`**/apis/v1/agentic_fit_allocator.py`), 11 results
+
+Searched for regex `requested_by=|requested_on=|if genai_audit_log_id|if genai_audit_log_id and|run_genai_audit_log\(` (`**/apis/v1/capability_double_click.py`), 7 results
+
+Searched for regex `requested_by=|requested_on=|if genai_audit_log_id|if genai_audit_log_id and|run_genai_audit_log\(` (`**/apis/v1/capability_maps_generator.py`), 6 results
+
+Searched for regex `requested_by=|requested_on=|if genai_audit_log_id|if genai_audit_log_id and|run_genai_audit_log\(` (`**/apis/v1/industrial_map.py`), 7 results
+
+Searched for regex `requested_by=|requested_on=|if genai_audit_log_id|if genai_audit_log_id and|run_genai_audit_log\(` (`**/apis/v1/missing_client_capabilities.py`), 19 results
+
+Searched for regex `requested_by=|requested_on=|if genai_audit_log_id|if genai_audit_log_id and|run_genai_audit_log\(` (`**/apis/v1/two_by_two.py`), 5 results
+
+Searched for text `run_genai_audit_log\(` (`**/*.py`), 26 results
+
+All main-route audit calls now use the new names, and the global search finds no old `requested_by`/`requested_on` arguments or success/failure ID gates; remaining ID checks only store audit IDs for later cleanup. I found one consistency gap in wrapper failure handlers: they still read payload attributes inline, so I’m moving those into per-wrapper audit locals as requested.
+
+Read , lines 245 to 280
+
+Read , lines 90 to 128
+
+Read , lines 45 to 80
+
+Generating patch (32 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_double_click.py
+
+Generating patch (29 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py
+
+Generating patch (32 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/two_by_two.py
+
+Wrapper handlers now also capture their request-available audit fields once and reuse them, and all six routes compile individually. I’m doing the final audit-only review now: checking stale keyword arguments, failure progress overrides, checkpoint gates, database-write ordering, and the tracker’s version/email-lookup logic before running the requested final compile and diff commands.
+
+Read , lines 420 to 570
+
+Read , lines 700 to 770
+
+Read , lines 255 to 280
+
+Read , lines 480 to 520
+
+Read , lines 395 to 445
+
+Read , lines 55 to 90
+
+Read , lines 285 to 320
+
+Read , lines 620 to 725
+
+Read , lines 95 to 130
+
+Read , lines 1000 to 1075
+
+The review confirms that success checkpoints now follow each route’s final persistence call, with no `run_genai_audit_log` calls left using legacy keyword names. I’m running the requested seven-file compile and final diff/stat now, plus a whitespace check to catch accidental patch residue.
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py
+
+Ran terminal command: git --no-pager diff --check
+Completed with input: git --no-pager diff --check
+Tool execution failed with exit code 1
+
+Ran terminal command: git --no-pager diff --stat
+
+Ran terminal command: git --no-pager diff -- db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py
+
+Ran terminal command: git status --short --branch
+
+The seven-file compile succeeded. The whitespace check found one trailing-space line in the CDC audit-handler area; the overall diff also includes the earlier `models.py`/`crud.py` audit changes already present from the prior task, which I’ll preserve. I’m checking the single flagged line and the final diff scope before rerunning checks.
+
+Read , lines 692 to 705
+
+Read , lines 210 to 285
+
+Read , lines 140 to 180
+
+Read , lines 1 to 100
+
+Generating patch (7 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_double_click.py
+
+The CDC whitespace issue is fixed and that module compiles. I’m rerunning the final checks over all nine currently modified tracked Python files, including the earlier model/CRUD audit changes, and capturing the exact requested diff/stat from the final worktree.
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py
+
+Ran terminal command: git --no-pager diff --check
+
+Ran terminal command: git --no-pager diff --stat
+
+Ran terminal command: git --no-pager diff
+
+Ran terminal command: git status --short --branch
+
+Read 
+
+The final failure-path review found one edge case in capability double-click: the now-unconditional outer failure checkpoint could reference `background_processing_data` before it exists if setup fails early. I’m capturing its audit sub-step once with a safe default and reusing that local in all checkpoints.
+
+Generating patch (24 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_double_click.py
+
+Searched for regex `sub_step=background_processing_data|get\('category'\)|sub_step=audit_sub_step` (`**/apis/v1/capability_double_click.py`), 5 results
+
+CDC’s outer failure path now has a safe cached audit sub-step, and the route compiles. I’m rerunning the final checks after that fix; the final diff will include the earlier model/CRUD audit changes still in the worktree, clearly identified as not changed in this request.
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py
+
+Ran terminal command: git --no-pager diff --check
+
+Ran terminal command: git --no-pager diff --stat
+
+Ran terminal command: git --no-pager diff
+
+Ran terminal command: git status --short --branch
+
+All nine modified tracked Python files compile, `git diff --check` is clean, and no staging or commit occurred. One final tracker review found a defensive filter that could discard malformed historical list entries; I’m removing that filter so version history is never silently dropped, then I’ll rerun the requested checks once more.
+
+Generating patch (20 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py
+Completed with input: py -m py_compile db/db_operations_orm.py
+Tool execution failed with exit code 1
+
+The history-preservation patch introduced an indentation error in the new-version calculation. I’m checking that small block and will fix the indentation, then rerun the tracker compile before the final full check.
+
+Read , lines 500 to 550
+
+Generating patch (17 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py
+
+The tracker now preserves the full version list and compiles after the indentation repair. I’m rerunning the complete final compile, whitespace, diff-stat, and full-diff commands once more; no additional code changes are planned.
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py
+
+Ran terminal command: git --no-pager diff --check
+
+Ran terminal command: git --no-pager diff --stat
+
+Ran terminal command: git --no-pager diff
+
+Ran terminal command: git status --short --branch
+
+Read , lines 1 to 160
+
+Read 
+
+Read 
+
+Read 
+
+Read 
+
+Read 
+
+Read 
+
+One final semantic pass caught that the new `analysis_name` value had replaced existing `step` values in a few checkpoints. I’m restoring the prior audit grouping keys (`step_name`/`processName`) while keeping the requested `analysis_name` field separate, so version matching remains consistent with each route’s original tracker key.
+
+Generating patch (13 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/agentic_fit_allocator.py
+
+Generating patch (21 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_double_click.py
+Completed with input: py -m py_compile apis/v1/capability_double_click.py
+Tool execution failed with exit code 1
+
+The step-key adjustment introduced an indentation issue in the CDC extraction block. I’m checking that exact block and will correct only the malformed line before continuing.
+
+Read , lines 335 to 355
+
+Generating patch (12 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_double_click.py
+Completed with input: py -m py_compile apis/v1/capability_double_click.py
+Tool execution failed with exit code 1
+
+Read , lines 250 to 278
+
+Generating patch (7 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_double_click.py
+
+Searched for regex `step=audit_` (`**/apis/v1/capability_double_click.py`), 9 results
+
+Generating patch (19 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_double_click.py
+
+CDC now compiles with the original `step_name` grouping key preserved separately from `analysis_name`. I’m applying the same separation to industrial-map, whose start key falls back to `"Industrial Map Generation"` when `process_name` is empty.
+
+Generating patch (15 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/industrial_map.py
+Completed with input: py -m py_compile apis/v1/industrial_map.py
+Tool execution failed with exit code 1
+
+The industrial step-key patch duplicated a keyword in its start call. I’m checking that checkpoint block, removing the duplicate, and then recompiling that route.
+
+Read , lines 175 to 198
+
+Searched for regex `step=audit_step|step=audit_analysis_name|step=background_processing_data|step=\(_bg` (`**/apis/v1/industrial_map.py`), 6 results
+
+Read , lines 395 to 445
+
+Generating patch (17 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/industrial_map.py
+
+Industrial-map now compiles with its original fallback step key used consistently across start, success, and failure; `analysis_name` remains the request’s `process_name`. I’m running one last repository-wide audit-call search plus the final compile and whitespace checks before reporting the result.
+
+Ran terminal command: py -m py_compile db/models.py db/crud.py db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py
+
+Ran terminal command: git --no-pager diff --check
+
+Ran terminal command: git --no-pager diff --stat
+
+Ran terminal command: git status --short --branch
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Implemented the audit-call updates across the six routes and `run_genai_audit_log`: checkpoints use the mapped fields, success/failure checkpoints are no longer gated on an audit ID, failed calls omit progress, and capability-map success follows the final `run_operations` write. `GENERATE_ALL` has no success checkpoint because it does not persist through `run_operations`.
+
+The existing `models.py` and `crud.py` audit changes remain in the worktree from the prior request; I did not modify them in this pass. Untracked `.vscode` and `run.ps1` were left untouched. No files were staged or committed.
+
+**Diff Stat**
+```text
+ apis/v1/agentic_fit_allocator.py       | 158 ++++++++++++++---------
+ apis/v1/capability_double_click.py     | 202 +++++++++++++++++------------
+ apis/v1/capability_maps_generator.py   | 140 +++++++++++---------
+ apis/v1/industrial_map.py              |  85 +++++++-----
+ apis/v1/missing_client_capabilities.py |  54 +++++---
+ apis/v1/two_by_two.py                  | 107 +++++++++++-----
+ db/crud.py                             |  36 +++++-
+ db/db_operations_orm.py                | 228 +++++++++++++++++++--------------
+ db/models.py                           |   3 +-
+ 9 files changed, 624 insertions(+), 389 deletions(-)
+```
+
+**Validation**
+`py -m py_compile` passed for all nine modified tracked Python files with no output. `git diff --check` also passed. The full `git --no-pager diff` was generated for the working tree; the API and tracker changes are visible in Source Control.
+
+Made changes.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Use exactly this mapping (fallback only where listed). Never use clientInfo.clientKey.
 - agentic_fit_allocator.py, capability_double_click.py, two_by_two.py:
   analysis_name = input_data.processName or backgroundProcessingInfo.processName
