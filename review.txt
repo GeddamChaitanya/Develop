@@ -1,3 +1,63 @@
+HARD RULES (apply to every change):
+- Do NOT modify any business logic or any teammate's code: no changes to generation,
+  status updates (run_operations_status / run_operations), Redis publish, progress
+  monitor, email, blob storage, schemas, routes, health check, project_compat, or any
+  function that is not audit-related.
+- Do NOT rename, reorder, reformat, or "clean up" existing code, imports, or comments.
+- Only ADD or EDIT lines that belong to the GenAI audit tracker (GenAIAuditLog model,
+  audit CRUD helpers, run_genai_audit_log, and the audit try/except checkpoints).
+- If a fix seems to require touching non-audit code, STOP and tell me instead of changing it.
+Scope: GenAI Events Tracker audit code ONLY, branch fix_asc_events_tracker (Ascend).
+Files allowed: db/models.py, db/crud.py, db/db_operations_orm.py.
+Change ONLY the GenAIAuditLog model and the audit functions (run_genai_audit_log and the
+genai_audit_log CRUD helpers). Do NOT touch any other function, and never change
+get_db() usages. Audit code must use get_audit_db(). Keep the existing code style.
+
+1. db/models.py – GenAIAuditLog:
+   - user_id: Integer, nullable=True (DB column is already integer)
+   - add client_id = Column(Integer, nullable=True) (column already exists in DB)
+   - keep the other existing columns unchanged (incl. log_history JSONB)
+
+2. db/db_operations_orm.py – rewrite run_genai_audit_log with this signature:
+   run_genai_audit_log(user_id=None, step=None, sub_step=None, progress=None,
+       status="In Progress", message=None, requested_time=None, input_key=None,
+       substep_key=None, receiver_email=None, client_id=None, analysis_name=None,
+       genai_audit_log_id=None)
+   Behaviour:
+   - ONE row per (step, sub_step). Find it with SELECT ... FOR UPDATE, protected by
+     pg_advisory_xact_lock(hashtext(step || '|' || coalesce(sub_step,''))). Create the
+     row if it does not exist.
+   - log_history = {"versions": [...], "total_runs": N}. Each version holds:
+     status, progress, message, input_key, substep_key, requested_by (str user_id),
+     receiver_email, client_id, analysis_name, requested_on, recorded_time (UTC ISO).
+     Do NOT write job_id into new versions (analysis_name replaces it).
+   - status "In Progress" with no matching open version -> append a new version,
+     total_runs += 1, set row event_time = now UTC (backend start of this run).
+   - Any other status (In Progress update, Success, Failed, Cancelled) -> update the
+     LATEST version whose substep_key AND input_key match; if none matches, append a
+     new version (never overwrite an older run).
+   - Failed / Cancelled: if progress is None, keep the version's last progress
+     (never reset to 0). Success: progress 100.
+   - Row columns always mirror the latest run: user_id, client_id, status, progress,
+     requested_time, sub_step, event_time (only set at run start).
+   - requested_time: parse ISO strings ("Z" -> +00:00) to an aware UTC datetime; None if invalid.
+   - user_id: store as int when it is numeric, otherwise None.
+   - call flag_modified(row, "log_history") before commit; return the row id.
+   - No deletes anywhere.
+
+3. db/crud.py: keep/adjust only the genai_audit_log helpers needed above, and add
+   query_genai_audit_logs(db, user_id=None, step=None, sub_step=None, status=None,
+   start_time=None, end_time=None) returning rows filtered by any combination
+   (event_time range), ordered by event_time desc. No API endpoint.
+
+Do not modify any API files yet. No refactors, no formatting changes, no new files.
+When done show:
+1. git --no-pager diff --stat
+2. full git --no-pager diff of the 3 files
+3. py -m py_compile db/models.py db/crud.py db/db_operations_orm.py
+Do not git add or commit.
+
+-----------------------------------------------------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> uvicorn api_v1:app --host 0.0.0.0 --port 8080 --reload --log-level info --log-config config/logging.yaml
 2026-10-25 15:42:40,102 - uvicorn.error - INFO - Will watch for changes in these directories: ['C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi']
 2026-10-25 15:42:40,103 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
