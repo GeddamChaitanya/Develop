@@ -1,3 +1,24 @@
+HARD RULES: audit code only, no business logic or teammates' code changes.
+
+1. db/db_operations_orm.py run_genai_audit_log: when UPDATING a matching version,
+   only overwrite keys whose new value is not None (keep existing values for
+   requested_on, client_id, analysis_name, receiver_email, requested_by, message, etc.).
+   status, progress (per existing rules) and recorded_time always update.
+   Row columns must then mirror the merged latest version (so requested_time stays filled).
+2. apis/v1/capability_maps_generator.py: add "In Progress" audit checkpoints (same
+   try/except style and audit locals) at the existing progress stages of L1/L2/L3:
+   25 when generation starts, 75 after capabilities are generated, 85 when DB insertion
+   starts (match the progressPercentage values already published to Redis).
+   Do not change any existing publish/monitor code.
+3. In the capability map failure message, use the action value (e.g. "GENERATE_L1"),
+   not the enum repr ("CapabilityMapAction.GENERATE_L1").
+4. Check the other audited files (two_by_two, capability_double_click, industrial_map,
+   missing_client_capabilities, missing_capabilities, workforce_analyzer): if a flow has
+   only a start checkpoint before Success, add intermediate In Progress checkpoints at its
+   existing progress stages the same way. Report which files you changed.
+Show git --no-pager diff --stat, the diff, and py -m py_compile on changed files.
+Do not git add or commit.
+--------------------------------------------------------------------------------------------
 Select-String -Path apis/v1/workforce_analyzer.py -Pattern 'client_info\s*='
 
 -----------------------------------------------------------------------------------------
