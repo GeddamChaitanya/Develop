@@ -1,4 +1,75 @@
-git restore --staged --worktree --source=HEAD apis/v1/workforce_analyzer.py
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git restore --staged --worktree --source=HEAD apis/v1/workforce_analyzer.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   apis/v1/agentic_fit_allocator.py
+        modified:   apis/v1/capability_double_click.py
+        modified:   apis/v1/capability_maps_generator.py
+        modified:   apis/v1/industrial_map.py
+        modified:   apis/v1/missing_client_capabilities.py
+        modified:   apis/v1/two_by_two.py
+        modified:   db/db_operations_orm.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        deleted_ab51.txt
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py db/db_operations_orm.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Remove-Item deleted_ab51.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git commit -C ab51a4e
+[fix_asc_events_tracker b9891b4] feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files
+ Author: Chaitanya <gedchaitanya@deloitte.com>
+ Date: Fri Jul 3 18:55:53 2026 +0530
+ 7 files changed, 229 insertions(+), 8 deletions(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> got log --oneline -4
+got : The term 'got' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify 
+that the path is correct and try again.
+At line:1 char:1
++ got log --oneline -4
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (got:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git log --oneline -4
+b9891b4 (HEAD -> fix_asc_events_tracker) feat: PBI 88921 - GenAI Events Tracker - audit logging implemented across all spec-mandated route files
+8568ead WIP: PBI 88921 GenAI Event Tracker audit logging implementation
+fbeeb51 feat: PBI 88921 - GEN AI Events Tracker - initial implementation
+9cc1ad4 (origin/fix_asc_events_tracker) Merge pull request #239 from Deloitte-US-Consulting-HO/ascend/shubham/snykIssues
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git show --stat 566f71d
+commit 566f71db452d125155cfa9e724c8930fed29f8cb
+Author: Kumar Shubham <kshubham2@deloitte.com>
+Date:   Mon Jul 6 16:45:47 2026 +0530
+
+    feat: add receiverEmail and requestedOn to audit log in capability map generation
+
+ apis/v1/capability_maps_generator.py | 2 ++
+ 1 file changed, 2 insertions(+)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git cherry-pick -n 566f71d
+Auto-merging apis/v1/capability_maps_generator.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   apis/v1/capability_maps_generator.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        run.ps1
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-git restore --staged --worktree --source=HEAD apis/v1/workforce_analyzer.py
 py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py db/db_operations_orm.py
 ----------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -U0 | Select-String '^-[^-]' > deleted_ab51.txt
