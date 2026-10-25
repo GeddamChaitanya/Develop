@@ -1,3 +1,314 @@
+I’ll inspect the current tracker merge logic and each audited flow’s existing progress publications/checkpoints first. Then I’ll add only audit calls at those established stages, leaving Redis, monitor, status, and business-write code untouched.
+
+Ran terminal command: git status --short --branch; git --no-pager diff --stat -- db/db_operations_orm.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/missing_capabilities.py apis/v1/workforce_analyzer.py
+
+Searched for regex `publish_message\(|start_job\(|heartbeat_job\(|mark_generated\(|run_genai_audit_log\(` (`**/apis/v1/capability_maps_generator.py`), 12 results
+
+Searched for regex `progress_percentage=|progressPercentage|progress=|"InProgress"|"Started"|"Processing"` (`**/apis/v1/{two_by_two.py,capability_double_click.py,industrial_map.py,missing_client_capabilities.py,missing_capabilities.py,workforce_analyzer.py}`), 22 results
+
+Searched for text `run_genai_audit_log\(` (`**/apis/v1/{two_by_two.py,capability_double_click.py,industrial_map.py,missing_client_capabilities.py,missing_capabilities.py,workforce_analyzer.py}`), 22 results
+
+Read , lines 480 to 620
+
+The tracker’s current matching-version update overwrites fields with `None`, so that needs the requested merge behavior. Capability-map code already exposes progress stages 25/75/85 through `start_job`/`heartbeat_job`; I’m checking the other six files’ existing numeric progress stages before adding only corresponding audit updates.
+
+Searched for regex `progress_percentage|sub_step_progress_percentage|progress=|progressPercent|progress_percent` (`**/apis/v1/two_by_two.py`), 5 results
+
+Searched for regex `progress_percentage|sub_step_progress_percentage|progress=|progressPercent|progress_percent` (`**/apis/v1/capability_double_click.py`), 7 results
+
+Searched for regex `progress_percentage|sub_step_progress_percentage|progress=|progressPercent|progress_percent` (`**/apis/v1/industrial_map.py`), 3 results
+
+Searched for regex `progress_percentage|sub_step_progress_percentage|progress=|progressPercent|progress_percent` (`**/apis/v1/missing_client_capabilities.py`), 3 results
+
+Searched for regex `progress_percentage|sub_step_progress_percentage|progress=|progressPercent|progress_percent` (`**/apis/v1/missing_capabilities.py`), 3 results
+
+Searched for regex `progress_percentage|sub_step_progress_percentage|progress=|progressPercent|progress_percent` (`**/apis/v1/workforce_analyzer.py`), 13 results
+
+Searched for regex `run_genai_audit_log\(|versions\[matching_index\]` (`**/db/db_operations_orm.py`), 3 results
+
+Read , lines 370 to 535
+
+The existing numeric intermediate stages are: capability maps 25/75/85; CDC 10; two-by-two 50; workforce salary generation 50, salary update 25, and cost-saving generation 50. Industrial-map, missing-client, and missing-capabilities have no intermediate percentage values beyond their starts and final success. I’ll first fix matching-version merging so omitted metadata is preserved and row columns mirror the merged latest version.
+
+Generating patch (10 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py
+
+The tracker now merges only non-`None` version fields while always updating status, progress, and recorded time; row mirroring already reads from the merged latest version. Next I’m adding isolated audit updates at the capability-map flow’s existing 25/75/85 progress stages without altering the existing job, heartbeat, or publish calls.
+
+Generating patch (68 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py
+
+Capability-map 25/75/85 checkpoints compile. I’m checking the remaining files’ numbered status updates to add intermediate audit events only where a numeric stage already exists; routes with no intermediate numeric stage will remain start/success/failure only.
+
+Read , lines 105 to 135
+
+Read , lines 180 to 225
+
+Read , lines 475 to 510
+
+Read , lines 425 to 455
+
+Read , lines 485 to 515
+
+Read , lines 730 to 765
+
+Read , lines 590 to 625
+
+I’ll add the numeric-stage audit updates only where existing status code publishes percentages: CDC 10, two-by-two 50, and workforce 50/25/50. Industrial-map, missing-client, and utility generation expose no intermediate percentage stages, so I’ll leave them start/success/failure only. I’ll also make the capability-map failure message render the action value.
+
+Generating patch (60 lines) in , , 
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/capability_maps_generator.py apis/v1/two_by_two.py apis/v1/capability_double_click.py
+
+CDC 10% and two-by-two 50% intermediate audit checkpoints now compile; the capability-map failure message also emits the action’s `.value`. I’m adding workforce intermediate checkpoints at its existing salary 50%, salary-update 25%, and cost-saving 50% status stages, guarded to the audited salary/cost-saving actions.
+
+Generating patch (72 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile apis/v1/workforce_analyzer.py
+
+Intermediate checkpoints are in place at all explicit numeric stages found: capability maps 25/75/85, CDC 10, two-by-two 50, and workforce salary 50, salary update 25, cost-saving 50. The remaining audited routes have no numeric intermediate stage in their existing status/progress code to mirror. I’m running final checks over the five files edited in this request and capturing their diff.
+
+Ran terminal command: git --no-pager diff --stat -- db/db_operations_orm.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git --no-pager diff -- db/db_operations_orm.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git --no-pager diff --check -- db/db_operations_orm.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+Completed with input: git --no-pager diff --check -- db/db_operations_orm.py apis/v1/capability_maps_generator.py apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/workforce_analyzer.py
+Tool execution failed with exit code 1
+
+Searched for regex `progress=25|progress=75|progress=85|progress=50|progress=10|progress=100` (`**/apis/v1/{capability_maps_generator.py,two_by_two.py,capability_double_click.py,workforce_analyzer.py}`), 17 results
+
+Updated five files with audit-only changes. Existing progress and persistence logic remains unchanged. Industrial-map, missing-client-capabilities, and missing-capabilities have no numeric intermediate progress stages to mirror, so they were not changed.
+
+**Diff Stat**
+```text
+ apis/v1/capability_double_click.py   | 220 +++++++++++++++++-----------
+ apis/v1/capability_maps_generator.py | 228 ++++++++++++++++++++---------
+ apis/v1/two_by_two.py                | 126 +++++++++++-----
+ apis/v1/workforce_analyzer.py        | 199 ++++++++++++++++++++++++++
+ db/db_operations_orm.py              | 269 +++++++++++++++++++++++------------
+ 5 files changed, 762 insertions(+), 280 deletions(-)
+```
+
+The files already contained earlier uncommitted audit changes, so their complete working-tree diff includes those as well. The additions from this request are:
+
+```diff
+diff --git a/db/db_operations_orm.py b/db/db_operations_orm.py
+@@ matching-version update
+-            versions[matching_index].update(version_entry)
++            for key, value in version_entry.items():
++                if key in ("status", "progress", "recorded_time") or value is not None:
++                    matching_version[key] = value
+
+diff --git a/apis/v1/capability_maps_generator.py b/apis/v1/capability_maps_generator.py
+@@ wrapper failure message
+-                message=f"Capability map generation failed for action: {getattr(payload, 'action', None)}",
++                message=f"Capability map generation failed for action: {getattr(getattr(payload, 'action', None), 'value', getattr(payload, 'action', None))}",
+
+@@ after start_job(... progress_percentage=25)
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step="Capability Setup",
++                sub_step=f"Generate L{level} Capabilities",
++                status="In Progress",
++                progress=25,
++                message=f"Starting capability map generation for action: {action.value}",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++                genai_audit_log_id=genai_audit_log_id,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+
+@@ after heartbeat_job(... progress_percentage=75)
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step="Capability Setup",
++                sub_step=f"Generate L{level} Capabilities",
++                status="In Progress",
++                progress=75,
++                message=f"Generated L{level} capabilities for action: {action.value}",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++                genai_audit_log_id=genai_audit_log_id,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+
+@@ after heartbeat_job(... progress_percentage=85)
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step="Capability Setup",
++                sub_step=f"Generate L{level} Capabilities",
++                status="In Progress",
++                progress=85,
++                message=f"Inserting L{level} capabilities into DB for action: {action.value}",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++                genai_audit_log_id=genai_audit_log_id,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+
+diff --git a/apis/v1/capability_double_click.py b/apis/v1/capability_double_click.py
+@@ after the existing 10% substep status update
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step=audit_step,
++                sub_step=audit_sub_step,
++                status="In Progress",
++                progress=10,
++                message=f"Generating Capability Double Click for action: {analysis_type}",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++                genai_audit_log_id=genai_audit_log_id,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+
+diff --git a/apis/v1/two_by_two.py b/apis/v1/two_by_two.py
+@@ after the initial two-by-two audit checkpoint
++        try:
++            db_operations_orm.run_genai_audit_log(
++                step=step_name,
++                sub_step=analysis_type,
++                status="In Progress",
++                progress=50,
++                message=f"Generating Two by Two for action {analysis_type}",
++                input_key=audit_input_key,
++                substep_key=audit_substep_key,
++                user_id=audit_user_id,
++                client_id=audit_client_id,
++                requested_time=audit_requested_time,
++                receiver_email=audit_receiver_email,
++                analysis_name=audit_analysis_name,
++                genai_audit_log_id=genai_audit_log_id,
++            )
++        except Exception as audit_err:
++            track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+
+diff --git a/apis/v1/workforce_analyzer.py b/apis/v1/workforce_analyzer.py
+@@ after existing salary-generation 50% status update
++            if audit_enabled:
++                try:
++                    db_operations_orm.run_genai_audit_log(
++                        step=audit_step,
++                        sub_step=audit_sub_step,
++                        status="In Progress",
++                        progress=50,
++                        message=f"Salary analysis complete; saving results for action: {action}",
++                        input_key=audit_input_key,
++                        substep_key=audit_substep_key,
++                        user_id=audit_user_id,
++                        client_id=audit_client_id,
++                        requested_time=audit_requested_time,
++                        receiver_email=audit_receiver_email,
++                        analysis_name=audit_analysis_name,
++                    )
++                except Exception as audit_err:
++                    track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+
+@@ after existing salary-update 25% status update
++            if audit_enabled:
++                try:
++                    db_operations_orm.run_genai_audit_log(
++                        step=audit_step,
++                        sub_step=audit_sub_step,
++                        status="In Progress",
++                        progress=25,
++                        message=f"Updating workforce salary for action: {action}",
++                        input_key=audit_input_key,
++                        substep_key=audit_substep_key,
++                        user_id=audit_user_id,
++                        client_id=audit_client_id,
++                        requested_time=audit_requested_time,
++                        receiver_email=audit_receiver_email,
++                        analysis_name=audit_analysis_name,
++                    )
++                except Exception as audit_err:
++                    track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+
+@@ after existing workforce cost-saving 50% status update
++            if audit_enabled:
++                try:
++                    db_operations_orm.run_genai_audit_log(
++                        step=audit_step,
++                        sub_step=audit_sub_step,
++                        status="In Progress",
++                        progress=50,
++                        message=f"Calculating workforce cost-saving potential for action: {action}",
++                        input_key=audit_input_key,
++                        substep_key=audit_substep_key,
++                        user_id=audit_user_id,
++                        client_id=audit_client_id,
++                        requested_time=audit_requested_time,
++                        receiver_email=audit_receiver_email,
++                        analysis_name=audit_analysis_name,
++                    )
++                except Exception as audit_err:
++                    track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
+```
+
+`py -m py_compile` passed for the five changed files with no output. `git diff --check` reports pre-existing trailing whitespace in capability-map telemetry lines; I left those untouched. No files were staged or committed.
+
+Made changes.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HARD RULES: audit code only, no business logic or teammates' code changes.
 
 1. db/db_operations_orm.py run_genai_audit_log: when UPDATING a matching version,
