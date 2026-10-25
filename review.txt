@@ -1,3 +1,7 @@
+git restore --staged --worktree --source=HEAD api_v1.py apis/v1/agentic_fit_allocator.py schemas/agentic_fit_allocator.py
+git diff origin/ascend/develop --stat
+
+----------------------------------------------------------------------------------------
 c5apiv1.txt code : 
 
 diff --git a/api_v1.py b/api_v1.py
