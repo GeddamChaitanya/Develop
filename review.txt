@@ -1,3 +1,15 @@
+Understood. For GENERATE_ALL there is no DB write in this file, so:
+1. Add the Success audit checkpoint right after generate_all_levels_hierarchy() completes
+   and before the return (same audit locals and try/except style, progress=100,
+   message like "Generate All capabilities completed").
+   Also confirm this flow has a start ("In Progress") checkpoint and that its exception
+   path records Failed. If either is missing, add it in the same style.
+   Do not change the generation call, telemetry, or the return value.
+2. Now do item 2 (two_by_two.py wrapper: step=getattr(payload, "processName", None)).
+3. Now do item 3 (version number in run_genai_audit_log).
+Same HARD RULES. Show git --no-pager diff of only these changes and py -m py_compile on
+the changed files. Do not git add or commit.
+--------------------------------------------------------------------------------------------------------------------------------
 I’ll inspect the current `GENERATE_ALL` branch at its return boundary first. If it has no persistence write in this file, I’ll stop without editing any of the requested changes, as instructed.
 
 Read , lines 220 to 305
