@@ -1,3 +1,78 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -U0 | Select-String '^-[^-]' > deleted_ab51.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> code deleted_ab51.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -- apis/v1/workforce_analyzer.py
+diff --git a/apis/v1/workforce_analyzer.py b/apis/v1/workforce_analyzer.py
+index 348167e..6a2eaa4 100644
+--- a/apis/v1/workforce_analyzer.py
++++ b/apis/v1/workforce_analyzer.py
+@@ -862,6 +862,7 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+     except HTTPException:
+         raise
+     except Exception as exc:
++        _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else {}
+         track_operation_error(
+             "Workforce_Analyzer_API",
+             error=exc,
+@@ -869,7 +870,6 @@ async def workforce_analyzer(request: WorkforceAnalyzerRequest):
+         )
+         track_trace("Error in workforce analyzer", severity="Error")
+         await monitor.stop_progress()
+-        _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else {}
+         # Update substep status to error
+         failed_status_written = False
+         if "substepkey" in locals() and substepkey:               ^C                                                                       
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --cached -U4 | Select-String -Context 4,8 '^-\s+try:'
+   
+   
+           email_send(receiver_email, action, process_name=background_processing_data.get('processName'),  client_name=client_info.get('clientName') if client_info else None)
+   
+           if genai_audit_log_id:
+> -            try:
+  +            try:# Audit checkpoint: SUCCESS (agentic fit allocation completed)
+  +                
+                   db_operations_orm.run_genai_audit_log(
+                       step=input_data.processName,
+                       sub_step=input_data.input_name,
+                       progress=100,
+  @@ -704,9 +710,10 @@ async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+           track_trace("Error in agentic fit allocation", severity="Error")
+           await monitor.stop_progress()
+           _bg = background_processing_data if "background_processing_data" in locals() and background_processing_data else {}
+           if genai_audit_log_id:
+> -            try:
+  +            try:# Audit checkpoint: FAILED (exception handler)
+  +                
+                   db_operations_orm.run_genai_audit_log(
+                       step=input_data.processName,
+                       sub_step=input_data.input_name,
+                       progress=0,
+  diff --git a/apis/v1/capability_double_click.py b/apis/v1/capability_double_click.py
+  index 374395c..4abebc5 100644
+       except Exception as e:
+           error_message = f"Error processing input data: {str(e)}"
+           track_operation_error("CAPABILITY_DOUBLE_CLICK", error_message)
+           if genai_audit_log_id and _AUDIT_LOG_BY_REQUEST_ID.get(str(input_data.input_key)):
+> -            try:
+  +            try:# Audit checkpoint: FAILED (third/outer exception handler)
+  +                
+                   db_operations_orm.run_genai_audit_log(
+                       step=background_processing_data.get('step_name') or input_data.processName,
+                       sub_step=background_processing_data.get('category') or input_data.input_name,
+                       progress=0,
+  diff --git a/apis/v1/capability_maps_generator.py b/apis/v1/capability_maps_generator.py
+  index b9c3dd1..21c79ce 100644
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path db/db_operations_orm.py -Pattern 'flag_modified'
+   
+db\db_operations_orm.py:18:from sqlalchemy.orm.attributes import flag_modified
+db\db_operations_orm.py:476:      - JSONB log_history column requires flag_modified() after in-place mutations 
+db\db_operations_orm.py:522:        # CRITICAL: Use flag_modified() to tell SQLAlchemy the JSONB column changed.
+db\db_operations_orm.py:525:        flag_modified(existing_record, "log_history")
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+-----------------------------------------------------------------------------------------------------------------------
 git --no-pager diff --cached -U4 | Select-String -Context 4,8 '^-\s+try:'
 Select-String -Path db/db_operations_orm.py -Pattern 'flag_modified'
 py -m py_compile apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py db/db_operations_orm.py
