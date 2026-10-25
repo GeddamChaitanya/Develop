@@ -1,4 +1,8 @@
-
+git --no-pager diff --stat -- db/db_operations_orm.py
+git --no-pager diff 9cc1ad4 --ignore-all-space --stat -- db/db_operations_orm.py
+git --no-pager diff -U0 9cc1ad4 -- apis/v1/capability_maps_generator.py | Select-String '^[-+].*(store_json_to_blob|output|CapabilityMapGeneratorOutput|run_operations\()'
+git --no-pager diff 9cc1ad4 -- db/models.py
+-------------------------------------------------------------------------------------
 I’ll inspect the current tracker and query helper plus their existing diffs, then add only the requested docstrings and comments. I’ll keep all executable lines and indentation unchanged, and compile both modules afterward.
 
 Ran terminal command: git --no-pager diff -- db/db_operations_orm.py db/crud.py
