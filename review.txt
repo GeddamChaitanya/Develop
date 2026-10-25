@@ -1,3 +1,290 @@
+
+I’ll inspect the current tracker and query helper plus their existing diffs, then add only the requested docstrings and comments. I’ll keep all executable lines and indentation unchanged, and compile both modules afterward.
+
+Ran terminal command: git --no-pager diff -- db/db_operations_orm.py db/crud.py
+
+Read , lines 420 to 575
+
+Read , lines 1485 to 1525
+
+The requested logic is already present: the tracker computes a new version as the highest existing number plus one and copies the matched entry’s number on updates. I’ll add only the specified explanatory docstrings/comments at those exact points, without changing executable lines.
+
+Generating patch (87 lines) in , 
+
+
+```
+
+```
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py db/crud.py
+Completed with input: py -m py_compile db/db_operations_orm.py db/crud.py
+Tool execution failed with exit code 1
+
+Compilation found an indentation error after the comment insertion, so I’m inspecting the tracker function boundary and nearby edited comments. I’ll repair only the misplaced comment placement and keep executable code unchanged.
+
+Read , lines 415 to 510
+
+Generating patch (78 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py db/crud.py
+Completed with input: py -m py_compile db/db_operations_orm.py db/crud.py
+Tool execution failed with exit code 1
+
+The docstring indentation is corrected, but the same error remains at line 474, indicating a later inserted comment is misindented. I’m inspecting the rest of the audit function and will fix only comment indentation.
+
+Read , lines 455 to 555
+
+Read , lines 420 to 465
+
+The previous patch did not actually dedent the inserted docstring; the current function body still has eight-space indentation before the docstring and UTC comment. I’m replacing that exact block with the requested text at the function’s four-space body indentation, leaving the executable function lines untouched.
+
+Generating patch (80 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 430 to 510
+
+The patch tool reports success, but the function still shows the original misindented docstring, so I’m checking for duplicate text elsewhere before making another attempt. No executable code has been changed.
+
+Searched for regex `Create or update the GenAI audit log for one step|Normalize requestedOn|No delete operations` (`**/db/db_operations_orm.py`), 3 results
+
+Generating patch (7 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 430 to 445
+
+Read , lines 430 to 490
+
+Generating patch (76 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 430 to 485
+
+Generating patch (6 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 437 to 448
+
+Generating patch (26 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 437 to 460
+
+Generating patch (6 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 435 to 450
+
+Single-line replacement works, so I’m switching to uniquely anchored one-line dedents for each docstring line. This avoids broad patch matching and keeps the edit confined to the comment block; executable lines remain untouched.
+
+Generating patch (90 lines) in 
+
+
+```
+
+```
+
+
+Read , lines 433 to 490
+
+The issue is isolated to the docstring block; several one-line comment edits are already correctly placed. I’m checking the remaining comments and CRUD docstring once, then I’ll perform a bounded mechanical replacement of only the tracker docstring block while preserving the file’s existing newline style.
+
+Ran terminal command: $text = [System.IO.File]::ReadAllText('db/db_operations_orm.py', [System.Text.Encoding]::UTF8); if ($text.Contains("`r`n")) { 'CRLF' } else { 'LF' }
+
+Read , lines 480 to 580
+
+Read , lines 1500 to 1527
+
+The CRUD docstring and all inline comments are correctly placed; only the tracker docstring’s internal indentation remains inconsistent. I’ll mechanically replace just that bounded docstring block, preserving CRLF and UTF-8, then re-run compilation and inspect the comment-only diff.
+
+Ran terminal command: $path = 'db/db_operations_orm.py'
+$lines = [System.IO.File]::ReadAllLines($path, [System.Text.Encoding]::UTF8)
+$signature = [Array]::IndexOf($lines, 'def run_genai_audit_log(')
+if ($signature -lt 0) { throw 'run_genai_audit_log signature not found' }
+$docStart = -1
+for ($i = $signature + 1; $i -lt $lines.Length; $i++) { if ($lines[$i].Trim() -eq '"""') { $docStart = $i; break } }
+if ($docStart -lt 0) { throw 'Audit docstring start not found' }
+$docEnd = -1
+for ($i = $docStart + 1; $i -lt $lines.Length; $i++) { if ($lines[$i].Trim() -eq '"""') { $docEnd = $i; break } }
+if ($docEnd -lt 0) { throw 'Audit docstring end not found' }
+$docLines = @(
+'    """',
+'    Create or update the GenAI audit log for one step / sub step, with per-run version history.',
+'',
+'    Design ( to save storage):',
+'      - ONE row per (step, sub_step). Every GenAI run is stored as a version entry in',
+'        log_history = {"versions": [...], "total_runs": N}.',
+'      - "In Progress" with no open run for the same substep_key + input_key -> appends a',
+'        new version (new run) and sets event_time (backend start time, UTC).',
+'      - Progress / Success / Failed / Cancelled -> updates the latest version with the same',
+'        substep_key + input_key; if none matches, a new version is appended so older runs',
+'        are never overwritten.',
+'      - Failed / Cancelled keep the last known progress (never reset to 0). Success = 100.',
+'      - Row columns (user_id, client_id, status, progress, requested_time) always mirror',
+'        the latest run, so the table stays queryable for reporting.',
+'',
+'    Parameters:',
+'      user_id: app user key (userId / CreatedByUserKey); if missing, looked up from',
+'               receiver_email via app_user. Stored as int.',
+'      step / sub_step: names from the request (processName, step name, input name).',
+'      progress / status / message: current checkpoint state.',
+'      requested_time: requestedOn from the UI (UTC); stored in requested_time.',
+'      input_key / substep_key: identify the run inside the step''s history.',
+'      receiver_email: requester email (also used for the user lookup).',
+'      client_id: Ascend project key (projectKey / projectInfo.projectKey).',
+'      analysis_name: process / analysis name from the payload (replaces job_id).',
+'      genai_audit_log_id: kept for backward compatibility; matching uses step/sub_step.',
+'',
+'    Returns:',
+'      int: genai_audit_log_id of the row.',
+'',
+'    Notes:',
+'      - Uses get_audit_db(), not get_db(): audit logs live in the separate audit database',
+'        (different connection string), business data stays in the main DB.',
+'      - Callers wrap this in try/except, so an audit failure never breaks the GenAI job.',
+'      - No delete operations: audit records are retained permanently (PBI requirement).',
+'    """'
+)
+$prefix = @($lines[0..($docStart - 1)])
+$suffix = @($lines[($docEnd + 1)..($lines.Length - 1)])
+$updated = @($prefix) + @($docLines) + @($suffix)
+$encoding = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($path, [string]::Join("`r`n", $updated) + "`r`n", $encoding)
+
+Read , lines 430 to 490
+
+The bounded rewrite now shows the requested docstring at the correct indentation, with the rest of the tracker body intact. I’m verifying every requested inline comment and the CRUD docstring, then I’ll run the exact compile command and capture the zero-context diff.
+
+Read , lines 490 to 590
+
+Searched for regex `Normalize requestedOn|Safely convert ids|user_id fallback|Serialize concurrent|Find the latest version|A new run starts|Success = 100|Version numbers continue|Row columns mirror|CRITICAL: flag_modified` (`**/db/db_operations_orm.py`), 11 results
+
+Read , lines 1503 to 1527
+
+Read , lines 588 to 615
+
+All requested comments are present, including both lines above `flag_modified()`, and the CRUD docstring is the function’s first statement. I’m running the requested compile and capturing the zero-context diff for the two files; their output will include older uncommitted audit changes, so I’ll call that out separately from these comment-only additions.
+
+Ran terminal command: py -m py_compile db/db_operations_orm.py db/crud.py
+
+Ran terminal command: git --no-pager diff -U0 -- db/db_operations_orm.py db/crud.py
+
+Ran terminal command: git --no-pager diff --check -- db/db_operations_orm.py db/crud.py
+
+Added only the requested docstrings and comments in this pass; executable code lines were not changed. Compilation passed for both files, and `git diff --check` is clean. No staging or commit was performed.
+
+The zero-context file diff also contains earlier uncommitted audit-code changes in these files. These are the comment/docstring additions from this pass:
+
+```diff
+diff --git a/db/db_operations_orm.py b/db/db_operations_orm.py
+@@ run_genai_audit_log
++    """
++    Create or update the GenAI audit log for one step / sub step, with per-run version history.
++
++    Design ( to save storage):
++      - ONE row per (step, sub_step). Every GenAI run is stored as a version entry in
++        log_history = {"versions": [...], "total_runs": N}.
++      - "In Progress" with no open run for the same substep_key + input_key -> appends a
++        new version (new run) and sets event_time (backend start time, UTC).
++      - Progress / Success / Failed / Cancelled -> updates the latest version with the same
++        substep_key + input_key; if none matches, a new version is appended so older runs
++        are never overwritten.
++      - Failed / Cancelled keep the last known progress (never reset to 0). Success = 100.
++      - Row columns (user_id, client_id, status, progress, requested_time) always mirror
++        the latest run, so the table stays queryable for reporting.
++
++    Parameters:
++      user_id: app user key (userId / CreatedByUserKey); if missing, looked up from
++               receiver_email via app_user. Stored as int.
++      step / sub_step: names from the request (processName, step name, input name).
++      progress / status / message: current checkpoint state.
++      requested_time: requestedOn from the UI (UTC); stored in requested_time.
++      input_key / substep_key: identify the run inside the step's history.
++      receiver_email: requester email (also used for the user lookup).
++      client_id: Ascend project key (projectKey / projectInfo.projectKey).
++      analysis_name: process / analysis name from the payload (replaces job_id).
++      genai_audit_log_id: kept for backward compatibility; matching uses step/sub_step.
++
++    Returns:
++      int: genai_audit_log_id of the row.
++
++    Notes:
++      - Uses get_audit_db(), not get_db(): audit logs live in the separate audit database
++        (different connection string), business data stays in the main DB.
++      - Callers wrap this in try/except, so an audit failure never breaks the GenAI job.
++      - No delete operations: audit records are retained permanently (PBI requirement).
++    """
++    # Normalize requestedOn (ISO string / datetime) to aware UTC.
++...
++    # Safely convert ids (user_id / client_id) to int; None if not numeric.
++...
++    # user_id fallback: resolve app_user.user_key from receiver_email (read-only, main DB).
++...
++        # Serialize concurrent runs of the same step/sub_step (lock released at commit).
++...
++        # Find the latest version of THIS run (same substep_key + input_key).
++...
++        # A new run starts when "In Progress" arrives and no open run exists for these keys.
++...
++        # Success = 100; Failed/Cancelled without progress keep the last known progress.
++...
++            # Version numbers continue from the highest existing one.
++...
++        # Row columns mirror the latest run for reporting queries.
++...
++        # CRITICAL: flag_modified() tells SQLAlchemy the JSONB column changed.
++        # Without it, in-place changes to log_history are not persisted to PostgreSQL.
+
+diff --git a/db/crud.py b/db/crud.py
+@@ query_genai_audit_logs
++    """Read-only reporting query on genai_audit_log; filter by any combination of
++    user_id, step, sub_step, status and event_time range. Newest first."""
+```
+
+`py -m py_compile `db_operations_orm.py` db/crud.py` completed with no output.
+
+Made changes.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 git --no-pager diff -U0 9cc1ad4 -- apis/v1/capability_maps_generator.py | Select-String '^[-+].*(store_json_to_blob|output|CapabilityMapGeneratorOutput|run_operations\()'
 
 git --no-pager diff 9cc1ad4 -- db/models.py
