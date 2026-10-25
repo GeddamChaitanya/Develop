@@ -1,3 +1,55 @@
+
+suspecious.txt : 
+
+
+-            finally:
+-                finally:
+-                finally:
+-            raise
+-        error_message = f"Error processing input data: {str(e)}"
+-        track_operation_error("CAPABILITY_DOUBLE_CLICK", error_message)
+-            finally:
+-            finally:
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 -- apis | Select-String '^-[^-]' | Select-String -NotMatch 'audit|run_genai_audit_log|step=|sub_step=|progress=|status=|message=|requested_|user_id=|client_id=|input_key=|substep_key=|receiver_email=|analysis_name=|ggit --no-pager diff -U0 -- apis | Select-String '^[-+]\s+step^C > suspicious.txt
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 -- apis | Select-String '^[-+]\s+step='
+   
+-                    step=input_data.processName,
++                step=input_data.processName,
+-                    step=input_data.processName,
++                step=input_data.processName,
+-                    step=getattr(payload, 'processName', None) or "Capability Double Click",
++                step=audit_step,
+-                step=background_processing_data.get('step_name') or input_data.processName,
++                step=audit_step,
+-                        step=background_processing_data.get('step_name') or input_data.processName,
++                    step=audit_step,
+-                        step=background_processing_data.get('step_name') or input_data.processName,
+-                    step=background_processing_data.get('step_name') or input_data.processName,
++                    step=audit_step,
++                step=audit_step,
+-                    step="Capability Setup",
++                step="Capability Setup",
+-                        step="Capability Setup",
+-                    step="Capability Setup",
++                step="Capability Setup",
+-                step=background_processing_data.get("step_name") or "Industrial Map Generation",
++                step=audit_step,
+-                    step=background_processing_data.get("step_name") or "Industrial Map Generation",
++                step=audit_step,
+-                step=(_bg or {}).get("step_name") or "Industrial Map Generation",
++                step=audit_step,
+-                    step=payload.processName,
++                step=audit_analysis_name,
+-                        step=step_name,
++                    step=step_name,
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 git --no-pager diff -U0 -- apis | Select-String '^-[^-]' | Select-String -NotMatch 'audit|run_genai_audit_log|step=|sub_step=|progress=|status=|message=|requested_|user_id=|client_id=|input_key=|substep_key=|receiver_email=|analysis_name=|genai_audit_log_id|^-\s*$|^-\s*\)\s*$|^-\s*try:\s*$|^-\s*except' > suspicious.txt
 
 git --no-pager diff -U0 -- apis | Select-String '^[-+]\s+step='
