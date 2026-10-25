@@ -1,3 +1,9 @@
+I’ll inspect the current `GENERATE_ALL` branch at its return boundary first. If it has no persistence write in this file, I’ll stop without editing any of the requested changes, as instructed.
+
+Read , lines 220 to 305
+
+The `GENERATE_ALL` flow has no final persistence write in `capability_maps_generator.py`. It awaits `generate_all_levels_hierarchy()`, records operation telemetry, then returns `CapabilityMapGeneratorOutput(capability_maps=flattened or [])`. There is no database write before that return, so I stopped without editing any files or proceeding with the other two changes. No diff or compile command was run.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HARD RULES: audit code only. Do NOT change business logic or teammates' code.
 No refactors, no formatting changes. If anything needs non-audit code, STOP and tell me.
 
