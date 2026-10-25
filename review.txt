@@ -1,4 +1,8 @@
+git --no-pager diff -U0 -- apis/v1/capability_double_click.py | Select-String '^\+\s+raise\s*$'
 
+
+Select-String -Path apis/v1/*.py -Pattern '_AUDIT_LOG_BY_REQUEST_ID'
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
   -                    receiver_email=None,
   -                    requested_by="0",
   -                    requested_on=None,
