@@ -1,3 +1,11 @@
+Hi Nisarg, quick update on the GenAI Events Tracker.
+
+As you mentioned, I’ve added all the tracker code changes to Ascend, including the new add-ons. I tested with dummy payloads, but a few flows need exact keys. I tried to take real payloads from the Ascend UI instance, but it was down due to an issue. A couple of hours ago I got the access and the required DB strings, so I can now take payloads from there.
+
+The one remaining step is creating the table on the Ascend audit DB. The SQL script is ready. For the migration script I hit a license issue, so I’m creating it in VS Code instead. Once the table is in place, I’ll wrap up testing and raise the PR.
+
+Tomorrow I’ll sync with Shubham on the Fit vs Dollar PBI. That’s it from my end, thanks.”
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- genai_audit_log for Ascend dev audit DB (aab_db_auditlog_eno0000j)
 -- Same structure as AEF (aab_db_auditlog_dev) + client_id. Idempotent; creates only, never drops.
 CREATE TABLE IF NOT EXISTS genai_audit_log (
