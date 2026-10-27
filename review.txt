@@ -1,3 +1,10 @@
+Hi Abhilipsa, a small correction to my earlier message: the default is used. Two places in the code:
+
+db/models.py: status = Column(String(50), nullable=False, server_default='In Progress'). When a new step/sub step row is first inserted, run_genai_audit_log does db.add(record) + db.flush() before setting status, so the INSERT uses this DB default to satisfy NOT NULL. In the same transaction it then sets the actual status from the latest run (In Progress / Success / Failed) and commits.
+db/db_operations_orm.py: run_genai_audit_log(..., status="In Progress", ...). The function’s default is In Progress, and every API start checkpoint passes status="In Progress" explicitly.
+
+So a run always begins as “In Progress”, and the DB default keeps the first insert valid. I’ll keep NOT NULL DEFAULT 'In Progress' in the migration so it matches the model.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Hi Abhilipsa, I checked. The genaiapi code has no create_all / ALTER / CREATE TABLE (the only CREATE TABLE is an in-memory SQLite unit test), and I didn’t run any manual DDL on aab_db_dev. My local runs only read and wrote rows.
 
 From my local logs on 25 Oct, both against aab_db_dev: at 15:15 and 15:44 IST, survey_response.client_id worked and project_supporting_file didn’t exist. At 21:01 IST, survey_response.client_id was gone and project_supporting_file existed. So the schema seems to have changed between ~15:45 and 21:00 IST on 25 Oct, likely a migration or seed run against the AEF DB. Faiz/Balram may know if a deployment or seed ran then. Since yesterday I’m only using the Ascend DB strings.
