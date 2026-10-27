@@ -1,3 +1,11 @@
+READ-ONLY. Do not edit any file.
+1. Find the status lifecycle file in this repo (search *status_lifecycle*.py, *lifecycle*.py,
+   or files defining "Not Yet Started" / "In Progress" status constants). Show its path and
+   list every status value it defines, with exact spelling and casing.
+2. Confirm the exact string used for the "not yet started" status.
+3. Show every place where the GenAIAuditLog status default is set:
+   db/models.py (server_default) and db/db_operations_orm.py (run_genai_audit_log defaults).
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 Hi Abhilipsa, a small correction to my earlier message: the default is used. Two places in the code:
 
 db/models.py: status = Column(String(50), nullable=False, server_default='In Progress'). When a new step/sub step row is first inserted, run_genai_audit_log does db.add(record) + db.flush() before setting status, so the INSERT uses this DB default to satisfy NOT NULL. In the same transaction it then sets the actual status from the latest run (In Progress / Success / Failed) and commits.
