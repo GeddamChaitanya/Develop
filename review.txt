@@ -1,3 +1,7 @@
+Hi Abhilipsa, I checked. The genaiapi code has no create_all / ALTER / CREATE TABLE (the only CREATE TABLE is an in-memory SQLite unit test), and I didn’t run any manual DDL on aab_db_dev. My local runs only read and wrote rows.
+
+From my local logs on 25 Oct, both against aab_db_dev: at 15:15 and 15:44 IST, survey_response.client_id worked and project_supporting_file didn’t exist. At 21:01 IST, survey_response.client_id was gone and project_supporting_file existed. So the schema seems to have changed between ~15:45 and 21:00 IST on 25 Oct, likely a migration or seed run against the AEF DB. Faiz/Balram may know if a deployment or seed ran then. Since yesterday I’m only using the Ascend DB strings.
+---------------------------------------------------------------------------------------------------------------------------------------------------
 Get-ChildItem -Recurse -Filter *.py | Where-Object { $_.FullName -notmatch '\\.venv\\' } | Select-String -Pattern 'create_all|metadata\.create|ALTER TABLE|add_column|CREATE TABLE'
 -----------------------
 Select-String -Path db\*.py, api_v1.py, utilities\*.py -Pattern 'create_all|metadata\.create|ALTER TABLE|add_column'
