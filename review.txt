@@ -1,3 +1,5 @@
+Select-String -Path db\*.py, api_v1.py, utilities\*.py -Pattern 'create_all|metadata\.create|ALTER TABLE|add_column'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 User Story:
 As a user, I want to switch between 2X2 and Fit vs Dollar views in the AI Prioritization step so that I can compare capabilities based on their fit score and cost savings opportunity.
 
