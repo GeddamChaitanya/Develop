@@ -1,3 +1,11 @@
+Hi Abhilipsa, status update:
+
+PR #1647 is updated with project_id.
+EF setup is ready on my side (EF tools, .NET 9 runtime, Ascend dev audit DB connection). I did a dry run only, and nothing was applied.
+The genaiapi tracker is updated to project_id and compiles. I’ll test it end to end once the table is created.
+
+Before running database update, one point: the Ascend audit DB has no __EFMigrationsHistory table, so EF lists all three AuditLog migrations as pending (InitialAuditLogSchema, RenameClientIdToProjectId and ours). Running it directly would try to re-run the first two on the existing tables. Should we mark those two as applied first, or run only our migration’s SQL? Once you confirm, I’ll run it and start testing.
+--------------------------------------------------------------------------------------------------------------------------------
 dotnet build Backend\AgenticAIBlueprinting.Data\AgenticAIBlueprinting.Data.csproj
 git add Backend/AgenticAIBlueprinting.Data/Migrations/AuditLog/20261027100000_GenAiAuditLogTable.cs
 git commit -m "fix: PBI 88921 - use project_id instead of client_id for Ascend"
