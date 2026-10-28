@@ -1,3 +1,5 @@
+  CREATE INDEX IF NOT EXISTS ix_genai_audit_log_project_id ON genai_audit_log (project_id);
+-----------------------------------------------------------------
 dotnet ef migrations list --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI --connection $auditConn
 -0------------------------------------------------------------------------------------------------------------------
 \Users\gedchaitanya\asc_tracker_mgs\aai-bpt-maincodebase> $auditConn = "Host=ccon-westus3-eno0000j-pgsql.postgres.database.azure.com;Port=5432;Database=aab_db_auditlog_eno0000j;Username=postgresadmin;Password=IzhPw6grV0Et;SSL Mode=Require"
