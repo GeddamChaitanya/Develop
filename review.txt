@@ -1,3 +1,7 @@
+git add Backend/AgenticAIBlueprinting.Data/Migrations/AuditLog/20261027100000_GenAiAuditLogTable.cs
+
+git commit -m "feat: PBI 88921 - add genai_audit_log migration (audit DB)"
+------------------------------------------------------------------------------------------------------------------
 Switched to branch 'main'
 Your branch is up to date with 'origin/main'.
 PS C:\Users\gedchaitanya\asc_tracker_mgs\aai-bpt-maincodebase> git switch ascend/Chaitanya/Mig_Script_Events_Tracker
