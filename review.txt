@@ -1,3 +1,13 @@
+Do not edit any file and do not run any command that changes a database. Proposal only.
+Goal: apply ONLY the EF migration 20261027100000_GenAiAuditLogTable (AuditLogDbContext,
+project Backend\AgenticAIBlueprinting.Data, startup Backend\AgenticAIBlueprinting.WebAPI)
+to the database in $auditConn, WITHOUT running 20250428000001_InitialAuditLogSchema and
+20260717132207_RenameClientIdToProjectId (their tables already exist, created outside EF,
+and __EFMigrationsHistory does not exist).
+Using only dotnet ef CLI commands (no direct SQL in pgAdmin, no code changes), is there a
+way to skip those two migrations? If yes, give me the exact command(s) and explain what each
+does. If dotnet ef has no option to skip earlier pending migrations, say so clearly.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Hi Abhilipsa, I checked the Ascend audit DB (read-only, nothing changed).
 
 The three audit tables (audit_log, audit_events, audit_event_categories) exist, but their columns don’t match the EF AuditLog migrations. They were created outside EF, and there’s no __EFMigrationsHistory table. So running database update directly would fail on the first migration. Screenshot attached.
