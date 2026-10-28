@@ -1,3 +1,36 @@
+gned) ; (& c:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Scripts\Activate.ps1)                     
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> . .\run.ps1                                          
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 HEAD -- apis db | Select-String '^\+.*project_id' | Select-String -NotMatch 'audit_project_id|project_id=audit_project_id|"project_id"|record\.project_id|project_id=None|project_id:|project_id\b.*Integer|parse_integer\(project_id\)|normalized_project_id'
+   
++      - Row columns (user_id, project_id, status, progress, requested_time) always mirror
++    # Safely convert ids (user_id / project_id) to int; None if not numeric.
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path db\db_operations_orm.py -Pattern 'project_id' | Select-Object LineNumber, Line
+   
+LineNumber Line                                                                                                        
+---------- ----                                                                                                        
+       433     project_id=None,                                                                                        
+       449       - Row columns (user_id, project_id, status, progress, requested_time) always mirror                   
+       460       project_id: Ascend project key (projectKey / projectInfo.projectKey).                                 
+       491     # Safely convert ids (user_id / project_id) to int; None if not numeric.                                
+       502     normalized_project_id = parse_integer(project_id)                                                       
+       567             "project_id": normalized_project_id,                                                            
+       601         record.project_id = latest_version.get("project_id")                                                
+      1212 def read_survey_responses_by_project_id(project_id: int):                                                   
+      1216     ``survey_response`` (filtered by *project_id*) so that every active                                     
+      1233             {"operation": "read_survey_responses_by_project_id", "project_id": project_id},                 
+      1235         print(f"--- Reading survey responses for project_id: {project_id} ---")                             
+      1237         results = crud.get_survey_responses_by_project_id(db, project_id)                                   
+      1241             print(f"Retrieved {len(results)} survey question(s), {answered} answered for project_id: {pro...
+      1243                 "project_id": project_id,                                                                   
+      1249             print(f"No survey questions found for project_id: {project_id}")                                
+      1251                 f"DB_Read: No survey questions found for project_id: {project_id}",                         
+      1252                 {"project_id": project_id},                                                                 
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+--------------------------------------------
 git --no-pager diff -U0 HEAD -- apis db | Select-String '^\+.*project_id' | Select-String -NotMatch 'audit_project_id|project_id=audit_project_id|"project_id"|record\.project_id|project_id=None|project_id:|project_id\b.*Integer|parse_integer\(project_id\)|normalized_project_id'
 
 Select-String -Path db\db_operations_orm.py -Pattern 'project_id' | Select-Object LineNumber, Line
