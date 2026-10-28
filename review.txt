@@ -1,3 +1,19 @@
+No. `dotnet ef` has no option to skip earlier pending migrations when applying a later one. EF compares the database’s `__EFMigrationsHistory` with the migration sequence and applies every migration through the requested target that it considers pending.
+
+For example, this command would **not** apply only the GenAI migration:
+
+```powershell
+dotnet ef database update 20261027100000_GenAiAuditLog `
+  --context AuditLogDbContext `
+  --project Backend\AgenticAIBlueprinting.Data `
+  --startup-project Backend\AgenticAIBlueprinting.WebAPI `
+  --connection $auditConn
+```
+
+Because the history table is absent, EF would treat the earlier migrations as pending and attempt to apply them too. Given that their tables already exist, that could fail on existing objects. I did not run any command.
+
+With your constraints, there is no CLI-only command to safely record those earlier migrations as already applied and then apply just the target migration. Doing that requires changing the migration/history state outside the normal `database update` flow, which the EF CLI does not offer as a skip option.
+------------------------------------------------------------------------------------------------------------------------------------------------------
 Do not edit any file and do not run any command that changes a database. Proposal only.
 Goal: apply ONLY the EF migration 20261027100000_GenAiAuditLogTable (AuditLogDbContext,
 project Backend\AgenticAIBlueprinting.Data, startup Backend\AgenticAIBlueprinting.WebAPI)
