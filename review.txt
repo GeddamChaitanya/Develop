@@ -1,3 +1,7 @@
+git --no-pager diff -U0 HEAD -- apis db | Select-String '^\+.*project_id' | Select-String -NotMatch 'audit_project_id|project_id=audit_project_id|"project_id"|record\.project_id|project_id=None|project_id:|project_id\b.*Integer|parse_integer\(project_id\)|normalized_project_id'
+
+Select-String -Path db\db_operations_orm.py -Pattern 'project_id' | Select-Object LineNumber, Line
+---------------------------------------------------------------------------------
 I’ll trace the audit-log model and call sites, make only the requested naming changes, then run `py -m py_compile` on changed Python files and report `git --no-pager diff --stat`.
 
 Read memory
