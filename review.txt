@@ -1,3 +1,14 @@
+READ-ONLY. Do not edit any file and do not run any dotnet ef command.
+In Backend/AgenticAIBlueprinting.Data/Migrations/AuditLog, read the Up() methods of:
+  1. 20250428000001_InitialAuditLogSchema.cs
+  2. 20260717132207_RenameClientIdToProjectId.cs
+For each migration, list every table, column (name + type + nullability), index, primary key,
+foreign key and sequence it creates or renames.
+Then write ONE read-only PostgreSQL query script (only SELECTs on information_schema / pg_indexes)
+that checks whether each of those objects exists in the database, returning
+object_type | object_name | expected_by_migration | exists (true/false).
+Also include a check for the "__EFMigrationsHistory" table.
+------------------------------------------------------------------------------------------------
 Hi Abhilipsa, status update:
 
 PR #1647 is updated with project_id.
