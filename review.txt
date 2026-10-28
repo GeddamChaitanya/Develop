@@ -1,3 +1,6 @@
+dotnet build Backend\AgenticAIBlueprinting.Data\AgenticAIBlueprinting.Data.csproj
+
+------------------------------------------------------------------------
 using AgenticAIBlueprinting.Data.AuditLog;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
