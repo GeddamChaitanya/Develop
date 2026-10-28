@@ -1,4 +1,12 @@
-  CREATE INDEX IF NOT EXISTS ix_genai_audit_log_project_id ON genai_audit_log (project_id);
+Audit code only. Rename the GenAI audit log client_id to project_id:
+- db/models.py GenAIAuditLog: client_id column -> project_id = Column(Integer, nullable=True)
+- db/db_operations_orm.py run_genai_audit_log: parameter client_id -> project_id; version key
+  "client_id" -> "project_id"; row column record.client_id -> record.project_id; update the docstring.
+- db/crud.py query_genai_audit_logs: if it filters client_id, rename to project_id.
+- All apis/v1/*.py audit calls: client_id=... -> project_id=... and audit_client_id -> audit_project_id.
+Do not change any other code. Show git --no-pager diff --stat and py -m py_compile on changed files.
+--------------------------------------------------------
+CREATE INDEX IF NOT EXISTS ix_genai_audit_log_project_id ON genai_audit_log (project_id);
 -----------------------------------------------------------------
 dotnet ef migrations list --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI --connection $auditConn
 -0------------------------------------------------------------------------------------------------------------------
