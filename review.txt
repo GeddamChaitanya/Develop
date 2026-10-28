@@ -1,3 +1,10 @@
+Base: the Ascend branch. Check which branch other recent Ascend PRs in this repo target.
+Reviewer: Abhilipsa.
+Title: PBI 88921 - Add genai_audit_log migration (Ascend audit DB)
+Description:
+
+Adds EF migration 20261027100000_GenAiAuditLogTable (AuditLogDbContext) under Backend/AgenticAIBlueprinting.Data/Migrations/AuditLog. Creates genai_audit_log in the audit DB: same structure as AEF + client_id, status default ‘Not yet Started’, indexes on step/sub_step, user_id, client_id, status and event_time. Idempotent (IF NOT EXISTS), raw SQL only; no entity or snapshot change, since the table is written by the Python GenAI API. Build passes.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 git add Backend/AgenticAIBlueprinting.Data/Migrations/AuditLog/20261027100000_GenAiAuditLogTable.cs
 
 git commit -m "feat: PBI 88921 - add genai_audit_log migration (audit DB)"
