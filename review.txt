@@ -1,3 +1,12 @@
+Hi Abhilipsa, I checked the Ascend audit DB (read-only, nothing changed).
+
+The three audit tables (audit_log, audit_events, audit_event_categories) exist, but their columns don’t match the EF AuditLog migrations. They were created outside EF, and there’s no __EFMigrationsHistory table. So running database update directly would fail on the first migration. Screenshot attached.
+
+Our migration only creates the new genai_audit_log table and doesn’t touch these tables. How should we apply it?
+
+Add history rows for the first two migrations, then run database update (only ours runs), or
+Run only our migration’s SQL.
+---------------------------------------------------------------------------------------------------------------
 SELECT table_name, column_name, data_type, character_maximum_length, is_nullable
 FROM information_schema.columns
 WHERE table_schema = 'public'
