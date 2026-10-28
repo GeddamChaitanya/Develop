@@ -1,3 +1,100 @@
+I’ll trace the audit-log model and call sites, make only the requested naming changes, then run `py -m py_compile` on changed Python files and report `git --no-pager diff --stat`.
+
+Read memory
+
+Searched for files matching `**/AGENTS.md`, no matches
+
+Searched for regex `client_id|audit_client_id|run_genai_audit_log|query_genai_audit_logs` (`**/db/**/*.py`), 11 results
+
+Searched for regex `client_id|audit_client_id|run_genai_audit_log|query_genai_audit_logs` (`**/apis/v1/**/*.py`), 103 results
+
+Read 
+
+The audit-log model and ORM path still store/read `client_id`, while eight API modules pass `audit_client_id`; `models.py` also has a separate earlier `client_id` mapping that I’ll leave untouched. I’m checking the exact CRUD filter and audit method block now; a focused disconfirming check after the rename is that no old audit-log keyword/attribute remains in these requested paths and the changed files compile.
+
+Searched for regex `audit_client_id|client_id\s*=|client_id|\.client_id` (`**/apis/v1/**/*.py`), 61 results
+
+Read , lines 370 to 400
+
+Read , lines 410 to 620
+
+Read , lines 1480 to 1527
+
+Ran terminal command: git status --short; rg -n "run_genai_audit_log\(|audit_client_id|GenAIAuditLog\.client_id|record\.client_id|client_id.*query_genai_audit_logs|query_genai_audit_logs\(" --glob "*.py"
+Completed with input: git status --short; rg -n "run_genai_audit_log\(|audit_client_id|GenAIAuditLog\.client_id|record\.client_id|client_id.*query_genai_audit_logs|query_genai_audit_logs\(" --glob "*.py"
+Tool execution failed with exit code 1
+
+Those target files already have uncommitted changes, so I’m preserving them and checking their diffs before editing. The ripgrep executable isn’t available in this PowerShell session; I’ll use Git’s search and diff output to avoid disturbing unrelated work.
+
+Ran terminal command: git --no-pager diff -- db/models.py db/db_operations_orm.py db/crud.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_capabilities.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py; git grep -n -E "run_genai_audit_log\(|audit_client_id|GenAIAuditLog\.client_id|record\.client_id|query_genai_audit_logs\(" -- "*.py"
+
+Read , lines 1 to 260
+
+Ran terminal command: git grep -n -E "client_id|audit_client_id|run_genai_audit_log\(" -- db/models.py db/db_operations_orm.py db/crud.py apis/v1 tests
+
+Read 
+
+The scope is clean: eight API modules contain only audit-log `audit_client_id` variables and `client_id=` audit keywords; the ORM file’s remaining `client_id` references are all in this audit function. `query_genai_audit_logs` currently has no client filter, so I’ll leave CRUD unchanged and apply only the requested identifier replacements, preserving the existing unrelated dirty edits.
+
+Ran terminal command: $encoding = New-Object System.Text.UTF8Encoding($false)
+function Replace-Checked([string]$text, [string]$old, [string]$new, [string]$path) {
+    $count = [regex]::Matches($text, [regex]::Escape($old)).Count
+    if ($count -eq 0) { throw "Expected text not found in $path`: $old" }
+    return $text.Replace($old, $new)
+}
+$apiFiles = @(
+    'apis/v1/agentic_fit_allocator.py',
+    'apis/v1/capability_double_click.py',
+    'apis/v1/capability_maps_generator.py',
+    'apis/v1/industrial_map.py',
+    'apis/v1/missing_capabilities.py',
+    'apis/v1/missing_client_capabilities.py',
+    'apis/v1/two_by_two.py',
+    'apis/v1/workforce_analyzer.py'
+)
+foreach ($path in $apiFiles) {
+    $text = [System.IO.File]::ReadAllText((Join-Path $PWD $path), [System.Text.Encoding]::UTF8)
+    $text = Replace-Checked $text 'audit_client_id' 'audit_project_id' $path
+    $text = Replace-Checked $text 'client_id=' 'project_id=' $path
+    [System.IO.File]::WriteAllText((Join-Path $PWD $path), $text, $encoding)
+}
+$ormPath = 'db/db_operations_orm.py'
+$ormText = [System.IO.File]::ReadAllText((Join-Path $PWD $ormPath), [System.Text.Encoding]::UTF8)
+$ormText = Replace-Checked $ormText 'client_id' 'project_id' $ormPath
+[System.IO.File]::WriteAllText((Join-Path $PWD $ormPath), $ormText, $encoding)
+$modelPath = 'db/models.py'
+$modelText = [System.IO.File]::ReadAllText((Join-Path $PWD $modelPath), [System.Text.Encoding]::UTF8)
+$modelText = Replace-Checked $modelText '    client_id = Column(Integer, nullable=True)' '    project_id = Column(Integer, nullable=True)' $modelPath
+[System.IO.File]::WriteAllText((Join-Path $PWD $modelPath), $modelText, $encoding)
+'Updated only requested audit-log identifiers.'
+
+Ran terminal command: py -m py_compile db/models.py db/db_operations_orm.py db/crud.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_capabilities.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+
+Ran terminal command: git grep -n -E "audit_client_id|client_id|record\.client_id" -- db/models.py db/db_operations_orm.py apis/v1
+
+The rename is in place, and the focused compile passed for the ORM/model/CRUD files and all eight API modules. A scoped search now finds no old audit-log identifier; the only remaining `client_id` in those paths is a separate model column mapping, which I preserved. I’m collecting the requested diff stat now.
+
+Ran terminal command: git --no-pager diff --stat
+
+Renamed the audit-log field and ORM version key to `project_id`, updated the ORM docstring and row assignment, and changed audit arguments in all eight API modules. `query_genai_audit_logs` has no `client_id` filter, so I left it unchanged. The other `client_id` model mapping is unrelated and remains untouched.
+
+`py -m py_compile` passed for the scoped Python files. The requested diff stat reflects the worktree’s existing uncommitted changes as well as this rename:
+
+```text
+ apis/v1/agentic_fit_allocator.py       | 158 +++++++++++--------
+ apis/v1/capability_double_click.py     | 220 ++++++++++++++++-----------
+ apis/v1/capability_maps_generator.py   | 228 ++++++++++++++++++++--------
+ apis/v1/industrial_map.py              |  85 +++++++----
+ apis/v1/missing_capabilities.py        |  59 ++++++++
+ apis/v1/missing_client_capabilities.py |  54 +++++--
+ apis/v1/two_by_two.py                  | 126 ++++++++++-----
+ apis/v1/workforce_analyzer.py          | 199 ++++++++++++++++++++++++
+ db/crud.py                             |  38 ++++-
+ db/db_operations_orm.py                | 269 +++++++++++++++++++++------------
+ db/models.py                           |   9 +-
+ 11 files changed, 1051 insertions(+), 394 deletions(-)
+```
+--------------------------------------------------------------------------------------------------------------------------------------------------
 Audit code only. Rename the GenAI audit log client_id to project_id:
 - db/models.py GenAIAuditLog: client_id column -> project_id = Column(Integer, nullable=True)
 - db/db_operations_orm.py run_genai_audit_log: parameter client_id -> project_id; version key
