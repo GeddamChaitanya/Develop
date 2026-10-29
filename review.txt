@@ -1,3 +1,12 @@
+the migration is applied on the Ascend dev audit DB via EF. Only genai_audit_log was created; the first two migrations were just recorded in __EFMigrationsHistory, and the existing audit tables are unchanged. Files are restored and nothing extra is committed. Starting genaiapi testing now.
+-----------------------------------------------------------------------------------------------------------------------------
+SELECT genai_audit_log_id, user_id, project_id, step, sub_step, progress, status,
+       requested_time AT TIME ZONE 'Asia/Kolkata' AS requested_ist,
+       event_time     AT TIME ZONE 'Asia/Kolkata' AS event_ist,
+       log_history -> 'versions' -> -1 AS latest_version
+FROM genai_audit_log
+ORDER BY genai_audit_log_id DESC;
+--------------------------------------------------------------------------------------------------------------------
 2026-10-29 11:29:09,616 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
 2026-10-29 11:29:09,661 - uvicorn.error - INFO - Started server process [36500]
 2026-10-29 11:29:09,662 - uvicorn.error - INFO - Waiting for application startup.
