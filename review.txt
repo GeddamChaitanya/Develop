@@ -1,4 +1,94 @@
-Audit labels only. Do not change any business logic.
+Read skill `python-fact-grounded-coding`
+Completed with input: {"skill":"python-fact-grounded-coding"}
+
+I’ll check the audit labels, update only the requested client-capability labels, and report the industrial-map fallbacks and any older naming still present. Then I’ll show the diff and run the requested compile check. No commit.
+
+
+Ran terminal command: git --no-pager status --short; git --no-pager diff -- apis\v1\missing_client_capabilities.py apis\v1\industrial_map.py
+
+Search for `run_genai_audit_log|step|Client Capability|Industrial Map|Industry Map`
+
+Find files matching `**/*instructions*`
+
+Read tool output
+Completed with input: {
+  "path": "C:\\Users\\GEDCHA~1\\AppData\\Local\\Temp\\1793267510897-copilot-tool-output-9244-71b37d2b-7cf4-4d1c-b62d-81402981c46b.txt",
+  "view_range": [
+    1,
+    220
+  ]
+}
+
+Search for `run_genai_audit_log\(`
+
+Read , lines 120 to 195
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\industrial_map.py",
+  "view_range": [
+    120,
+    195
+  ]
+}
+
+Search for `(?i)client capability map|industry map|industrial map`
+
+All three client-capability audit calls use `"Client Capability Map Generation"` with `sub_step=None`. I’ll change only those three labels and preserve the existing worktree changes. The industrial-map audit step falls back to `"Industrial Map Generation"`; all three sub-steps are `None`. Older names also remain in progress messages, logs, and email labels.
+
+
+Edit 
+
+Ran terminal command: git --no-pager diff -- apis\v1\missing_client_capabilities.py; py -m py_compile apis\v1\missing_client_capabilities.py; if ($LASTEXITCODE -eq 0) { Write-Output 'py_compile: PASS' } else { exit $LASTEXITCODE }
+
+Search for `step="Project Capability Map"|sub_step=None|step_name.*Industrial Map|audit_s...`
+
+Search Tools
+
+"pylanceFileSyntaxErrors" failed
+Completed with input: {
+  "fileUri": "file:///C:/Users/gedchaitanya/fix_asc_tracker/aai-bpt-genaiapi/apis/v1/missing_client_capabilities.py"
+}
+Tool execution failed: MCP server 'pylance mcp server': workspaceRoot is required for the pylanceFileSyntaxErrors MCP tool. Pass workspaceRoot or configure a default workspace root.
+
+pylanceFileSyntaxErrors
+Completed with input: {
+  "fileUri": "file:///C:/Users/gedchaitanya/fix_asc_tracker/aai-bpt-genaiapi/apis/v1/missing_client_capabilities.py",
+  "workspaceRoot": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi"
+}
+
+### Audit-label report
+
+Updated all **3** `run_genai_audit_log` calls in `missing_client_capabilities.py`:
+- `step`: `"Client Capability Map Generation"` → `"Project Capability Map"`
+- `sub_step`: remains `None` in every call.
+
+Only those three strings were changed by me. No business logic changed; existing worktree changes were preserved. **No commit created.**
+
+### Industrial-map labels — unchanged
+
+In `industrial_map.py`:
+
+| Field | Current behavior |
+|---|---|
+| `step_name` | `input_data.process_name or "Industrial Map Generation"` |
+| `audit_step` | `background_processing_data.get("step_name") or "Industrial Map Generation"` |
+| Audit `sub_step` | `None` in all three calls; no fallback string |
+
+### Older names still present
+
+Yes—the inspected code still uses older terminology:
+- **Client capability map** remains in `loading/log messages` and progress text.
+- **Industry map** remains in `progress messages` and `email labels`.
+- **Industrial Map Generation** remains the fallback above.
+
+These confirm current code terminology, not necessarily the team’s agreed naming. All were left unchanged.
+
+### Validation
+
+- Ran and displayed `git --no-pager diff -- apis\v1\missing_client_capabilities.py`. It includes pre-existing edits alongside the three label replacements.
+- `py -m py_compile apis\v1\missing_client_capabilities.py` — **PASS**
+- Pylance syntax check — **no syntax errors**.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-Audit labels only. Do not change any business logic.
 1. apis/v1/missing_client_capabilities.py: in every run_genai_audit_log call, change the
    hard-coded step label "Client Capability Map Generation" (or similar "Client Capability Map"
    text) to "Project Capability Map". Keep sub_step as is unless it also says "Client";
