@@ -1,3 +1,6 @@
+dotnet ef database update --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI --connection $auditConn
+
+
 $auditConn -replace 'Password=[^;]*','Password=****'
 
 dotnet ef migrations list --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI --connection $auditConn
