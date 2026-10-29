@@ -1,4 +1,7 @@
-
+SELECT * FROM blueprinting_process_sub_step_input
+WHERE sub_step_key = 960
+ORDER BY 1 DESC;
+------------------------------------------------------------------------------------------------------------------------------------
 2026-10-29 11:51:41,344 - uvicorn.access - INFO - 127.0.0.1:63306 - "POST /api/v1/capability_maps_generator HTTP/1.1" 422
 2026-10-29 11:54:17,177 - uvicorn.access - INFO - 127.0.0.1:49674 - "POST /api/v1/capability_maps_generator HTTP/1.1" 202
 [TRACE] Received input_data: {"ID":"capability-setup-454-20261029","projectKey":1,"projectCapabilityMapKey":null,"projectName":"
