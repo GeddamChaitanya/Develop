@@ -1,3 +1,11 @@
+SELECT count(*) FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name IN ('audit_events','audit_event_categories','audit_log');
+
+
+SELECT to_regclass('public.genai_audit_log') AS genai_table,
+       to_regclass('public."__EFMigrationsHistory"') AS history_table;
+------------------------------------------------------------------------------------------------------------------------------------------
 No. `dotnet ef` has no option to skip earlier pending migrations when applying a later one. EF compares the database’s `__EFMigrationsHistory` with the migration sequence and applies every migration through the requested target that it considers pending.
 
 For example, this command would **not** apply only the GenAI migration:
