@@ -1,3 +1,640 @@
+Read skill `python-fact-grounded-coding`
+Completed with input: {"skill":"python-fact-grounded-coding"}
+
+I’ll trace the audit lifecycle for each trigger, check naming within the audit code, and inspect the requested leftovers. I’ll keep this read-only and distinguish verified behavior from gaps or assumptions.
+
+
+Ran terminal command: git --no-pager status --short; git --no-pager branch --show-current
+
+Search for `run_genai_audit_log\(`
+
+Search for `class GenAIAuditLog|def .*genai_audit_log|def run_genai_audit_log`
+
+Find files matching `**/{run.ps1,preview.sql,test_output_*.json}`
+
+Find files matching `.vscode/**`
+
+Read , lines 380 to 420
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\models.py",
+  "view_range": [
+    380,
+    420
+  ]
+}
+
+Read , lines 1410 to 1595
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\crud.py",
+  "view_range": [
+    1410,
+    1595
+  ]
+}
+
+Read , lines 422 to 620
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\db_operations_orm.py",
+  "view_range": [
+    422,
+    620
+  ]
+}
+
+Search for `client_id|clientKey|ClientKey|clientInfo|client_key|clientName|client_name|Cl...`
+
+Read , lines 590 to 620
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\db_operations_orm.py",
+  "view_range": [
+    590,
+    620
+  ]
+}
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+for p in sorted(Path('apis\\v1').glob('*.py')):
+    text=p.read_text(encoding='utf-8-sig'); tree=ast.parse(text); parents={c:n for n in ast.walk(tree) for c in ast.iter_child_nodes(n)}
+    calls=[n for n in ast.walk(tree) if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='run_genai_audit_log']
+    if not calls: continue
+    print('\nFILE',p)
+    for n in sorted(calls,key=lambda x:x.lineno):
+        a=n; fn=''; guards=[]; tr=None
+        while a in parents:
+            a=parents[a]
+            if isinstance(a,(ast.FunctionDef,ast.AsyncFunctionDef)): fn=a.name;break
+            if isinstance(a,ast.If): guards.append(ast.unparse(a.test))
+            if isinstance(a,ast.Try) and tr is None: tr=a
+        kws={k.arg:ast.unparse(k.value) for k in n.keywords}
+        print(n.lineno,fn,' | '.join(k+'='+kws.get(k,'OMITTED') for k in ['step','sub_step','status','progress']))
+        print(' guards:', '; '.join(guards) or '-',' handlers:', '; '.join(ast.unparse(h) for h in tr.handlers) if tr else 'NO TRY')
+    for n in sorted(ast.walk(tree),key=lambda n:getattr(n,'lineno',0)):
+        if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id.startswith('audit_') for t in n.targets): print(' LOCAL',n.lineno,ast.unparse(n))
+'@ | py -
+
+Search for `client_id|clientKey|ClientKey|clientInfo|client_key|clientName|client_name|Cl...`
+
+Search for `TEMP DEBUG|test.only|DEBUG|print\(`
+
+Read tool output
+Completed with input: {
+  "path": "C:\\Users\\GEDCHA~1\\AppData\\Local\\Temp\\1793280461008-copilot-tool-output-9244-df0121a4-ece7-4737-a005-a56c79cf580a.txt",
+  "view_range": [
+    1,
+    95
+  ]
+}
+
+Read tool output
+Completed with input: {
+  "path": "C:\\Users\\GEDCHA~1\\AppData\\Local\\Temp\\1793280461008-copilot-tool-output-9244-df0121a4-ece7-4737-a005-a56c79cf580a.txt",
+  "view_range": [
+    96,
+    190
+  ]
+}
+
+Read tool output
+Completed with input: {
+  "path": "C:\\Users\\GEDCHA~1\\AppData\\Local\\Temp\\1793280461008-copilot-tool-output-9244-df0121a4-ece7-4737-a005-a56c79cf580a.txt",
+  "view_range": [
+    191,
+    290
+  ]
+}
+
+Search for `TEMP DEBUG|test.only|DEBUG|print\(`
+
+Ran terminal command: git ls-files --cached --others --exclude-standard -- run.ps1 .vscode '*test_output_*.json' '*preview.sql'; git ls-files --others --ignored --exclude-standard -- '*test_output_*.json' '*preview.sql'
+
+Read , lines 225 to 310
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_maps_generator.py",
+  "view_range": [
+    225,
+    310
+  ]
+}
+
+Read , lines 370 to 465
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_maps_generator.py",
+  "view_range": [
+    370,
+    465
+  ]
+}
+
+Read , lines 470 to 600
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_maps_generator.py",
+  "view_range": [
+    470,
+    600
+  ]
+}
+
+Read , lines 65 to 250
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\missing_capabilities.py",
+  "view_range": [
+    65,
+    250
+  ]
+}
+
+Search for `genai_audit_log|GenAIAuditLog`
+
+Read , lines 48 to 92
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\two_by_two.py",
+  "view_range": [
+    48,
+    92
+  ]
+}
+
+Read , lines 95 to 240
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\two_by_two.py",
+  "view_range": [
+    95,
+    240
+  ]
+}
+
+Read , lines 270 to 380
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\two_by_two.py",
+  "view_range": [
+    270,
+    380
+  ]
+}
+
+Read , lines 245 to 285
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_double_click.py",
+  "view_range": [
+    245,
+    285
+  ]
+}
+
+Read , lines 330 to 355
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_double_click.py",
+  "view_range": [
+    330,
+    355
+  ]
+}
+
+Read , lines 630 to 760
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_double_click.py",
+  "view_range": [
+    630,
+    760
+  ]
+}
+
+Read , lines 400 to 505
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\agentic_fit_allocator.py",
+  "view_range": [
+    400,
+    505
+  ]
+}
+
+Read , lines 685 to 774
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\agentic_fit_allocator.py",
+  "view_range": [
+    685,
+    774
+  ]
+}
+
+Read , lines 900 to 985
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\workforce_analyzer.py",
+  "view_range": [
+    900,
+    985
+  ]
+}
+
+Read , lines 1035 to 1090
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\workforce_analyzer.py",
+  "view_range": [
+    1035,
+    1090
+  ]
+}
+
+Read , lines 375 to 445
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\industrial_map.py",
+  "view_range": [
+    375,
+    445
+  ]
+}
+
+Read , lines 950 to 1075
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\missing_client_capabilities.py",
+  "view_range": [
+    950,
+    1075
+  ]
+}
+
+The lifecycle review found two significant audit gaps: 2×2 failures use a different step/sub-step from their Start call, and WFA records Success before its final status write. All 42 audit calls have dedicated warning handlers, but two handlers also reset a local audit ID, so “only logs a warning” is not strictly true. I’ll finish checking history/UTC behavior and leftovers before compiling the report.
+
+
+Search for `TEMP DEBUG|TEMP_DEBUG|test.only|DEBUG|print\(`
+
+Search for `raise HTTPException|run_operations_status|return |audit_enabled`
+
+Search for `client_id|clientKey|ClientKey|clientInfo|client_key|clientName|client_name|Cl...`
+
+Read , lines 90 to 150
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_maps_generator.py",
+  "view_range": [
+    90,
+    150
+  ]
+}
+
+Read , lines 610 to 680
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_maps_generator.py",
+  "view_range": [
+    610,
+    680
+  ]
+}
+
+Read , lines 210 to 245
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\missing_capabilities.py",
+  "view_range": [
+    210,
+    245
+  ]
+}
+
+Search for `(?i)temp.?debug|test.only|debug|print\([^\n]*(secret|password|token|api.?key|...`
+
+Ran terminal command: @'
+import ast,re
+from pathlib import Path
+paths=[Path('run.ps1'),Path('.vscode\\settings.json'),Path('preview.sql'),Path('test_output_l1_capabilities.json')]
+for p in paths:
+ print('ARTIFACT',p,'exists='+str(p.exists()))
+ if p.exists() and p.suffix in ('.ps1','.json'):
+  for i,line in enumerate(p.read_text(encoding='utf-8-sig').splitlines(),1):
+   if re.search(r'(?i)secret|password|token|api.?key|connection|debug|test|uvicorn|python|env|port',line):
+    if re.search(r'(?i)secret|password|token|api.?key|connection',line): print(' ',i,'[potential credential-related line; value withheld]')
+    else: print(' ',i,line)
+for p in [Path('db\\models.py'),Path('db\\crud.py'),Path('db\\db_operations_orm.py')]:
+ tree=ast.parse(p.read_text(encoding='utf-8-sig'))
+ for n in tree.body:
+  if isinstance(n,(ast.ClassDef,ast.FunctionDef)) and ('genai_audit_log' in n.name or n.name=='GenAIAuditLog'):
+   text='\n'.join(p.read_text(encoding='utf-8-sig').splitlines()[n.lineno-1:n.end_lineno])
+   hits=[(i+n.lineno,line.strip()) for i,line in enumerate(text.splitlines()) if re.search(r'client_id|clientKey|ClientKey|clientInfo|client_key|clientName|client_name|Client Capability Map|Industrial Map|\bprint\(|\bdelete\b',line)]
+   print('AUDIT_HELPER_HITS',p,n.name,hits)
+'@ | py -
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+for p in sorted(Path('apis\\v1').glob('*.py')):
+ tree=ast.parse(p.read_text(encoding='utf-8-sig')); calls=[n for n in ast.walk(tree) if isinstance(n,ast.Call) and getattr(n.func,'attr','')=='run_genai_audit_log']
+ if not calls: continue
+ print('\n',p)
+ for n in sorted(ast.walk(tree),key=lambda n:getattr(n,'lineno',0)):
+  if isinstance(n,ast.Call) and (getattr(n.func,'attr','').startswith(('run_operations','update_capability_map')) or getattr(n.func,'attr','')=='run_genai_audit_log'):
+   print(n.lineno, getattr(n.func,'attr',''),'; '.join(k.arg+'='+ast.unparse(k.value) for k in n.keywords if k.arg in ['status','progress']))
+'@ | py -
+
+Ran terminal command: @'
+import ast,datetime
+from pathlib import Path
+from types import SimpleNamespace
+p=Path('db\\db_operations_orm.py')
+tree=ast.parse(p.read_text(encoding='utf-8-sig'))
+fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='run_genai_audit_log')
+class Record:
+ def __init__(self,**kwargs):
+  self.__dict__.update(kwargs);self.genai_audit_log_id=1;self.event_time=datetime.datetime.utcnow();self.log_history=None
+class Session:
+ def __init__(self): self.records={}
+ def execute(self,*a,**kw): pass
+ def add(self,r): self.records[(r.step,r.sub_step)]=r
+ def flush(self): pass
+ def commit(self): pass
+ def refresh(self,r): pass
+ def rollback(self): pass
+ def close(self): pass
+session=Session();lookups=[]
+class Crud:
+ @staticmethod
+ def get_genai_audit_log_by_step(db,step,sub_step,for_update=False): return db.records.get((step,sub_step))
+ @staticmethod
+ def get_user_by_email(db,email): lookups.append(email); return SimpleNamespace(user_key=22)
+ns={'datetime':datetime,'get_audit_db':lambda:iter([session]),'get_db':lambda:iter([session]),'crud':Crud,'GenAIAuditLog':Record,'text':lambda s:s,'flag_modified':lambda *a:None,'track_trace':lambda *a,**kw:None}
+exec(compile(ast.Module(body=[fn],type_ignores=[]),'<read-only audit helper extraction>','exec'),ns)
+run=ns['run_genai_audit_log']; common=dict(step='Test',sub_step=None,input_key=1,substep_key=2,project_id=1,requested_time='2026-10-29T18:00:00+05:30')
+run(status='In Progress',progress=10,**common);run(status='In Progress',progress=50,**common);run(status='Failed',**common)
+r=session.records[('Test',None)];v=r.log_history['versions'][0]
+assert r.progress==50 and v['progress']==50 and v['status']=='Failed'
+assert r.requested_time.isoformat()=='2026-10-29T12:30:00+00:00' and r.event_time.utcoffset()==datetime.timedelta(0)
+assert r.project_id==1 and v['project_id']==1 and 'client_id' not in v
+run(status='In Progress',progress=10,**common);run(status='Success',progress=25,**common)
+assert len(session.records)==1 and len(r.log_history['versions'])==2 and r.log_history['total_runs']==2 and r.progress==100
+print('PASS: sequential row reuse, retry versions, Failed retains 50%, Success forces 100%, UTC offset conversion, nullable substep, project_id in row/history')
+run(step='EmailActor',status='In Progress',user_id='[tester@example.com](mailto:tester@example.com)',receiver_email='[tester@example.com](mailto:tester@example.com)')
+assert session.records[('EmailActor',None)].user_id is None and not lookups
+print('CONFIRMED GAP: email-valued user_id becomes None without email lookup; fallback runs only when user_id is None')
+run(step='EarlyFailure',status='Failed')
+print('MODEL-DEFAULT SIMULATION: failure-only row event_time timezone =',session.records[('EarlyFailure',None)].event_time.tzinfo)
+'@ | py -
+
+Ran terminal command: @'
+import ast,re
+from pathlib import Path
+count=0;bad=[];extras=[]
+for p in Path('apis\\v1').glob('*.py'):
+ tree=ast.parse(p.read_text(encoding='utf-8-sig'));parents={c:n for n in ast.walk(tree) for c in ast.iter_child_nodes(n)}
+ for n in ast.walk(tree):
+  if not (isinstance(n,ast.Call) and getattr(n.func,'attr','')=='run_genai_audit_log'):continue
+  count+=1;a=n
+  while a in parents and not isinstance(a,ast.Try): a=parents[a]
+  if not isinstance(a,ast.Try): bad.append((str(p),n.lineno,'no try'));continue
+  for h in a.handlers:
+   for stmt in h.body:
+    if not (isinstance(stmt,ast.Expr) and isinstance(stmt.value,ast.Call) and getattr(stmt.value.func,'id','')=='track_trace' and any(k.arg=='severity' and isinstance(k.value,ast.Constant) and k.value.value=='Warning' for k in stmt.value.keywords)):
+     extras.append((str(p),n.lineno,ast.unparse(stmt)))
+print('Audit calls:',count,'Missing try:',bad,'Non-warning handler statements:',extras)
+p=Path('run.ps1')
+for i,line in enumerate(p.read_text(encoding='utf-8-sig').splitlines(),1):
+ if re.search(r'(?i)secret|password|token|key|connection|DB_string|instrumentation',line):
+  name=re.search(r'\$env:([A-Za-z0-9_]+)',line)
+  if name: print('run.ps1',i,'env variable',name.group(1),'commented='+str(line.lstrip().startswith('#')),'[value withheld]')
+'@ | py -
+
+Search for `TEMP DEBUG|TEMP_DEBUG|test.only|print\(`
+
+Ran terminal command: git --no-pager status --short; Get-ChildItem -LiteralPath . -File -Filter 'test_output_*.json' | Select-Object -ExpandProperty Name; Get-ChildItem -LiteralPath . -File -Filter 'preview.sql' | Select-Object -ExpandProperty Name
+
+Read , lines 300 to 327
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\capability_double_click.py",
+  "view_range": [
+    300,
+    327
+  ]
+}
+
+Read , lines 260 to 302
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\workforce_analyzer.py",
+  "view_range": [
+    260,
+    302
+  ]
+}
+
+Read , lines 146 to 205
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\industrial_map.py",
+  "view_range": [
+    146,
+    205
+  ]
+}
+
+Read , lines 150 to 218
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\missing_client_capabilities.py",
+  "view_range": [
+    150,
+    218
+  ]
+}
+
+Search for `TEMP DEBUG|TEMP_DEBUG|test.only|print\(`
+
+Read tool output
+Completed with input: {
+  "path": "C:\\Users\\GEDCHA~1\\AppData\\Local\\Temp\\1793280461008-copilot-tool-output-9244-df0121a4-ece7-4737-a005-a56c79cf580a.txt",
+  "view_range": [
+    286,
+    322
+  ]
+}
+
+Read , lines 1120 to 1169
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\db_operations_orm.py",
+  "view_range": [
+    1120,
+    1169
+  ]
+}
+
+Ran terminal command: @'
+import ast
+from pathlib import Path
+for p in sorted(Path('apis\\v1').glob('*.py')):
+ tree=ast.parse(p.read_text(encoding='utf-8-sig'))
+ for n in ast.walk(tree):
+  if isinstance(n,ast.Call) and getattr(n.func,'attr','')=='run_genai_audit_log':
+   kv={k.arg:ast.unparse(k.value) for k in n.keywords}
+   missing=[k for k in ['user_id','project_id','requested_time','input_key','substep_key','receiver_email','analysis_name'] if k not in kv]
+   if missing: print(p,n.lineno,'missing',missing)
+print('Completed keyword surface check.')
+'@ | py -
+
+## Read-only audit report
+
+**Branch:** `fix_asc_events_tracker`  
+**Scope checked:** audit model, CRUD helpers, audit writer, and **42 audit calls across 8 API files**, including their audit context and nearby write ordering.
+
+**No files edited, no jobs triggered, no database connections made.** Validation used source/AST inspection and an in-memory execution of the extracted audit helper with fake database objects.
+
+## Part 1 — PBI coverage
+
+“Progress” below means an **intermediate audit checkpoint**, not Redis/UI progress. “Final DB write” includes the final substep-status write, not just output persistence.
+
+| Trigger | File/function | Start? | Progress? | Success after final DB write? | Failed, without progress reset? |
+|---|---|---|---|---|---|
+| Industry Map | `industrial_map_generator` | Yes, 10%; **after file loading** | No; 10 → 100 | Yes, after industry-map writes | Yes; progress omitted |
+| Capability Generation Utility | `generate_missing_capabilities` | Yes, 10% | No; 10 → 100 | Yes, after utility output-write call | Yes, but early failure can encounter uninitialized audit locals |
+| Project/Client Capability Map | `generate_missing_client_capabilities` | Yes, 10% | No; 10 → 100 | After map-update call; **returned record not required to be non-null** | Yes; progress omitted |
+| Capability Setup L1/L2/L3 | `generate_capability_map` | Yes, 0% | Yes: 25, 75, 85 | **Partial:** after output write, but before final status write at line 622 | Yes, through runner; progress omitted |
+| Capability Setup — Generate All | `generate_capability_map` | Yes, 10% | No; 10 → 100 | **Not established:** branch records Success and returns generated data without an output DB-write call | Yes, through runner; progress omitted |
+| AI Identifier — L1 OpEx | `agentic_fit_allocation` | Yes, 10% | Yes, 50% | Yes, after output and final status writes | Yes; cleanup runs before Failed audit |
+| AI Identifier — L2 OpEx | `agentic_fit_allocation` | Yes, 10% | Yes, 50% | Yes | Yes; same cleanup caveat |
+| AI Identifier — L3 OpEx | `agentic_fit_allocation` | Yes, 10% | Yes, 50% | Yes | Yes; same cleanup caveat |
+| Cost Savings Potential — AI Identifier | `agentic_fit_allocation` | Yes, 10% | Yes, 90% | Yes | Yes; same cleanup caveat |
+| L3 Capability Salary — WFA | `workforce_analyzer` | Yes, 10% | Yes, 50% | **Partial:** Success at 584 follows output write, but final status write is at 977 | Yes once audit enabled; early/HTTPException paths are gaps |
+| Salary Cost Savings Potential — WFA | `workforce_analyzer` | Yes, 10% | Yes, 50% | **Partial:** Success at 948 precedes final status write at 977 | Yes once audit enabled; same gaps |
+| AI Prioritization — 2×2 | `generate_two_by_two` | Yes, 0% | Yes, 50% | Yes | **Incorrect identity:** runner uses different step/sub-step; original run can remain In Progress |
+| CDC | `generate_capability_double_click` | Yes, 0% | Yes, 10% | Yes | Inner/outer calls preserve progress; runner additionally writes a differently keyed failure |
+
+### Shared audit requirements
+
+| Requirement | Finding |
+|---|---|
+| One row per `step/sub_step` | **Implemented through the writer:** advisory transaction lock and lookup by both fields. However, the `model` has **no declared unique constraint** for that pair. Direct CRUD creates can bypass the writer’s protection. Existing DB constraints were not inspected. |
+| Versions in `log_history` | **Yes.** `The writer` maintains `versions` and `total_runs`, updating a matching run or appending a retry version. |
+| `event_time` UTC | **Normal Start path: yes**, using timezone-aware UTC. **Not guaranteed on failure-only/direct-create paths:** `model default` is naive `datetime.datetime.utcnow`; the writer explicitly sets aware `event_time` only when `starts_new_run` is true. |
+| `requested_time` UTC | **Yes for valid input.** `Parser` converts offsets to UTC and treats naive timestamps as UTC. Invalid strings become `None` without a warning. |
+| Nullable `sub_step` | **Yes.** Model permits null, and `lookup` explicitly handles SQL NULL. |
+| Failed does not reset progress | **All current Failed call sites omit `progress`.** The helper preserves the matching version’s progress. This depends on matching the same audit identity/run keys. |
+| No audit deletes | **No explicit audit delete operation found** in the inspected source or repository references to `GenAIAuditLog`/`genai_audit_log`. External SQL, DB retention jobs, and permissions were not verified. |
+| Reporting filters | `query_genai_audit_logs` supports `user_id`, `step`, `sub_step`, `status`, and inclusive `event_time` bounds, newest first. These filter **row/latest state**, not historical versions. `sub_step=None` means “no filter,” not “NULL substeps only.” |
+| Every audit call has its own warning-only exception handler | **42/42 have dedicated try/except handlers logging Warning.** Strictly, two handlers also assign `genai_audit_log_id=None`: `Industry Map` and `Project Capability Map`. No handler rethrows or writes business data. |
+
+**In-memory checks passed:** sequential row reuse, retry-version creation, Failed retaining 50%, Success forcing 100%, UTC offset conversion, nullable substep, and `project_id` in row/history. These checks do **not** substitute for PostgreSQL integration testing.
+
+---
+
+## Part 2 — Ascend naming
+
+**Classification**
+- **A:** audit code or a value directly supplying audit labels/context.
+- **B:** existing business/storage/email/telemetry/comment code; leave unchanged for this audit-only task.
+
+Repeated hits with the same expression are grouped; every matching line is listed. Code excerpts are abbreviated.
+
+### Matching naming strings in instrumented API files
+
+| File | Line(s) | Code excerpt | Class / assessment |
+|---|---:|---|---|
+| `industrial_map.py` | 146 | `"step_name": input_data.process_name or "Industrial Map Generation"` | **A — shared audit input.** Legacy fallback feeds `audit_step`; approved replacement label is not established by code. |
+| `industrial_map.py` | 155 | `audit_step = ... or "Industrial Map Generation"` | **A — audit label.** Same naming-policy question. Do not automatically replace with workspace terminology. |
+| `industrial_map.py` | 84 | Commented `summary="Generate Industrial Map"` | **B** — route documentation/comment |
+| `industrial_map.py` | 399, 475 | `email_send(..., client_name=None, ...)` | **B** — email API |
+| `industrial_map.py` | 466 | `f"Error in Industrial Map Generation: ..."` | **B** — notification text |
+| `agentic_fit_allocator.py` | 220 | `AgenticFitAllocator(client_info.get('clientName'), ...)` | **B** — business initialization |
+| `agentic_fit_allocator.py` | 280, 740 | `properties={..., "client_name": client_info.get('clientName')}` | **B** — telemetry |
+| `agentic_fit_allocator.py` | 318 | `client_info.get("projectKey") or client_info.get("clientKey")` | **B** — business-context fallback |
+| `agentic_fit_allocator.py` | 342 | `track_trace(...client_info.get('clientName')...)` | **B** — business trace |
+| `agentic_fit_allocator.py` | 373, 459, 675 | `client_key=client_info.get('clientKey')` | **B** — blob-storage arguments |
+| `agentic_fit_allocator.py` | 717, 787 | `email_send(..., client_name=client_info.get('clientName'))` | **B** — email |
+| `capability_double_click.py` | 400 | `_ck = client_info.get("clientKey")` | **B** — survey/file context |
+| `capability_double_click.py` | 586 | `projectInfo.get("projectKey") or projectInfo.get("clientKey")` | **B** — business fallback |
+| `capability_double_click.py` | 614 | `client_key=client_info.get('clientKey')` | **B** — blob storage |
+| `capability_double_click.py` | 651, 653, 697, 757 | `email_send(..., client_name=...get('clientName'))` | **B** — email; line 653 is commented out |
+| `capability_double_click.py` | 655 | `"client_name": client_info.get('clientName')` | **B** — telemetry |
+| `capability_maps_generator.py` | 207 | `# client_name=input_data.projectName` | **B** — commented email argument |
+| `capability_maps_generator.py` | 341 | `"Client Capability Map generation aborted: no map_json found..."` | **B** — business error, not audit label |
+| `capability_maps_generator.py` | 516 | `client_key=input_data.projectKey` | **B** — storage parameter already supplied a project key |
+| `capability_maps_generator.py` | 610 | `client_name=input_data.projectName` | **B** — email parameter already supplied project name |
+| `capability_maps_generator.py` | 667 | `client_name=input_data.clientName if hasattr(...) else None` | **B** — error email |
+| `missing_client_capabilities.py` | 993 | `client_name=None` | **B** — email |
+| `missing_capabilities.py` | 211 | `email_send(..., client_name=None)` | **B** — email |
+| `two_by_two.py` | 162 | `_ck = client_info.get("clientKey")` | **B** — survey/file context |
+| `two_by_two.py` | 283 | `client_key=client_info.get('clientKey')` | **B** — blob storage |
+| `two_by_two.py` | 316, 346, 350, 371 | `email_send(..., client_name=...get('clientName'))` | **B** — email |
+| `two_by_two.py` | 318 | `"client_name": client_info.get('clientName')` | **B** — telemetry |
+| `workforce_analyzer.py` | 301, 303 | `client_name = ...projectName...` | **B** — local variable name; value is project name |
+| `workforce_analyzer.py` | 416, 489, 1013 | `"client_name": client_name` | **B** — telemetry/metrics |
+| `workforce_analyzer.py` | 456, 613 | `track_trace(f"...{client_name}...")` | **B** — business trace |
+| `workforce_analyzer.py` | 481, 665, 821 | `df, cap_map_json, client_name or "client"` | **B** — analysis arguments |
+| `workforce_analyzer.py` | 482, 666, 822 | `client_key=(...get("projectKey") or ...get("clientKey"))` | **B** — analysis/context arguments |
+| `workforce_analyzer.py` | 527, 678, 896, 1023 | `"company_name": client_name` | **B** — business output |
+| `workforce_analyzer.py` | 549 | `client_key=_client_info_out.get('clientKey')` | **B** — blob storage |
+| `workforce_analyzer.py` | 1008 | `client_name=client_name` | **B** — email |
+
+The API-wide search also found these **non-audited business surfaces**:
+
+| File | Line(s) | Code excerpt | Class |
+|---|---:|---|---|
+| `heatmap.py` | 84 | `"clientInfo": output_data.get('clientInfo')` | **B** — output payload |
+| `heatmap.py` | 89 | `client_key=...get('clientInfo').get('clientKey')` | **B** — storage |
+| `heatmap.py` | 118 | `email_send(...client_name=...get('clientName'))` | **B** — email |
+| `two_by_two_generator.py` | 48, 58, 59, 60, 76 | `client_key = projectInfo.projectKey`; subsequent context/storage uses | **B** — business variable/arguments |
+
+### Audit identity confirmation
+
+- `GenAIAuditLog`: **`project_id`**, not `client_id`.
+- `run_genai_audit_log signature`: **`project_id`**.
+- `Version entries`: **`"project_id": normalized_project_id`**.
+- `Row synchronization`: **`record.project_id`**.
+- No searched legacy identifier hits in the scoped model/CRUD/writer or audit-local expressions, apart from the Industry Map label identified above.
+
+**Additional audit-message naming:** although not an exact match for `"Client Capability Map"`, `missing_client_capabilities.py` still uses “Missing Client Capabilities” wording in audit messages at **203, 1015, 1062**. Its audit **step is already `"Project Capability Map"`**.
+
+**Conclusion:** project identity is migrated in audit code. Legacy business naming remains. Code alone does not establish the team’s agreed terminology, and **industry and workspace should not be treated as interchangeable fields**.
+
+---
+
+## Part 3 — Leftovers / commit hygiene
+
+| Item | Finding |
+|---|---|
+| `run.ps1` | **Untracked. Keep out of the audit commit.** Contains environment assignments for API key, DB connections, Redis password, communication-service and storage connections. Values were withheld from this report. |
+| `.vscode/settings.json` | **Untracked.** Local Python environment setting; exclude unless intentionally shared team configuration. |
+| `test_output_*.json` | No current files found by repository/root artifact checks. The tagged test-output filename is not currently present on disk. |
+| `preview.sql` | Not found by repository/root artifact checks. |
+| Literal `TEMP DEBUG` / test-only audit code | No matching markers or audit-helper `print()` calls found. |
+| `CDC response print` | `print("Generated response: ", response)` — business output logging, not an audit call. |
+| `2×2 response print` | Same full-response print. |
+| Warning prints | `CDC line 590` and `2×2 generator line 72` print context-loading errors. Outside audit. |
+| `DB demonstration block` | Existing `__main__` test/demo code executes business insert/update operations with hard-coded records. Outside the scoped audit helper; **was not executed**. |
+
+**Secret printing:** no explicit `print()` of a credential variable was identified in the scoped audit code. Full-response prints and whole-request traces are not redacted, but that is not proof they currently contain secrets. A repository-wide secret scan was outside this review.
+
+---
+
+## Gaps to fix — audit-only
+
+1. **Fix failure identity in 2×2 and CDC runners.**  
+   `2×2 failure` uses `processName`/`None`, whereas Start uses `step_name`/category. `CDC runner failure` has the same mismatch. Passing the old audit ID does not repair this: the writer matches by step/sub-step. Preserve the resolved audit context and avoid duplicate failure rows.
+
+2. **Move Success after the final status write.**  
+   Applies to Capability Setup L1/L2/L3 and WFA salary/cost-saving branches. Currently a later status-write failure can follow an already-recorded Success.
+
+3. **Resolve Generate All persistence ownership.**  
+   Capability Setup Generate All records Success without a local output-write checkpoint. If PBI requires persisted completion, emit Success at the actual persistence boundary—not merely after generation. Do not add business writes as an incidental audit change.
+
+4. **Cover early failure paths and protect failure auditing from cleanup errors.**  
+   - WFA starts with `audit_enabled=False`; failures before action resolution are not audited, and its `HTTPException` handler bypasses Failed auditing.
+   - Utility audit locals are initialized inside the main try; earlier failure can leave them undefined.
+   - AI Identifier calls `monitor.stop_progress()` before Failed auditing; a cleanup exception can prevent the audit call.
+   - Industry Map Start occurs after blob loading, so a failed load has no Start checkpoint.
+
+5. **Make `event_time` timezone-aware on every creation path.**  
+   Replace reliance on the naive model default, particularly for failure-only rows and direct CRUD creation.
+
+6. **Fix actor fallback for nonnumeric `userId`.**  
+   `The helper` performs email lookup only when the original `user_id is None`. An email-valued `userId` becomes null without fallback. **Confirmed by the in-memory check.**
+
+7. **Warn on invalid audit timestamps instead of silently storing null.**  
+   Valid timestamps normalize correctly; malformed strings currently lose `requested_time` without an explicit warning.
+
+8. **Close history/count and uniqueness edge cases.**  
+   A failure-only version can be appended while `total_runs` stays zero. Also consider enforcing the one-row identity at DB level, accounting for nullable substeps, rather than relying solely on writer locking.
+
+9. **Do not record Success solely because a write call returned.**  
+   In the Project Capability Map path, a null `updated_record` does not prevent Success. Validate the existing write result before recording audit completion.
+
+10. **Optional completeness/naming alignment:**  
+    Add intermediate audit checkpoints for the three map/utility flows and Capability Setup Generate All if required by PBI; populate analysis identity where currently available but omitted; obtain the approved Industry Map label and align remaining client-worded audit messages. **Do not rename business fields or substitute workspace for industry without an agreed contract.**
+
+**Worktree status remained unchanged during this review.**
+-----------------------------------------------------------------------------------------------------------------------------
 READ-ONLY. Do not edit any file. Scope: GenAI audit log code only on this branch
 (db/models.py GenAIAuditLog, db/crud.py genai_audit_log helpers, db/db_operations_orm.py
 run_genai_audit_log, and every run_genai_audit_log call + its audit_* locals in apis/v1/*.py).
