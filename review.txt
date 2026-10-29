@@ -1,6 +1,56 @@
-git add apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_capabilities.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py db/crud.py db/db_operations_orm.py db/models.py
+## Summary
+Implements the GenAI Events Tracker (PBI 88921) on Ascend: every GenAI-triggered job records
+user, step, sub step, progress, status and timestamps in the dedicated `genai_audit_log`
+table (audit DB), for traceability and future reporting. Backend only, no UI/API changes.
 
+Related: migration PR #1647 (WebAPI, `20261027100000_GenAiAuditLogTable`) creates the table.
+Already applied on Ascend dev audit DB.
 
-git commit -m "feat: PBI 88921 - GenAI Events Tracker audit log for Ascend"
+## Design
+- One row per step / sub step; every run is stored as a version in `log_history` (JSONB):
+  `{"versions": [...], "total_runs": N}` (agreed with TL to save storage).
+- New run on "In Progress"; progress/Success/Failed update the matching version
+  (`substep_key` + `input_key`); older runs are never overwritten.
+- Row columns mirror the latest run: `user_id`, `project_id`, `status`, `progress`,
+  `requested_time`, `event_time`.
+- Failed/Cancelled keep the last progress reached; Success = 100.
+- Timestamps in UTC: `event_time` = backend start, `requested_time` = UI `requestedOn`.
+- Concurrency: advisory lock + `SELECT … FOR UPDATE` per step / sub step.
+- Writes use the audit DB (`get_audit_db()`); business data/status stays on `get_db()`.
 
+## Changes
+- `db/models.py`: `GenAIAuditLog` model (`project_id`, integer `user_id`, status default 'Not yet Started').
+- `db/db_operations_orm.py`: `run_genai_audit_log` (versioning, merge, user lookup by email).
+- `db/crud.py`: audit helpers + `query_genai_audit_logs` (filter by user, step, sub step, status, time range).
+- `apis/v1/*`: audit checkpoints (start / progress / Success / Failed) for:
+  - Capability Setup L1/L2/L3 + Generate All (`capability_maps_generator`)
+  - AI Identifier OpEx, Cost Savings Potential (`agentic_fit_allocator`)
+  - L3 Capability Salary, Salary Cost Savings (`workforce_analyzer`)
+  - AI Prioritization 2x2 (`two_by_two`), CDC (`capability_double_click`)
+  - Project Capability Map (`missing_client_capabilities`)
+  - Capability Generation Utility (`missing_capabilities`), Industry Map (`industrial_map`)
+- Field mapping uses Ascend project fields (`projectKey` / `projectInfo.projectKey`), not client fields.
 
+## Fixes vs earlier PR (#208)
+- Restored overwritten code (health check, `/api/v1/me`, status updates on `get_db`, agentic fit handler).
+- `requested_time` now populated; `user_id` captured (payload or email lookup).
+- Success no longer skipped (removed `if genai_audit_log_id` gates; JSONB persisted via `flag_modified`).
+- Success recorded only after the final DB write; failures no longer reset progress to 0.
+- Team add-ons: `project_id` column, `user_id` always captured, `analysis_name` replaces `job_id`.
+
+## Business-logic impact
+None. All audit calls are in their own try/except (warning only) and write to a separate DB.
+Generation, status updates, Redis, emails and error handling are unchanged.
+
+## Testing (local, Ascend dev data + audit DB)
+- ✅ Success: CDC, AI Prioritization (2x2), Capability Setup Generate All, Agentic Fit.
+- ✅ Failed with last progress kept: Capability Setup L1/L2/L3 (85), OpEx (50), Salary (10), Cost Saving (50), Project Capability Map (10).
+- ✅ Versioning: repeat runs append versions, `total_runs` increments, older versions intact.
+- ✅ `user_id`, `project_id`, `requested_time`, `analysis_name` captured.
+- <Industry Map / Capability Generation Utility: tested | same pattern, verified by code review>.
+
+## Known limits
+- No cancel flow exists in the app yet; tracker supports `Cancelled` (keeps progress).
+- Industry Map and Capability Generation Utility have no project → `project_id` NULL.
+- `step` / `sub_step` come from request names (agreed with TL), not fixed PBI labels.
+- AEF dev port will follow in a separate PR after approval.
