@@ -1,82 +1,427 @@
-SELECT * FROM "__EFMigrationsHistory";
+2026-10-29 11:29:09,616 - auth.config - INFO - Auth DISABLED — endpoints are publicly accessible
+2026-10-29 11:29:09,661 - uvicorn.error - INFO - Started server process [36500]
+2026-10-29 11:29:09,662 - uvicorn.error - INFO - Waiting for application startup.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan scheduled
+2026-10-29 11:29:09,668 - uvicorn.error - INFO - Application startup complete.
+[TRACE] [GENAI STARTUP RECOVERY] Startup recovery scan completed
+2026-10-29 11:32:13,911 - uvicorn.access - INFO - 127.0.0.1:63133 - "POST /api/v1/capability_maps_generator HTTP/1.1" 202
+[TRACE] Received input_data: {"ID":"capability-setup-454-20261029","projectKey":1,"projectCapabilityMapKey":null,"projectName":"
+Getting database session...
+Database session created.
+--- Reading survey responses for project_id: 1 ---
+[ERROR] CRUD_Get_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
 
-SELECT column_name, data_type, column_default
-FROM information_schema.columns
-WHERE table_name = 'genai_audit_log'
-ORDER BY ordinal_position;
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_SurveyResponses - (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
 
-SELECT count(*) FROM information_schema.columns
-WHERE table_schema = 'public'
-  AND table_name IN ('audit_events','audit_event_categories','audit_log');
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading survey responses: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
 
---------------------------------------------------------------------------
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch survey context for project 1: (psycopg2.errors.UndefinedColumn) column survey_response.client_id does not exist
+LINE 2: ...aster.id = public.survey_response.question_id AND public.sur...
+                                                             ^
 
-git restore Backend/AgenticAIBlueprinting.Data/Migrations/AuditLog/20250428000001_InitialAuditLogSchema.cs Backend/AgenticAIBlueprinting.Data/Migrations/AuditLog/20260717132207_RenameClientIdToProjectId.cs
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = %(client_id_1)s 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: {'client_id_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Getting database session...
+Database session created.
+--- Reading supporting files for project_key: 1 ---
+[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
 
-dotnet ef database update --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI --connection $auditConn
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_ProjectSupportingFiles - (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading supporting files: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch file context for project 1: (psycopg2.errors.UndefinedColumn) column project_supporting_file.client_supporting_file_key does not exist
+LINE 1: SELECT project_supporting_file.client_supporting_file_key AS...
+               ^
+
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = %(project_key_1)s ORDER BY project_supporting_file.created_date DESC]
+[parameters: {'project_key_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+{'ID': 'capability-setup-454-20261029', 'Status': 'Started', 'Logs': 'Capability maps started  GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 960, 'input_key': 0, 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:960:0:capability-setup-454-20261029', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 960
+Updated Description: L1 Capability step
+
+--- Operations finished ---
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 960
+Updated Description: L1 Capability step
+
+--- Operations finished ---
+{'ID': 'capability-setup-454-20261029', 'Status': 'Started', 'Logs': 'Starting capability map generation for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 25, 'stage': 'capability-map-l1-generation', 'stageStatus': 'started', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:960:0:capability-setup-454-20261029', 'processName': 'Blueprinting Analysis-#91', 'stepKey': 454, 'substepkey': 960, 'input_key': 0, 'input_name': 'string', 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+[TRACE] Progress monitor started for ID: capability-setup-454-20261029
+[TRACE] Starting L1 generation for Enterprise Default Project_Testing
+===== INDUSTRY STANDARD / NO CONTEXT PATH TRIGGERED =====
+selection_key: 13
+survey_ctx present: False
+file_ctx present: False
+===== DEBUG END =====
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1793253761.569475   34924 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'capability-setup-454-20261029', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:960:0:capability-setup-454-20261029', 'processName': 'Blueprinting Analysis-#91', 'stepKey': 454, 'substepkey': 960, 'input_key': 0, 'input_name': 'string', 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+E0000 00:00:1793253761.593423   34924 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capability-setup-454-20261029', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:960:0:capability-setup-454-20261029', 'processName': 'Blueprinting Analysis-#91', 'stepKey': 454, 'substepkey': 960, 'input_key': 0, 'input_name': 'string', 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capability-setup-454-20261029', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:960:0:capability-setup-454-20261029', 'processName': 'Blueprinting Analysis-#91', 'stepKey': 454, 'substepkey': 960, 'input_key': 0, 'input_name': 'string', 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'capability-setup-454-20261029', 'Status': 'In Progress', 'Logs': 'Generating capability maps for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:960:0:capability-setup-454-20261029', 'processName': 'Blueprinting Analysis-#91', 'stepKey': 454, 'substepkey': 960, 'input_key': 0, 'input_name': 'string', 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+E0000 00:00:1793253795.319490   34924 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1793253795.325768   34924 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+TEMP DEBUG: L1 written to test_output_l1_capabilities.json
+2026-10-29 11:33:21,572 - watchfiles.main - INFO - 1 change detected
+[TRACE] Progress monitor stopped for ID: capability-setup-454-20261029
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 960
+Updated Description: L1 Capability step
+
+--- Operations finished ---
+{'ID': 'capability-setup-454-20261029', 'Status': 'In Progress', 'Logs': 'Generated L1 capabilities for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 75, 'stage': 'capability-map-l1-generation', 'stageStatus': 'completed', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:960:0:capability-setup-454-20261029', 'processName': 'Blueprinting Analysis-#91', 'stepKey': 454, 'substepkey': 960, 'input_key': 0, 'input_name': 'string', 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+{'ID': 'capability-setup-454-20261029', 'Status': 'InProgress', 'Logs': 'Data Inserting into DB for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'InProgress', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 960, 'input_key': 0, 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'channelName': 'capMap_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:960:0:capability-setup-454-20261029', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: InProgress
+[TRACE] Redis message published successfully: InProgress
+2026-10-29 11:33:29,858 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '76cad9f9-d35e-11f1-863e-d4f32df15685'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-10-29 11:33:31,382 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '5be32560-801e-0000-276b-67f7be000000'
+    'x-ms-client-request-id': '76cad9f9-d35e-11f1-863e-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'Date': 'Thu, 29 Oct 2026 06:03:30 GMT'
+2026-10-29 11:33:31,398 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/None/960/L1_Capability_Generation_Output_61cc68a4-47e0-4b02-a1f8-27e9a91aa6ba.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '6713'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '77b5c7af-d35e-11f1-87f9-d4f32df15685'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-10-29 11:33:32,629 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Thu, 29 Oct 2026 06:03:32 GMT'
+    'ETag': '"0x8DF35825C92CAC4"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ea3b7039-601e-0045-326b-67225d000000'
+    'x-ms-client-request-id': '77b5c7af-d35e-11f1-87f9-d4f32df15685'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Thu, 29 Oct 2026 06:03:31 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/1/None/960/L1_Capability_Generation_Output_6
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 960
+Updated Description: L1 Capability step
+
+--- Operations finished ---
+{'ID': 'capability-setup-454-20261029', 'Status': 'InsertionProcessing', 'Logs': 'Capability maps started insertion into DB for action: GENERATE_L1', 'input_key': 0, 'substepkey': 960, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': None, 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': 85, 'stage': 'capability-map-db-insertion', 'stageStatus': 'heartbeat', 'heartbeatCount': None, 'jobMetadata': {'jobId': 'genai:960:0:capability-setup-454-20261029', 'processName': 'Blueprinting Analysis-#91', 'stepKey': 454, 'substepkey': 960, 'input_key': 0, 'input_name': 'string', 'ID': 'capability-setup-454-20261029', 'receiverEmail': 'gedchaitanya@deloitte.com', 'module': 'Capability Maps', 'action': 'GENERATE_L1', 'channelName': 'capMap_background_process', 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: InsertionProcessing
+[TRACE] Redis message published successfully: InsertionProcessing
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Output write missing idempotency identity fields
+[TRACE] DB_Operations: Running INSERT operation for output
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+[ERROR] DB_Insert_SubStepOutput - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[ERROR] DB_Operations_Output - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+An error occurred during operations: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+[ERROR] Capability_Map_Generation - Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+[TRACE] Progress monitor stopped for ID: capability-setup-454-20261029
+
+--- Starting database operations ---
+Getting database session...
+Database session created.
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[ERROR] CRUD_Update_SubStep - (psycopg2.errors.ForeignKeyViolation) insert or update on table "blueprinting_process_sub_step" violates foreign key constraint "FK_blueprinting_process_sub_step_blueprinting_process_step_step"
+DETAIL:  Key (step_key)=(960) is not present in table "blueprinting_process_step".
+
+[SQL: UPDATE blueprinting_process_sub_step SET step_key=%(step_key)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'step_key': 960, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not fou ... (28 characters truncated) ... ub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'blueprinting_process_sub_step_sub_step_key': 960}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] DB_Update_SubStep - (psycopg2.errors.ForeignKeyViolation) insert or update on table "blueprinting_process_sub_step" violates foreign key constraint "FK_blueprinting_process_sub_step_blueprinting_process_step_step"
+DETAIL:  Key (step_key)=(960) is not present in table "blueprinting_process_step".
+
+[SQL: UPDATE blueprinting_process_sub_step SET step_key=%(step_key)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'step_key': 960, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not fou ... (28 characters truncated) ... ub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'blueprinting_process_sub_step_sub_step_key': 960}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+[ERROR] DB_Operations - (psycopg2.errors.ForeignKeyViolation) insert or update on table "blueprinting_process_sub_step" violates foreign key constraint "FK_blueprinting_process_sub_step_blueprinting_process_step_step"
+DETAIL:  Key (step_key)=(960) is not present in table "blueprinting_process_step".
+
+[SQL: UPDATE blueprinting_process_sub_step SET step_key=%(step_key)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'step_key': 960, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not fou ... (28 characters truncated) ... ub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'blueprinting_process_sub_step_sub_step_key': 960}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+An error occurred during operations: (psycopg2.errors.ForeignKeyViolation) insert or update on table "blueprinting_process_sub_step" violates foreign key constraint "FK_blueprinting_process_sub_step_blueprinting_process_step_step"
+DETAIL:  Key (step_key)=(960) is not present in table "blueprinting_process_step".
+
+[SQL: UPDATE blueprinting_process_sub_step SET step_key=%(step_key)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'step_key': 960, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not fou ... (28 characters truncated) ... ub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'blueprinting_process_sub_step_sub_step_key': 960}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Please ensure the database is running and parent records exist if inserting.
+
+--- Operations finished ---
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 572, in generate_capability_map
+    output_key = db_operations_orm.run_operations(output_key=input_data.outputKey, data=db_data)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 415, in run_operations
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 396, in run_operations
+    output_record = insert_sub_step_output(db, data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 313, in insert_sub_step_output
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 293, in insert_sub_step_output
+    validate_sub_step_output_references(db, sub_step_output_data)
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 64, in validate_sub_step_output_references
+    raise ValueError(
+ValueError: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not found in blueprinting_process_sub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.ForeignKeyViolation: insert or update on table "blueprinting_process_sub_step" violates foreign key constraint "FK_blueprinting_process_sub_step_blueprinting_process_step_step"
+DETAIL:  Key (step_key)=(960) is not present in table "blueprinting_process_step".
 
 
-$auditConn -replace 'Password=[^;]*','Password=****'
+The above exception was the direct cause of the following exception:
 
-dotnet ef migrations list --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI --connection $auditConn
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 112, in _capmap_runner
+    asyncio.run(generate_capability_map(payload))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\capability_maps_generator.py", line 641, in generate_capability_map
+    mark_failed(
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\utilities\genai_job_lifecycle.py", line 192, in mark_failed
+    return lifecycle_update(
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\utilities\genai_job_lifecycle.py", line 100, in lifecycle_update
+    db_result = writer(
+                ^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\utilities\genai_job_lifecycle.py", line 25, in _default_db_status_writer
+    return db_operations_orm.run_operations_status(sub_step_key=sub_step_key, data=dict(data))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 219, in run_operations_status
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 213, in run_operations_status
+    update_sub_step(db, sub_step_key, data)
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 185, in update_sub_step
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py", line 160, in update_sub_step
+    updated_output = crud.update_blueprinting_process_sub_step(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\crud.py", line 648, in update_blueprinting_process_sub_step
+    raise e
+  File "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\crud.py", line 636, in update_blueprinting_process_sub_step
+    db.commit()
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 85, in save_obj
+    _emit_update_statements(
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 912, in _emit_update_statements
+    c = connection.execute(
+        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\gedchaitanya\Ascend-Dev-Citation\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) insert or update on table "blueprinting_process_sub_step" violates foreign key constraint "FK_blueprinting_process_sub_step_blueprinting_process_step_step"
+DETAIL:  Key (step_key)=(960) is not present in table "blueprinting_process_step".
 
-$auditConn = "Host=ccon-westus3-eno0000j-pgsql.postgres.database.azure.com;Port=5432;Database=aab_db_auditlog_eno0000j;Username=postgresadmin;Password=<pwd>;SSL Mode=Require"
+[SQL: UPDATE blueprinting_process_sub_step SET step_key=%(step_key)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'step_key': 960, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not fou ... (28 characters truncated) ... ub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'blueprinting_process_sub_step_sub_step_key': 960}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Getting database session...
+Database session created.
+Getting audit database session...
+Audit database session created.
+[ERROR] Capability_Map_Generation_Background - (psycopg2.errors.ForeignKeyViolation) insert or update on table "blueprinting_process_sub_step" violates foreign key constraint "FK_blueprinting_process_sub_step_blueprinting_process_step_step"
+DETAIL:  Key (step_key)=(960) is not present in table "blueprinting_process_step".
 
-dotnet ef migrations script --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI -o preview.sql
-
-SELECT count(*) FROM information_schema.columns
-WHERE table_schema = 'public'
-  AND table_name IN ('audit_events','audit_event_categories','audit_log');
-
-
-SELECT to_regclass('public.genai_audit_log') AS genai_table,
-       to_regclass('public."__EFMigrationsHistory"') AS history_table;
-------------------------------------------------------------------------------------------------------------------------------------------
-No. `dotnet ef` has no option to skip earlier pending migrations when applying a later one. EF compares the database’s `__EFMigrationsHistory` with the migration sequence and applies every migration through the requested target that it considers pending.
-
-For example, this command would **not** apply only the GenAI migration:
-
-```powershell
-dotnet ef database update 20261027100000_GenAiAuditLog `
-  --context AuditLogDbContext `
-  --project Backend\AgenticAIBlueprinting.Data `
-  --startup-project Backend\AgenticAIBlueprinting.WebAPI `
-  --connection $auditConn
-```
-
-Because the history table is absent, EF would treat the earlier migrations as pending and attempt to apply them too. Given that their tables already exist, that could fail on existing objects. I did not run any command.
-
-With your constraints, there is no CLI-only command to safely record those earlier migrations as already applied and then apply just the target migration. Doing that requires changing the migration/history state outside the normal `database update` flow, which the EF CLI does not offer as a skip option.
-------------------------------------------------------------------------------------------------------------------------------------------------------
-Do not edit any file and do not run any command that changes a database. Proposal only.
-Goal: apply ONLY the EF migration 20261027100000_GenAiAuditLogTable (AuditLogDbContext,
-project Backend\AgenticAIBlueprinting.Data, startup Backend\AgenticAIBlueprinting.WebAPI)
-to the database in $auditConn, WITHOUT running 20250428000001_InitialAuditLogSchema and
-20260717132207_RenameClientIdToProjectId (their tables already exist, created outside EF,
-and __EFMigrationsHistory does not exist).
-Using only dotnet ef CLI commands (no direct SQL in pgAdmin, no code changes), is there a
-way to skip those two migrations? If yes, give me the exact command(s) and explain what each
-does. If dotnet ef has no option to skip earlier pending migrations, say so clearly.
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Hi Abhilipsa, I checked the Ascend audit DB (read-only, nothing changed).
-
-The three audit tables (audit_log, audit_events, audit_event_categories) exist, but their columns don’t match the EF AuditLog migrations. They were created outside EF, and there’s no __EFMigrationsHistory table. So running database update directly would fail on the first migration. Screenshot attached.
-
-Our migration only creates the new genai_audit_log table and doesn’t touch these tables. How should we apply it?
-
-Add history rows for the first two migrations, then run database update (only ours runs), or
-Run only our migration’s SQL.
----------------------------------------------------------------------------------------------------------------
-SELECT table_name, column_name, data_type, character_maximum_length, is_nullable
-FROM information_schema.columns
-WHERE table_schema = 'public'
-  AND table_name IN ('audit_events','audit_event_categories','audit_log')
-ORDER BY table_name, ordinal_position;
------------------------
-
-
-SELECT tablename, indexname
-FROM pg_indexes
-WHERE schemaname = 'public'
-  AND tablename IN ('audit_events','audit_event_categories','audit_log')
-ORDER BY tablename, indexname;
+[SQL: UPDATE blueprinting_process_sub_step SET step_key=%(step_key)s, sub_step_status_key=%(sub_step_status_key)s, sub_step_progress_percentage=%(sub_step_progress_percentage)s, sub_step_progress_message=%(sub_step_progress_message)s WHERE blueprinting_process_sub_step.sub_step_key = %(blueprinting_process_sub_step_sub_step_key)s]
+[parameters: {'step_key': 960, 'sub_step_status_key': 6, 'sub_step_progress_percentage': 0, 'sub_step_progress_message': 'Error in Capability Map Generation: Cannot write blueprinting_process_sub_step_output: missing parent reference(s): generated_for_input_key=0 not fou ... (28 characters truncated) ... ub_step_input. The request contains stale or invalid orchestration IDs; create or reload the sub-step and input records before generating the output.', 'blueprinting_process_sub_step_sub_step_key': 960}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
