@@ -1,3 +1,5 @@
+$auditConn = "Host=ccon-westus3-eno0000j-pgsql.postgres.database.azure.com;Port=5432;Database=aab_db_auditlog_eno0000j;Username=postgresadmin;Password=<pwd>;SSL Mode=Require"
+
 dotnet ef migrations script --context AuditLogDbContext --project Backend\AgenticAIBlueprinting.Data --startup-project Backend\AgenticAIBlueprinting.WebAPI -o preview.sql
 
 SELECT count(*) FROM information_schema.columns
