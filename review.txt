@@ -1,3 +1,20 @@
+Audit-only fix. Do not change business logic, status updates, Redis, emails or error handling.
+Problem: in apis/v1/two_by_two.py and apis/v1/capability_double_click.py the background
+runner (wrapper) failure audit call uses a different step/sub_step than the Start audit call
+inside the main function, so it creates a separate row and leaves the real run "In Progress".
+Fix:
+1. When the main function records the Start checkpoint, store the resolved audit context
+   (step, sub_step, input_key, substep_key, user_id, project_id, requested_time,
+   receiver_email, analysis_name) in the existing module-level _AUDIT_LOG_BY_REQUEST_ID dict
+   (keyed as it is today), instead of only the audit id.
+2. In the runner's failure handler, if that context exists, record Failed using exactly that
+   context (no progress argument); if it does not exist, keep the current behaviour.
+3. If the main function's own except path already recorded Failed for this run, skip the
+   runner's duplicate Failed call (e.g. pop the context after the main Failed is recorded).
+4. Keep the existing pop/cleanup of the dict so it does not grow.
+Each audit call stays in its own try/except (warning only).
+Show git --no-pager diff for both files and py -m py_compile on them. Do not commit.
+---------------------------------------------------------------------------------------------------------------
 Read skill `python-fact-grounded-coding`
 Completed with input: {"skill":"python-fact-grounded-coding"}
 
