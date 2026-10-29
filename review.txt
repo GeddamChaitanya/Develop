@@ -1,3 +1,12 @@
+Audit labels only. Do not change any business logic.
+1. apis/v1/missing_client_capabilities.py: in every run_genai_audit_log call, change the
+   hard-coded step label "Client Capability Map Generation" (or similar "Client Capability Map"
+   text) to "Project Capability Map". Keep sub_step as is unless it also says "Client";
+   if so, use "Add/Update Project Capability Map".
+2. apis/v1/industrial_map.py: show me the current step/sub_step fallback strings
+   (e.g. "Industrial Map Generation") without changing them yet.
+Show git --no-pager diff for the changed file and py -m py_compile on it. Do not commit.
+-------------------------------------------------------------------------------------------------------------------------------------------------
 {capabilityMapKey: 5, projectKey: 1, mapName: "Test_01", mapDescription: "", isMapJson: true,…}
 CreatedByUserKey
 : 
