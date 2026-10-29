@@ -1,3 +1,31 @@
+READ-ONLY. Do not edit any file. Scope: GenAI audit log code only on this branch
+(db/models.py GenAIAuditLog, db/crud.py genai_audit_log helpers, db/db_operations_orm.py
+run_genai_audit_log, and every run_genai_audit_log call + its audit_* locals in apis/v1/*.py).
+
+PART 1 – PBI coverage. Report a table: trigger | file/function | Start? | progress? |
+Success after final DB write? | Failed (no progress reset)? 
+Triggers: Industry Map, Capability Generation Utility, Project (Client) Capability Map,
+Capability Setup L1/L2/L3 + Generate All, AI Identifier L1/L2/L3 OpEx, Cost Savings Potential,
+L3 Capability Salary, Salary Cost Savings Potential, AI Prioritization (2x2), CDC.
+Also confirm: one row per step/sub_step with versions in log_history; event_time and
+requested_time stored in UTC; sub_step nullable; no delete operations anywhere for
+genai_audit_log; query_genai_audit_logs filters by user_id, step, sub_step, status, time range;
+every audit call is wrapped in its own try/except that only logs a warning.
+
+PART 2 – Ascend naming in AUDIT code only. Search the scope above for: client_id, clientKey,
+ClientKey, clientInfo, client_key, clientName, client_name, "Client Capability Map",
+"Industrial Map". For each hit report file:line, the code, and whether it is
+(a) audit code that should use the Ascend project fields (projectKey / projectInfo.projectKey /
+project_id / projectName), or (b) existing business code outside audit (leave it).
+Confirm the GenAIAuditLog model, run_genai_audit_log and the version entries use project_id
+(not client_id).
+
+PART 3 – leftovers: list any TEMP DEBUG / test-only code, print() of secrets, or files that
+should not be committed (run.ps1, .vscode, test_output_*.json, preview.sql).
+
+Output: the Part 1 table, the Part 2 table with a/b classification, the Part 3 list,
+and a final "gaps to fix" list (audit-only). No changes.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Read skill `python-fact-grounded-coding`
 Completed with input: {"skill":"python-fact-grounded-coding"}
 
