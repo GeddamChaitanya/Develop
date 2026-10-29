@@ -1,3 +1,129 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> ^C
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff -U0 -- apis/v1/two_by_two.py apis/v1/capability_double_click.py | Select-String '^-[^-]'
+
+-        genai_audit_log_id = _AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, "input_key", "")))
+-        if genai_audit_log_id:
+-            try:
+-                # Audit checkpoint: FAILED (first exception handler)
+-                    step=getattr(payload, 'processName', None) or "Capability Double Click",
+-                    sub_step=None,
+-                    progress=0,
+-                    input_key=getattr(payload, 'input_key', None),
+-                    receiver_email=None,
+-                    requested_by="0",
+-                    requested_on=None,
+-                    genai_audit_log_id=genai_audit_log_id,
+-                    substep_key=getattr(payload, 'substepkey', None),
+-            except Exception as audit_err:
+-                track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+-            finally:
+-                _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "input_key", "")), None)
+-                step=background_processing_data.get('step_name') or input_data.processName,
+-                sub_step=background_processing_data.get('category') or input_data.input_name,
+-                input_key=input_data.input_key,
+-                receiver_email=(background_processing_data or {}).get('receiverEmail'),
+-                requested_by=str((background_processing_data or {}).get('userId') or 0),
+-                requested_on=(background_processing_data or {}).get('requestedOn'),
+-                substep_key=(background_processing_data or {}).get('substepkey'),
+-            if genai_audit_log_id:
+-                _AUDIT_LOG_BY_REQUEST_ID[str(input_data.input_key)] = genai_audit_log_id
+-            if genai_audit_log_id:
+-                try:
+-                    # Audit checkpoint: SUCCESS (capability double-click analysis completed)
+-                    db_operations_orm.run_genai_audit_log(
+-                        step=background_processing_data.get('step_name') or input_data.processName,
+-                        sub_step=background_processing_data.get('category') or input_data.input_name,
+-                        progress=100,
+-                        status="Success",
+-                        message="CDC generation completed successfully",
+-                        input_key=input_data.input_key,
+-                        receiver_email=(background_processing_data or {}).get('receiverEmail'),
+-                        requested_by=str((background_processing_data or {}).get('userId') or 0),
+-                        requested_on=(background_processing_data or {}).get('requestedOn'),
+-                        genai_audit_log_id=genai_audit_log_id,
+-                        substep_key=(background_processing_data or {}).get('substepkey'),
+-                    )
+-                except Exception as audit_err:
+-                    track_trace(f"Audit log completion update skipped: {audit_err}", severity="Warning")
+-                finally:
+-                    _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+-            if genai_audit_log_id:
+-                try:
+-                    # Audit checkpoint: FAILED (second exception handler)
+-                    db_operations_orm.run_genai_audit_log(
+-                        step=background_processing_data.get('step_name') or input_data.processName,
+-                        sub_step=background_processing_data.get('category') or input_data.input_name,
+-                        progress=0,
+-                        status="Failed",
+-                        message=f"Error in CDC Generation: {str(e)[:500]}",
+-                        input_key=input_data.input_key,
+-                        receiver_email=(background_processing_data or {}).get('receiverEmail'),
+-                        requested_by=str((background_processing_data or {}).get('userId') or 0),
+-                        requested_on=(background_processing_data or {}).get('requestedOn'),
+-                        genai_audit_log_id=genai_audit_log_id,
+-                        substep_key=(background_processing_data or {}).get('substepkey'),
+-                    )
+-                except Exception as audit_err:
+-                    track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+-                finally:
+-                    _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+-    
+-        if genai_audit_log_id and _AUDIT_LOG_BY_REQUEST_ID.get(str(input_data.input_key)):
+-            try:# Audit checkpoint: FAILED (third/outer exception handler)
+-                
+-                    step=background_processing_data.get('step_name') or input_data.processName,
+-                    sub_step=background_processing_data.get('category') or input_data.input_name,
+-                    progress=0,
+-                    input_key=input_data.input_key,
+-                    receiver_email=(background_processing_data or {}).get('receiverEmail'),
+-                    requested_by=str((background_processing_data or {}).get('userId') or 0),
+-                    requested_on=(background_processing_data or {}).get('requestedOn'),
+-                    substep_key=(background_processing_data or {}).get('substepkey'),
+-            except Exception as audit_err:
+-                track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+-            finally:
+-                _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.input_key), None)
+-        genai_audit_log_id = _AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, "input_key", "")))
+-        if genai_audit_log_id:
+-            try:
+-                # Audit checkpoint: FAILED (exception handler)
+-                    step=payload.processName,
+-                    sub_step=None,
+-                    progress=0,
+-                    requested_by="0",
+-                    genai_audit_log_id=genai_audit_log_id,
+-            except Exception as audit_err:
+-                track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+-            finally:
+-                _AUDIT_LOG_BY_REQUEST_ID.pop(str(getattr(payload, "input_key", "")), None)
+-                step=step_name,
+-                sub_step=analysis_type,
+-                input_key=input_data.input_key,
+-                receiver_email=receiver_email,
+-                requested_by=str(background_processing_data.get("userId") or 0),
+-                requested_on=background_processing_data.get("requestedOn"),
+-            if genai_audit_log_id:
+-                _AUDIT_LOG_BY_REQUEST_ID[str(input_data.input_key)] = genai_audit_log_id
+-            if genai_audit_log_id:
+-                try:
+-                    # Audit checkpoint: SUCCESS (two-by-two analysis completed)
+-                    db_operations_orm.run_genai_audit_log(
+-                        step=step_name,
+-                        sub_step=analysis_type,
+-                        progress=100,
+-                        status="Success",
+-                        input_key=input_data.input_key,
+-                        receiver_email=background_processing_data.get("receiverEmail"),
+-                        requested_by=str(background_processing_data.get("userId") or 0),
+-                        requested_on=background_processing_data.get("requestedOn"),
+-                        genai_audit_log_id=genai_audit_log_id,
+-                    )
+-                except Exception as audit_err:
+-                    track_trace(f"Audit log completion update skipped: {audit_err}", severity="Warning")
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+------------------------------------------------------------------------------------------------------------
 git --no-pager diff -U0 -- apis/v1/two_by_two.py apis/v1/capability_double_click.py | Select-String '^-[^-]'
 
 git add db/models.py db/crud.py db/db_operations_orm.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_client_capabilities.py apis/v1/missing_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
