@@ -1,3 +1,50 @@
+{capabilityMapKey: 5, projectKey: 1, mapName: "Test_01", mapDescription: "", isMapJson: true,…}
+CreatedByUserKey
+: 
+22
+capabilityMapKey
+: 
+5
+isMapJson
+: 
+true
+mapDescription
+: 
+""
+mapFileOriginalName
+: 
+"Capabilities Table_2026-10-08.csv"
+mapFilePath
+: 
+"NV_PoC_V1/1/ProjectCapabilityMap/bd3ae1f3-acce-4ca4-ab5a-6cebba223e84.csv"
+mapFileSizeMbs
+: 
+1
+mapFileStorageName
+: 
+"bd3ae1f3-acce-4ca4-ab5a-6cebba223e84.csv"
+mapJson
+: 
+""
+mapName
+: 
+"Test_01"
+parentWorkspaceName
+: 
+"Ascend"
+projectKey
+: 
+1
+receiverEmail
+: 
+"gedchaitanya@deloitte.com"
+workspaceDescription
+: 
+"Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment."
+workspaceName
+: 
+"blueprinting-testing"
+---------------------------------------------------------------------------------------------------------------------------------------
 SELECT * FROM blueprinting_process_sub_step_input
 WHERE sub_step_key = 960
 ORDER BY 1 DESC;
