@@ -1,56 +1,48 @@
-## Summary
-Implements the GenAI Events Tracker (PBI 88921) on Ascend: every GenAI-triggered job records
-user, step, sub step, progress, status and timestamps in the dedicated `genai_audit_log`
-table (audit DB), for traceability and future reporting. Backend only, no UI/API changes.
+READ-ONLY ANALYSIS. Do not edit any file.
 
-Related: migration PR #1647 (WebAPI, `20261027100000_GenAiAuditLogTable`) creates the table.
-Already applied on Ascend dev audit DB.
+Context: branch fix_asc_events_tracker has merged origin/ascend/develop, which includes
+PR #255 (feature/asyncpg). Against our base 9cc1ad4, ascend/develop changed only
+db/database.py and db/db_operations_orm.py. Our GenAI audit log code (get_audit_db,
+GenAIAuditLog model, genai_audit_log CRUD helpers, run_genai_audit_log,
+query_genai_audit_logs) was written for the old sync SQLAlchemy style.
 
-## Design
-- One row per step / sub step; every run is stored as a version in `log_history` (JSONB):
-  `{"versions": [...], "total_runs": N}` (agreed with TL to save storage).
-- New run on "In Progress"; progress/Success/Failed update the matching version
-  (`substep_key` + `input_key`); older runs are never overwritten.
-- Row columns mirror the latest run: `user_id`, `project_id`, `status`, `progress`,
-  `requested_time`, `event_time`.
-- Failed/Cancelled keep the last progress reached; Success = 100.
-- Timestamps in UTC: `event_time` = backend start, `requested_time` = UI `requestedOn`.
-- Concurrency: advisory lock + `SELECT … FOR UPDATE` per step / sub step.
-- Writes use the audit DB (`get_audit_db()`); business data/status stays on `get_db()`.
+Answer each point with file name, line numbers and the exact code:
 
-## Changes
-- `db/models.py`: `GenAIAuditLog` model (`project_id`, integer `user_id`, status default 'Not yet Started').
-- `db/db_operations_orm.py`: `run_genai_audit_log` (versioning, merge, user lookup by email).
-- `db/crud.py`: audit helpers + `query_genai_audit_logs` (filter by user, step, sub step, status, time range).
-- `apis/v1/*`: audit checkpoints (start / progress / Success / Failed) for:
-  - Capability Setup L1/L2/L3 + Generate All (`capability_maps_generator`)
-  - AI Identifier OpEx, Cost Savings Potential (`agentic_fit_allocator`)
-  - L3 Capability Salary, Salary Cost Savings (`workforce_analyzer`)
-  - AI Prioritization 2x2 (`two_by_two`), CDC (`capability_double_click`)
-  - Project Capability Map (`missing_client_capabilities`)
-  - Capability Generation Utility (`missing_capabilities`), Industry Map (`industrial_map`)
-- Field mapping uses Ascend project fields (`projectKey` / `projectInfo.projectKey`), not client fields.
+1. db/database.py
+   a. List every engine and session factory now defined (sync create_engine/sessionmaker
+      and/or async create_async_engine/async_sessionmaker). Which connection string
+      does each use?
+   b. Show the current get_db(). Is it sync (def + yield Session) or async
+      (async def + yield AsyncSession)?
+   c. Show our get_audit_db(). Which engine/session factory does it use, and does that
+      object still exist after the merge?
+   d. List the 4 Problems/warnings VS Code reports in this file and what causes each.
 
-## Fixes vs earlier PR (#208)
-- Restored overwritten code (health check, `/api/v1/me`, status updates on `get_db`, agentic fit handler).
-- `requested_time` now populated; `user_id` captured (payload or email lookup).
-- Success no longer skipped (removed `if genai_audit_log_id` gates; JSONB persisted via `flag_modified`).
-- Success recorded only after the final DB write; failures no longer reset progress to 0.
-- Team add-ons: `project_id` column, `user_id` always captured, `analysis_name` replaces `job_id`.
+2. db/db_operations_orm.py
+   a. Show the current run_operations_status and one other business function, such as
+      run_operations. Are they def or async def? How do they get the session
+      (next(get_db()), async with, await ...)? Do they call execute/commit with await?
+   b. In run_genai_audit_log, list every DB call: get_db / get_audit_db usage, the user
+      lookup by receiver_email, the pg_advisory_xact_lock text() call,
+      crud.get_genai_audit_log_by_step(for_update=True), create/update,
+      flag_modified, commit, rollback, close. Will each one still work with the
+      session types from 1a/1b? Mark each OK or BREAKS, with the reason.
+   c. Same check for query_genai_audit_logs.
 
-## Business-logic impact
-None. All audit calls are in their own try/except (warning only) and write to a separate DB.
-Generation, status updates, Redis, emails and error handling are unchanged.
+3. db/crud.py and db/models.py
+   Were they changed by ascend/develop? Do the genai_audit_log helpers in crud.py use
+   db.query(...) or db.execute(select(...))? Will they work with the session type our
+   audit code receives?
 
-## Testing (local, Ascend dev data + audit DB)
-- ✅ Success: CDC, AI Prioritization (2x2), Capability Setup Generate All, Agentic Fit.
-- ✅ Failed with last progress kept: Capability Setup L1/L2/L3 (85), OpEx (50), Salary (10), Cost Saving (50), Project Capability Map (10).
-- ✅ Versioning: repeat runs append versions, `total_runs` increments, older versions intact.
-- ✅ `user_id`, `project_id`, `requested_time`, `analysis_name` captured.
-- <Industry Map / Capability Generation Utility: tested | same pattern, verified by code review>.
+4. Callers
+   In apis/v1/*.py, how are run_operations_status and run_genai_audit_log called:
+   with await or without? Are the calling endpoints/functions def or async def?
+   Give the count and 2–3 examples.
 
-## Known limits
-- No cancel flow exists in the app yet; tracker supports `Cancelled` (keeps progress).
-- Industry Map and Capability Generation Utility have no project → `project_id` NULL.
-- `step` / `sub_step` come from request names (agreed with TL), not fixed PBI labels.
-- AEF dev port will follow in a separate PR after approval.
+5. Conclusion
+   State one of these:
+   (A) Nothing breaks. The audit code still works as is.
+   (B) Only the audit code needs conversion. Give the minimal change list, following
+       EXACTLY the pattern used by run_operations_status.
+   Do NOT propose changes to business functions, teammates' code, or the 42 call sites.
+   Do NOT edit any file.
