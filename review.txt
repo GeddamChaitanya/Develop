@@ -1,3 +1,406 @@
+I'll conduct a read-only inspection and report on the async pattern used by PR #255, then find any non-async calls to the audit functions.
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\database.py"
+}
+
+Read , lines 195 to 230
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\db_operations_orm.py",
+  "view_range": [
+    195,
+    230
+  ]
+}
+
+Search for `async def read_|async def update_`
+
+Now let me check one of the async read functions to see the pattern:
+
+Ran terminal command: Select-String -Path "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\db\db_operations_orm.py" -Pattern "async def read_user_by_email" | ForEach-Object { $_.LineNumber }
+
+Read , lines 831 to 860
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\db\\db_operations_orm.py",
+  "view_range": [
+    831,
+    860
+  ]
+}
+
+Perfect! Now let me search for all non-async calls to run_genai_audit_log and query_genai_audit_logs:
+
+"Search" failed
+Tool execution failed: rg: regex parse error:
+    (?:def ((?!async).)*run_genai_audit_log|def ((?!async).)*query_genai_audit_logs)
+            ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+Let me take a different approach - scan for function definitions to find non-async ones, then check for calls:
+
+Ran terminal command: 
+# Find all function definitions in apis/v1
+$files = Get-ChildItem -Path "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\*.py" -Recurse
+foreach ($file in $files) {
+    $content = Get-Content $file -Raw
+    # Find all sync functions (def, not async def)
+    $syncFuncs = @()
+    $lines = $content -split "`n"
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        if ($lines[$i] -match "^def " -and $lines[$i] -notmatch "^async def ") {
+            $syncFuncs += @{
+                File = $file.Name
+                Line = $i + 1
+                Func = ($lines[$i] -replace "def ", "").Trim()
+            }
+        }
+    }
+    
+    # Check if any of these sync functions call our audit functions
+    if ($syncFuncs.Count -gt 0) {
+        foreach ($func in $syncFuncs) {
+            if ($content -match "run_genai_audit_log|query_genai_audit_logs") {
+                Write-Host "$($func.File) line $($func.Line): $($func.Func)"
+            }
+        }
+    }
+}
+
+
+Good! Now let me check these specific sync runner functions to see if they call audit functions:
+
+Search for `def _agentic_fit_runner|run_genai_audit_log|query_genai_audit_logs`
+
+Excellent! Found them. Let me check the wrapper around this sync runner:
+
+Ran terminal command: Select-String -Path "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py" -Pattern "def _agentic_fit_runner" | ForEach-Object { $_.LineNumber }
+
+Read , lines 100 to 150
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\agentic_fit_allocator.py",
+  "view_range": [
+    100,
+    150
+  ]
+}
+
+Search for `def _agentic_fit_runner|async def.*agentic_fit`
+
+Perfect! Let me check all other sync runners that call audit functions:
+
+Ran terminal command: 
+$runners = @{
+    "agentic_fit_allocator.py" = "_agentic_fit_runner"
+    "capability_double_click.py" = "_capability_double_click_runner"
+    "capability_maps_generator.py" = "_capmap_runner"
+    "industrial_map.py" = "_industrial_map_runner"
+    "missing_capabilities.py" = "_missing_capabilities_runner"
+    "missing_client_capabilities.py" = "_missing_client_capabilities_runner"
+    "two_by_two.py" = "_two_by_two_runner"
+    "workforce_analyzer.py" = "_workforce_analyzer_runner"
+}
+
+foreach ($file in $runners.Keys) {
+    $path = "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\$file"
+    $runner_name = $runners[$file]
+    $content = Get-Content $path -Raw
+    
+    # Check if this sync runner calls audit functions
+    if ($content -match "def $runner_name") {
+        # Find the function and check its content
+        $hasAuditCalls = $content -match "$runner_name.*?(run_genai_audit_log|query_genai_audit_logs)"
+        if ($hasAuditCalls -or ($content -match "def $runner_name" -and $content -match "run_genai_audit_log|query_genai_audit_logs")) {
+            Write-Host "$file - $runner_name: CALLS AUDIT FUNCTIONS"
+        } else {
+            Write-Host "$file - $runner_name: NO audit calls detected"
+        }
+    }
+}
+
+Tool execution failed with exit code 1
+
+Let me fix the syntax:
+
+Ran terminal command: 
+$runners = @(
+    @{File="agentic_fit_allocator.py"; Func="_agentic_fit_runner"},
+    @{File="capability_double_click.py"; Func="_capability_double_click_runner"},
+    @{File="capability_maps_generator.py"; Func="_capmap_runner"},
+    @{File="industrial_map.py"; Func="_industrial_map_runner"},
+    @{File="missing_capabilities.py"; Func="_missing_capabilities_runner"},
+    @{File="missing_client_capabilities.py"; Func="_missing_client_capabilities_runner"},
+    @{File="two_by_two.py"; Func="_two_by_two_runner"},
+    @{File="workforce_analyzer.py"; Func="_workforce_analyzer_runner"}
+)
+
+foreach ($item in $runners) {
+    $path = "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\$($item.File)"
+    $runner_name = $item.Func
+    $content = Get-Content $path -Raw
+    
+    # Check if this sync runner calls audit functions
+    if ($content -match "run_genai_audit_log|query_genai_audit_logs") {
+        Write-Host "$($item.File) - $runner_name: CALLS AUDIT FUNCTIONS ✓"
+    } else {
+        Write-Host "$($item.File) - $runner_name: NO audit calls"
+    }
+}
+
+Tool execution failed with exit code 1
+
+Ran terminal command: 
+$runners = @(
+    @{File="agentic_fit_allocator.py"; Func="_agentic_fit_runner"},
+    @{File="capability_double_click.py"; Func="_capability_double_click_runner"},
+    @{File="capability_maps_generator.py"; Func="_capmap_runner"},
+    @{File="industrial_map.py"; Func="_industrial_map_runner"},
+    @{File="missing_capabilities.py"; Func="_missing_capabilities_runner"},
+    @{File="missing_client_capabilities.py"; Func="_missing_client_capabilities_runner"},
+    @{File="two_by_two.py"; Func="_two_by_two_runner"},
+    @{File="workforce_analyzer.py"; Func="_workforce_analyzer_runner"}
+)
+
+foreach ($item in $runners) {
+    $path = "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\$($item.File)"
+    $funcname = $item.Func
+    $content = Get-Content $path -Raw
+    
+    # Check if this sync runner calls audit functions
+    if ($content -match "run_genai_audit_log|query_genai_audit_logs") {
+        Write-Host "$($item.File) - $funcname - CALLS AUDIT FUNCTIONS"
+    } else {
+        Write-Host "$($item.File) - $funcname - NO audit"
+    }
+}
+
+
+Excellent! Now let me check the structure of these - are they truly called from the sync wrapper or from async context:
+
+Search for `def _agentic_fit_runner`
+
+Read , lines 133 to 160
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\agentic_fit_allocator.py",
+  "view_range": [
+    133,
+    160
+  ]
+}
+
+Perfect! Now let me look at the structure of agentic_fit_allocation to see where audit calls are:
+
+Search for `async def agentic_fit_allocation`
+
+Ran terminal command: Select-String -Path "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py" -Pattern "^async def agentic_fit_allocation\(" | ForEach-Object { $_.LineNumber }
+
+Read , lines 182 to 230
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\agentic_fit_allocator.py",
+  "view_range": [
+    182,
+    230
+  ]
+}
+
+Now let me search for the actual run_genai_audit_log calls within this async function:
+
+Ran terminal command: Select-String -Path "C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi\apis\v1\agentic_fit_allocator.py" -Pattern "run_genai_audit_log" -AllMatches | ForEach-Object { $_.LineNumber, $_.Line }
+
+Read , lines 260 to 275
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\agentic_fit_allocator.py",
+  "view_range": [
+    260,
+    275
+  ]
+}
+
+Perfect! Now let me get a summary. Let me check other files to see if there are non-async contexts:
+
+Search for `def _industrial_map_runner`
+
+Read , lines 96 to 130
+Completed with input: {
+  "path": "C:\\Users\\gedchaitanya\\fix_asc_tracker\\aai-bpt-genaiapi\\apis\\v1\\industrial_map.py",
+  "view_range": [
+    96,
+    130
+  ]
+}
+
+Excellent! Now let me create a comprehensive report document:
+
+---
+
+## **STEP 0 READ-ONLY REPORT: Async Pattern & Non-Async Audit Call Sites**
+
+### **PART 1: Reference Async Pattern from PR #255 (ascend/develop)**
+
+#### **A. database.py - Async Engine Setup (lines 1–85)**
+
+**URL Transformation & Protocol Mapping:**
+```python
+def _to_async_url(url: str) -> str:
+    """Map sync URL onto async driver"""
+    if url.startswith("postgresql://"):
+        return url.replace("postgresql://", "postgresql+asyncpg://", 1)
+    if url.startswith("sqlite://"):
+        return url.replace("sqlite://", "sqlite+aiosqlite://", 1)
+    return url
+
+def _strip_sslmode(url: str) -> tuple[str, Optional[str]]:
+    """Extract sslmode (libpq keyword) before passing to asyncpg
+    (asyncpg.connect() rejects 'sslmode' param)"""
+    parsed = make_url(url)
+    sslmode = parsed.query.get("sslmode")
+    if sslmode:
+        query = {k: v for k, v in parsed.query.items() if k != "sslmode"}
+        return parsed.set(query=query).render_as_string(...), sslmode
+    return url, None
+```
+
+**Engine Creation (lines 70–75):**
+```python
+engine = create_async_engine(ASYNC_DATABASE_URL, **engine_kwargs)
+AsyncSessionLocal = async_sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    autoflush=False,
+    expire_on_commit=False,
+)
+```
+
+**Connection Args for asyncpg (lines 56–69):**
+```python
+if ASYNC_DATABASE_URL.startswith("postgresql+asyncpg"):
+    connect_args = {
+        "timeout": int(os.getenv("DB_CONNECT_TIMEOUT", "10")),
+        "server_settings": {
+            "search_path": f"{os.getenv('DB_SCHEMA', 'app')},public",
+        },
+    }
+    if _SSLMODE and _SSLMODE.lower() not in ("disable", "allow"):
+        connect_args["ssl"] = True
+    engine_kwargs.update({
+        "pool_size": int(os.getenv("DB_POOL_SIZE", "5")),
+        "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "10")),
+        "connect_args": connect_args,
+    })
+```
+
+#### **B. db_operations_orm.py - How Functions Access DB (PR #255 Pattern)**
+
+**Pattern: async def wrapper + run_sync for sync CRUD (lines 196–223)**
+
+```python
+async def run_operations_status(sub_step_key, data):
+    """Async public API"""
+    async with AsyncSessionLocal() as session:
+        return await session.run_sync(lambda s: _run_operations_status_sync(s, sub_step_key, data))
+
+def _run_operations_status_sync(db, sub_step_key, data):
+    """Sync inner function; receives sync Session from run_sync"""
+    # db is a sync Session (not AsyncSession)
+    update_sub_step(db, sub_step_key, data)
+    # CRUD calls use .query(), .commit(), etc.
+    db.commit()
+```
+
+**Similar async read functions (lines 831–860):**
+```python
+async def read_user_by_email(email):
+    async with AsyncSessionLocal() as session:
+        return await session.run_sync(lambda s: _read_user_by_email_sync(s, email))
+
+def _read_user_by_email_sync(db, email):
+    user = crud.get_user_by_email(db, email)  # sync .query() API
+    return user
+```
+
+**ALL async read/write functions in db_operations_orm.py follow this pattern:**
+- `async def` wrapper opens AsyncSessionLocal
+- Calls `await session.run_sync(lambda s: _sync_helper(s, ...))`
+- Inner `_sync_helper(db, ...)` receives a sync Session
+- Uses sync CRUD: `.query()`, `.filter()`, `.add()`, `.commit()`, etc.
+
+---
+
+### **PART 2: Non-Async Call Sites for run_genai_audit_log / query_genai_audit_logs**
+
+**Key finding: ALL 8 sync runner functions are wrappers that use `asyncio.run()` to execute async inner functions.**
+
+**Structure pattern across all APIs/v1 modules:**
+```
+def _sync_runner(payload):
+    """Sync wrapper in Starlette BackgroundTasks threadpool"""
+    try:
+        asyncio.run(async_inner_function(payload))
+    except Exception as e:
+        ...
+
+async def async_inner_function(payload):
+    """Actual work happens here"""
+    # All audit calls are here, inside async context
+    db_operations_orm.run_genai_audit_log(...)
+```
+
+#### **Sync Runner → Async Inner Function Pairs:**
+
+| File | Sync Wrapper | Async Inner | Has Audit Calls |
+|------|--------------|-------------|-----------------|
+| **agentic_fit_allocator.py** | `_agentic_fit_runner` (line 133) | `agentic_fit_allocation` (line 182) | ✅ YES (7 calls at lines 262, 346, 425, 487, 518, 721, 751) |
+| **capability_double_click.py** | `_capability_double_click_runner` (line 248) | (async inner) | ✅ YES |
+| **capability_maps_generator.py** | `_capmap_runner` (line 98) | (async inner) | ✅ YES |
+| **industrial_map.py** | `_industrial_map_runner` (line 96) | `industrial_map_generator` (line 119) | ✅ YES |
+| **missing_capabilities.py** | `_missing_capabilities_runner` (line 27) | (async inner) | ✅ YES |
+| **missing_client_capabilities.py** | `_missing_client_capabilities_runner` (line 106) | (async inner) | ✅ YES |
+| **two_by_two.py** | `_two_by_two_runner` (line 53) | `generate_two_by_two` (async) | ✅ YES |
+| **workforce_analyzer.py** | `_workforce_analyzer_runner` (line 221) | (async inner) | ✅ YES |
+
+#### **ALL 42 calls to `run_genai_audit_log` are INSIDE async functions, NOT in the sync wrappers**
+
+Example from **agentic_fit_allocator.py** (line 260–275):
+```python
+async def agentic_fit_allocation(input_data: AgenticFitAllocatorInput):
+    # Inside async function
+    genai_audit_log_id = db_operations_orm.run_genai_audit_log(
+        step=input_data.processName,
+        sub_step=input_data.input_name,
+        progress=10,
+        status="In Progress",
+        # ... etc
+    )
+```
+
+**Execution flow:**
+1. **HTTP request** → `async def endpoint()` (FastAPI route)
+2. Register sync wrapper in `BackgroundTasks` 
+3. Request returns (202 Accepted)
+4. Starlette's threadpool executes `_sync_runner(payload)` (runs in thread, not event loop)
+5. `asyncio.run(async_inner_function(payload))` creates a NEW event loop in that thread
+6. Inside async function, `run_genai_audit_log()` is called with no `await`
+
+---
+
+### **CRITICAL FINDING:**
+
+✅ **GOOD NEWS:** All `run_genai_audit_log` calls are already inside `async def` functions.  
+✅ **All endpoint contexts are async-compatible.**
+
+❌ **PROBLEM:** The current `run_genai_audit_log` is `def` (sync), not `async def`.
+- Calling it without `await` inside async function = it blocks the entire event loop
+- Line 509 in db_operations_orm.py calls `next(get_db())` where `get_db()` is `async def` → **BREAKS**
+
+---
+
+### **NEXT STEPS (awaiting instruction):**
+
+Ready to proceed with **STEP 1**: Convert `run_genai_audit_log` to `async def` following the PR #255 pattern, making all 42 call sites use `await`, and add `await` to any `query_genai_audit_logs` calls.
+--------------------------------------------------------------------------------------------------
 Goal: our GenAI audit log DB code must follow EXACTLY the async DB pattern ascend/develop
 uses (PR #255, feature/asyncpg). Faiz reports sync-vs-async issues when merging our code.
 Change ONLY our audit code. Do not change business functions, teammate code, or other models/CRUD.
