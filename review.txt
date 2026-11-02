@@ -1,57 +1,13 @@
-py -m py_compile db/database.py db/db_operations_orm.py db/models.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_capabilities.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
-git --no-pager diff --stat
-git add db/database.py db/db_operations_orm.py db/models.py apis/v1
-git status
+Changes (audit code only, no business logic touched):
+The audit DB code now follows the PR #255 async pattern: an async audit engine built like the main one, and run_genai_audit_log as an async wrapper using run_sync
+The user lookup uses the existing read_user_by_email
+await is added to our audit calls (and asyncio.run in the sync runner except blocks)
+client_id is renamed to project_id to match the genai_audit_log table
+Tested: Success, Failed, repeat runs (versions) and the user lookup. All good.
 
 
-
-2026-11-02 17:25:18,246 - uvicorn.error - INFO - Shutting down
-2026-11-02 17:25:18,355 - uvicorn.error - INFO - Waiting for application shutdown.
-2026-11-02 17:25:18,356 - uvicorn.error - INFO - Application shutdown complete.
-2026-11-02 17:25:18,356 - uvicorn.error - INFO - Finished server process [25780]
-2026-11-02 17:25:18,856 - uvicorn.error - INFO - Stopping reloader process [35988]
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> py -m py_compile db/database.py db/db_operations_orm.py db/models.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_capabilities.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff --stat
-warning: in the working copy of 'apis/v1/agentic_fit_allocator.py', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'apis/v1/capability_double_click.py', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'apis/v1/capability_maps_generator.py', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'apis/v1/two_by_two.py', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'apis/v1/workforce_analyzer.py', LF will be replaced by CRLF the next time Git touches it
- apis/v1/agentic_fit_allocator.py       |  28 ++--
- apis/v1/capability_double_click.py     |  26 ++--
- apis/v1/capability_maps_generator.py   |  34 ++---
- apis/v1/industrial_map.py              |  12 +-
- apis/v1/missing_capabilities.py        |  12 +-
- apis/v1/missing_client_capabilities.py |  12 +-
- apis/v1/two_by_two.py                  |  18 +--
- apis/v1/workforce_analyzer.py          |  32 ++---
- db/database.py                         |  48 ++++---
- db/db_operations_orm.py                | 239 +++++++++++++++++++++------------
- db/models.py                           |   4 +-
- 11 files changed, 271 insertions(+), 194 deletions(-)
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status 
-On branch fix_asc_events_tracker
-Your branch is ahead of 'origin/fix_asc_events_tracker' by 4 commits.
-  (use "git push" to publish your local commits)
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   apis/v1/agentic_fit_allocator.py
-        modified:   apis/v1/capability_double_click.py
-        modified:   apis/v1/capability_maps_generator.py
-        modified:   apis/v1/industrial_map.py
-        modified:   apis/v1/missing_capabilities.py
-        modified:   apis/v1/missing_client_capabilities.py
-        modified:   apis/v1/two_by_two.py
-        modified:   apis/v1/workforce_analyzer.py
-        modified:   db/database.py
-        modified:   db/db_operations_orm.py
-        modified:   db/models.py
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        run.ps1
-
-no changes added to commit (use "git add" and/or "git commit -a")
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+Updated our audit log DB code to the new async asyncpg pattern from PR #255 (async audit engine + run_sync wrapper). Only audit code changed, no business logic.
+Fixed the client_id → project_id mismatch with the genai_audit_log table.
+Used NullPool for the audit engine to avoid event loop errors in background runs.
+Tested Success, Failed, repeat runs (versioning) and the user lookup. All working.
+Pushed to fix_asc_events_tracker (PR #253) and asked Faiz to review.
