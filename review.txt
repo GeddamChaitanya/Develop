@@ -1,3 +1,14 @@
+Goal: our GenAI audit log DB code must follow EXACTLY the async DB pattern ascend/develop
+uses (PR #255, feature/asyncpg). Faiz reports sync-vs-async issues when merging our code.
+Change ONLY our audit code. Do not change business functions, teammate code, or other models/CRUD.
+
+STEP 0 (read-only, report first):
+- Show the reference pattern from ascend/develop: how database.py builds the async engine
+  (make_url, asyncpg driver, ssl/connect_args), and how db_operations_orm.py functions changed
+  in PR #255 access the DB (run_sync + sync crud? or await db.execute(select(...)) directly?).
+- List every run_genai_audit_log / query_genai_audit_logs call in apis/v1 that is inside a
+  NON-async function (def, thread, callback, runner failure handler). Then STOP and wait.
+=--------------------------------------------------------------------------
 I'll analyze the codebase to determine the impact of the asyncpg migration on your GenAI audit code. Let me examine the key files.
 
 Read 
