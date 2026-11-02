@@ -1,3 +1,41 @@
-git grep -n "client_id\|project_id" HEAD -- db/models.py db/db_operations_orm.py apis/v1
-git grep -n "client_id\|project_id" -- apis/v1
-Get-Content db/models.py | Select-Object -Index (385..400)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git grep -n "client_id\|project_id" -- db/models.py db/db_operations_orm.py
+db/db_operations_orm.py:439:    normalized_client_id,
+db/db_operations_orm.py:505:            "client_id": normalized_client_id,
+db/db_operations_orm.py:549:        record.client_id = latest_version.get("client_id")
+db/db_operations_orm.py:579:    client_id=None,
+db/db_operations_orm.py:595:      - Row columns (user_id, client_id, status, progress, requested_time) always mirror
+db/db_operations_orm.py:606:      client_id: Ascend project key (projectKey / projectInfo.projectKey).
+db/db_operations_orm.py:637:    # Safely convert ids (user_id / client_id) to int; None if not numeric.
+db/db_operations_orm.py:649:        normalized_client_id = parse_integer(client_id)
+db/db_operations_orm.py:679:                    normalized_client_id,
+db/db_operations_orm.py:1294:async def read_survey_responses_by_project_id(project_id: int):
+db/db_operations_orm.py:1296:        return await session.run_sync(lambda s: _read_survey_responses_by_project_id_sync(s, project_id))
+db/db_operations_orm.py:1299:def _read_survey_responses_by_project_id_sync(db, project_id: int):
+db/db_operations_orm.py:1303:    ``survey_response`` (filtered by *project_id*) so that every active
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git grep -n "client_id\|project_id" HEAD -- db/models.py db/db_operations_orm.py apis/v1
+HEAD:apis/v1/agentic_fit_allocator.py:194:    audit_client_id = None
+HEAD:apis/v1/agentic_fit_allocator.py:227:        audit_client_id = None
+HEAD:apis/v1/agentic_fit_allocator.py:236:            audit_client_id = (audit_project_info or {}).get("projectKey") or input_data.ProjectKey
+HEAD:apis/v1/agentic_fit_allocator.py:271:                client_id=audit_client_id,
+HEAD:apis/v1/agentic_fit_allocator.py:355:                    client_id=audit_client_id,
+HEAD:apis/v1/agentic_fit_allocator.py:434:                    client_id=audit_client_id,
+HEAD:apis/v1/agentic_fit_allocator.py:496:                    client_id=audit_client_id,
+HEAD:apis/v1/agentic_fit_allocator.py:527:                    client_id=audit_client_id,
+HEAD:apis/v1/agentic_fit_allocator.py:730:                client_id=audit_client_id,
+HEAD:apis/v1/agentic_fit_allocator.py:759:                client_id=audit_client_id,
+HEAD:apis/v1/capability_double_click.py:34:from db.db_operations_orm import read_sub_step_input_by_input_key, read_survey_responses_by_project_id, read_sub_step_output_by_output_key
+HEAD:apis/v1/capability_double_click.py:256:    audit_client_id = getattr(payload, "ProjectKey", None)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git grep -n "client_id\|project_id" -- apis/v1
+apis/v1/agentic_fit_allocator.py:194:    audit_client_id = None
+apis/v1/agentic_fit_allocator.py:227:        audit_client_id = None
+apis/v1/agentic_fit_allocator.py:236:            audit_client_id = (audit_project_info or {}).get("projectKey") or input_data.ProjectKey
+apis/v1/agentic_fit_allocator.py:271:                client_id=audit_client_id,
+apis/v1/agentic_fit_allocator.py:355:                    client_id=audit_client_id,
+apis/v1/agentic_fit_allocator.py:434:                    client_id=audit_client_id,
+apis/v1/agentic_fit_allocator.py:496:                    client_id=audit_client_id,
+apis/v1/agentic_fit_allocator.py:527:                    client_id=audit_client_id,
+apis/v1/agentic_fit_allocator.py:730:                client_id=audit_client_id,
+apis/v1/agentic_fit_allocator.py:759:                client_id=audit_client_id,
+apis/v1/capability_double_click.py:34:from db.db_operations_orm import read_sub_step_input_by_input_key, read_survey_responses_by_project_id, read_sub_step_output_by_output_key
+apis/v1/capability_double_click.py:256:    audit_client_id = getattr(payload, "ProjectKey", None)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
