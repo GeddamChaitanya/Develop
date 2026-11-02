@@ -1,3 +1,16 @@
+git --no-pager grep -c "project_id=\|client_id=" 404b735 -- apis/v1
+git --no-pager grep -c "project_id=\|client_id=" 100ab84 -- apis/v1
+git --no-pager grep -c "project_id=\|client_id=" -- apis/v1
+git --no-pager log --oneline -8 -- db/models.py apis/v1/two_by_two.py
+
+
+
+Select-String -Path db\models.py,db\db_operations_orm.py -Pattern "client_id"
+Select-String -Path apis\v1\*.py -Pattern "client_id="
+git --no-pager diff apis/v1 | Select-String "^[+-]" | Select-String -NotMatch "run_genai_audit_log|project_id=|^\+\+\+|^---"
+
+
+---------------------------------------------------------------------------
 I'll carefully rename `client_id` to `project_id` in the audit code only. Let me start by viewing the relevant sections:
 
 Read , lines 385 to 405
