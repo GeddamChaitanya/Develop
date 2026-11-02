@@ -1,3 +1,6 @@
+git grep -n "get_audit_db\|SessionAuditLocal"
+git grep -n "client_id\|project_id" -- db/models.py db/db_operations_orm.py
+
 py -c "import subprocess,pathlib; fs=subprocess.check_output(['git','diff','--name-only','--','apis/v1']).decode().split(); [ (lambda p,o: p.write_bytes(p.read_bytes().rstrip(b'\r\n \t')+o[len(o.rstrip(b'\r\n \t')):]))(pathlib.Path(f), subprocess.check_output(['git','show','HEAD:'+f])) for f in fs]"
 
 git --no-pager diff apis/v1 | Select-String "^[+-]" | Select-String -NotMatch "run_genai_audit_log|^\+\+\+|^---"
