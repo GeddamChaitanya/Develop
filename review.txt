@@ -1,3 +1,109 @@
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff apis/v1 | Select-String "^[+-]" | Select-String -NotMatch "run_genai_audit_log|^\+\+\+|^---"
+warning: in the working copy of 'apis/v1/agentic_fit_allocator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apis/v1/capability_double_click.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apis/v1/capability_maps_generator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apis/v1/two_by_two.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apis/v1/workforce_analyzer.py', LF will be replaced by CRLF the next time Git touches it
+
+-            )
++            ))
+-            )
++            ))
+-            )
++            ))
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff db/database.py db/models.py
+diff --git a/db/database.py b/db/database.py
+index 9500b99..24c2640 100644
+--- a/db/database.py
++++ b/db/database.py
+@@ -80,28 +80,41 @@ AsyncSessionLocal = async_sessionmaker(
+ )
+ 
+ # Dedicated audit DB session factory (isolated from main SessionLocal/get_db)
++# Async engine for audit DB, following the same pattern as the main engine
+ AUDIT_DATABASE_URL = os.getenv("DB_STRING_AUDITLOG")
+ if AUDIT_DATABASE_URL:
+-    audit_engine = create_engine(AUDIT_DATABASE_URL, **engine_kwargs)
+-    SessionAuditLocal = sessionmaker(autocommit=False, autoflush=False, bind=audit_engine)
++    ASYNC_AUDIT_DATABASE_URL, _AUDIT_SSLMODE = _strip_sslmode(_to_async_url(AUDIT_DATABASE_URL))
++    
++    audit_engine_kwargs = engine_kwargs.copy()
++    if ASYNC_AUDIT_DATABASE_URL.startswith("postgresql+asyncpg"):
++        audit_connect_args = {
++            "timeout": int(os.getenv("DB_CONNECT_TIMEOUT", "10")),
++            "server_settings": {
++                "search_path": f"{os.getenv('DB_SCHEMA', 'app')},public",
++            },
++        }
++        if _AUDIT_SSLMODE and _AUDIT_SSLMODE.lower() not in ("disable", "allow"):
++            audit_connect_args["ssl"] = True
++        audit_engine_kwargs.update(
++            {
++                "pool_size": int(os.getenv("DB_POOL_SIZE", "5")),
++                "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "10")),
++                "connect_args": audit_connect_args,
++            }
++        )
++    
++    audit_engine = create_async_engine(ASYNC_AUDIT_DATABASE_URL, **audit_engine_kwargs)
++    AsyncAuditSessionLocal = async_sessionmaker(
++        bind=audit_engine,
++        class_=AsyncSession,
++        autoflush=False,
++        expire_on_commit=False,
++    )
+ else:
+     audit_engine = None
+-    SessionAuditLocal = None
+-
++    AsyncAuditSessionLocal = None
+ 
+ 
+ async def get_db():
+     async with AsyncSessionLocal() as db:
+         yield db
+-
+-def get_audit_db():
+-    if SessionAuditLocal is None:
+-        raise ValueError("DB_STRING_AUDITLOG environment variable is not set")
+-
+-    print("Getting audit database session...")
+-    db = SessionAuditLocal()
+-    print("Audit database session created.")
+-    try:
+-        yield db
+-    finally:
+-        db.close()
+diff --git a/db/models.py b/db/models.py
+index 7c6eca8..09ae50d 100644
+--- a/db/models.py
++++ b/db/models.py
+@@ -395,5 +395,5 @@ class GenAIAuditLog(Base):
+     progress = Column(Integer, nullable=False, server_default='0')
+     status = Column(String(50), nullable=False, server_default='In Progress')
+     requested_time = Column(DateTime(timezone=True), nullable=True)
+-    event_time = Column(DateTime(timezone=True), nullable=False, default=datetime.datetime.utcnow)
++    event_time = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+     log_history = Column(JSONB, nullable=True)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git grep -n "get_audit_db\|SessionAuditLocal"
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git grep -n "client_id\|project_id" -- db/models.py db/db_operations_orm.py
+db/db_operations_orm.py:439:    normalized_client_id,
+db/db_operations_orm.py:505:            "client_id": normalized_client_id,
+db/db_operations_orm.py:549:        record.client_id = latest_version.get("client_id")
+db/db_operations_orm.py:579:    client_id=None,
+db/db_operations_orm.py:595:      - Row columns (user_id, client_id, status, progress, requested_time) always mirror
+db/db_operations_orm.py:606:      client_id: Ascend project key (projectKey / projectInfo.projectKey).
+db/db_operations_orm.py:637:    # Safely convert ids (user_id / client_id) to int; None if not numeric.
+db/db_operations_orm.py:649:        normalized_client_id = parse_integer(client_id)
+db/db_operations_orm.py:679:                    normalized_client_id,
+db/db_operations_orm.py:1294:async def read_survey_responses_by_project_id(project_id: int):
+db/db_operations_orm.py:1296:        return await session.run_sync(lambda s: _read_survey_responses_by_project_id_sync(s, project_id))
+db/db_operations_orm.py:1299:def _read_survey_responses_by_project_id_sync(db, project_id: int):
+db/db_operations_orm.py:1303:    ``survey_response`` (filtered by *project_id*) so that every active
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+---------------------------------------------
 git grep -n "get_audit_db\|SessionAuditLocal"
 git grep -n "client_id\|project_id" -- db/models.py db/db_operations_orm.py
 
