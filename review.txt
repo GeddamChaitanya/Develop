@@ -1,3 +1,19 @@
+Rename client_id -> project_id in our GenAI audit code ONLY. The DB table column is project_id.
+
+1. db/models.py, GenAIAuditLog: client_id = Column(Integer, nullable=True)
+   -> project_id = Column(Integer, nullable=True). Nothing else.
+2. db/db_operations_orm.py, run_genai_audit_log and _run_genai_audit_log_sync only:
+   - parameter client_id=None -> project_id=None
+   - normalized_client_id -> normalized_project_id
+   - log_history version key "client_id" -> "project_id"
+   - record.client_id = latest_version.get("client_id")
+     -> record.project_id = latest_version.get("project_id")
+   - docstring/comments: client_id -> project_id
+3. apis/v1/*.py: ONLY the keyword inside run_genai_audit_log(...) calls:
+   client_id=audit_client_id -> project_id=audit_client_id
+   Do not rename variables. Do not touch any other client_id usage.
+Show the diff before saving. Then run py_compile on db/*.py and apis/v1/*.py.
+-------------------------------------------------------------------------------------------------------------------------
 (.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git grep -n "client_id\|project_id" -- db/models.py db/db_operations_orm.py
 db/db_operations_orm.py:439:    normalized_client_id,
 db/db_operations_orm.py:505:            "client_id": normalized_client_id,
