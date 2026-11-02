@@ -1,100 +1,23 @@
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager grep -c "project_id=\|client_id=" 404b735 -- apis/v1
-404b735:apis/v1/agentic_fit_allocator.py:7
-404b735:apis/v1/capability_double_click.py:6
-404b735:apis/v1/capability_maps_generator.py:8
-404b735:apis/v1/industrial_map.py:3
-404b735:apis/v1/missing_capabilities.py:3
-404b735:apis/v1/missing_client_capabilities.py:3
-404b735:apis/v1/two_by_two.py:4
-404b735:apis/v1/workforce_analyzer.py:8
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager grep -c "project_id=\|client_id=" 100ab84 -- apis/v1
-100ab84:apis/v1/agentic_fit_allocator.py:7
-100ab84:apis/v1/capability_double_click.py:6
-100ab84:apis/v1/capability_maps_generator.py:8
-100ab84:apis/v1/industrial_map.py:3
-100ab84:apis/v1/missing_capabilities.py:3
-100ab84:apis/v1/missing_client_capabilities.py:3
-100ab84:apis/v1/two_by_two.py:4
-100ab84:apis/v1/workforce_analyzer.py:8
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager grep -c "project_id=\|client_id=" -- apis/v1
-apis/v1/agentic_fit_allocator.py:7
-apis/v1/capability_double_click.py:6
-apis/v1/capability_maps_generator.py:8
-apis/v1/industrial_map.py:3
-apis/v1/missing_capabilities.py:3
-apis/v1/missing_client_capabilities.py:3
-apis/v1/two_by_two.py:4
-apis/v1/workforce_analyzer.py:8
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager log --oneline -8 -- db/models.py apis/v1/two_by_two.py
-100ab84 (origin/fix_asc_events_tracker) Merge ascend/develop into fix_asc_events_tracker
-404b735 feat: PBI 88921 - GenAI Events Tracker audit log for Ascend
-70fa373 WIP: async + asyncpg migration (checkpoint)
-822d78b fix: IA opex Generated status and survey_response schema alignment
-41f995f feat: add parent workspace name support across multiple APIs and schemas
-13158c6 (origin/ascend/kumarShubham_SingleTenantUpdates_DevelopBranchGenAI) Merge branch 'ascend/develop' into ascend/kumarShubham_SingleTenantUpdates_DevelopBranchGenAI
-475ae92 feat: standardize email subject format in generate_two_by_two function
-87c6ca9 fix: update sub_step_status_key for capability map and two by two generation processes
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path db\models.py,db\db_operations_orm.py -Pattern "client_id"
+Edit ONLY db/database.py, ONLY the audit engine block (inside "if AUDIT_DATABASE_URL:",
+around lines 88-104). Do not touch the main engine, AsyncSessionLocal, get_db, helpers,
+or any other file.
 
-db\models.py:355:    project_id = Column('client_id', Integer, nullable=False)
+Problem: background runners use asyncio.run() (a new event loop per run). The pooled
+audit connections get reused across closed loops -> "RuntimeError: Event loop is closed".
 
+Change:
+1. Add at the top with the other sqlalchemy imports:
+   from sqlalchemy.pool import NullPool
+2. In the audit block, right after audit_engine_kwargs = engine_kwargs.copy():
+   - remove pool_size, max_overflow, pool_timeout from audit_engine_kwargs
+     (pop with default None)
+   - set audit_engine_kwargs["poolclass"] = NullPool
+   - add a short comment: audit connections are not pooled because background runners
+     use asyncio.run() (a new event loop per run)
+3. Keep audit_connect_args exactly as now (timeout, search_path, ssl), but set it with
+   audit_engine_kwargs["connect_args"] = audit_connect_args
+   instead of the .update({... pool_size, max_overflow, connect_args}) block.
+4. Keep create_async_engine(...) and AsyncAuditSessionLocal = async_sessionmaker(...) unchanged.
 
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> Select-String -Path apis\v1\*.py -Pattern "client_id="
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff apis/v1 | Select-String "^[+-]" | Select-String -NotMatch "run_genai_audit_log|project_id=|^\+\+\+|^---"
-warning: in the working copy of 'apis/v1/agentic_fit_allocator.py', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'apis/v1/capability_double_click.py', LF will be replaced by CRLF the next time Gittouches it
-warning: in the working copy of 'apis/v1/capability_maps_generator.py', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'apis/v1/two_by_two.py', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'apis/v1/workforce_analyzer.py', LF will be replaced by CRLF the next time Git touches it
-
--                client_id=audit_client_id,
--                    client_id=audit_client_id,
--                    client_id=audit_client_id,
--                    client_id=audit_client_id,
--                    client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--            )
-+            ))
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                    client_id=audit_client_id,
--                    client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--            )
-+            ))
--                    client_id=audit_client_id,
--                    client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--            )
-+            ))
--                client_id=audit_client_id,
--                client_id=audit_client_id,
--                    client_id=audit_client_id,
--                    client_id=audit_client_id,
--                        client_id=audit_client_id,
--                        client_id=audit_client_id,
--                        client_id=audit_client_id,
--                        client_id=audit_client_id,
--                        client_id=audit_client_id,
--                        client_id=audit_client_id,
--                    client_id=audit_client_id,
-
-
-(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
+Show the diff before saving. Then run:
+py -m py_compile db/database.py
