@@ -5,3 +5,288 @@ git --no-pager diff apis/v1 | Select-String "^[+-]" | Select-String -NotMatch "r
 
 
 git --no-pager diff apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py
+
+---------------------------------------------------------------
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git fetch origin              
+info: please complete authentication in your browser...
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 5 (delta 3), reused 5 (delta 3), pack-reused 0 (from 0)
+Unpacking objects: 100% (5/5), 502 bytes | 35.00 KiB/s, done.
+From https://github.com/Deloitte-US-Consulting-HO/aai-bpt-genaiapi
+   4d55405..f9cfbb7  ascend/abhilimishra/cloudSwitchPOC-GenAI-with-latest-develop-changes -> origin/ascend/abhilimishra/cloudSwitchPOC-GenAI-with-latest-develop-changes
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git merge --no-commit --no-ff origin/ascend/develop 
+Already up to date.
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git log --oneline -5                                
+195a810 (HEAD -> fix_asc_events_tracker) Merge branch 'ascend/develop' of https://github.com/Deloitte-US-Consulting-HO/aai-bpt-genaiapi into fix_asc_events_tracker
+ddba103 (origin/ascend/develop) Merge pull request #255 from Deloitte-US-Consulting-HO/ascend/feature/asynpg
+8a01d9f (origin/ascend/feature/asynpg) fix: update TAG version to v1.5.9 in deploy-dev.yaml
+47e4bc7 feat: enhance async database connectivity and health check support
+100ab84 (origin/fix_asc_events_tracker) Merge ascend/develop into fix_asc_events_tracker
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git status          
+On branch fix_asc_events_tracker
+Your branch is ahead of 'origin/fix_asc_events_tracker' by 4 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        run.ps1
+
+nothing added to commit but untracked files present (use "git add" to track)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff 9cc1ad4 origin/ascend/develop --stat -- db              
+ db/database.py          |  80 ++++++++++++++++-----
+ db/db_operations_orm.py | 188 +++++++++++++++++++++++++++---------------------
+ 2 files changed, 168 insertions(+), 100 deletions(-)
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> ^C
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> py -m py_compile db/database.py db/db_operations_orm.py db/models.py apis/v1/agentic_fit_allocator.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py apis/v1/industrial_map.py apis/v1/missing_capabilities.py apis/v1/missing_client_capabilities.py apis/v1/two_by_two.py apis/v1/workforce_analyzer.py
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff apis/v1 | Select-String "^[+-]" | Select-String -NotMatch "run_genai_audit_log|^\+\+\+|^---"
+
++
++
+-            )
++            ))
++
++
+-            )
++            ))
++
++
+-        raise
++        raise
++
+-        raise
++        raise
++
+-        raise
++        raise
++
+-            )
++            ))
++
++
++
++
+
+
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> git --no-pager diff apis/v1/two_by_two.py apis/v1/capability_double_click.py apis/v1/capability_maps_generator.py
+diff --git a/apis/v1/capability_double_click.py b/apis/v1/capability_double_click.py
+index 140c861..0764d12 100644
+--- a/apis/v1/capability_double_click.py
++++ b/apis/v1/capability_double_click.py
+@@ -266,7 +266,7 @@ def _capability_double_click_runner(payload: AgenticFitAllocatorInput):
+         genai_audit_log_id = _AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, "input_key", "")))
+         try:
+             # Audit checkpoint: FAILED (first exception handler)
+-            db_operations_orm.run_genai_audit_log(
++            asyncio.run(db_operations_orm.run_genai_audit_log(
+                 step=audit_step,
+                 sub_step=None,
+                 status="Failed",
+@@ -279,7 +279,7 @@ def _capability_double_click_runner(payload: AgenticFitAllocatorInput):
+                 receiver_email=audit_receiver_email,
+                 analysis_name=audit_analysis_name,
+                 genai_audit_log_id=genai_audit_log_id,
+-            )
++            ))
+         except Exception as audit_err:
+             track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+         finally:
+@@ -459,7 +459,7 @@ async def generate_capability_double_click(input_data: AgenticFitAllocatorInput)
+ 
+         try:
+             # Audit checkpoint: CREATE (capability double-click analysis start)
+-            genai_audit_log_id = db_operations_orm.run_genai_audit_log(
++            genai_audit_log_id = await db_operations_orm.run_genai_audit_log(
+                 step=audit_step,
+                 sub_step=audit_sub_step,
+                 progress=0,
+@@ -489,7 +489,7 @@ async def generate_capability_double_click(input_data: AgenticFitAllocatorInput)
+             },
+         )
+         try:
+-            db_operations_orm.run_genai_audit_log(
++            await db_operations_orm.run_genai_audit_log(
+                 step=audit_step,
+                 sub_step=audit_sub_step,
+                 status="In Progress",
+@@ -655,7 +655,7 @@ async def generate_capability_double_click(input_data: AgenticFitAllocatorInput)
+ 
+             try:
+                 # Audit checkpoint: SUCCESS (capability double-click analysis completed)
+-                db_operations_orm.run_genai_audit_log(
++                await db_operations_orm.run_genai_audit_log(
+                     step=audit_step,
+                     sub_step=audit_sub_step,
+                     progress=100,
+@@ -697,7 +697,7 @@ async def generate_capability_double_click(input_data: AgenticFitAllocatorInput)
+ 
+             try:
+                 # Audit checkpoint: FAILED (second exception handler)
+-                db_operations_orm.run_genai_audit_log(
++                await db_operations_orm.run_genai_audit_log(
+                     step=audit_step,
+                     sub_step=audit_sub_step,
+                     status="Failed",
+@@ -723,7 +723,7 @@ async def generate_capability_double_click(input_data: AgenticFitAllocatorInput)
+         track_operation_error("CAPABILITY_DOUBLE_CLICK", error_message)
+         try:
+             # Audit checkpoint: FAILED (third/outer exception handler)
+-            db_operations_orm.run_genai_audit_log(
++            await db_operations_orm.run_genai_audit_log(
+                 step=audit_step,
+                 sub_step=audit_sub_step,
+                 status="Failed",
+@@ -757,3 +757,5 @@ async def generate_capability_double_click(input_data: AgenticFitAllocatorInput)
+ 
+ 
+         raise
++
++
+diff --git a/apis/v1/capability_maps_generator.py b/apis/v1/capability_maps_generator.py
+index e54e8d0..a196dc4 100644
+--- a/apis/v1/capability_maps_generator.py
++++ b/apis/v1/capability_maps_generator.py
+@@ -115,7 +115,7 @@ def _capmap_runner(payload: CapabilityMapGeneratorInput):
+         genai_audit_log_id = _AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, "ID", "")))
+         try:
+             # Audit checkpoint: FAILED (exception handler)
+-            db_operations_orm.run_genai_audit_log(
++            asyncio.run(db_operations_orm.run_genai_audit_log(
+                 step="Capability Setup",
+                 sub_step=(
+                     "Generate All Capabilities"
+@@ -132,7 +132,7 @@ def _capmap_runner(payload: CapabilityMapGeneratorInput):
+                 receiver_email=audit_receiver_email,
+                 analysis_name=audit_analysis_name,
+                 genai_audit_log_id=genai_audit_log_id,
+-            )
++            ))
+         except Exception as audit_err:
+             track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+         finally:
+@@ -240,7 +240,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+             genai_audit_log_id = None
+             try:
+                 # Audit checkpoint: CREATE (GENERATE_ALL job start)
+-                genai_audit_log_id = db_operations_orm.run_genai_audit_log(
++                genai_audit_log_id = await db_operations_orm.run_genai_audit_log(
+                     step="Capability Setup",
+                     sub_step="Generate All Capabilities",
+                     status="In Progress",
+@@ -284,7 +284,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+             flattened = await generation.generate_all_levels_hierarchy()
+             try:
+                 # Audit checkpoint: SUCCESS (GENERATE_ALL job completed)
+-                db_operations_orm.run_genai_audit_log(
++                await db_operations_orm.run_genai_audit_log(
+                     step="Capability Setup",
+                     sub_step="Generate All Capabilities",
+                     status="Success",
+@@ -385,7 +385,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+         await db_operations_orm.run_operations_status(sub_step_key=input_data.substepkey, data=status_data)
+         try:
+             # Audit checkpoint: CREATE (L1/L2/L3 job start)
+-            genai_audit_log_id = db_operations_orm.run_genai_audit_log(
++            genai_audit_log_id = await db_operations_orm.run_genai_audit_log(
+                 step="Capability Setup",
+                 sub_step=f"Generate L{level} Capabilities",
+                 progress=0,
+@@ -442,7 +442,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+             stage=f"capability-map-l{level}-generation",
+         )
+         try:
+-            db_operations_orm.run_genai_audit_log(
++            await db_operations_orm.run_genai_audit_log(
+                 step="Capability Setup",
+                 sub_step=f"Generate L{level} Capabilities",
+                 status="In Progress",
+@@ -482,7 +482,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+             stage_status="completed",
+         )
+         try:
+-            db_operations_orm.run_genai_audit_log(
++            await db_operations_orm.run_genai_audit_log(
+                 step="Capability Setup",
+                 sub_step=f"Generate L{level} Capabilities",
+                 status="In Progress",
+@@ -552,7 +552,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+             stage="capability-map-db-insertion",
+         )
+         try:
+-            db_operations_orm.run_genai_audit_log(
++            await db_operations_orm.run_genai_audit_log(
+                 step="Capability Setup",
+                 sub_step=f"Generate L{level} Capabilities",
+                 status="In Progress",
+@@ -572,7 +572,7 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+         output_key = await db_operations_orm.run_operations(output_key=input_data.outputKey, data=db_data)
+         try:
+             # Audit checkpoint: SUCCESS (L1/L2/L3 job completed)
+-            db_operations_orm.run_genai_audit_log(
++            await db_operations_orm.run_genai_audit_log(
+                 step="Capability Setup",
+                 sub_step=f"Generate L{level} Capabilities",
+                 progress=100,
+@@ -671,3 +671,5 @@ async def generate_capability_map(input_data: CapabilityMapGeneratorInput):
+         )
+         _AUDIT_LOG_BY_REQUEST_ID.pop(str(input_data.ID), None)
+         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
++
++
+diff --git a/apis/v1/two_by_two.py b/apis/v1/two_by_two.py
+index d3a98f8..25ce634 100644
+--- a/apis/v1/two_by_two.py
++++ b/apis/v1/two_by_two.py
+@@ -69,7 +69,7 @@ def _two_by_two_runner(payload: AgenticFitAllocatorInput):
+         genai_audit_log_id = _AUDIT_LOG_BY_REQUEST_ID.get(str(getattr(payload, "input_key", "")))
+         try:
+             # Audit checkpoint: FAILED (exception handler)
+-            db_operations_orm.run_genai_audit_log(
++            asyncio.run(db_operations_orm.run_genai_audit_log(
+                 step=getattr(payload, "processName", None),
+                 sub_step=None,
+                 status="Failed",
+@@ -82,7 +82,7 @@ def _two_by_two_runner(payload: AgenticFitAllocatorInput):
+                 receiver_email=audit_receiver_email,
+                 analysis_name=audit_analysis_name,
+                 genai_audit_log_id=genai_audit_log_id,
+-            )
++            ))
+         except Exception as audit_err:
+             track_trace(f"Audit log error update skipped: {audit_err}", severity="Warning")
+         finally:
+@@ -204,7 +204,7 @@ async def generate_two_by_two(input_data: AgenticFitAllocatorInput):
+         genai_audit_log_id = None
+         try:
+             # Audit checkpoint: CREATE (two-by-two analysis start)
+-            genai_audit_log_id = db_operations_orm.run_genai_audit_log(
++            genai_audit_log_id = await db_operations_orm.run_genai_audit_log(
+                 step=step_name,
+                 sub_step=analysis_type,
+                 progress=0,
+@@ -224,7 +224,7 @@ async def generate_two_by_two(input_data: AgenticFitAllocatorInput):
+             track_trace(f"Audit log create skipped: {audit_err}", severity="Warning")
+ 
+         try:
+-            db_operations_orm.run_genai_audit_log(
++            await db_operations_orm.run_genai_audit_log(
+                 step=step_name,
+                 sub_step=analysis_type,
+                 status="In Progress",
+@@ -318,7 +318,7 @@ async def generate_two_by_two(input_data: AgenticFitAllocatorInput):
+                                         properties={"action": analysis_type, "client_name": client_info.get('clientName') if client_info else None})
+             try:
+                 # Audit checkpoint: SUCCESS (two-by-two analysis completed)
+-                db_operations_orm.run_genai_audit_log(
++                await db_operations_orm.run_genai_audit_log(
+                     step=step_name,
+                     sub_step=analysis_type,
+                     progress=100,
+@@ -376,3 +376,5 @@ async def generate_two_by_two(input_data: AgenticFitAllocatorInput):
+         raise
+ 
+ 
++
++
+(.venv) PS C:\Users\gedchaitanya\fix_asc_tracker\aai-bpt-genaiapi> 
