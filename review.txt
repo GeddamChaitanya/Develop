@@ -1,13 +1,15 @@
-Changes (audit code only, no business logic touched):
-The audit DB code now follows the PR #255 async pattern: an async audit engine built like the main one, and run_genai_audit_log as an async wrapper using run_sync
-The user lookup uses the existing read_user_by_email
-await is added to our audit calls (and asyncio.run in the sync runner except blocks)
-client_id is renamed to project_id to match the genai_audit_log table
-Tested: Success, Failed, repeat runs (versions) and the user lookup. All good.
+1. LOCATE THE 2x2 CODE
+Start from these known files:
+- apis/v1/two_by_two_generator.py → generate_two_by_two() endpoint
+- apis/v1/two_by_two.py
+- agents/two_by_two/ → two_by_two_generator.py, prompts.py, llm_helper.py, capability_kpi.py, current_state.py, future_state.py
+- agents/survey_context.py, agents/client_file_context.py, agents/industry_classification_context.py (existing context builders)
+- agents/agentic_fit/ and agents/workforce_analyzer/ (check whether these hold High Fit % and Cost Savings logic)
+- agents/data_transformations.py, db/, schemas/
 
-
-Updated our audit log DB code to the new async asyncpg pattern from PR #255 (async audit engine + run_sync wrapper). Only audit code changed, no business logic.
-Fixed the client_id → project_id mismatch with the genai_audit_log table.
-Used NullPool for the audit engine to avoid event loop errors in background runs.
-Tested Success, Failed, repeat runs (versioning) and the user lookup. All working.
-Pushed to fix_asc_events_tracker (PR #253) and asked Faiz to review.
+Tasks:
+- First confirm whether this two_by_two code is the Viability vs Feasibility 2x2 used in AI Prioritization (search "viability", "feasibility", "dimension"). If the viability/feasibility logic lives elsewhere, find it.
+- Explain the role of each file above.
+- Give the end-to-end call flow from generate_two_by_two(): request fields → context building (survey_ctx, file_ctx, workspace_ctx, industry context) → which agent functions run → LLM calls → DB reads/writes → response. Include function names and line numbers.
+- Show how the existing context (survey_ctx, file_ctx, workspace_ctx) gets injected into the prompts. I will follow the same pattern to add High Fit % and Cost Savings as new context.
+- Show the request schema and response structure, with a sample JSON.
