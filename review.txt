@@ -1,1 +1,35 @@
-Diff 2 is approved. The only change I'd like is a one-line module docstring at the top of the file explaining that it builds High Fit % and Cost Saving Opportunity context for 2x2 dimension scoring. Please don't change anything else in diff 2, and don't revisit any of its other implementation details. Please go ahead and show me diff 3 for apis/v1/two_by_two.py, with the loading moved inside the branch that calls generate_two_by_two_analysis, and don't apply anything yet.
+**Diff 3 of 4: `two_by_two.py`**
+
+The existing `track_trace` import is reused. Loading happens only in the `try` branch immediately before the scorer call.
+
+```diff
+@@
+ from agents.two_by_two.future_state import generate_future_state_process
+ from agents.constants import TWO_BY_TWO_STEP_NAME, CAPILITY_DOUBLE_CLICK_STEP_NAME
++from apis.v1.capability_double_click import _load_cost_saving_potential_output
++from agents.two_by_two.fit_cost_enrichment import build_fit_cost_lookup
+ 
+ router = APIRouter()
+@@
+         try:
+             # raise Exception("Simulated error for testing")  # Uncomment to test error handling
++            fit_cost_lookup = None
++            process_key = background_processing_data.get('processKey') if background_processing_data else None
++            if process_key:
++                saved_output = await _load_cost_saving_potential_output(int(process_key))
++                if saved_output is not None:
++                    fit_cost_lookup = build_fit_cost_lookup(saved_output)
++                    _, ambiguous_paths = fit_cost_lookup
++                    if ambiguous_paths:
++                        track_trace(
++                            f"Ambiguous fit/cost capability paths: {ambiguous_paths}",
++                            severity="Warning",
++                        )
++
+             capability_matrix = await generate_two_by_two_analysis(analysis_type, selected_capability,
+-                                                                capabilities, step_name,survey_ctx=survey_ctx, file_ctx=file_ctx)
++                                                                capabilities, step_name,survey_ctx=survey_ctx, file_ctx=file_ctx,
++                                                                fit_cost_lookup=fit_cost_lookup)
+```
+
+No changes have been applied.
