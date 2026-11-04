@@ -1,11 +1,74 @@
-Before applying anything, I'd like to check three things about diff 4.
+I’ll trace both scoring modes separately, because `_build_prompt()` is shared: the `/twobytwo` path and Capability Double Click batch its capability list differently. I’ll verify the actual list contents, entry types, ID sources, and all `_build_prompt()` callers before deciding whether Diff 4 can use the selection directly without changing CDC behavior.
 
-First, inside _build_prompt, please confirm whether the selected_capability_map it receives contains only the current batch's selected capabilities, and whether each entry carries l1CapabilityName, l2CapabilityName, l3CapabilityName and uniqueId. If it does, please use selected_capability_map directly as the list passed to build_fit_cost_prompt_text, and remove the new filtering loop over the current-level capabilities, so there's no duplicate selection logic and no ID matching needed. If it doesn't carry those fields, tell me what it does carry and keep the loop.
+Searched for regex `_build_prompt\(`, 6 results
 
-Second, if the loop has to stay, please check from the code where unique_ids and the capabilities' uniqueId values come from in the /twobytwo path, whether they can differ in type, for example a string versus a number from the saved JSON, and whether duplicate uniqueId values can appear in the current-level list. If something can't be confirmed from the code, say so rather than guessing.
+Searched for regex `define_scope_of_unique_ids|unique_ids.append|selected_capability_batch=batch|selected_capability_batch=selected_capability_map|capabilities_override=caps_override` (`**/agents/two_by_two/two_by_two_generator.py`), 11 results
 
-Third, please confirm every call site of _build_prompt, including any in tests, and that each stays compatible with the new optional parameter.
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
 
-Show me the revised diff 4 if anything changes, and don't apply anything yet.
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
 
-Please also confirm that selected_capability_map is a list at that point, or tell me its actual type, and whether its entries are plain dicts or Pydantic models, so the new prompt-text function can iterate over it safely.
+Searched for text `uniqueId`, 110 results
+
+Read , lines 650 to 755
+
+Read , lines 825 to 975
+
+Read , lines 170 to 195
+
+**What I verified**
+
+- In the `/twobytwo` path, `items_to_batch` is `selected_capability_map`; each `_evaluate_batch()` receives a slice of that list, and passes the slice to `evaluate_feasibility_viability()` (batching, 2x2 batch call, `two_by_two_generator.py:736`). There, `unique_ids` are derived from that same list (`two_by_two_generator.py:672`). So for `/twobytwo`, `selected_capability_map` at `_build_prompt()` is the current batch.
+- That path gets the selection from decoded persisted JSON, so its entries are plain dictionaries, not Pydantic models ([map selection](apis/v1/two_by_two.py#L181)). The `SelectedCapabilityMap` schema requires `l1CapabilityName` and `uniqueId`, and defines `l2CapabilityName`/`l3CapabilityName` as optional (`two_by_two_generator.py:38`). Since `/twobytwo` does not validate this JSON against that model, I cannot confirm every persisted entry actually contains all four keys. Missing hierarchy names will resolve to “not available.”
+- Capability Double Click differs: it batches the current-level capability list, but passes the primary `selected_capability_map` rather than the batch to `_build_prompt()` ([CDC batch setup](agents/two_by_two/two_by_two_generator.py#L935), `two_by_two_generator.py:944`). Thus the current-capability filtering loop must remain for that path.
+- In `/twobytwo`, ID values are read from the same batch objects for `unique_ids`; they are not converted. In CDC’s fallback, IDs come from the overridden batch and are compared to those same capability dictionaries. No code validates uniqueness, so duplicate IDs are possible in supplied data; I cannot confirm whether persisted production data contains them.
+- The 2x2 `_build_prompt()` has one call site, in `evaluate_feasibility_viability()` (definition, call); I found no 2x2 test call site. The other `_build_prompt()` matches are in the separate industry-classification module/tests.
+
+**Revised Diff 4**
+
+This uses `selected_capability_map` directly when its ID list equals the current `unique_ids` (the `/twobytwo` batch), while retaining current-level filtering for CDC.
+
+```diff
+@@
+     fit_cost_context_block = ""
+     if fit_cost_lookup is not None:
+-        current_level_capabilities = capabilities.get(analysis_type.upper()) or []
+-        selected_ids = set(unique_ids)
+-        selected_capabilities = []
+-        for capability in current_level_capabilities:
++        selected_capability_ids = []
++        for capability in selected_capability_map:
+             if hasattr(capability, 'uniqueId'):
+                 capability_id = capability.uniqueId
+             elif isinstance(capability, dict):
+                 capability_id = capability.get('uniqueId')
+             else:
+                 continue
+-            if capability_id in selected_ids:
+-                selected_capabilities.append(capability)
++            selected_capability_ids.append(capability_id)
++
++        if selected_capability_ids == unique_ids:
++            selected_capabilities = selected_capability_map
++        else:
++            current_level_capabilities = capabilities.get(analysis_type.upper()) or []
++            selected_ids = set(unique_ids)
++            selected_capabilities = []
++            for capability in current_level_capabilities:
++                if hasattr(capability, 'uniqueId'):
++                    capability_id = capability.uniqueId
++                elif isinstance(capability, dict):
++                    capability_id = capability.get('uniqueId')
++                else:
++                    continue
++                if capability_id in selected_ids:
++                    selected_capabilities.append(capability)
+ 
+         fit_cost_lines = build_fit_cost_prompt_text(
+```
+
+No files have been changed.
