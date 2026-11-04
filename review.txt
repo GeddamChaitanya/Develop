@@ -1,9 +1,9 @@
-d-0.25.0
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> py -c "import apis.v1.two_by_two; import apis.v1.capability_double_click; import agents.two_by_two.fit_cost_enrichment";
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> pytest tests -k "capability_double_click or two_by_two or impact_analyzer" -q         
-F.......                                                                                                                                       [100%]
-===================================================================== FAILURES ======================================================================
-_____________________________________________________ test_two_by_two_path_sets_status_complete _____________________________________________________
+(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> git stash 
+Saved working directory and index state WIP on two_by_two_enc_asc: 15a75e4 Merge pull request #254 from Deloitte-US-Consulting-HO/ascend/shubham/async-asyncpg
+(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> pytest tests -k "capability_double_click or two_by_two or impact_analyzer" -q                                           
+F.......                                                                                                                                                                              [100%]
+========================================================================================= FAILURES =========================================================================================
+________________________________________________________________________ test_two_by_two_path_sets_status_complete _________________________________________________________________________
 
     @pytest.mark.asyncio
     async def test_two_by_two_path_sets_status_complete():
@@ -59,7 +59,7 @@ _____________________________________________________ test_two_by_two_path_sets_
                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 tests\test_cdc_status.py:253: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 input_data = AgenticFitAllocatorInput(stepKey=1, substepkey=10, processName='TestProcess', processKey=100, input_key=200, input_nam...e, ParentWorkspaceName=None, WorkspaceDescription=None, discount_rate=0.1, TwoByTwoOutPutKeys=None, receiverEmail=None)
 
@@ -274,7 +274,7 @@ input_data = AgenticFitAllocatorInput(stepKey=1, substepkey=10, processName='Tes
             except Exception as audit_err:
                 track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
     
-            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating capability double click analysis", input_key=background_processing_data.get('input_key'), substep_key=background_processing_data.get('substepkey'), receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=analysis_type,channel_name=channel_name)
+            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating capability double click analysis", input_key=background_processing_data.get('input_key'),substep_key=background_processing_data.get('substepkey'), receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=analysis_type,channel_name=channel_name)
     
             try:
                 # raise Exception("Simulated error for testing")  # Uncomment to test error handling
@@ -362,17 +362,17 @@ input_data = AgenticFitAllocatorInput(stepKey=1, substepkey=10, processName='Tes
                 ^^^^^^^^^^^^^^^^^^^^^^^^^
 E               KeyError: 'current_state'
 
-apis\v1\capability_double_click.py:606: KeyError
---------------------------------------------------------------- Captured stdout call ----------------------------------------------------------------
+apis\v1\capability_double_click.py:594: KeyError
+----------------------------------------------------------------------------------- Captured stdout call -----------------------------------------------------------------------------------
 Generated response:  {'projectInfo': {'clientName': 'Acme Corp', 'industry': 'Tech', 'projectName': 'Acme Corp'}, 'backgroundProcessingInfo': {'ID': 'abc-123', 'input_key': 200, 'substepkey': 10, 'receiverEmail': 'test@test.com', 'requestedOn': '2025-01-01', 'category': 'OPERATIONS', 'step_name': 'viability-n-feasibility', 'processName': 'TestProcess', 'outputKey': 999}, 'selected_capability_map': [{'uniqueId': 'u1', 'name': 'Cap A'}], 'capability_matrix': [{'uniqueId': 'u1'}]}
 [ERROR] CAPABILITY_DOUBLE_CLICK - Error processing input data: 'current_state'
---------------------------------------------------------------- Captured stderr call ----------------------------------------------------------------
+----------------------------------------------------------------------------------- Captured stderr call -----------------------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\apis\v1\capability_double_click.py", line 606, in generate_capability_double_click
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\apis\v1\capability_double_click.py", line 594, in generate_capability_double_click
     response["current_state"]["mas_process_file"] = blob_path
     ~~~~~~~~^^^^^^^^^^^^^^^^^
 KeyError: 'current_state'
-================================================================= warnings summary ==================================================================
+===================================================================================== warnings summary =====================================================================================
 db\models.py:9
   C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\db\models.py:9: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
     Base = declarative_base()
@@ -393,7 +393,26 @@ utilities\redis_cache.py:13
     warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-============================================================== short test summary info ==============================================================
+================================================================================= short test summary info ==================================================================================
 FAILED tests/test_cdc_status.py::test_two_by_two_path_sets_status_complete - KeyError: 'current_state'
-1 failed, 7 passed, 350 deselected, 10 warnings in 4.95s
+1 failed, 7 passed, 350 deselected, 10 warnings in 3.28s
+(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> git stash pop
+On branch two_by_two_enc_asc
+Your branch is up to date with 'origin/two_by_two_enc_asc'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   agents/two_by_two/two_by_two_generator.py
+        modified:   apis/v1/capability_double_click.py
+        modified:   apis/v1/two_by_two.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .vscode/
+        agents/two_by_two/fit_cost_enrichment.py
+        run.ps1
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (168111b89ec983955a10658286fc97ca3816fb9f)
 (.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> 
