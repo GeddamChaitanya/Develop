@@ -1,1 +1,34 @@
-Final diff 4 is approved. All four diffs are now approved, so please apply them exactly as reviewed, including the agreed adjustments: the explicit {} return in the _load_impact_analyzer_for_process wrapper, the one-line module docstring in fit_cost_enrichment.py, the process key in the warning message in two_by_two.py, and the string-based ID comparison in diff 4. Don't make any other changes, don't run any git commands, and don't execute or install anything. When you're done, list the files you changed.
+I’m applying only the four approved file changes now: the loader extraction, the new pure enrichment module, the process-key-scoped lookup in `/twobytwo`, and optional lookup plumbing into the scorer. I’ll make no Git calls and won’t run tests or executable code.
+
+Generating patch (372 lines) in , , , 
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+The four approved files are now edited, with no other files touched. I’m doing a static editor-diagnostics check only; I will not run tests, commands, Git, or the application.
+
+Checked , , , , 1 problem found
+
+Applied the four approved diffs only:
+
+- `capability_double_click.py`
+- `fit_cost_enrichment.py`
+- `two_by_two.py`
+- `two_by_two_generator.py`
+
+Static diagnostics found no errors in the first three files. The generator file reports that the existing `langchain_google_genai` import cannot be resolved. I did not run tests, commands, Git, or install anything.
+
+Made changes.
