@@ -1,418 +1,103 @@
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> git stash 
-Saved working directory and index state WIP on two_by_two_enc_asc: 15a75e4 Merge pull request #254 from Deloitte-US-Consulting-HO/ascend/shubham/async-asyncpg
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> pytest tests -k "capability_double_click or two_by_two or impact_analyzer" -q                                           
-F.......                                                                                                                                                                              [100%]
-========================================================================================= FAILURES =========================================================================================
-________________________________________________________________________ test_two_by_two_path_sets_status_complete _________________________________________________________________________
+I’ll trace the registered route paths, step-name branches, Redis channel settings, and repository references to “Generate AI Prioritization.” Then I’ll compare the tests and docs to assess whether the CDC `TWO_BY_TWO_STEP_NAME` branch appears to be exercised, and identify where fit/cost lookup plumbing would attach without changing code.
 
-    @pytest.mark.asyncio
-    async def test_two_by_two_path_sets_status_complete():
-        """The 2x2 branch (not full CDC) should also get status 7 on success."""
-    
-        input_payload = _make_input_data()
-    
-        mock_input_record = MagicMock()
-        mock_input_record.sub_step_key = 10
-        # Use Two by Two step name
-        mock_input_record.input_json = _make_db_input_json(step_name="viability-n-feasibility")
-    
-        with (
-            patch("apis.v1.capability_double_click.read_sub_step_input_by_input_key", new_callable=AsyncMock, return_value=mock_input_record),
-            patch("apis.v1.capability_double_click.db_operations_orm") as mock_db_ops,
-            patch("apis.v1.capability_double_click.publish_message"),
-            patch("apis.v1.capability_double_click.monitor") as mock_monitor,
-            patch("apis.v1.capability_double_click.generate_two_by_two_analysis", new_callable=AsyncMock) as mock_2x2,
-            patch("apis.v1.capability_double_click.generate_docx", return_value="blob/path.docx"),
-            patch("apis.v1.capability_double_click.generate_cdc_docs", return_value={
-                "current_state_file": "cs.docx", "future_state_file": "fs.docx", "kpi_file": "kpi.docx"
-            }),
-            patch("apis.v1.capability_double_click.email_send", new_callable=AsyncMock),
-            patch("apis.v1.capability_double_click.track_api_call"),
-            patch("apis.v1.capability_double_click.track_trace"),
-            patch("apis.v1.capability_double_click.track_operation_complete"),
-        ):
-            mock_monitor.start_progress = AsyncMock()
-            mock_monitor.stop_progress = AsyncMock()
-            if not isinstance(mock_db_ops.run_operations, AsyncMock):
-                mock_db_ops.run_operations = AsyncMock(return_value=1)
-            if not isinstance(mock_db_ops.run_operations_status, AsyncMock):
-                mock_db_ops.run_operations_status = AsyncMock()
-            mock_db_ops.run_operations = AsyncMock(return_value=55)
-            mock_db_ops.run_operations_status = AsyncMock()
-            mock_2x2.return_value = [{"uniqueId": "u1"}]
-    
-            from schemas.agentic_fit_allocator import AgenticFitAllocatorInput
-            model = AgenticFitAllocatorInput(**input_payload)
-    
-            from apis.v1.capability_double_click import generate_capability_double_click
-    
-            # The 2x2 branch builds a response without current_state/future_state keys,
-            # so generate_docx / generate_cdc_docs will be called on a dict that lacks them.
-            # That's fine – we're testing the status calls, not docx generation.
-            # We need to handle the KeyError on response["current_state"] gracefully;
-            # let generate_docx/generate_cdc_docs succeed via mocks.
-            # But the code does `response["current_state"]["mas_process_file"] = blob_path`
-            # which will raise KeyError. We expect the error path here.
-            from fastapi.exceptions import HTTPException
-            try:
->               result = await generate_capability_double_click(model)
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Searched for regex `twobytwo|capability_double_click|two_by_two_generator|TWO_BY_TWO_STEP_NAME|CAPILITY_DOUBLE_CLICK_STEP_NAME|viability-n-feasibility|Generate AI Prioritization`, 189 results
 
-tests\test_cdc_status.py:253: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+Searched for regex `REDIS_channel_name_twobytwo|REDIS_channel_name_capability_double_click|REDIS.*twobytwo|CAPABILITY_DOUBLE_CLICK`, 112 results
 
-input_data = AgenticFitAllocatorInput(stepKey=1, substepkey=10, processName='TestProcess', processKey=100, input_key=200, input_nam...e, ParentWorkspaceName=None, WorkspaceDescription=None, discount_rate=0.1, TwoByTwoOutPutKeys=None, receiverEmail=None)
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
 
-    async def generate_capability_double_click(input_data: AgenticFitAllocatorInput):
-    
-        # Per-job ProgressMonitor: each background job runs on its own event loop
-        # (via asyncio.run in the BackgroundTasks threadpool); sharing a module-level
-        # monitor across loops raises "await wasn't used with future".
-        monitor = ProgressMonitor()
-    
-        genai_audit_log_id = None
-        audit_analysis_name = None
-        audit_step = None
-        audit_sub_step = None
-        audit_client_id = None
-        audit_user_id = None
-        audit_requested_time = None
-        audit_substep_key = None
-        audit_input_key = None
-        audit_receiver_email = None
-        try:
-            # Track API call
-            track_api_call("CAPABILITY_DOUBLE_CLICK_GENERATOR", input_data.input_key)
-    
-            # Log input data for debugging
-            track_trace(f"Received input_data: {input_data.model_dump_json()}", severity="Information")
-    
-            channel_name = os.getenv('REDIS_channel_name_capability_double_click')
-            receiver_email = input_data.receiverEmail if input_data.receiverEmail else None
-            input_record = await read_sub_step_input_by_input_key(input_data.input_key)
-            substepkey = input_record.sub_step_key if input_record else None
-            input_data_db = json.loads(input_record.input_json) if input_record and input_record.input_json else None
-            input_data_client = json.loads(input_data_db) if isinstance(input_data_db, str) else input_data_db if input_data_db else {}
-            input_data_client = normalize_project_payload(input_data_client)
-            input_data_db = normalize_project_payload(input_data_db)
-            client_info = input_data_client.get('projectInfo') if isinstance(input_data_client, dict) else None
-            # Ensure client_info is a dict for safe .get() access
-            client_info = client_info if isinstance(client_info, dict) else None
-            capability_info = input_data_client.get('capabilityInfo') if isinstance(input_data_client, dict) and input_data_client.get('capabilityInfo') else None
-    
-            # Ensure input_data_db is a dict before calling .get()
-            background_processing_data = input_data_db.get('backgroundProcessingInfo') if isinstance(input_data_db, dict) and input_data_db.get('backgroundProcessingInfo') else {}
-            try:
-                audit_project_info = input_data_client.get("projectInfo") if isinstance(input_data_client, dict) else None
-                audit_analysis_name = input_data.processName or background_processing_data.get("processName")
-                audit_step = background_processing_data.get("step_name") or input_data.processName
-                audit_sub_step = background_processing_data.get("category") or input_data.input_name
-                audit_client_id = (audit_project_info or {}).get("projectKey") or input_data.ProjectKey
-                audit_user_id = background_processing_data.get("userId")
-                audit_requested_time = background_processing_data.get("requestedOn")
-                audit_substep_key = background_processing_data.get("substepkey") or input_data.substepkey
-                audit_input_key = background_processing_data.get("input_key") or input_data.input_key
-                audit_receiver_email = background_processing_data.get("receiverEmail") or input_data.receiverEmail
-            except Exception as audit_context_err:
-                track_trace(f"Audit context extraction skipped: {audit_context_err}", severity="Warning")
-            analysis_type = background_processing_data.get('category') if isinstance(background_processing_data, dict) else None
-            if not receiver_email:
-                receiver_email = background_processing_data.get('receiverEmail') if isinstance(background_processing_data, dict) else None
-            if input_data_db.get('selected_capability_map')[0].get("uniqueId") is None:
-    
-                for i, cap in enumerate(input_data_db.get('L3_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L3_capability_map') else []):
-                    if cap.get("l3CapabilityName").lower() == input_data_db.get("selected_capability_map")[0].get("l3CapabilityName").lower():
-                        if cap.get("uniqueId") is not None:
-                            input_data_db['selected_capability_map'][0]['uniqueId'] = cap.get("uniqueId")
-                        else:
-                            input_data_db['selected_capability_map'][0]['uniqueId'] = "l3-opex-216"+str(i)+"-"+str(uuid.uuid4())
-                            input_data_db['L3_capability_map'][i]['uniqueId'] = input_data_db['selected_capability_map'][0]['uniqueId']
-                    else:
-                        if cap.get("uniqueId") is None:
-                            input_data_db['L3_capability_map'][i]['uniqueId'] = "l3-opex-216"+str(i)+"-"+str(uuid.uuid4())
-                            if cap.get("l3CapabilityName").lower() == input_data_db.get("selected_capability_map")[0].get("l3CapabilityName").lower():
-                                input_data_db['selected_capability_map'][0]['uniqueId'] = input_data_db['L3_capability_map'][i]['uniqueId']
-    
-            selected_capability = input_data_db.get('selected_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('selected_capability_map') else None
-            projectInfo = client_info
-            two_by_two_output_records = None
-            capability_matrix_lookup = None
-            # raise Exception("Simulated error for testing")  # Uncomment to test error handling
-            if input_data.TwoByTwoOutPutKeys is not None and len(input_data.TwoByTwoOutPutKeys) > 0:
-                track_trace(f"TwoByTwoOutPutKeys: {input_data.TwoByTwoOutPutKeys}", severity="Information")
-    
-                two_by_two_output_records = await load_outputs_by_keys(input_data.TwoByTwoOutPutKeys)
-    
-    
-            # Build a lookup dictionary from two_by_two_output_records capability_matrix keyed by l3CapabilityName
-                capability_matrix_lookup: dict = {}
-                if isinstance(two_by_two_output_records, dict):
-                    for record in two_by_two_output_records:
-                        capability_matrix_raw = two_by_two_output_records[record].get('capability_matrix') if isinstance(two_by_two_output_records[record], dict) else None
-                        if isinstance(capability_matrix_raw, list):
-                            for item in capability_matrix_raw:
-                                l3_name = item.get('l3CapabilityName').strip().lower() if item.get('l3CapabilityName') else None
-                                if l3_name:
-                                    capability_matrix_lookup[l3_name] = item
-    
-            # Fetch client context (survey + files) for LLM prompts
-            _client_context = ""
-            survey_ctx = None
-            file_ctx = None
-            try:
-                from agents.survey_context import fetch_survey_context
-                from agents.client_file_context import fetch_file_context
-                from agents.industry_classification_context import append_industry_classification_context
-                _ck = client_info.get("clientKey") if client_info else None
-                if _ck:
-                    survey_ctx = await fetch_survey_context(int(_ck))
-                    file_ctx = await fetch_file_context(int(_ck))
-                survey_ctx = append_industry_classification_context(survey_ctx, client_info)
-                workspace_ctx = append_workspace_context(
-                    None,
-                    (client_info.get("workspaceName") if client_info else None) or input_data.WorkspaceName,
-                    (client_info.get("workspaceDescription") if client_info else None) or input_data.WorkspaceDescription,
-                    parent_workspace_name=(client_info.get("parentWorkspaceName") if client_info else None) or input_data.ParentWorkspaceName,
-                )
-                if workspace_ctx:
-                    survey_ctx = ((survey_ctx or "") + "\n" + workspace_ctx).strip()
-                _client_context = ((survey_ctx or "") + "\n" + (file_ctx or "")).strip()
-            except Exception as ctx_err:
-                track_trace(f"Warning: could not load client context: {ctx_err}", severity="Warning")
-    
-    
-    
-    
-            # Select the appropriate capability map based on analysis_type
-            L1_capabilities = input_data_db.get('L1_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L1_capability_map') else None
-            L2_capabilities = input_data_db.get('L2_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L2_capability_map') else None
-            L3_capabilities = input_data_db.get('L3_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L3_capability_map') else None
-    
-            capabilities = {"L1": L1_capabilities, "L2": L2_capabilities, "L3": L3_capabilities}
-    
-            # ── Enrich L3 capabilities with impact-analyzer financial data ──
-            # The CDC input L3_capability_map often has only percentages (and $0
-            # for dollar amounts).  The impact_analyzer from the Cost Saving
-            # Potential output is the authoritative source used by the Heatmap.
-            # Merging it here ensures the KPI Impact tab shows identical figures.
-            _process_key = background_processing_data.get('processKey')
-            if _process_key and L3_capabilities:
-                try:
-                    _ia_lookup = await _load_impact_analyzer_for_process(int(_process_key))
-                    if _ia_lookup:
-                        _n = _enrich_capabilities_from_impact_analyzer(L3_capabilities, _ia_lookup)
-                        track_trace(
-                            f"Enriched {_n}/{len(L3_capabilities)} L3 capabilities "
-                            f"from impact_analyzer (process_key={_process_key})",
-                            severity="Information",
-                        )
-                    else:
-                        track_trace(
-                            f"No impact_analyzer found for process_key={_process_key}; "
-                            "KPI will use derivation fallback",
-                            severity="Warning",
-                        )
-                except Exception as enrich_err:
-                    track_trace(
-                        f"Warning: impact_analyzer enrichment failed: {enrich_err}",
-                        severity="Warning",
-                    )
-    
-            step_name = background_processing_data.get('step_name') if background_processing_data and background_processing_data.get('step_name') else None
-    
-            track_trace(f"Starting capability double click for action: ", severity="Information")
-    
-            publish_message(background_processing_data.get('ID'), "Started", f" Started generating for Capability Double Click for action {analysis_type}", background_processing_data.get('input_key'), background_processing_data.get('substepkey'), receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
-    
-            try:
-                # Audit checkpoint: CREATE (capability double-click analysis start)
-                genai_audit_log_id = await db_operations_orm.run_genai_audit_log(
-                    step=audit_step,
-                    sub_step=audit_sub_step,
-                    progress=0,
-                    status="In Progress",
-                    message=f"Started CDC generation for action {analysis_type}",
-                    input_key=audit_input_key,
-                    substep_key=audit_substep_key,
-                    user_id=audit_user_id,
-                    project_id=audit_client_id,
-                    requested_time=audit_requested_time,
-                    receiver_email=audit_receiver_email,
-                    analysis_name=audit_analysis_name,
-                )
-                if genai_audit_log_id:
-                    _AUDIT_LOG_BY_REQUEST_ID[str(input_data.input_key)] = genai_audit_log_id
-            except Exception as audit_err:
-                track_trace(f"Audit log create skipped: {audit_err}", severity="Warning")
-    
-            # Update sub-step status to In Progress in DB
-            await db_operations_orm.run_operations_status(
-                sub_step_key=substepkey,
-                data={
-                    "sub_step_name": step_name or CAPILITY_DOUBLE_CLICK_STEP_NAME,
-                    "sub_step_status_key": DB_STATUS_IN_PROGRESS,
-                    "sub_step_progress_percentage": 10,
-                    "sub_step_progress_message": f"Generating Capability Double Click for action: {analysis_type}",
-                },
-            )
-            try:
-                await db_operations_orm.run_genai_audit_log(
-                    step=audit_step,
-                    sub_step=audit_sub_step,
-                    status="In Progress",
-                    progress=10,
-                    message=f"Generating Capability Double Click for action: {analysis_type}",
-                    input_key=audit_input_key,
-                    substep_key=audit_substep_key,
-                    user_id=audit_user_id,
-                    project_id=audit_client_id,
-                    requested_time=audit_requested_time,
-                    receiver_email=audit_receiver_email,
-                    analysis_name=audit_analysis_name,
-                    genai_audit_log_id=genai_audit_log_id,
-                )
-            except Exception as audit_err:
-                track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
-    
-            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating capability double click analysis", input_key=background_processing_data.get('input_key'),substep_key=background_processing_data.get('substepkey'), receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=analysis_type,channel_name=channel_name)
-    
-            try:
-                # raise Exception("Simulated error for testing")  # Uncomment to test error handling
-                capability_matrix = await generate_two_by_two_analysis(analysis_type.upper(), selected_capability,
-                                                                    capabilities, step_name,survey_ctx=survey_ctx, file_ctx=file_ctx)
-                if  TWO_BY_TWO_STEP_NAME in step_name:
-                    response = {
-                        "projectInfo": projectInfo,
-                        "backgroundProcessingInfo": background_processing_data,
-                        "selected_capability_map": selected_capability,
-                        "capability_matrix": capability_matrix
-                    }
-                    await monitor.stop_progress()
-    
-    
-                elif CAPILITY_DOUBLE_CLICK_STEP_NAME in step_name:
-                    # cccm = ['Mobile Service Management', 'Service Center Workflow Management']
-                    # i=0
-                    # for cm in capability_matrix:
-                    #     cm['l3CapabilityName'] = cccm[i]
-                    #     i += 1
-                    #     if i >= len(cccm):
-                    #         break
-                    if input_data.TwoByTwoOutPutKeys is not None and len(input_data.TwoByTwoOutPutKeys) > 0 and capability_matrix_lookup is not None:
-                        for cm in capability_matrix:
-                            if cm.get('l3CapabilityName').strip().lower() in capability_matrix_lookup:
-                                cm['viability'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('viability')
-                                cm['feasibility'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('feasibility')
-                                cm['viability_score'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('viability_score')
-                                cm['feasibility_score'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('feasibility_score')
-                    selected_unique_id = selected_capability[0].get('uniqueId', '')
-                    select_capability_matrix = {}
-                    for cm in capability_matrix:
-                        cap_unique_id = cm.get('uniqueId', '')
-                        if cap_unique_id == selected_unique_id:
-                            select_capability_matrix = cm
-                            break
-    
-                    capability_kpi = await generate_capability_kpi(analysis_type.upper(), selected_capability, capabilities,
-                                                                select_capability_matrix,survey_ctx=survey_ctx, file_ctx=file_ctx)
-                    current_state = await generate_current_state_process(analysis_type.upper(), projectInfo, selected_capability,
-                                                                        capabilities,
-                                                                        survey_ctx=survey_ctx, file_ctx=file_ctx)
-                    future_state = await generate_future_state_process(analysis_type.upper(), projectInfo, selected_capability,
-                                                                    capabilities, current_state, select_capability_matrix,
-                                                                    capability_kpi,
-                                                                    survey_ctx=survey_ctx, file_ctx=file_ctx)
-                    # In wireframes, it looks like these are the same, so I'm just copying this data
-                    current_state["current_process_analysis"] = future_state.get("current_process_analysis", {})
-                    # TODO:  Capability KPI needs data from current/future state; current/future state needs capability KPI
-                    #        Need to figure out how to add Current vs future state activity descriptions to
-                    #        context_data for prompt for "operational_narrative".
-                    capability_kpi = await generate_operational_narrative_standalone(analysis_type.upper(), selected_capability,
-                                                                                    capabilities, select_capability_matrix,
-                                                                                    current_state, future_state,
-                                                                                    capability_kpi)
-    
-                    response = {
-                        "projectInfo": projectInfo,
-                        "backgroundProcessingInfo": background_processing_data,
-                        "selected_capability_map": selected_capability,
-                        "capability_matrix": capability_matrix,
-                        "capability_kpi": capability_kpi,
-                        "current_state": current_state,
-                        "future_state": future_state
-                    }
-    
-                    await monitor.stop_progress()
-    
-                print("Generated response: ", response)
-    
-                # Fetch raw survey Q&A for DOCX rendering
-                survey_records = []
-                try:
-                    project_key = projectInfo.get("projectKey") or projectInfo.get("clientKey") if projectInfo else input_data.ProjectKey
-                    if project_key:
-                        survey_records = await read_survey_responses_by_project_id(int(project_key)) or []
-                except Exception as survey_err:
-                    print(f"Warning: could not load survey context: {survey_err}")
-    
-                blob_path = generate_docx(response, survey_context=survey_records)
-    
-                # Store MAS combined docx path
->               response["current_state"]["mas_process_file"] = blob_path
-                ^^^^^^^^^^^^^^^^^^^^^^^^^
-E               KeyError: 'current_state'
+Searched for regex `capability_double_click|twobytwo|two_by_two_generator|TWO_BY_TWO_STEP_NAME|viability-n-feasibility` (`**/tests/**`), 84 results
 
-apis\v1\capability_double_click.py:594: KeyError
------------------------------------------------------------------------------------ Captured stdout call -----------------------------------------------------------------------------------
-Generated response:  {'projectInfo': {'clientName': 'Acme Corp', 'industry': 'Tech', 'projectName': 'Acme Corp'}, 'backgroundProcessingInfo': {'ID': 'abc-123', 'input_key': 200, 'substepkey': 10, 'receiverEmail': 'test@test.com', 'requestedOn': '2025-01-01', 'category': 'OPERATIONS', 'step_name': 'viability-n-feasibility', 'processName': 'TestProcess', 'outputKey': 999}, 'selected_capability_map': [{'uniqueId': 'u1', 'name': 'Cap A'}], 'capability_matrix': [{'uniqueId': 'u1'}]}
-[ERROR] CAPABILITY_DOUBLE_CLICK - Error processing input data: 'current_state'
------------------------------------------------------------------------------------ Captured stderr call -----------------------------------------------------------------------------------
-Traceback (most recent call last):
-  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\apis\v1\capability_double_click.py", line 594, in generate_capability_double_click
-    response["current_state"]["mas_process_file"] = blob_path
-    ~~~~~~~~^^^^^^^^^^^^^^^^^
-KeyError: 'current_state'
-===================================================================================== warnings summary =====================================================================================
-db\models.py:9
-  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\db\models.py:9: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
-    Base = declarative_base()
+The code/docs show three registered routes, with distinct async Redis channels for `/twobytwo` and `/capability_double_click`. I found a CDC status test that explicitly uses `viability-n-feasibility`; I’m checking that test’s assertions and the API docs now, since they’re the strongest evidence about whether that branch is merely theoretical.
 
-utilities\redis_cache.py:13
-  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\utilities\redis_cache.py:13: DeprecationWarning: Call to '__init__' function with deprecated usage of input argument/s 'retry_on_timeout'. (TimeoutError is included by default.) -- Deprecated since version 6.0.0.
-    r = redis.Redis(
+Read , lines 18 to 40
 
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\pydantic\_internal\_config.py:323: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
-    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+Read , lines 1 to 18
 
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================================================================================= short test summary info ==================================================================================
-FAILED tests/test_cdc_status.py::test_two_by_two_path_sets_status_complete - KeyError: 'current_state'
-1 failed, 7 passed, 350 deselected, 10 warnings in 3.28s
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> git stash pop
-On branch two_by_two_enc_asc
-Your branch is up to date with 'origin/two_by_two_enc_asc'.
+Read , lines 195 to 270
 
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   agents/two_by_two/two_by_two_generator.py
-        modified:   apis/v1/capability_double_click.py
-        modified:   apis/v1/two_by_two.py
+Read , lines 660 to 765
 
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        .vscode/
-        agents/two_by_two/fit_cost_enrichment.py
-        run.ps1
+The docs describe `/twobytwo` as the async background pipeline and `/capability_double_click` as the CDC deep-dive route. The CDC `viability-n-feasibility` test is more revealing: it explicitly expects that branch to hit a `KeyError` after generating the matrix. I’m checking route-specific tests and any “Generate AI Prioritization” wording before drawing the conclusion.
 
-no changes added to commit (use "git add" and/or "git commit -a")
-Dropped refs/stash@{0} (168111b89ec983955a10658286fc97ca3816fb9f)
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> 
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Read , lines 10 to 30
+
+Read , lines 40 to 55
+
+Read , lines 245 to 260
+
+The route registration and test search show no route-specific test for `/twobytwo` or `/two_by_two_generator`; the only explicit test of the CDC endpoint’s 2x2 step expects its error path. I’ll pin down the exact branch and lookup insertion points, then give you the evidence and caveat about the .NET caller.
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Read , lines 240 to 315
+
+Read , lines 415 to 550
+
+Read , lines 285 to 300
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Searched for regex `api_router = APIRouter|include_router\(two_by_two|include_router\(capability_double_click|include_router\(two_by_two_generator` (`**/apis/base.py`), 4 results
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+The evidence points to a reachable but incomplete CDC 2x2 branch: there is a dedicated test for it, and that test expects the subsequent missing-`current_state` access to fail. I’m verifying the exact response-access lines so I can distinguish that code-level fact from the unconfirmable question of which endpoint the external .NET backend invokes.
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Read , lines 500 to 655
+
+Read , lines 104 to 114
+
+Read , lines 15 to 30
+
+The code/docs do not identify a .NET action named “Generate AI Prioritization.” The docs do label `/twobytwo` as the DB-backed background-processing variant; I’m refreshing line anchors after the approved edits for the lookup and CDC branch details.
+
+Searched for regex `_load_cost_saving_potential_output|_load_impact_analyzer_for_process|L3_capabilities = input_data_db|get\('processKey'\)|generate_two_by_two_analysis\(|response\["current_state"\]|TWO_BY_TWO_STEP_NAME in step_name` (`**/apis/v1/capability_double_click.py`), 11 results
+
+Searched for regex `@router.post\('/twobytwo'|channel_name = os.getenv|generate_two_by_two_analysis\(|TWO_BY_TWO_STEP_NAME in step_name|CAPILITY_DOUBLE_CLICK_STEP_NAME in step_name` (`**/apis/v1/two_by_two.py`), 5 results
+
+No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
+If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
+Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+
+Searched for regex `test_two_by_two_path_sets_status_complete|step_name="viability-n-feasibility"|response\["current_state"\]` (`**/tests/test_cdc_status.py`), 5 results
+
+## Routes and Steps
+
+All routes are registered under the `/api/v1` prefix in `base.py:23`. The three relevant routes are:
+
+- **`POST /api/v1/twobytwo`** is an async, DB-backed route accepting `AgenticFitAllocatorInput` (`two_by_two.py:43`). It reads its Redis channel from `REDIS_channel_name_twobytwo` (`two_by_two.py:126`); the local config sets that to `two_by_two_background_process` (`run.ps1:16`). The docs call this the background-processing variant ([API docs](docs/genai_attribution_report.md#L704)).
+- **`POST /api/v1/capability_double_click`** is an async, DB-backed CDC route, also accepting `AgenticFitAllocatorInput` (`capability_double_click.py:248`). It uses `REDIS_channel_name_capability_double_click` (`capability_double_click.py:335`); local config sets it to `capability_double_click_background_process` (`run.ps1:25`). Its documented purpose is a capability deep-dive, including KPIs and current/future state ([API docs](docs/genai_attribution_report.md#L723)).
+- **`POST /api/v1/two_by_two_generator`** is a separate synchronous route accepting `TwoByTwoGeneratorInput` (`two_by_two_generator.py:18`). Its documentation describes it as stateless and supports both the viability-feasibility and capability-double-click step names ([API docs](docs/genai_attribution_report.md#L664)).
+
+Both `TWO_BY_TWO_STEP_NAME` and `CAPILITY_DOUBLE_CLICK_STEP_NAME` are handled by the shared scorer and the async `/twobytwo` endpoint (`constants.py:9`, `constants.py:10`, `two_by_two.py:267`). The CDC endpoint calls the scorer too, with branches for both step names (`capability_double_click.py:526`).
+
+## Is CDC’s 2x2 Branch Live?
+
+The CDC route is registered, and its 2x2 branch is reachable in code. The tests explicitly pass `viability-n-feasibility` to `generate_capability_double_click()` ([test setup](tests/test_cdc_status.py#L204), `test_cdc_status.py:212`). However, the branch creates a response without `current_state`, then later the handler unconditionally accesses `response["current_state"]` (`capability_double_click.py:528`, `capability_double_click.py:606`). The test itself expects that path to raise a `KeyError` (`test_cdc_status.py:247`, `test_cdc_status.py:259`). So it is not merely unreferenced code, but the tested path is incomplete or failing; **whether production sends this step to the CDC route cannot be confirmed from code**.
+
+The docs identify `/api/v1/twobytwo` as the async background-processing route and list `/twobytwo` for two-by-two analysis (`genai_attribution_report.md:704`, `genai_attribution_report.md:110`). I found no “Generate AI Prioritization” wording in the repository’s docs, README, pipeline/config files, or tests, and no .NET caller in this repo. **Which endpoint the .NET backend uses for that action cannot be confirmed from code.**
+
+## CDC Fit/Cost Context
+
+The CDC endpoint already obtains `processKey`, builds the three capability lists, and loads impact-analyzer rows for L3 enrichment ([capability maps and process key](apis/v1/capability_double_click.py#L434), `capability_double_click.py:443`, `capability_double_click.py:446`). To supply the same context to scoring, use the new `_load_cost_saving_potential_output(process_key)` there, build the fit/cost lookup from that saved output alongside the existing L3 lookup, and pass `fit_cost_lookup=...` at the existing `generate_two_by_two_analysis()` call (`capability_double_click.py:526`). Using the raw saved output matters because the current `_load_impact_analyzer_for_process()` result contains only impact rows, not the L1/L2 heatmap.
