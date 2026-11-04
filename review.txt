@@ -1,1 +1,46 @@
-Before I use the AI Identifier heatmap values, I need to be sure what they actually mean, so please only read the code and don't change anything. In apis/v1/agentic_fit_allocator.py around line 1926, where the l1_l2_heatmap is built, please show me the code that calculates L1_percent, L1_amount, L2_percent and L2_amount. I want to know whether L1_percent is the High Fit percentage for that L1 capability, or something else, like its share of total cost savings or total opex. I also want to know whether L1_amount is the cost saving opportunity in dollars. Please do the same check for high_fit_percentage and cost_saving_opportunity in build_l1_allocations and build_l2_allocations in agents/workforce_analyzer/workforce_analyzer.py, and tell me in plain words how each one is calculated from the L3 rows, with line numbers.
+I’ll read the heatmap builder and both Workforce Analyzer rollup builders at their current lines, then compare their numerator, denominator, and dollar aggregation. No files will be changed.
+
+Read , lines 1885 to 1942
+
+Read , lines 1794 to 1865
+
+Read , lines 1866 to 1935
+
+Read , lines 1528 to 1579
+
+In the AI Identifier heatmap, `L1_percent` and `L2_percent` are **high-fit labor as a percentage of labor OPEX**. They are not shares of total savings or total OPEX. `L1_amount` and `L2_amount` are aggregated cost-saving dollars.
+
+```python
+l1_percent = 100 * (
+    l1_info["high_fit_labor"] / l1_info["labor_opex"]
+    if l1_info["labor_opex"] > 0 else 0
+)
+
+l2_percent = 100 * (
+    l2_info["high_fit_labor"] / l2_info["labor_opex"]
+    if l2_info["labor_opex"] > 0 else 0
+)
+
+l2s.append({
+    "L2_name": l2_name,
+    "L2_amount": round(l2_info["cost_saving"]),
+    "L2_percent": round(l2_percent),
+    ...
+})
+
+l1_heatmap.append({
+    "L1_name": l1_name,
+    "L1_amount": round(l1_info["cost_saving"]),
+    "L1_percent": round(l1_percent),
+    ...
+})
+```
+
+The L1 and L2 totals are accumulated from the L3 impact-analyzer rows: `cost_saving` sums `"Cost Saving Opportunity"`, `labor_opex` sums `"Labor Opex"`, and `high_fit_labor` sums `"High Fit Labor"` ([aggregation and output](apis/v1/agentic_fit_allocator.py#L1887)). Thus, each amount is summed savings dollars; each percentage is rounded high-fit-labor divided by labor OPEX ([percentage and output](apis/v1/agentic_fit_allocator.py#L1920)).
+
+For Workforce Analyzer, both `build_l1_allocations()` and `build_l2_allocations()` aggregate L3 rows. They sum the L3 labor amount, high-fit labor, and cost-saving opportunity; the code notes those L3 amounts are already organization-level totals and are not multiplied by headcount ([L1 accumulation](agents/workforce_analyzer/workforce_analyzer.py#L1803), `workforce_analyzer.py:1871`).
+
+- **L1 `high_fit_percentage`:** rounded `sum(high_fit_labor) / sum(labor_amount) * 100`; **L1 `cost_saving_opportunity`:** summed L3 savings ([L1 calculation and output](agents/workforce_analyzer/workforce_analyzer.py#L1834)).
+- **L2 `high_fit_percentage`:** the same calculation, grouped by L1/L2; **L2 `cost_saving_opportunity`:** summed L3 savings for that group ([L2 calculation and output](agents/workforce_analyzer/workforce_analyzer.py#L1906)).
+
+For context, each L3 Workforce Analyzer saving is calculated as `high_fit_labor * (1 - discount_rate)` ([L3 calculation](agents/workforce_analyzer/workforce_analyzer.py#L1536)).
