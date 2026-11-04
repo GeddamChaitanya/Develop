@@ -1,57 +1,7 @@
-I’ll trace both flows from their API entry points into the capability-map construction and 2x2 call, using the current branch and the attached `capability_double_click.py` as the anchor. I’ll focus on where each L3 metric is enriched and whether the L1/L2 aggregates exist in that same call path.
+I'm about to extend the /twobytwo endpoint, and I want to follow the same approach Capability Double Click already uses, so please show me the relevant code rather than summarizing it. Don't change anything yet.
 
-Searched for regex `two_by_two_generator|generate_two_by_two\(|generate_two_by_two_analysis\(|TWO_BY_TWO_STEP_NAME|CAPILITY_DOUBLE_CLICK_STEP_NAME` (`**/apis/**`), 33 results
+First, show me the code in apis/v1/capability_double_click.py around lines 422 to 434 where it loads the impact analyzer output and enriches the capability maps, along with the full bodies of _load_impact_analyzer_for_process, _extract_impact_analyzer_lookup and _enrich_capabilities_from_impact_analyzer. I want to understand what each one takes and returns, whether the enrichment modifies Pydantic models or turns them into dicts, and how it handles a capability with no match.
 
-Searched for regex `AgenticFitAllocatorInput|WorkforceAnalyzerInput|TwoByTwoGeneratorInput|L3_capability_map|High_Fit_%|High_Fit_percent|High Fit %|Cost Saving Opportunity|L1_percent|L1_amount|L2_percent|L2_amount` (`**/apis/v1/**`), 67 results
+Then show me apis/v1/two_by_two.py from around line 170 to 260, so I can see exactly where L1_capability_map, L2_capability_map and L3_capability_map are read and how they're passed to generate_two_by_two_analysis(), and where the process key is available in that function.
 
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-Read , lines 1 to 240
-
-Read , lines 180 to 295
-
-Read , lines 315 to 465
-
-Read , lines 570 to 730
-
-Read , lines 790 to 930
-
-The two triggers are distinct: `/twobytwo` in `two_by_two.py` consumes the persisted input map directly, while the Workforce Analyzer API only saves its outputs; the later capability-double-click route loads them, enriches L3 maps, and calls the shared scorer. I’m checking exact line anchors and whether L1/L2 allocations are ever read in that enrichment path.
-
-Searched for regex `@router.post|AgenticFitAllocatorInput|L3_capability_map|generate_two_by_two_analysis|High_Fit_%|Cost_Saving_Opportunity|l1_l2_heatmap|l1_allocations|l2_allocations` (`**/apis/v1/two_by_two.py`), 8 results
-
-Searched for regex `@router.post|async def generate_workforce|generate_two_by_two_analysis|build_l1_allocations|build_l2_allocations|WorkforceAnalyzerGrid|output_json|impact_analyzer` (`**/apis/v1/workforce_analyzer.py`), 30 results
-
-Searched for regex `_load_impact_analyzer_for_process|_extract_impact_analyzer_lookup|_enrich_capabilities_from_impact_analyzer|L3_capability_map|generate_two_by_two_analysis|High Fit %|Cost Saving Opportunity|build_l1_allocations|build_l2_allocations|l1_l2_heatmap` (`**/apis/v1/capability_double_click.py`), 17 results
-
-Read 
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-Searched for regex `item\["High Fit %"\]|item\["Cost Saving Opportunity"\]|"L1_percent":|"L2_percent":|"L1_amount":|"L2_amount":` (`**/apis/v1/agentic_fit_allocator.py`), 12 results
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-## AI Identifier Flow
-
-The dedicated Agentic Fit 2x2 entry point is `POST /api/v1/twobytwo`: `two_by_two.py:41` accepts `AgenticFitAllocatorInput` (`two_by_two.py:43`), reads `L3_capability_map` from the saved input JSON, and passes the L1/L2/L3 maps to `generate_two_by_two_analysis()` (`two_by_two.py:183`, `two_by_two.py:249`). So yes, that route is the AgenticFitAllocatorInput-based path. The repo does not show the allocator calling that route directly; the map arrives through the persisted request input.
-
-The allocator’s L3 output is converted to numeric `"High Fit %"` and `"Cost Saving Opportunity"` in `agentic_fit_allocator.py:917`. Its L1/L2 heatmap values are also produced (`L1_percent`/`L1_amount`, `L2_percent`/`L2_amount`) ([heatmap aggregation](apis/v1/agentic_fit_allocator.py#L1920)). But `/twobytwo` itself does not load or merge that saved output: it passes through the `L3_capability_map` it read. The explicit bridge is instead in `capability_double_click.py:422`: its enrichment maps `"High Fit %"` to `High_Fit_%` and `"Cost Saving Opportunity"` to `Cost_Saving_Opportunity` ([field map](apis/v1/capability_double_click.py#L177)), then calls the shared scorer (`capability_double_click.py:514`). That loader only extracts `impact_analyzer` rows (`capability_double_click.py:60`); it does not pass the heatmap rollups into L1/L2 capabilities.
-
-## Workforce Analyzer Flow
-
-The Workforce Analyzer endpoint builds and saves its own result; it does not call the 2x2 scorer in that handler (`workforce_analyzer.py:205`, `workforce_analyzer.py:909`). Its L3 rows contain numeric `"High Fit %"` and `"Cost Saving Opportunity (USD)"` values (`workforce_analyzer.py:1571`, `workforce_analyzer.py:1577`). `build_l1_allocations()` and `build_l2_allocations()` roll up numeric `high_fit_percentage` and `cost_saving_opportunity` values (`workforce_analyzer.py:1794`, `workforce_analyzer.py:1849`, `workforce_analyzer.py:1866`, `workforce_analyzer.py:1923`).
-
-The later `/capability_double_click` route loads the process’s cost-potential output and enriches only its L3 capability maps ([loader and enrichment call](apis/v1/capability_double_click.py#L434)). Its shared field map converts `"High Fit %"` to `High_Fit_%` and `"Cost Saving Opportunity (USD)"` to `Cost_Saving_Opportunity` ([field map](apis/v1/capability_double_click.py#L177)). The Workforce Analyzer rollups are in `WorkforceAnalyzerGrid`, but the loader’s extractor reads only `Cost Saving Potential.impact_analyzer`; it does not merge `l1_allocations` or `l2_allocations` into the 2x2 capability data (`capability_double_click.py:60`).
-
-**Shared code:** Both paths ultimately call `generate_two_by_two_analysis()`. The explicit bridge for saved Agentic Fit and Workforce Analyzer values is currently the enrichment code in `capability_double_click.py`; its field map already handles both pipelines’ different cost-saving keys. The separate `/two_by_two_generator` route is also registered (`two_by_two_generator.py:18`), but neither flow’s code shown here calls it. The enrichment lookup matches on normalized L3 name, not `uniqueId` or the full L1/L2/L3 path (`capability_double_click.py:60`).
+Finally, tell me where the L1 and L2 rollups sit inside each saved output. For the AI Identifier output, I mean the heatmap with L1_percent, L1_amount, L2_percent and L2_amount. For the Workforce Analyzer output, I mean l1_allocations and l2_allocations inside WorkforceAnalyzerGrid. Tell me the exact JSON path and keys for each, and whether each rollup row carries the capability names I could match on. Please include line numbers throughout.
