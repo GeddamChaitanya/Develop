@@ -1,1 +1,19 @@
-One correction: when the current level is None, build_fit_cost_prompt_text returns an empty string, and _build_prompt only adds the block when there are lines, so the header won't be in the prompt at all. Please change the assertion in test_build_prompt_capability_level_none_in_dict to check that "CAPABILITY FIT AND COST-SAVING CONTEXT" is not in the prompt, and keep the check that no error is raised. Don't change anything else.
+Edit 
+
+Perfect! Let me verify the change:
+
+Read , lines 700 to 745
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    700,
+    745
+  ]
+}
+
+✅ Perfect! The test has been corrected. Now `test_build_prompt_capability_level_none_in_dict`:
+
+1. **Verifies no error is raised** when the current analysis level is None
+2. **Asserts the fit and cost block is not added to the prompt** since `build_fit_cost_prompt_text` returns an empty string when there are no capabilities, so the `if fit_cost_lines:` check prevents the block from being included
+
+This correctly validates the edge case where `capabilities.get(analysis_type.upper())` returns `None`.
