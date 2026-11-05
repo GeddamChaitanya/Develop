@@ -1,11 +1,753 @@
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> pytest tests/test_two_by_two_fit_cost.py -q     
-.........................                                                                                [100%]
-============================================== warnings summary ===============================================
+    payload = build_capability_maps_recovery_payload(state, original_payload, output_key=output_key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+state = {'ID': 'req-1', 'action': 'GENERATE_L3', 'channelName': 'chan', 'clientKey': None, ...}
+original_payload = {'ID': 'req-1', 'action': 'GENERATE_L3', 'clientName': 'Acme', 'input_key': 3, ...}
+
+    def build_capability_maps_recovery_payload(
+        state: Mapping[str, Any],
+        original_payload: Mapping[str, Any],
+        *,
+        output_key: Any = None,
+    ):
+        """Build `CapabilityMapGeneratorInput` for a recovered Capability Maps job."""
+        from schemas.capability_maps_generator import CapabilityMapGeneratorInput
+    
+        metadata = normalize_genai_job_metadata(state.get("jobMetadata") or {}, state)
+        payload = dict(original_payload)
+        payload["ID"] = payload.get("ID") or metadata.get("ID") or f"recovery-{metadata.get('jobId')}"
+        payload["input_key"] = _coerce_int(payload.get("input_key") or metadata.get("input_key"))
+        payload["substepkey"] = _coerce_int(payload.get("substepkey") or metadata.get("substepkey"))
+        payload["receiverEmail"] = payload.get("receiverEmail") or metadata.get("receiverEmail")
+        payload["requestedOn"] = payload.get("requestedOn") or metadata.get("requestedOn") or datetime.now(UTC).isoformat()
+        payload["process_name"] = payload.get("process_name") or metadata.get("processName")
+        payload["outputKey"] = _coerce_int(output_key) if output_key is not None else _coerce_int(payload.get("outputKey"))
+        if not payload.get("input_name"):
+            payload["input_name"] = metadata.get("input_name") or "Recovered GenAI input"
+    
+        missing = [field for field in ("ID", "clientName", "action", "substepkey", "input_key", "input_name") if payload.get(field) in (None, "")]
+        if missing:
+            raise GenAIRecoveryError(f"Cannot recover Capability Maps job; missing fields: {', '.join(missing)}")
+>       return CapabilityMapGeneratorInput(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+E         Value error, project name must not be empty or just whitespace [type=value_error, input_value={'ID': 'req-1', 'clientNa...rocess_name': 'Process'}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+utilities\genai_job_recovery.py:159: ValidationError
+_____________________________________________ test_health_openapi_uses_ready_not_ready_response_descriptions _____________________________________________
+
+    def test_health_openapi_uses_ready_not_ready_response_descriptions():
+        from api_v1 import app
+    
+        schema = app.openapi()
+>       assert schema["paths"]["/health"]["get"]["responses"]["200"]["description"] == "Ready"
+E       AssertionError: assert 'Successful Response' == 'Ready'
+E         
+E         - Ready
+E         + Successful Response
+
+tests\test_genai_health.py:217: AssertionError
+_____________________________________________ test_build_capability_maps_recovery_payload_reuses_output_key ______________________________________________
+
+    def test_build_capability_maps_recovery_payload_reuses_output_key():
+>       payload = build_capability_maps_recovery_payload(
+            _metadata(outputKey=999, jobMetadata=_metadata()),
+            _capmap_input(outputKey=None),
+            output_key=999,
+        )
+
+tests\test_genai_job_recovery.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+state = {'ID': 'abc', 'action': 'GENERATE_L3', 'channelName': 'chan', 'input_key': 300, ...}
+original_payload = {'action': 'GENERATE_L3', 'capabilities': [], 'clientDescription': 'Client description', 'clientName': 'ClientCo', ...}
+
+    def build_capability_maps_recovery_payload(
+        state: Mapping[str, Any],
+        original_payload: Mapping[str, Any],
+        *,
+        output_key: Any = None,
+    ):
+        """Build `CapabilityMapGeneratorInput` for a recovered Capability Maps job."""
+        from schemas.capability_maps_generator import CapabilityMapGeneratorInput
+    
+        metadata = normalize_genai_job_metadata(state.get("jobMetadata") or {}, state)
+        payload = dict(original_payload)
+        payload["ID"] = payload.get("ID") or metadata.get("ID") or f"recovery-{metadata.get('jobId')}"
+        payload["input_key"] = _coerce_int(payload.get("input_key") or metadata.get("input_key"))
+        payload["substepkey"] = _coerce_int(payload.get("substepkey") or metadata.get("substepkey"))
+        payload["receiverEmail"] = payload.get("receiverEmail") or metadata.get("receiverEmail")
+        payload["requestedOn"] = payload.get("requestedOn") or metadata.get("requestedOn") or datetime.now(UTC).isoformat()
+        payload["process_name"] = payload.get("process_name") or metadata.get("processName")
+        payload["outputKey"] = _coerce_int(output_key) if output_key is not None else _coerce_int(payload.get("outputKey"))
+        if not payload.get("input_name"):
+            payload["input_name"] = metadata.get("input_name") or "Recovered GenAI input"
+    
+        missing = [field for field in ("ID", "clientName", "action", "substepkey", "input_key", "input_name") if payload.get(field) in (None, "")]
+        if missing:
+            raise GenAIRecoveryError(f"Cannot recover Capability Maps job; missing fields: {', '.join(missing)}")
+>       return CapabilityMapGeneratorInput(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+E         Value error, project name must not be empty or just whitespace [type=value_error, input_value={'clientName': 'ClientCo'...rocess_name': 'Process'}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+utilities\genai_job_recovery.py:159: ValidationError
+___________________________________________ test_recover_capability_maps_job_requeues_with_existing_output_key ___________________________________________
+
+    @pytest.mark.asyncio
+    async def test_recover_capability_maps_job_requeues_with_existing_output_key():
+        fake = FakeRedis()
+        recorder = Recorder()
+        state = update_job_state(_metadata(outputKey=999), status="Recovering", output_key=999, retry_count=1, redis_client=fake)
+    
+>       result = await recover_capability_maps_job(
+            state,
+            input_reader=_aw(lambda input_key: _record(_capmap_input(outputKey=None))),
+            output_lookup=_aw(lambda **_: None),
+            runner=recorder.runner,
+            db_status_writer=recorder.db_writer,
+            publisher=recorder.publisher,
+            redis_client=fake,
+        )
+
+tests\test_genai_job_recovery.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+utilities\genai_job_recovery.py:233: in recover_capability_maps_job
+    payload = build_capability_maps_recovery_payload(state, original_payload, output_key=output_key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+state = {'ID': 'abc', 'action': 'GENERATE_L3', 'channelName': 'chan', 'clientKey': None, ...}
+original_payload = {'action': 'GENERATE_L3', 'capabilities': [], 'capabilityMapInputSelectionKey': 14, 'clientDescription': 'Client description', ...}
+
+    def build_capability_maps_recovery_payload(
+        state: Mapping[str, Any],
+        original_payload: Mapping[str, Any],
+        *,
+        output_key: Any = None,
+    ):
+        """Build `CapabilityMapGeneratorInput` for a recovered Capability Maps job."""
+        from schemas.capability_maps_generator import CapabilityMapGeneratorInput
+    
+        metadata = normalize_genai_job_metadata(state.get("jobMetadata") or {}, state)
+        payload = dict(original_payload)
+        payload["ID"] = payload.get("ID") or metadata.get("ID") or f"recovery-{metadata.get('jobId')}"
+        payload["input_key"] = _coerce_int(payload.get("input_key") or metadata.get("input_key"))
+        payload["substepkey"] = _coerce_int(payload.get("substepkey") or metadata.get("substepkey"))
+        payload["receiverEmail"] = payload.get("receiverEmail") or metadata.get("receiverEmail")
+        payload["requestedOn"] = payload.get("requestedOn") or metadata.get("requestedOn") or datetime.now(UTC).isoformat()
+        payload["process_name"] = payload.get("process_name") or metadata.get("processName")
+        payload["outputKey"] = _coerce_int(output_key) if output_key is not None else _coerce_int(payload.get("outputKey"))
+        if not payload.get("input_name"):
+            payload["input_name"] = metadata.get("input_name") or "Recovered GenAI input"
+    
+        missing = [field for field in ("ID", "clientName", "action", "substepkey", "input_key", "input_name") if payload.get(field) in (None, "")]
+        if missing:
+            raise GenAIRecoveryError(f"Cannot recover Capability Maps job; missing fields: {', '.join(missing)}")
+>       return CapabilityMapGeneratorInput(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+E         Value error, project name must not be empty or just whitespace [type=value_error, input_value={'clientName': 'ClientCo'...rocess_name': 'Process'}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+utilities\genai_job_recovery.py:159: ValidationError
+_______________________________________________ test_recover_job_loads_state_by_recovery_keys_and_enqueues _______________________________________________
+
+    @pytest.mark.asyncio
+    async def test_recover_job_loads_state_by_recovery_keys_and_enqueues():
+        fake = FakeRedis()
+        recorder = Recorder()
+        update_job_state(_metadata(), status="Recovering", retry_count=0, redis_client=fake)
+    
+>       result = await recover_job(
+            process_key=100,
+            substepkey=200,
+            input_key=300,
+            input_reader=_aw(lambda input_key: _record()),
+            output_lookup=_aw(lambda **_: None),
+            runner=recorder.runner,
+            enqueue=recorder.enqueue,
+            db_status_writer=recorder.db_writer,
+            publisher=recorder.publisher,
+            redis_client=fake,
+        )
+
+tests\test_genai_job_recovery.py:272: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+utilities\genai_job_recovery.py:285: in recover_job
+    return await recover_capability_maps_job(state, redis_client=redis_client, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+utilities\genai_job_recovery.py:233: in recover_capability_maps_job
+    payload = build_capability_maps_recovery_payload(state, original_payload, output_key=output_key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+state = {'ID': 'abc', 'action': 'GENERATE_L3', 'channelName': 'chan', 'createdAt': '2026-11-05T06:21:53.330368+00:00', ...}
+original_payload = {'action': 'GENERATE_L3', 'capabilities': [], 'capabilityMapInputSelectionKey': 14, 'clientDescription': 'Client description', ...}
+
+    def build_capability_maps_recovery_payload(
+        state: Mapping[str, Any],
+        original_payload: Mapping[str, Any],
+        *,
+        output_key: Any = None,
+    ):
+        """Build `CapabilityMapGeneratorInput` for a recovered Capability Maps job."""
+        from schemas.capability_maps_generator import CapabilityMapGeneratorInput
+    
+        metadata = normalize_genai_job_metadata(state.get("jobMetadata") or {}, state)
+        payload = dict(original_payload)
+        payload["ID"] = payload.get("ID") or metadata.get("ID") or f"recovery-{metadata.get('jobId')}"
+        payload["input_key"] = _coerce_int(payload.get("input_key") or metadata.get("input_key"))
+        payload["substepkey"] = _coerce_int(payload.get("substepkey") or metadata.get("substepkey"))
+        payload["receiverEmail"] = payload.get("receiverEmail") or metadata.get("receiverEmail")
+        payload["requestedOn"] = payload.get("requestedOn") or metadata.get("requestedOn") or datetime.now(UTC).isoformat()
+        payload["process_name"] = payload.get("process_name") or metadata.get("processName")
+        payload["outputKey"] = _coerce_int(output_key) if output_key is not None else _coerce_int(payload.get("outputKey"))
+        if not payload.get("input_name"):
+            payload["input_name"] = metadata.get("input_name") or "Recovered GenAI input"
+    
+        missing = [field for field in ("ID", "clientName", "action", "substepkey", "input_key", "input_name") if payload.get(field) in (None, "")]
+        if missing:
+            raise GenAIRecoveryError(f"Cannot recover Capability Maps job; missing fields: {', '.join(missing)}")
+>       return CapabilityMapGeneratorInput(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+E         Value error, project name must not be empty or just whitespace [type=value_error, input_value={'clientName': 'ClientCo'...ess', 'outputKey': None}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+utilities\genai_job_recovery.py:159: ValidationError
+_______________________________________________ test_legacy_db_status_keys_normalize_to_canonical_statuses _______________________________________________
+
+    def test_legacy_db_status_keys_normalize_to_canonical_statuses():
+        assert canonical_status_from_db_key(1) == GenAIJobStatus.FAILED
+>       assert canonical_status_from_db_key(7) == GenAIJobStatus.COMPLETED
+E       AssertionError: assert <GenAIJobStat...: 'Generated'> == <GenAIJobStat...: 'Completed'>
+E         
+E         - Completed
+E         + Generated
+
+tests\test_genai_job_status.py:26: AssertionError
+_________________________________________ test_genai_recovery_end_to_end_with_realistic_capability_maps_request __________________________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002148AA29580>
+
+    def test_genai_recovery_end_to_end_with_realistic_capability_maps_request(monkeypatch):
+        import db.db_operations_orm as db_operations_orm
+        import utilities.genai_job_state as genai_job_state
+        import utilities.redis_cache as redis_cache
+        import api_v1
+        from apis.v1 import capability_maps_generator as capmap_api
+        from apis.v1 import genai_recovery
+    
+        fake_redis = FakeRedis()
+        payload = _real_capability_maps_payload()
+        generated_l3_rows = [
+            {
+                "l1_capability_name": "Commercial Operations",
+                "l2_capability_name": "Sales Pipeline Management",
+                "l3_capability_name": "Opportunity Qualification",
+                "l3_capability_description": "Assess opportunity fit, value, timing, and win probability.",
+            },
+            {
+                "l1_capability_name": "Service Operations",
+                "l2_capability_name": "Field Service Dispatch",
+                "l3_capability_name": "Technician Route Optimization",
+                "l3_capability_description": "Optimize technician routes using service priority, skill, and location data.",
+            },
+        ]
+    
+        monkeypatch.setenv("REDIS_channel_name_capmap", "capmap-progress-e2e")
+        monkeypatch.setattr(genai_job_state, "_DEFAULT_REDIS_CLIENT", fake_redis)
+        monkeypatch.setattr(redis_cache, "r", fake_redis)
+        monkeypatch.setattr(api_v1, "schedule_startup_recovery_scan", lambda: None)
+        monkeypatch.setattr(db_operations_orm, "read_latest_sub_step_output_by_input_key", lambda *args, **kwargs: None)
+        monkeypatch.setattr(db_operations_orm, "read_sub_step_by_sub_step_key", lambda sub_step_key: type("SubStep", (), {"sub_step_status_key": DB_STATUS_IN_PROGRESS})())
+        monkeypatch.setattr(db_operations_orm, "run_operations", lambda output_key, data: output_key or 98765)
+        monkeypatch.setattr(db_operations_orm, "run_operations_status", lambda sub_step_key, data: {"updated": sub_step_key, "data": data})
+        monkeypatch.setattr(capmap_api, "email_send", lambda *args, **kwargs: True)
+    
+        async def fake_generate_capability_maps_for_level(self, level, selection_key, df_file, selected_capabilities, survey_ctx, file_ctx):
+            assert level == 3
+            assert selection_key is None
+            return generated_l3_rows
+    
+        monkeypatch.setattr(
+            "agents.capability_maps_generation.capability_maps_generator.CapabilityMapGeneration.generate_capability_maps_for_level",
+            fake_generate_capability_maps_for_level,
+        )
+    
+        client = TestClient(api_v1.app, raise_server_exceptions=False)
+    
+        with patch("api_v1.readiness_summary", return_value={"status": 200, "ready": True, "checks": {}}), patch(
+            "api_v1.job_health_summary",
+            return_value={"status": 200, "counts": {"total": 0}, "staleJobs": [], "errors": []},
+        ):
+            assert client.get("/health/live").status_code == 200
+            assert client.get("/health/ready").status_code == 200
+            assert client.get("/health/jobs").status_code == 200
+    
+        start_response = client.post("/api/v1/capability_maps_generator", json=payload)
+>       assert start_response.status_code == 202
+E       assert 422 == 202
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests\test_genai_recovery_e2e_real_payload.py:174: AssertionError
+_________________________________________________ test_industry_classification_retries_null_llm_response _________________________________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002148C2B6180>
+
+    @pytest.mark.asyncio
+    async def test_industry_classification_retries_null_llm_response(monkeypatch):
+        calls = []
+    
+        class FakeResponse:
+            def __init__(self, content):
+                self.content = content
+    
+        class FakeLLM:
+            def __init__(self, *args, **kwargs):
+                pass
+    
+            async def ainvoke(self, prompt, timeout=180):
+                calls.append(prompt)
+                if len(calls) == 1:
+                    return FakeResponse(
+                        '{"industryClassificationCode": null, "codeSystem": null, '
+                        '"classificationTitle": null, "confidence": null, "source_reasoning": null}'
+                    )
+                return FakeResponse(
+                    '{"industryClassificationCode": "336110", "codeSystem": "NAICS", '
+                    '"classificationTitle": "Automobile and Light Duty Motor Vehicle Manufacturing", '
+                    '"confidence": "high", "source_reasoning": "The automotive manufacturing context maps to NAICS 336110."}'
+                )
+    
+        monkeypatch.setattr(industry_code_agent, "ChatGoogleGenerativeAI", FakeLLM)
+        payload = IndustryClassificationSuggestionInput(
+            projectName="Tesla manufacturing transformation",
+            projectDescription="",
+            industry="Transportation",
+            sector="Automotive",
+            subSector="Auto Manufacturing",
+        )
+    
+>       result = await industry_code_agent.suggest_industry_classification_code(payload)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_industry_classification_code.py:400: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_data = IndustryClassificationSuggestionInput(projectKey=None, projectName='Tesla manufacturing transformation', projectDescri...ceName=None, workspaceDescription=None, industry='Transportation', sector='Automotive', subSector='Auto Manufacturing')
+
+    async def suggest_industry_classification_code(
+        input_data: IndustryClassificationSuggestionInput,
+    ) -> IndustryClassificationSuggestionOutput:
+        """Suggest a NAICS code from workspace/project/industry/sector/sub-sector context."""
+        llm = ChatGoogleGenerativeAI(
+            model=LARGE_MODEL_NAME,
+            temperature=0,
+            max_retries=2,
+            api_key=os.getenv("GEMINI_API_KEY"),
+        )
+        response_text = ""
+        data = {}
+        for attempt, prompt in enumerate(
+            (
+                _build_prompt(input_data, NAICS_SUGGESTION_PROMPT),
+                None,
+            ),
+            start=1,
+        ):
+            if prompt is None:
+                prompt = _build_prompt(input_data, NAICS_RETRY_PROMPT, previous_response=response_text[:2000])
+    
+            response = await llm.ainvoke(prompt, timeout=180)
+            raw_response_text = getattr(response, "content", response)
+            if isinstance(raw_response_text, list):
+                raw_response_text = " ".join(str(item) for item in raw_response_text)
+            response_text = str(raw_response_text)
+            data = _normalise_suggestion_payload(_extract_json(response_text))
+            if _is_complete_suggestion(data):
+                break
+            if attempt == 2:
+>               raise ValueError(
+                    "NAICS suggestion response still had missing required fields after retry"
+                )
+E               ValueError: NAICS suggestion response still had missing required fields after retry
+
+agents\industry_classification_code.py:188: ValueError
+____________________________________________ test_industry_classification_retries_partially_null_llm_response ____________________________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002148AA4D880>
+
+    @pytest.mark.asyncio
+    async def test_industry_classification_retries_partially_null_llm_response(monkeypatch):
+        calls = []
+    
+        class FakeResponse:
+            def __init__(self, content):
+                self.content = content
+    
+        class FakeLLM:
+            def __init__(self, *args, **kwargs):
+                pass
+    
+            async def ainvoke(self, prompt, timeout=180):
+                calls.append(prompt)
+                if len(calls) == 1:
+                    return FakeResponse(
+                        '{"industryClassificationCode": "541511", "codeSystem": "NAICS", '
+                        '"classificationTitle": null, "confidence": null, "reasoning": null}'
+                    )
+                return FakeResponse(
+                    '{"industryClassificationCode": "541511", "codeSystem": "NAICS", '
+                    '"classificationTitle": "Custom Computer Programming Services", '
+                    '"confidence": "high", "reasoning": "The software context maps to NAICS 541511."}'
+                )
+    
+        monkeypatch.setattr(industry_code_agent, "ChatGoogleGenerativeAI", FakeLLM)
+        payload = IndustryClassificationSuggestionInput(
+            projectName="Adobe transformation",
+            projectDescription="Transform digital media operations",
+            industry="Technology, Media & Telecom",
+            sector="Technology",
+            subSector="Software, Services & Platforms",
+        )
+    
+>       result = await industry_code_agent.suggest_industry_classification_code(payload)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_industry_classification_code.py:443: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input_data = IndustryClassificationSuggestionInput(projectKey=None, projectName='Adobe transformation', projectDescription='Transfo...cription=None, industry='Technology, Media & Telecom', sector='Technology', subSector='Software, Services & Platforms')
+
+    async def suggest_industry_classification_code(
+        input_data: IndustryClassificationSuggestionInput,
+    ) -> IndustryClassificationSuggestionOutput:
+        """Suggest a NAICS code from workspace/project/industry/sector/sub-sector context."""
+        llm = ChatGoogleGenerativeAI(
+            model=LARGE_MODEL_NAME,
+            temperature=0,
+            max_retries=2,
+            api_key=os.getenv("GEMINI_API_KEY"),
+        )
+        response_text = ""
+        data = {}
+        for attempt, prompt in enumerate(
+            (
+                _build_prompt(input_data, NAICS_SUGGESTION_PROMPT),
+                None,
+            ),
+            start=1,
+        ):
+            if prompt is None:
+                prompt = _build_prompt(input_data, NAICS_RETRY_PROMPT, previous_response=response_text[:2000])
+    
+            response = await llm.ainvoke(prompt, timeout=180)
+            raw_response_text = getattr(response, "content", response)
+            if isinstance(raw_response_text, list):
+                raw_response_text = " ".join(str(item) for item in raw_response_text)
+            response_text = str(raw_response_text)
+            data = _normalise_suggestion_payload(_extract_json(response_text))
+            if _is_complete_suggestion(data):
+                break
+            if attempt == 2:
+>               raise ValueError(
+                    "NAICS suggestion response still had missing required fields after retry"
+                )
+E               ValueError: NAICS suggestion response still had missing required fields after retry
+
+agents\industry_classification_code.py:188: ValueError
+_ test_missing_capability_generation_prompts_include_naics_context[You are a capability map expert with knowledge in business architecture, capability modeling frameworks, and industry best practices.\nYou also have deep financial experience and can use your expertise to perform financial calculations and analyses.\n\nYour task is to generate L3 (Level 3) capabilities with descriptions for the given L1 and L2 capability hierarchy.\n\n**Company Context:**\n- Company Name: {company_name}\n\n{industry_context}\n- Uploaded Client Capability Map File: {uploaded_filename}\n\n**Capability Hierarchy:**\n- L1 Capability:{l1_capability_name}\n  {l1_description_context}\n- L2 Capability: {l2_capability_name}\n  {l2_description_context}\n\n**Existing L3 Capabilities under this L2 (DO NOT REMOVE OR REPLACE THESE):**\n{existing_l3_capabilities}\n\n**Minimum number of NEW L3 capabilities to generate:** {num_to_generate}\n\n**Instructions:**\n- IMPORTANT: All existing L3 capabilities listed above MUST be preserved - do NOT suggest removing or replacing any of them\n- Generate AT LEAST {num_to_generate} NEW L3 capability names with descriptions for this L2\n- Perform additional research to identify gaps in L3 coverage for this L2 capability\n- You SHOULD generate MORE new L3s if you identify missing capabilities that would provide comprehensive coverage\n- Each new L3 should be a specific, granular function or activity within the parent L2\n- Do NOT duplicate any existing L3 capabilities listed above\n- Ensure L3 capabilities are tied to business processes (not product capabilities) that incur operating expenses\n- Generate a concise 1-2 sentence description for each new L3\n- The description should explain what this specific capability does within the context of its parent L2\n- Be written in a professional business context\n- Focus on the business processes, functions, and activities - not products\n\n**Research Focus Areas:**\n- Industry best practices for this capability domain\n- Common business processes and activities within this L2\n- Operational functions that drive business value\n- Activities that require staffing and operating expenses\n\n**SOURCE REASONING RULES:**\nThe uploaded Client Capability Map is the primary source of evidence. Public research is supplementary and should only be cited when the LLM actually uses it to fill missing information, generate a missing capability, or refine capability content.\n\nCASE 1 \u2014 Client Capability Map Evidence:\nIf information available from the uploaded Client Capability Map directly and materially supports the generated or enriched L3 capability, provide genuine reasoning explaining what the client map supports and cite the exact client filename using (Source: exact-client-filename). Copy the filename EXACTLY as supplied to the prompt. Never shorten, truncate, guess, fabricate, or replace any portion of the filename with "...". Do not cite the client file when it does not actually support the generated information.\n\nCASE 2 \u2014 Public Research Used:\nIf information is missing from the Client Capability Map and the LLM actually uses public/web research to generate a missing L3, fill missing information, enrich content, or refine a description, provide genuine reasoning and include the actual public URL retrieved during the current research using (Source: https://actual-retrieved-url). A public URL is optional and must appear only when public research actually contributed. Never fabricate, construct, infer, derive, or guess a URL. Never include URLs containing vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, or grounding-api-redirect. If a grounding redirect is the only URL available, omitthe URL entirely and mention the genuine source name or type only if it is actually known from the research result.\n\nCASE 3 \u2014 No Direct Evidence:\nIf the generated capability or information is not directly supported by Client Capability Map evidence and no genuine public source supports it, source_reasoning must begin with "AI Generated: " followed by genuine capability-specific reasoning explaining why this L3 capability or description is appropriate for this client under its parent L2 and L1 context. Do not simply restate the L3 description. Do not fabricate client evidence, filenames, source names, or URLs.\n\nSTRICT RULES FOR SOURCE REASONING:\n- Client Capability Map evidence has first priority. Public research is supplementary, not mandatory.\n- Include a public URL only when it was actually retrieved and used during the current generation.\n- Never fabricate filenames, source names, or URLs.\n- Never include grounding redirect URLs (vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, grounding-api-redirect).\n- Copy client filenames exactly without truncation or "...".\n- Do not cite the client file as direct evidence unless it materially supports the generated information.\n- Keep all reasoning and citation information inside the single source_reasoning field.\n- Do not add source_links or any other citation field.\n- Never return source_reasoning as None, "None", "No reasoning available", "No reasoning available.", or an empty string.\n- Every generated or enriched L3 must contain genuine source_reasoning.\n\n**Output:** Return ONLY the NEW L3 capabilities with their descriptions AND source_reasoning in the specified JSON format. Do not include existing L3s in the output.\n-values3] _
+
+template = 'You are a capability map expert with knowledge in business architecture, capability modeling frameworks, and industry...ith their descriptionsAND source_reasoning in the specified JSON format. Do not include existing L3s in the output.\n'
+values = {'company_name': 'Acme', 'existing_l3_capabilities': 'None', 'l1_capability_name': 'Finance', 'l1_description_context': '', ...}
+
+    @pytest.mark.parametrize(
+        ("template", "values"),
+        [
+            (
+                fill_missing_l1description.L1_DESCRIPTION_PROMPT,
+                {"company_name": "Acme", "l1_capabilities_needing_desc": "- Finance"},
+            ),
+            (
+                fill_missing_l2capabilities.L2_GENERATE_CAPABILITIES_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "existing_l2_capabilities": "None",
+                    "num_to_generate": 1,
+                },
+            ),
+            (
+                fill_missing_l2capabilities.L2_DESCRIPTION_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "l2_capabilities_needing_desc": "- Accounting",
+                },
+            ),
+            (
+                fill_missing_l3capabilities.L3_GENERATE_CAPABILITIES_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "l2_capability_name": "Accounting",
+                    "l2_description_context": "",
+                    "existing_l3_capabilities": "None",
+                    "num_to_generate": 1,
+                },
+            ),
+            (
+                fill_missing_l3capabilities.L3_DESCRIPTION_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "l2_capability_name": "Accounting",
+                    "l2_description_context": "",
+                    "l3_capabilities_needing_desc": "- Accounts Payable",
+                },
+            ),
+            (
+                generate_detaileddescriptions.DETAILED_DESCRIPTION_PROMPT,
+                {"company_name": "Acme", "capability_rows": "Finance > Accounting"},
+            ),
+            (
+                validate_and_fill_empty.FILL_EMPTY_FIELDS_PROMPT,
+                {"company_name": "Acme", "rows_with_empty_fields": "Row 1"},
+            ),
+        ],
+    )
+    def test_missing_capability_generation_prompts_include_naics_context(template, values):
+>       prompt = template.format(industry_context=NAICS_CONTEXT, **values)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'uploaded_filename'
+
+tests\test_industry_context_propagation.py:86: KeyError
+_ test_missing_capability_generation_prompts_include_naics_context[You are a capability map expert with knowledge in business architecture, capability modeling frameworks, and industry best practices.\n\nYour task is to generate descriptions for the L3 (Level 3) capabilities that are missing descriptions.\n\n**Company Context:**\n- Company Name: {company_name}\n\n{industry_context}\n- Uploaded Client Capability Map File: {uploaded_filename}\n\n**Capability Hierarchy:**\n- L1 Capability: {l1_capability_name}\n  {l1_description_context}\n- L2 Capability: {l2_capability_name}\n  {l2_description_context}\n\n**L3 Capabilities needing descriptions under this L2:**\n{l3_capabilities_needing_desc}\n\n**Instructions:**\n- Generate a concise 1-2 sentence description for each L3 capability listed above\n- The description should explain what this specific capability/activity does\n- Place it in context of its parent L1 and L2 capabilities\n- Be written in a professional business context\n- Focus on the business processes and functions, not products\n- Ensure descriptions are actionable and describe operational activities\n\n**SOURCE REASONING RULES:**\nThe uploaded Client Capability Map is the primary source of evidence. Public research is supplementary and should only be cited when the LLM actually uses it to fill missing information, enrich descriptions, or refine capability content.\n\nCASE 1 \u2014 Client Capability Map Evidence:\nIf information available from the uploaded Client Capability Map directly and materially supports the generated or enriched L3 description, provide genuine reasoning explaining what the client map supports and cite the exact client filename using (Source: exact-client-filename). Copy the filename EXACTLY as supplied to the prompt. Never shorten, truncate, guess, fabricate, or replace any portion of the filename with "...". Do not cite the client file when it does not actually support the generated information.\n\nCASE 2 \u2014 Public Research Used:\nIf information is missing from the Client Capability Map and the LLM actually uses public/web research to enrich descriptions, fill missing content, or refine capability information, provide genuine reasoning and include the actual public URL retrieved during the current research using (Source: https://actual-retrieved-url). A public URL is optional and must appear only when public research actually contributed. Never fabricate, construct, infer, derive, or guess a URL. Never include URLs containing vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, or grounding-api-redirect. If a grounding redirect is the onlyURL available, omit the URL entirely and mention the genuine source name or type only if it is actually known from the research result.\n\nCASE 3 \u2014 No Direct Evidence:\nIf the description is not directly supported by Client Capability Map evidence and no genuine public source supports it, source_reasoning must begin with "AI Generated: " followed by genuine capability-specific reasoning explaining why this enriched description is appropriate for this L3 under its parent L2 and L1 context. Do not simply restate the description. Do not fabricate client evidence, filenames, source names, or URLs.\n\nSTRICT RULES FOR SOURCE REASONING:\n- Client Capability Map evidence has first priority. Public research is supplementary, not mandatory.\n- Include a public URL only when it was actually retrieved and used during the current generation.\n- Never fabricate filenames, source names, or URLs.\n- Never include grounding redirect URLs (vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, grounding-api-redirect).\n- Copy client filenames exactly without truncation or "...".\n- Do not cite the client file as direct evidence unless it materially supports the generated information.\n- Keep all reasoning and citation information inside the single source_reasoning field.\n- Do not add source_links or any other citation field.\n- Never return source_reasoning as None, "None","No reasoning available", "No reasoning available.", or an empty string.\n- Every generated or enriched L3 description must contain genuine source_reasoning.\n\n**Output:** Return descriptions for ALL the L3 capabilities listed above along with source_reasoning for each in the specified JSON format.\n-values4] _
+
+template = 'You are a capability map expert with knowledge in business architecture, capability modeling frameworks, and industry...riptions for ALL the L3 capabilities listed above along with source_reasoning for each in the specified JSON format.\n'
+values = {'company_name': 'Acme', 'l1_capability_name': 'Finance', 'l1_description_context': '', 'l2_capability_name': 'Accounting', ...}
+
+    @pytest.mark.parametrize(
+        ("template", "values"),
+        [
+            (
+                fill_missing_l1description.L1_DESCRIPTION_PROMPT,
+                {"company_name": "Acme", "l1_capabilities_needing_desc": "- Finance"},
+            ),
+            (
+                fill_missing_l2capabilities.L2_GENERATE_CAPABILITIES_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "existing_l2_capabilities": "None",
+                    "num_to_generate": 1,
+                },
+            ),
+            (
+                fill_missing_l2capabilities.L2_DESCRIPTION_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "l2_capabilities_needing_desc": "- Accounting",
+                },
+            ),
+            (
+                fill_missing_l3capabilities.L3_GENERATE_CAPABILITIES_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "l2_capability_name": "Accounting",
+                    "l2_description_context": "",
+                    "existing_l3_capabilities": "None",
+                    "num_to_generate": 1,
+                },
+            ),
+            (
+                fill_missing_l3capabilities.L3_DESCRIPTION_PROMPT,
+                {
+                    "company_name": "Acme",
+                    "l1_capability_name": "Finance",
+                    "l1_description_context": "",
+                    "l2_capability_name": "Accounting",
+                    "l2_description_context": "",
+                    "l3_capabilities_needing_desc": "- Accounts Payable",
+                },
+            ),
+            (
+                generate_detaileddescriptions.DETAILED_DESCRIPTION_PROMPT,
+                {"company_name": "Acme", "capability_rows": "Finance > Accounting"},
+            ),
+            (
+                validate_and_fill_empty.FILL_EMPTY_FIELDS_PROMPT,
+                {"company_name": "Acme", "rows_with_empty_fields": "Row 1"},
+            ),
+        ],
+    )
+    def test_missing_capability_generation_prompts_include_naics_context(template, values):
+>       prompt = template.format(industry_context=NAICS_CONTEXT, **values)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'uploaded_filename'
+
+tests\test_industry_context_propagation.py:86: KeyError
+____________________________________________________ TestPreflightCheckLLM.test_success_returns_none _____________________________________________________
+
+self = <tests.test_llm_preflight.TestPreflightCheckLLM object at 0x000002148AA86750>
+
+    @pytest.mark.asyncio
+    async def test_success_returns_none(self):
+        """Happy path: LLM responds, no exception."""
+>       mod = _reload_preflight()
+              ^^^^^^^^^^^^^^^^^^^
+
+tests\test_llm_preflight.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _reload_preflight():
+        """Reload the module to get the REAL function (undoing conftest mock)."""
+>       import utilities.llm_preflight as mod
+E       ModuleNotFoundError: No module named 'utilities.llm_preflight'
+
+tests\test_llm_preflight.py:12: ModuleNotFoundError
+____________________________________________________ TestPreflightCheckLLM.test_empty_response_raises ____________________________________________________
+
+self = <tests.test_llm_preflight.TestPreflightCheckLLM object at 0x000002148AA86BA0>
+
+    @pytest.mark.asyncio
+    async def test_empty_response_raises(self):
+        """LLM returns empty content -> LLMUnavailableError."""
+>       mod = _reload_preflight()
+              ^^^^^^^^^^^^^^^^^^^
+
+tests\test_llm_preflight.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _reload_preflight():
+        """Reload the module to get the REAL function (undoing conftest mock)."""
+>       import utilities.llm_preflight as mod
+E       ModuleNotFoundError: No module named 'utilities.llm_preflight'
+
+tests\test_llm_preflight.py:12: ModuleNotFoundError
+___________________________________________________ TestPreflightCheckLLM.test_connection_error_raises ___________________________________________________
+
+self = <tests.test_llm_preflight.TestPreflightCheckLLM object at 0x000002148AA86F90>
+
+    @pytest.mark.asyncio
+    async def test_connection_error_raises(self):
+        """LLM throws a connection error -> LLMUnavailableError."""
+>       mod = _reload_preflight()
+              ^^^^^^^^^^^^^^^^^^^
+
+tests\test_llm_preflight.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _reload_preflight():
+        """Reload the module to get the REAL function (undoing conftest mock)."""
+>       import utilities.llm_preflight as mod
+E       ModuleNotFoundError: No module named 'utilities.llm_preflight'
+
+tests\test_llm_preflight.py:12: ModuleNotFoundError
+_______________________________________________________ TestPreflightCheckLLM.test_timeout_raises ________________________________________________________
+
+self = <tests.test_llm_preflight.TestPreflightCheckLLM object at 0x000002148AA87380>
+
+    @pytest.mark.asyncio
+    async def test_timeout_raises(self):
+        """LLM hangs beyond timeout -> LLMUnavailableError."""
+>       mod = _reload_preflight()
+              ^^^^^^^^^^^^^^^^^^^
+
+tests\test_llm_preflight.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _reload_preflight():
+        """Reload the module to get the REAL function (undoing conftest mock)."""
+>       import utilities.llm_preflight as mod
+E       ModuleNotFoundError: No module named 'utilities.llm_preflight'
+
+tests\test_llm_preflight.py:12: ModuleNotFoundError
+______________________________________________________ TestPreflightCheckLLM.test_custom_model_name ______________________________________________________
+
+self = <tests.test_llm_preflight.TestPreflightCheckLLM object at 0x000002148AA87770>
+
+    @pytest.mark.asyncio
+    async def test_custom_model_name(self):
+        """Custom model name is passed through to ChatGoogleGenerativeAI."""
+>       mod = _reload_preflight()
+              ^^^^^^^^^^^^^^^^^^^
+
+tests\test_llm_preflight.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _reload_preflight():
+        """Reload the module to get the REAL function (undoing conftest mock)."""
+>       import utilities.llm_preflight as mod
+E       ModuleNotFoundError: No module named 'utilities.llm_preflight'
+
+tests\test_llm_preflight.py:12: ModuleNotFoundError
+_________________________________________________ test_total_opex_prompts_include_consistency_guardrails _________________________________________________
+
+    def test_total_opex_prompts_include_consistency_guardrails():
+        for prompt in (prompt_total_opex, prompt_total_opex_context):
+>           assert "## Consistency Guardrail:" in prompt
+E           assert '## Consistency Guardrail:' in "\n        Today's date is {today}. You are a senior financial analyst specializing in corporate financial statements ...uted TTM values when SEC filings are available.\n\nIMPORTANT NOTE: RECHECK ONCE YOU CALCULATE THE TOTAL OPEX\n        "
+
+tests\test_opex_consistency_guardrails.py:9: AssertionError
+___________________________________________________ test_format_opex_data_preserves_calculation_basis ____________________________________________________
+
+    @pytest.mark.asyncio
+    async def test_format_opex_data_preserves_calculation_basis():
+        formatted = await format_opex_data(
+            {
+                "total_opex_costs_usd": 123456789,
+                "currency": "USD",
+                "breakdown": {"R_n_D": 123456789},
+                "sources": ["SEC 10-K filing"],
+                "confidence_level": "high",
+                "source_reasoning": "Calculated from the latest 10-K line items.",
+                "calculation_basis": "latest_10k_fy",
+                "estimation_method": "latest_10k_fy",
+            },
+            prompt="test prompt",
+        )
+    
+        assert formatted["total_opex_costs"] == 123456789
+>       assert formatted["calculation_basis"] == "latest_10k_fy"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'calculation_basis'
+
+tests\test_opex_consistency_guardrails.py:35: KeyError
+__________________________________________________ test_fallback_opex_estimate_marks_basis_unavailable ___________________________________________________
+
+    def test_fallback_opex_estimate_marks_basis_unavailable():
+        fallback = create_fallback_opex_estimate("Example Co", "network unavailable")
+    
+        assert fallback["total_opex_costs"] is None
+>       assert fallback["calculation_basis"] == "unavailable"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'calculation_basis'
+
+tests\test_opex_consistency_guardrails.py:44: KeyError
+==================================================================== warnings summary ====================================================================
 db\models.py:9
   C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\db\models.py:9: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
     Base = declarative_base()
 
 utilities\redis_cache.py:13
+tests/test_genai_job_state.py::test_publish_message_updates_job_state
+tests/test_genai_job_state.py::test_progress_monitor_stop_only_stops_heartbeat
+tests/test_genai_job_state.py::test_progress_monitor_can_publish_completion_explicitly
   C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\utilities\redis_cache.py:13: DeprecationWarning: Call to '__init__' function with deprecated usage of input argument/s 'retry_on_timeout'. (TimeoutError is included by default.) -- Deprecated since version 6.0.0.
     r = redis.Redis(
 
@@ -15,409 +757,43 @@ utilities\redis_cache.py:13
 .venv\Lib\site-packages\pydantic\_internal\_config.py:323
 .venv\Lib\site-packages\pydantic\_internal\_config.py:323
 .venv\Lib\site-packages\pydantic\_internal\_config.py:323
+.venv\Lib\site-packages\pydantic\_internal\_config.py:323
+.venv\Lib\site-packages\pydantic\_internal\_config.py:323
   C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\pydantic\_internal\_config.py:323: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
     warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+tests/test_genai_coverage_edges.py::test_startup_recovery_requeue_error_marks_completed_with_errors
+  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\_pytest\fixtures.py:767: RuntimeWarning: coroutine 'Connection._cancel' was never awaited
+    def _check_scope(
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+tests/test_genai_health.py::test_health_openapi_uses_ready_not_ready_response_descriptions
+  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\fastapi\openapi\utils.py:303: UserWarning: Duplicate Operation ID health_check_health_get for function health_check at C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\api_v1.py
+    warnings.warn(message, stacklevel=1)
+
+tests/test_genai_health.py::test_health_openapi_uses_ready_not_ready_response_descriptions
+  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\fastapi\openapi\utils.py:303: UserWarning: Duplicate Operation ID whoami_api_v1_me_get for function whoami at C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\api_v1.py
+    warnings.warn(message, stacklevel=1)
+
+tests/test_genai_job_recovery.py::test_recover_job_loads_state_by_recovery_keys_and_enqueues
+  C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\threading.py:299: RuntimeWarning: coroutine 'Connection._cancel' was never awaited
+    def __enter__(self):
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+tests/test_genai_recovery_e2e_real_payload.py::test_genai_recovery_end_to_end_with_realistic_capability_maps_request
+  C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\typing.py:2187: RuntimeWarning: coroutine 'Connection._cancel' was never awaited
+    def cast(typ, val):
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+tests/test_industry_classification_code.py::test_industry_classification_backfill_updates_project_table
+  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\aiosqlite\core.py:105: DeprecationWarning: The default datetime adapter is deprecated as of Python 3.12; see the sqlite3 documentation for suggested replacement recipes
+    result = function()
 
 .venv\Lib\site-packages\_pytest\cacheprovider.py:475
   C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\_pytest\cacheprovider.py:475: PytestCacheWarning: could not create cache path C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.pytest_cache\v\cache\nodeids: [WinError 5] Access is denied: 'C:\\Users\\gedchaitanya\\2by2_enc_asc\\aai-bpt-genaiapi\\.pytest_cache\\v\\cache'
-    config.cache.set("cache/nodeids", sorted(self.cached_nodeids))
-
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-25 passed, 9 warnings in 5.87s
-(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> pytest tests -k "capability_double_click or two_by_two or impact_analyzer" -q
-F................................                                                                        [100%]
-================================================== FAILURES ===================================================
-__________________________________ test_two_by_two_path_sets_status_complete __________________________________
-
-    @pytest.mark.asyncio
-    async def test_two_by_two_path_sets_status_complete():
-        """The 2x2 branch (not full CDC) should also get status 7 on success."""
-    
-        input_payload = _make_input_data()
-    
-        mock_input_record = MagicMock()
-        mock_input_record.sub_step_key = 10
-        # Use Two by Two step name
-        mock_input_record.input_json = _make_db_input_json(step_name="viability-n-feasibility")
-    
-        with (
-            patch("apis.v1.capability_double_click.read_sub_step_input_by_input_key", new_callable=AsyncMock, return_value=mock_input_record),
-            patch("apis.v1.capability_double_click.db_operations_orm") as mock_db_ops,
-            patch("apis.v1.capability_double_click.publish_message"),
-            patch("apis.v1.capability_double_click.monitor") as mock_monitor,
-            patch("apis.v1.capability_double_click.generate_two_by_two_analysis", new_callable=AsyncMock) as mock_2x2,
-            patch("apis.v1.capability_double_click.generate_docx", return_value="blob/path.docx"),
-            patch("apis.v1.capability_double_click.generate_cdc_docs", return_value={
-                "current_state_file": "cs.docx", "future_state_file": "fs.docx", "kpi_file": "kpi.docx"
-            }),
-            patch("apis.v1.capability_double_click.email_send", new_callable=AsyncMock),
-            patch("apis.v1.capability_double_click.track_api_call"),
-            patch("apis.v1.capability_double_click.track_trace"),
-            patch("apis.v1.capability_double_click.track_operation_complete"),
-        ):
-            mock_monitor.start_progress = AsyncMock()
-            mock_monitor.stop_progress = AsyncMock()
-            if not isinstance(mock_db_ops.run_operations, AsyncMock):
-                mock_db_ops.run_operations = AsyncMock(return_value=1)
-            if not isinstance(mock_db_ops.run_operations_status, AsyncMock):
-                mock_db_ops.run_operations_status = AsyncMock()
-            mock_db_ops.run_operations = AsyncMock(return_value=55)
-            mock_db_ops.run_operations_status = AsyncMock()
-            mock_2x2.return_value = [{"uniqueId": "u1"}]
-    
-            from schemas.agentic_fit_allocator import AgenticFitAllocatorInput
-            model = AgenticFitAllocatorInput(**input_payload)
-    
-            from apis.v1.capability_double_click import generate_capability_double_click
-    
-            # The 2x2 branch builds a response without current_state/future_state keys,
-            # so generate_docx / generate_cdc_docs will be called on a dict that lacks them.
-            # That's fine – we're testing the status calls, not docx generation.
-            # We need to handle the KeyError on response["current_state"] gracefully;
-            # let generate_docx/generate_cdc_docs succeed via mocks.
-            # But the code does `response["current_state"]["mas_process_file"] = blob_path`
-            # which will raise KeyError. We expect the error path here.
-            from fastapi.exceptions import HTTPException
-            try:
->               result = await generate_capability_double_click(model)
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-tests\test_cdc_status.py:253: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-input_data = AgenticFitAllocatorInput(stepKey=1, substepkey=10, processName='TestProcess', processKey=100, input_key=200, input_nam...e, ParentWorkspaceName=None, WorkspaceDescription=None, discount_rate=0.1, TwoByTwoOutPutKeys=None, receiverEmail=None)
-
-    async def generate_capability_double_click(input_data: AgenticFitAllocatorInput):
-    
-        # Per-job ProgressMonitor: each background job runs on its own event loop
-        # (via asyncio.run in the BackgroundTasks threadpool); sharing a module-level
-        # monitor across loops raises "await wasn't used with future".
-        monitor = ProgressMonitor()
-    
-        genai_audit_log_id = None
-        audit_analysis_name = None
-        audit_step = None
-        audit_sub_step = None
-        audit_client_id = None
-        audit_user_id = None
-        audit_requested_time = None
-        audit_substep_key = None
-        audit_input_key = None
-        audit_receiver_email = None
-        try:
-            # Track API call
-            track_api_call("CAPABILITY_DOUBLE_CLICK_GENERATOR", input_data.input_key)
-    
-            # Log input data for debugging
-            track_trace(f"Received input_data: {input_data.model_dump_json()}", severity="Information")
-    
-            channel_name = os.getenv('REDIS_channel_name_capability_double_click')
-            receiver_email = input_data.receiverEmail if input_data.receiverEmail else None
-            input_record = await read_sub_step_input_by_input_key(input_data.input_key)
-            substepkey = input_record.sub_step_key if input_record else None
-            input_data_db = json.loads(input_record.input_json) if input_record and input_record.input_json else None
-            input_data_client = json.loads(input_data_db) if isinstance(input_data_db, str) else input_data_db if input_data_db else {}
-            input_data_client = normalize_project_payload(input_data_client)
-            input_data_db = normalize_project_payload(input_data_db)
-            client_info = input_data_client.get('projectInfo') if isinstance(input_data_client, dict) else None
-            # Ensure client_info is a dict for safe .get() access
-            client_info = client_info if isinstance(client_info, dict) else None
-            capability_info = input_data_client.get('capabilityInfo') if isinstance(input_data_client, dict) and input_data_client.get('capabilityInfo') else None
-    
-            # Ensure input_data_db is a dict before calling .get()
-            background_processing_data = input_data_db.get('backgroundProcessingInfo') if isinstance(input_data_db, dict) and input_data_db.get('backgroundProcessingInfo') else {}
-            try:
-                audit_project_info = input_data_client.get("projectInfo") if isinstance(input_data_client, dict) else None
-                audit_analysis_name = input_data.processName or background_processing_data.get("processName")
-                audit_step = background_processing_data.get("step_name") or input_data.processName
-                audit_sub_step = background_processing_data.get("category") or input_data.input_name
-                audit_client_id = (audit_project_info or {}).get("projectKey") or input_data.ProjectKey
-                audit_user_id = background_processing_data.get("userId")
-                audit_requested_time = background_processing_data.get("requestedOn")
-                audit_substep_key = background_processing_data.get("substepkey") or input_data.substepkey
-                audit_input_key = background_processing_data.get("input_key") or input_data.input_key
-                audit_receiver_email = background_processing_data.get("receiverEmail") or input_data.receiverEmail
-            except Exception as audit_context_err:
-                track_trace(f"Audit context extraction skipped: {audit_context_err}", severity="Warning")
-            analysis_type = background_processing_data.get('category') if isinstance(background_processing_data, dict) else None
-            if not receiver_email:
-                receiver_email = background_processing_data.get('receiverEmail') if isinstance(background_processing_data, dict) else None
-            if input_data_db.get('selected_capability_map')[0].get("uniqueId") is None:
-    
-                for i, cap in enumerate(input_data_db.get('L3_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L3_capability_map') else []):
-                    if cap.get("l3CapabilityName").lower() == input_data_db.get("selected_capability_map")[0].get("l3CapabilityName").lower():
-                        if cap.get("uniqueId") is not None:
-                            input_data_db['selected_capability_map'][0]['uniqueId'] = cap.get("uniqueId")
-                        else:
-                            input_data_db['selected_capability_map'][0]['uniqueId'] = "l3-opex-216"+str(i)+"-"+str(uuid.uuid4())
-                            input_data_db['L3_capability_map'][i]['uniqueId'] = input_data_db['selected_capability_map'][0]['uniqueId']
-                    else:
-                        if cap.get("uniqueId") is None:
-                            input_data_db['L3_capability_map'][i]['uniqueId'] = "l3-opex-216"+str(i)+"-"+str(uuid.uuid4())
-                            if cap.get("l3CapabilityName").lower() == input_data_db.get("selected_capability_map")[0].get("l3CapabilityName").lower():
-                                input_data_db['selected_capability_map'][0]['uniqueId'] = input_data_db['L3_capability_map'][i]['uniqueId']
-    
-            selected_capability = input_data_db.get('selected_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('selected_capability_map') else None
-            projectInfo = client_info
-            two_by_two_output_records = None
-            capability_matrix_lookup = None
-            # raise Exception("Simulated error for testing")  # Uncomment to test error handling
-            if input_data.TwoByTwoOutPutKeys is not None and len(input_data.TwoByTwoOutPutKeys) > 0:
-                track_trace(f"TwoByTwoOutPutKeys: {input_data.TwoByTwoOutPutKeys}", severity="Information")
-    
-                two_by_two_output_records = await load_outputs_by_keys(input_data.TwoByTwoOutPutKeys)
-    
-    
-            # Build a lookup dictionary from two_by_two_output_records capability_matrix keyed by l3CapabilityName
-                capability_matrix_lookup: dict = {}
-                if isinstance(two_by_two_output_records, dict):
-                    for record in two_by_two_output_records:
-                        capability_matrix_raw = two_by_two_output_records[record].get('capability_matrix') if isinstance(two_by_two_output_records[record], dict) else None
-                        if isinstance(capability_matrix_raw, list):
-                            for item in capability_matrix_raw:
-                                l3_name = item.get('l3CapabilityName').strip().lower() if item.get('l3CapabilityName') else None
-                                if l3_name:
-                                    capability_matrix_lookup[l3_name] = item
-    
-            # Fetch client context (survey + files) for LLM prompts
-            _client_context = ""
-            survey_ctx = None
-            file_ctx = None
-            try:
-                from agents.survey_context import fetch_survey_context
-                from agents.client_file_context import fetch_file_context
-                from agents.industry_classification_context import append_industry_classification_context
-                _ck = client_info.get("clientKey") if client_info else None
-                if _ck:
-                    survey_ctx = await fetch_survey_context(int(_ck))
-                    file_ctx = await fetch_file_context(int(_ck))
-                survey_ctx = append_industry_classification_context(survey_ctx, client_info)
-                workspace_ctx = append_workspace_context(
-                    None,
-                    (client_info.get("workspaceName") if client_info else None) or input_data.WorkspaceName,
-                    (client_info.get("workspaceDescription") if client_info else None) or input_data.WorkspaceDescription,
-                    parent_workspace_name=(client_info.get("parentWorkspaceName") if client_info else None) or input_data.ParentWorkspaceName,
-                )
-                if workspace_ctx:
-                    survey_ctx = ((survey_ctx or "") + "\n" + workspace_ctx).strip()
-                _client_context = ((survey_ctx or "") + "\n" + (file_ctx or "")).strip()
-            except Exception as ctx_err:
-                track_trace(f"Warning: could not load client context: {ctx_err}", severity="Warning")
-    
-    
-    
-    
-            # Select the appropriate capability map based on analysis_type
-            L1_capabilities = input_data_db.get('L1_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L1_capability_map') else None
-            L2_capabilities = input_data_db.get('L2_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L2_capability_map') else None
-            L3_capabilities = input_data_db.get('L3_capability_map') if isinstance(input_data_db, dict) and input_data_db.get('L3_capability_map') else None
-    
-            capabilities = {"L1": L1_capabilities, "L2": L2_capabilities, "L3": L3_capabilities}
-    
-            # ── Enrich L3 capabilities with impact-analyzer financial data ──
-            # The CDC input L3_capability_map often has only percentages (and $0
-            # for dollar amounts).  The impact_analyzer from the Cost Saving
-            # Potential output is the authoritative source used by the Heatmap.
-            # Merging it here ensures the KPI Impact tab shows identical figures.
-            _process_key = background_processing_data.get('processKey')
-            if _process_key and L3_capabilities:
-                try:
-                    _ia_lookup = await _load_impact_analyzer_for_process(int(_process_key))
-                    if _ia_lookup:
-                        _n = _enrich_capabilities_from_impact_analyzer(L3_capabilities, _ia_lookup)
-                        track_trace(
-                            f"Enriched {_n}/{len(L3_capabilities)} L3 capabilities "
-                            f"from impact_analyzer (process_key={_process_key})",
-                            severity="Information",
-                        )
-                    else:
-                        track_trace(
-                            f"No impact_analyzer found for process_key={_process_key}; "
-                            "KPI will use derivation fallback",
-                            severity="Warning",
-                        )
-                except Exception as enrich_err:
-                    track_trace(
-                        f"Warning: impact_analyzer enrichment failed: {enrich_err}",
-                        severity="Warning",
-                    )
-    
-            step_name = background_processing_data.get('step_name') if background_processing_data and background_processing_data.get('step_name') else None
-    
-            track_trace(f"Starting capability double click for action: ", severity="Information")
-    
-            publish_message(background_processing_data.get('ID'), "Started", f" Started generating for Capability Double Click for action {analysis_type}", background_processing_data.get('input_key'), background_processing_data.get('substepkey'), receiver_email, background_processing_data.get('requestedOn'),channel_name=channel_name)
-    
-            try:
-                # Audit checkpoint: CREATE (capability double-click analysis start)
-                genai_audit_log_id = await db_operations_orm.run_genai_audit_log(
-                    step=audit_step,
-                    sub_step=audit_sub_step,
-                    progress=0,
-                    status="In Progress",
-                    message=f"Started CDC generation for action {analysis_type}",
-                    input_key=audit_input_key,
-                    substep_key=audit_substep_key,
-                    user_id=audit_user_id,
-                    project_id=audit_client_id,
-                    requested_time=audit_requested_time,
-                    receiver_email=audit_receiver_email,
-                    analysis_name=audit_analysis_name,
-                )
-                if genai_audit_log_id:
-                    _AUDIT_LOG_BY_REQUEST_ID[str(input_data.input_key)] = genai_audit_log_id
-            except Exception as audit_err:
-                track_trace(f"Audit log create skipped: {audit_err}", severity="Warning")
-    
-            # Update sub-step status to In Progress in DB
-            await db_operations_orm.run_operations_status(
-                sub_step_key=substepkey,
-                data={
-                    "sub_step_name": step_name or CAPILITY_DOUBLE_CLICK_STEP_NAME,
-                    "sub_step_status_key": DB_STATUS_IN_PROGRESS,
-                    "sub_step_progress_percentage": 10,
-                    "sub_step_progress_message": f"Generating Capability Double Click for action: {analysis_type}",
-                },
-            )
-            try:
-                await db_operations_orm.run_genai_audit_log(
-                    step=audit_step,
-                    sub_step=audit_sub_step,
-                    status="In Progress",
-                    progress=10,
-                    message=f"Generating Capability Double Click for action: {analysis_type}",
-                    input_key=audit_input_key,
-                    substep_key=audit_substep_key,
-                    user_id=audit_user_id,
-                    project_id=audit_client_id,
-                    requested_time=audit_requested_time,
-                    receiver_email=audit_receiver_email,
-                    analysis_name=audit_analysis_name,
-                    genai_audit_log_id=genai_audit_log_id,
-                )
-            except Exception as audit_err:
-                track_trace(f"Audit log progress update skipped: {audit_err}", severity="Warning")
-    
-            await monitor.start_progress(background_processing_data.get('ID'),message=f"Generating capability double click analysis", input_key=background_processing_data.get('input_key'), substep_key=background_processing_data.get('substepkey'), receivers_email=receiver_email, requested_on=background_processing_data.get('requestedOn'),action=analysis_type,channel_name=channel_name)
-    
-            try:
-                # raise Exception("Simulated error for testing")  # Uncomment to test error handling
-                capability_matrix = await generate_two_by_two_analysis(analysis_type.upper(), selected_capability,
-                                                                    capabilities, step_name,survey_ctx=survey_ctx, file_ctx=file_ctx)
-                if  TWO_BY_TWO_STEP_NAME in step_name:
-                    response = {
-                        "projectInfo": projectInfo,
-                        "backgroundProcessingInfo": background_processing_data,
-                        "selected_capability_map": selected_capability,
-                        "capability_matrix": capability_matrix
-                    }
-                    await monitor.stop_progress()
-    
-    
-                elif CAPILITY_DOUBLE_CLICK_STEP_NAME in step_name:
-                    # cccm = ['Mobile Service Management', 'Service Center Workflow Management']
-                    # i=0
-                    # for cm in capability_matrix:
-                    #     cm['l3CapabilityName'] = cccm[i]
-                    #     i += 1
-                    #     if i >= len(cccm):
-                    #         break
-                    if input_data.TwoByTwoOutPutKeys is not None and len(input_data.TwoByTwoOutPutKeys) > 0 andcapability_matrix_lookup is not None:
-                        for cm in capability_matrix:
-                            if cm.get('l3CapabilityName').strip().lower() in capability_matrix_lookup:
-                                cm['viability'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('viability')
-                                cm['feasibility'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('feasibility')
-                                cm['viability_score'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('viability_score')
-                                cm['feasibility_score'] = capability_matrix_lookup[cm.get('l3CapabilityName').strip().lower()].get('feasibility_score')
-                    selected_unique_id = selected_capability[0].get('uniqueId', '')
-                    select_capability_matrix = {}
-                    for cm in capability_matrix:
-                        cap_unique_id = cm.get('uniqueId', '')
-                        if cap_unique_id == selected_unique_id:
-                            select_capability_matrix = cm
-                            break
-    
-                    capability_kpi = await generate_capability_kpi(analysis_type.upper(), selected_capability, capabilities,
-                                                                select_capability_matrix,survey_ctx=survey_ctx,file_ctx=file_ctx)
-                    current_state = await generate_current_state_process(analysis_type.upper(), projectInfo, selected_capability,
-                                                                        capabilities,
-                                                                        survey_ctx=survey_ctx, file_ctx=file_ctx)
-                    future_state = await generate_future_state_process(analysis_type.upper(), projectInfo, selected_capability,
-                                                                    capabilities, current_state, select_capability_matrix,
-                                                                    capability_kpi,
-                                                                    survey_ctx=survey_ctx, file_ctx=file_ctx)
-                    # In wireframes, it looks like these are the same, so I'm just copying this data
-                    current_state["current_process_analysis"] = future_state.get("current_process_analysis", {})
-                    # TODO:  Capability KPI needs data from current/future state; current/future state needs capability KPI
-                    #        Need to figure out how to add Current vs future state activity descriptions to
-                    #        context_data for prompt for "operational_narrative".
-                    capability_kpi = await generate_operational_narrative_standalone(analysis_type.upper(), selected_capability,
-                                                                                    capabilities, select_capability_matrix,
-                                                                                    current_state, future_state,
-                                                                                    capability_kpi)
-    
-                    response = {
-                        "projectInfo": projectInfo,
-                        "backgroundProcessingInfo": background_processing_data,
-                        "selected_capability_map": selected_capability,
-                        "capability_matrix": capability_matrix,
-                        "capability_kpi": capability_kpi,
-                        "current_state": current_state,
-                        "future_state": future_state
-                    }
-    
-                    await monitor.stop_progress()
-    
-                print("Generated response: ", response)
-    
-                # Fetch raw survey Q&A for DOCX rendering
-                survey_records = []
-                try:
-                    project_key = projectInfo.get("projectKey") or projectInfo.get("clientKey") if projectInfo else input_data.ProjectKey
-                    if project_key:
-                        survey_records = await read_survey_responses_by_project_id(int(project_key)) or []
-                except Exception as survey_err:
-                    print(f"Warning: could not load survey context: {survey_err}")
-    
-                blob_path = generate_docx(response, survey_context=survey_records)
-    
-                # Store MAS combined docx path
->               response["current_state"]["mas_process_file"] = blob_path
-                ^^^^^^^^^^^^^^^^^^^^^^^^^
-E               KeyError: 'current_state'
-
-apis\v1\capability_double_click.py:606: KeyError
--------------------------------------------- Captured stdout call ---------------------------------------------
-Generated response:  {'projectInfo': {'clientName': 'Acme Corp', 'industry': 'Tech', 'projectName': 'Acme Corp'}, 'backgroundProcessingInfo': {'ID': 'abc-123', 'input_key': 200, 'substepkey': 10, 'receiverEmail': 'test@test.com', 'requestedOn': '2025-01-01', 'category': 'OPERATIONS', 'step_name': 'viability-n-feasibility', 'processName': 'TestProcess', 'outputKey': 999}, 'selected_capability_map': [{'uniqueId': 'u1', 'name': 'Cap A'}], 'capability_matrix': [{'uniqueId': 'u1'}]}
-[ERROR] CAPABILITY_DOUBLE_CLICK - Error processing input data: 'current_state'
--------------------------------------------- Captured stderr call ---------------------------------------------
-Traceback (most recent call last):
-  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\apis\v1\capability_double_click.py", line 606, in generate_capability_double_click
-    response["current_state"]["mas_process_file"] = blob_path
-    ~~~~~~~~^^^^^^^^^^^^^^^^^
-KeyError: 'current_state'
-============================================== warnings summary ===============================================
-db\models.py:9
-  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\db\models.py:9: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
-    Base = declarative_base()
-
-utilities\redis_cache.py:13
-  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\utilities\redis_cache.py:13: DeprecationWarning: Call to '__init__' function with deprecated usage of input argument/s 'retry_on_timeout'. (TimeoutError is included by default.) -- Deprecated since version 6.0.0.
-    r = redis.Redis(
-
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-.venv\Lib\site-packages\pydantic\_internal\_config.py:323
-  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\pydantic\_internal\_config.py:323: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
-    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
-
-.venv\Lib\site-packages\_pytest\cacheprovider.py:475
-  C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\_pytest\cacheprovider.py:475: PytestCacheWarning: cache could not write path C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.pytest_cache\v\cache\nodeids: [Errno 13] Permission denied: 'C:\\Users\\gedchaitanya\\2by2_enc_asc\\aai-bpt-genaiapi\\.pytest_cache\\v\\cache\\nodeids'
     config.cache.set("cache/nodeids", sorted(self.cached_nodeids))
 
 .venv\Lib\site-packages\_pytest\cacheprovider.py:429
@@ -425,7 +801,62 @@ utilities\redis_cache.py:13
     config.cache.set("cache/lastfailed", self.lastfailed)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-=========================================== short test summary info ===========================================
+================================================================ short test summary info =================================================================
+FAILED tests/test_api_endpoints_comprehensive.py::test_current_process_flow_with_null_generation_result - assert 422 == 500
+FAILED tests/test_api_endpoints_comprehensive.py::test_future_process_flow_with_null_generation_result - assert 422 == 500
+FAILED tests/test_capability_maps_endpoint.py::test_endpoint_generate_l1_default - assert 422 == 202
+FAILED tests/test_capability_maps_endpoint.py::test_endpoint_generate_l3_triggers_prerequisites - assert 422 == 202
+FAILED tests/test_capability_maps_endpoint.py::test_endpoint_l3_with_provided_l1_l2 - assert 422 == 202
+FAILED tests/test_capability_maps_endpoint.py::test_endpoint_generate_l3_with_empty_prerequisites - assert 422 == 202
+FAILED tests/test_capability_maps_endpoint.py::test_endpoint_generate_all_flattened - assert 422 == 202
+FAILED tests/test_capability_maps_endpoint.py::test_endpoint_generate_all_ignores_provided - assert 422 == 202
+FAILED tests/test_cdc_status.py::test_cdc_error_sets_status_error - RuntimeError: LLM timeout
 FAILED tests/test_cdc_status.py::test_two_by_two_path_sets_status_complete - KeyError: 'current_state'
-1 failed, 32 passed, 350 deselected, 12 warnings in 3.47s
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_success - assert 422 == 200
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_camel_case_input - assert 422 == 200
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_generation_failure - assert 422 == 500
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_exception_path - assert 422 == 500
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_missing_long_description_errors - assert 422 == 500
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_missing_short_description_errors - assert 422 == 500
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_null_bpmn_optional_field - assert 422 == 200
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_output_validation_failure_missing_process_name - assert 422 == 500
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_concatenates_short_and_long_description - assert 422 == 200
+FAILED tests/test_current_process_flow_generator_endpoint.py::test_current_process_flow_generator_roles_default_empty - assert 422 == 200
+FAILED tests/test_database_engine_config.py::test_sslmode_is_translated_out_of_the_url - AssertionError: assert True == 'require'
+FAILED tests/test_database_engine_config.py::test_libpq_only_spellings_are_not_passed_to_asyncpg - AssertionError: assert True == 'require'
+FAILED tests/test_database_engine_config.py::test_both_engines_use_nullpool_so_connections_never_cross_loops - AssertionError: assert False
+FAILED tests/test_database_engine_config.py::test_get_audit_db_reports_missing_configuration - AttributeError: module '_database_under_test' has no attribute 'get_audit_db'
+FAILED tests/test_database_engine_config.py::test_session_dependencies_are_async_generators - AttributeError: module '_database_under_test' has no attribute 'get_audit_db'
+FAILED tests/test_database_engine_config.py::test_connect_timeout_in_the_url_becomes_asyncpg_timeout - assert 10 == 30.0
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_success - assert 422 == 200
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_camel_case_input - assert 422 == 200
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_generation_failure - assert 422 == 500
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_exception_path - assert 422 == 500
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_missing_long_description_errors - assert 422 == 500
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_missing_short_description_errors - assert 422 == 500
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_null_bpmn_optional_field - assert 422 == 500
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_output_validation_failure_missing_process_name - assert 422 == 500
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_concatenates_short_and_long_description - assert 422 == 200
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_roles_default_empty - assert 422 == 200
+FAILED tests/test_future_process_flow_generator.py::test_future_process_flow_generator_current_workflow_steps_required - assert ('current_workflow_steps' in "[{'type': 'value_error', 'loc': ['body'], 'msg': 'Value error, company_name must not be empty or just whitespace'...
+FAILED tests/test_genai_coverage_edges.py::test_recovery_enqueue_path_and_payload_output_lookup - pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+FAILED tests/test_genai_health.py::test_health_openapi_uses_ready_not_ready_response_descriptions - AssertionError: assert 'Successful Response' == 'Ready'
+FAILED tests/test_genai_job_recovery.py::test_build_capability_maps_recovery_payload_reuses_output_key - pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+FAILED tests/test_genai_job_recovery.py::test_recover_capability_maps_job_requeues_with_existing_output_key - pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+FAILED tests/test_genai_job_recovery.py::test_recover_job_loads_state_by_recovery_keys_and_enqueues - pydantic_core._pydantic_core.ValidationError: 1 validation error for CapabilityMapGeneratorInput
+FAILED tests/test_genai_job_status.py::test_legacy_db_status_keys_normalize_to_canonical_statuses - AssertionError: assert <GenAIJobStat...: 'Generated'> == <GenAIJobStat...: 'Completed'>
+FAILED tests/test_genai_recovery_e2e_real_payload.py::test_genai_recovery_end_to_end_with_realistic_capability_maps_request - assert 422 == 202
+FAILED tests/test_industry_classification_code.py::test_industry_classification_retries_null_llm_response - ValueError: NAICS suggestion response still had missing required fields after retry
+FAILED tests/test_industry_classification_code.py::test_industry_classification_retries_partially_null_llm_response - ValueError: NAICS suggestion response still had missing required fields after retry
+FAILED tests/test_industry_context_propagation.py::test_missing_capability_generation_prompts_include_naics_context[You are a capability map expert with knowledge in business architecture, capability modeling frameworks, and industry best practices.\nYou also have deep financial experience and can use your expertise to perform financial calculations and analyses.\n\nYour task is to generate L3 (Level 3) capabilities with descriptions for the given L1 and L2 capability hierarchy.\n\n**Company Context:**\n- Company Name: {company_name}\n\n{industry_context}\n- Uploaded Client Capability Map File: {uploaded_filename}\n\n**Capability Hierarchy:**\n- L1 Capability: {l1_capability_name}\n  {l1_description_context}\n- L2 Capability: {l2_capability_name}\n  {l2_description_context}\n\n**Existing L3 Capabilities under this L2 (DO NOT REMOVE OR REPLACE THESE):**\n{existing_l3_capabilities}\n\n**Minimum number of NEW L3 capabilities to generate:** {num_to_generate}\n\n**Instructions:**\n- IMPORTANT: All existing L3 capabilities listed above MUST be preserved - do NOT suggest removing or replacing any of them\n- Generate AT LEAST {num_to_generate} NEW L3 capability names with descriptions for this L2\n- Perform additional research to identify gaps in L3 coverage for this L2 capability\n- You SHOULD generate MORE new L3s if you identify missing capabilities that would provide comprehensive coverage\n- Each new L3 should be a specific, granular function or activity within the parent L2\n- Do NOT duplicate any existing L3 capabilities listed above\n- Ensure L3 capabilities are tied to business processes (not product capabilities) that incur operating expenses\n- Generate a concise 1-2 sentence description for each new L3\n- The description should explain what this specific capability does within the context of its parent L2\n- Be written in aprofessional business context\n- Focus on the business processes, functions, and activities - not products\n\n**Research Focus Areas:**\n- Industry best practices for this capability domain\n- Common business processes and activities within this L2\n- Operational functions that drive business value\n- Activities that require staffing and operating expenses\n\n**SOURCE REASONING RULES:**\nThe uploaded Client Capability Map is the primary source of evidence. Public research is supplementary and should only be cited when the LLM actually uses it to fill missing information, generate a missing capability, or refine capability content.\n\nCASE 1 \u2014 Client Capability Map Evidence:\nIf information available from the uploaded Client Capability Map directly and materially supports the generated or enriched L3 capability, provide genuine reasoning explaining what the client map supports and cite the exact client filename using (Source: exact-client-filename). Copy the filename EXACTLY as supplied to the prompt. Never shorten, truncate, guess, fabricate, or replace any portion of the filename with "...". Do not cite the client file when it does not actually support the generated information.\n\nCASE 2 \u2014 Public Research Used:\nIf information is missing from the Client Capability Map and the LLM actually uses public/web research to generate a missing L3, fill missing information, enrich content, or refine a description, provide genuine reasoning and include the actual public URL retrieved during the current research using (Source: https://actual-retrieved-url). A public URL is optional and must appear only when public research actually contributed. Never fabricate, construct, infer, derive, or guess a URL. Never include URLs containing vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, or grounding-api-redirect. If a grounding redirect is the only URL available, omit the URL entirely and mention the genuine source name or type only if it is actually known from the research result.\n\nCASE 3 \u2014 No Direct Evidence:\nIf the generated capability or information is not directly supported by Client Capability Map evidence andno genuine public source supports it, source_reasoning must begin with "AI Generated: " followed by genuine capability-specific reasoning explaining why this L3 capability or description is appropriate for this client under its parent L2 and L1 context. Do not simply restate the L3 description. Do not fabricate client evidence, filenames, source names, or URLs.\n\nSTRICT RULES FOR SOURCE REASONING:\n- Client Capability Map evidence has first priority. Public research is supplementary, not mandatory.\n- Include a public URL only when it was actually retrieved and used during the current generation.\n- Never fabricate filenames, source names, or URLs.\n- Never include grounding redirect URLs (vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, grounding-api-redirect).\n- Copy client filenames exactly without truncation or "...".\n- Do not cite the client file as direct evidence unless it materially supports the generated information.\n- Keep all reasoning and citation information inside the single source_reasoning field.\n- Do not add source_links or any other citation field.\n- Never return source_reasoning as None, "None", "No reasoning available", "No reasoning available.", or an empty string.\n- Every generated or enriched L3 must contain genuine source_reasoning.\n\n**Output:** Return ONLY the NEW L3 capabilities with their descriptions AND source_reasoningin the specified JSON format. Do not include existing L3s in the output.\n-values3] - KeyError: 'uploaded_filename'
+FAILED tests/test_industry_context_propagation.py::test_missing_capability_generation_prompts_include_naics_context[You are a capability map expert with knowledge in business architecture, capability modeling frameworks, and industry best practices.\n\nYour task is to generate descriptions for the L3 (Level 3) capabilities that are missing descriptions.\n\n**Company Context:**\n- Company Name: {company_name}\n\n{industry_context}\n- Uploaded Client Capability Map File: {uploaded_filename}\n\n**Capability Hierarchy:**\n- L1 Capability: {l1_capability_name}\n  {l1_description_context}\n- L2 Capability: {l2_capability_name}\n  {l2_description_context}\n\n**L3 Capabilities needing descriptions under this L2:**\n{l3_capabilities_needing_desc}\n\n**Instructions:**\n- Generate a concise 1-2 sentence description for each L3 capability listed above\n- The description should explain what this specific capability/activity does\n- Place it in context of its parent L1 and L2 capabilities\n- Be written in a professional business context\n- Focus on the business processes and functions, not products\n- Ensure descriptions are actionable and describe operational activities\n\n**SOURCE REASONING RULES:**\nThe uploaded Client Capability Map is the primary source of evidence. Public research is supplementary and should only be cited when the LLM actually uses it to fill missing information,enrich descriptions, or refine capability content.\n\nCASE 1 \u2014 Client Capability Map Evidence:\nIf information available from the uploaded Client Capability Map directly and materially supports the generated or enriched L3 description, provide genuine reasoning explaining what the client map supports and cite the exact client filename using (Source: exact-client-filename). Copy the filename EXACTLY as supplied to the prompt. Never shorten, truncate, guess, fabricate, or replace any portion of the filename with "...". Do not cite the client file when it does not actually support the generated information.\n\nCASE 2 \u2014 Public Research Used:\nIf information is missing from the Client Capability Map and the LLM actually uses public/web research to enrich descriptions, fill missing content, or refine capability information, provide genuine reasoning and include the actual public URL retrieved during the current research using (Source: https://actual-retrieved-url). A public URL is optional and must appear only when public research actually contributed. Never fabricate, construct, infer, derive, or guess a URL. Never include URLs containing vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, or grounding-api-redirect. If a grounding redirect is the only URL available, omit the URL entirely and mention the genuine source name or type only if it is actually known from the research result.\n\nCASE 3 \u2014 No Direct Evidence:\nIf the description is not directly supported by Client Capability Map evidence and no genuine public source supports it, source_reasoning must begin with "AI Generated: " followed by genuine capability-specific reasoning explaining why this enriched description is appropriate for this L3 under its parent L2 and L1 context. Do not simply restate the description. Do not fabricate client evidence, filenames, source names, or URLs.\n\nSTRICT RULES FOR SOURCE REASONING:\n- Client Capability Map evidence has first priority. Public research is supplementary, not mandatory.\n- Include a public URL only when it was actually retrieved and used during the current generation.\n- Never fabricate filenames, source names, or URLs.\n- Never include grounding redirect URLs (vertexaisearch.cloud.google.com, vertexaisearch.googleapis.com, grounding-api-redirect).\n- Copy client filenames exactly without truncation or "...".\n- Do not cite the client file as direct evidence unless it materially supports the generated information.\n- Keep all reasoning and citation information inside the single source_reasoning field.\n- Do not add source_links or any other citation field.\n- Never return source_reasoning as None, "None", "No reasoning available", "No reasoning available.", or an empty string.\n- Every generated or enriched L3 description must contain genuine source_reasoning.\n\n**Output:** Return descriptions for ALL the L3 capabilities listed above along with source_reasoning for each in the specified JSON format.\n-values4] - KeyError: 'uploaded_filename'
+FAILED tests/test_llm_preflight.py::TestPreflightCheckLLM::test_success_returns_none - ModuleNotFoundError: No module named 'utilities.llm_preflight'
+FAILED tests/test_llm_preflight.py::TestPreflightCheckLLM::test_empty_response_raises - ModuleNotFoundError: No module named 'utilities.llm_preflight'
+FAILED tests/test_llm_preflight.py::TestPreflightCheckLLM::test_connection_error_raises - ModuleNotFoundError: No module named 'utilities.llm_preflight'
+FAILED tests/test_llm_preflight.py::TestPreflightCheckLLM::test_timeout_raises - ModuleNotFoundError: No module named 'utilities.llm_preflight'
+FAILED tests/test_llm_preflight.py::TestPreflightCheckLLM::test_custom_model_name - ModuleNotFoundError: No module named 'utilities.llm_preflight'
+FAILED tests/test_opex_consistency_guardrails.py::test_total_opex_prompts_include_consistency_guardrails - assert '## Consistency Guardrail:' in "\n Today's date is {today}. You are a senior financial analyst specializing in corporate financial state...
+FAILED tests/test_opex_consistency_guardrails.py::test_format_opex_data_preserves_calculation_basis - KeyError: 'calculation_basis'
+FAILED tests/test_opex_consistency_guardrails.py::test_fallback_opex_estimate_marks_basis_unavailable - KeyError: 'calculation_basis'
+56 failed, 327 passed, 21 warnings in 63.67s (0:01:03)
 (.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> 
