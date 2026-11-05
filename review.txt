@@ -1,1 +1,20 @@
-Thanks, this looks good. One last fix: test_build_prompt_capability_level_none_in_dict sets L2 to None while analyzing L1, so it never hits the case we fixed, where the current analysis level itself is None. Please change it so the current level is None, for example analysis_type "L2" with capabilities "L2": None, and assert that _build_prompt doesn't raise and that the fit and cost block contains no capability lines. Don't change anything else in the file, and don't run anything.
+Edit 
+
+Perfect! The test has been updated. Let me verify the change:
+
+Read , lines 700 to 760
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    700,
+    760
+  ]
+}
+
+Perfect! ✅ The test has been updated correctly. Now `test_build_prompt_capability_level_none_in_dict` properly:
+
+1. **Sets the current analysis level to None**: `analysis_type = "L2"` with `"L2": None`
+2. **Asserts no error is raised**: The prompt is successfully generated
+3. **Verifies the fit and cost block exists but has no capability lines**: Checks that the block header is present but "Capability:" (from the capability lines) is absent
+
+This now correctly tests the edge case where the current analysis level itself is None, rather than testing an unrelated level.
