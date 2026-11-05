@@ -1,103 +1,13 @@
-I’ll trace the registered route paths, step-name branches, Redis channel settings, and repository references to “Generate AI Prioritization.” Then I’ll compare the tests and docs to assess whether the CDC `TWO_BY_TWO_STEP_NAME` branch appears to be exercised, and identify where fit/cost lookup plumbing would attach without changing code.
+I'd like to add regression tests for the 2x2 fit and cost change, in a new file at tests/test_two_by_two_fit_cost.py. Please follow the style of the existing tests in the tests folder, including how they use pytest, pytest-asyncio and mocks. Use only mock data, with no real database, blob storage, Redis or LLM calls, and don't change any existing code or tests.
 
-Searched for regex `twobytwo|capability_double_click|two_by_two_generator|TWO_BY_TWO_STEP_NAME|CAPILITY_DOUBLE_CLICK_STEP_NAME|viability-n-feasibility|Generate AI Prioritization`, 189 results
+For build_fit_cost_lookup in agents/two_by_two/fit_cost_enrichment.py, please cover a saved output shaped like the AI Identifier one and one shaped like the Workforce Analyzer one. That means L1 and L2 values coming from Cost Saving Potential.l1_l2_heatmap with its nested L2s, and L3 values coming from the impact_analyzer rows, including both the "Cost Saving Opportunity" and "Cost Saving Opportunity (USD)" keys. Please also cover impact_analyzer sitting at the root of the JSON instead of under Cost Saving Potential, the alternative L3 name keys, names that differ only in case or extra spaces still matching, the same L3 name under two different L2s staying as two separate entries, and a duplicate path being removed from the lookup and returned in the ambiguous list.
 
-Searched for regex `REDIS_channel_name_twobytwo|REDIS_channel_name_capability_double_click|REDIS.*twobytwo|CAPABILITY_DOUBLE_CLICK`, 112 results
+For get_fit_cost_values, please check that a zero value is returned as zero and not as "not available", that None, a missing key and an ambiguous path all come back as "not available", and that a capability with no match comes back as "not available" for both values. Cover L1, L2 and L3 capabilities, as dicts.
 
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
+For build_fit_cost_prompt_text, please check that each line contains the capability name, uniqueId, "High Fit %:" and "Cost Saving Opportunity:" with the raw values.
 
-Searched for regex `capability_double_click|twobytwo|two_by_two_generator|TWO_BY_TWO_STEP_NAME|viability-n-feasibility` (`**/tests/**`), 84 results
+For _build_prompt in agents/two_by_two/two_by_two_generator.py, please check that when no lookup is passed, the prompt contains no fit and cost block at all, so existing behavior is unchanged. When a lookup is passed, only the capabilities whose uniqueId is in the current unique_ids appear, a numeric uniqueId on the capability still matches a string ID in unique_ids, and a capability level that is None in the capabilities dict doesn't cause an error. Build the other arguments _build_prompt needs from simple mock values, based on its current signature.
 
-The code/docs show three registered routes, with distinct async Redis channels for `/twobytwo` and `/capability_double_click`. I found a CDC status test that explicitly uses `viability-n-feasibility`; I’m checking that test’s assertions and the API docs now, since they’re the strongest evidence about whether that branch is merely theoretical.
+For the refactor in apis/v1/capability_double_click.py, please add two async tests that patch _load_cost_saving_potential_output. One should confirm _load_impact_analyzer_for_process returns {} when the loader returns None. The other should confirm it returns the same L3 lookup that _extract_impact_analyzer_lookup would build when the loader returns a saved output.
 
-Read , lines 18 to 40
-
-Read , lines 1 to 18
-
-Read , lines 195 to 270
-
-Read , lines 660 to 765
-
-The docs describe `/twobytwo` as the async background pipeline and `/capability_double_click` as the CDC deep-dive route. The CDC `viability-n-feasibility` test is more revealing: it explicitly expects that branch to hit a `KeyError` after generating the matrix. I’m checking route-specific tests and any “Generate AI Prioritization” wording before drawing the conclusion.
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-Read , lines 10 to 30
-
-Read , lines 40 to 55
-
-Read , lines 245 to 260
-
-The route registration and test search show no route-specific test for `/twobytwo` or `/two_by_two_generator`; the only explicit test of the CDC endpoint’s 2x2 step expects its error path. I’ll pin down the exact branch and lookup insertion points, then give you the evidence and caveat about the .NET caller.
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-Read , lines 240 to 315
-
-Read , lines 415 to 550
-
-Read , lines 285 to 300
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-Searched for regex `api_router = APIRouter|include_router\(two_by_two|include_router\(capability_double_click|include_router\(two_by_two_generator` (`**/apis/base.py`), 4 results
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-The evidence points to a reachable but incomplete CDC 2x2 branch: there is a dedicated test for it, and that test expects the subsequent missing-`current_state` access to fail. I’m verifying the exact response-access lines so I can distinguish that code-level fact from the unconfirmable question of which endpoint the external .NET backend invokes.
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-Read , lines 500 to 655
-
-Read , lines 104 to 114
-
-Read , lines 15 to 30
-
-The code/docs do not identify a .NET action named “Generate AI Prioritization.” The docs do label `/twobytwo` as the DB-backed background-processing variant; I’m refreshing line anchors after the approved edits for the lookup and CDC branch details.
-
-Searched for regex `_load_cost_saving_potential_output|_load_impact_analyzer_for_process|L3_capabilities = input_data_db|get\('processKey'\)|generate_two_by_two_analysis\(|response\["current_state"\]|TWO_BY_TWO_STEP_NAME in step_name` (`**/apis/v1/capability_double_click.py`), 11 results
-
-Searched for regex `@router.post\('/twobytwo'|channel_name = os.getenv|generate_two_by_two_analysis\(|TWO_BY_TWO_STEP_NAME in step_name|CAPILITY_DOUBLE_CLICK_STEP_NAME in step_name` (`**/apis/v1/two_by_two.py`), 5 results
-
-No matches found. Your search pattern might be excluded completely by either the search.exclude settings or .*ignore files.
-If you believe that it should have results, you can check into the .*ignore files and the exclude setting (here are some excluded patterns for reference:[**/node_modules,**/bower_components,**/*.code-search]).
-Then if you want to include those files you can call the tool again by setting "includeIgnoredFiles" to true.
-
-Searched for regex `test_two_by_two_path_sets_status_complete|step_name="viability-n-feasibility"|response\["current_state"\]` (`**/tests/test_cdc_status.py`), 5 results
-
-## Routes and Steps
-
-All routes are registered under the `/api/v1` prefix in `base.py:23`. The three relevant routes are:
-
-- **`POST /api/v1/twobytwo`** is an async, DB-backed route accepting `AgenticFitAllocatorInput` (`two_by_two.py:43`). It reads its Redis channel from `REDIS_channel_name_twobytwo` (`two_by_two.py:126`); the local config sets that to `two_by_two_background_process` (`run.ps1:16`). The docs call this the background-processing variant ([API docs](docs/genai_attribution_report.md#L704)).
-- **`POST /api/v1/capability_double_click`** is an async, DB-backed CDC route, also accepting `AgenticFitAllocatorInput` (`capability_double_click.py:248`). It uses `REDIS_channel_name_capability_double_click` (`capability_double_click.py:335`); local config sets it to `capability_double_click_background_process` (`run.ps1:25`). Its documented purpose is a capability deep-dive, including KPIs and current/future state ([API docs](docs/genai_attribution_report.md#L723)).
-- **`POST /api/v1/two_by_two_generator`** is a separate synchronous route accepting `TwoByTwoGeneratorInput` (`two_by_two_generator.py:18`). Its documentation describes it as stateless and supports both the viability-feasibility and capability-double-click step names ([API docs](docs/genai_attribution_report.md#L664)).
-
-Both `TWO_BY_TWO_STEP_NAME` and `CAPILITY_DOUBLE_CLICK_STEP_NAME` are handled by the shared scorer and the async `/twobytwo` endpoint (`constants.py:9`, `constants.py:10`, `two_by_two.py:267`). The CDC endpoint calls the scorer too, with branches for both step names (`capability_double_click.py:526`).
-
-## Is CDC’s 2x2 Branch Live?
-
-The CDC route is registered, and its 2x2 branch is reachable in code. The tests explicitly pass `viability-n-feasibility` to `generate_capability_double_click()` ([test setup](tests/test_cdc_status.py#L204), `test_cdc_status.py:212`). However, the branch creates a response without `current_state`, then later the handler unconditionally accesses `response["current_state"]` (`capability_double_click.py:528`, `capability_double_click.py:606`). The test itself expects that path to raise a `KeyError` (`test_cdc_status.py:247`, `test_cdc_status.py:259`). So it is not merely unreferenced code, but the tested path is incomplete or failing; **whether production sends this step to the CDC route cannot be confirmed from code**.
-
-The docs identify `/api/v1/twobytwo` as the async background-processing route and list `/twobytwo` for two-by-two analysis (`genai_attribution_report.md:704`, `genai_attribution_report.md:110`). I found no “Generate AI Prioritization” wording in the repository’s docs, README, pipeline/config files, or tests, and no .NET caller in this repo. **Which endpoint the .NET backend uses for that action cannot be confirmed from code.**
-
-## CDC Fit/Cost Context
-
-The CDC endpoint already obtains `processKey`, builds the three capability lists, and loads impact-analyzer rows for L3 enrichment ([capability maps and process key](apis/v1/capability_double_click.py#L434), `capability_double_click.py:443`, `capability_double_click.py:446`). To supply the same context to scoring, use the new `_load_cost_saving_potential_output(process_key)` there, build the fit/cost lookup from that saved output alongside the existing L3 lookup, and pass `fit_cost_lookup=...` at the existing `generate_two_by_two_analysis()` call (`capability_double_click.py:526`). Using the raw saved output matters because the current `_load_impact_analyzer_for_process()` result contains only impact rows, not the L1/L2 heatmap.
+Please keep the tests small and clearly named, one behavior per test. Show me the full test file before saving it, and don't run anything.
