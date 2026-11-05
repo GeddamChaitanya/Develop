@@ -1,1 +1,22 @@
-That test is hitting a pre-existing limitation: the existing loop at line 120 of _build_prompt already iterates every capability level and fails on None, before our new block runs. I don't want to change that existing code in this PR. Please update test_build_prompt_capability_level_none_in_dict so the current analysis level is an empty list instead of None, for example analysis_type "L2" with "L2": [], rename it to test_build_prompt_current_level_empty_has_no_block, and assert that "CAPABILITY FIT AND COST-SAVING CONTEXT" is not in the prompt. Don't change anything else, and don't run anything.
+Edit 
+
+Perfect! Let me verify the change:
+
+Read , lines 700 to 745
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    700,
+    745
+  ]
+}
+
+✅ Done! The test has been updated:
+
+1. **Renamed** to `test_build_prompt_current_level_empty_has_no_block` - more descriptive name
+2. **Changed L2 from None to []** - avoids hitting the pre-existing limitation at line 120
+3. **Changed analysis_type to "L2"** - analyzes the empty level
+4. **Asserts no error is raised** - validates robustness
+5. **Asserts the block is not added** - since there are no capabilities, `build_fit_cost_prompt_text` returns empty, so the conditional `if fit_cost_lines:` prevents the block from being included
+
+This now tests a valid edge case specific to the new fit/cost block code, without touching the pre-existing code.
