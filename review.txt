@@ -1,11 +1,1002 @@
-Thanks, the structure looks good, but a few tests need fixing before I run them. Please don't change any non-test code.
+Edit 
 
-First, in test_build_fit_cost_prompt_text_contains_required_fields, the L3 capability only has l3CapabilityName, but the lookup needs the full L1, L2 and L3 path, so it will resolve to "not available" and the assertion will fail. Please add l1CapabilityName "Finance" and l2CapabilityName "Accounting" to that capability.
+Edit 
 
-Second, the _build_prompt tests assert against the whole prompt, but _build_prompt already embeds the capabilities as JSON elsewhere, so checks like "Excluded Capability" not in prompt can fail, and checks like "85" in prompt can pass even if the new block is wrong. Please add a small helper in the test file that extracts only the text between "CAPABILITY FIT AND COST-SAVING CONTEXT" and "RUBRIC", and make every fit and cost assertion in those tests check that block instead. For example, check that the block has a line with the right uniqueId and "High Fit %: 85", and that the excluded capability's uniqueId isn't in the block.
+"Edit File" failed
+Completed with input: {
+  "new_str": "def test_get_fit_cost_values_none_returns_not_available():\n    \"\"\"Test that None values return 'not available'.\"\"\"\n    lookup_data = {\n        (\"capability\",): {\n            \"high_fit_percent\": None,\n            \"cost_saving_opportunity\": None,\n        },\n    }\n    lookup = (lookup_data, [])\n\n    capability = {\"l1CapabilityName\": \"Capability\"}\n\n    high_fit, cost_saving = get_fit_cost_values(capability, \"L1\", lookup)\n\n    assert high_fit == \"not available\"\n    assert cost_saving == \"not available\"",
+  "old_str": "def test_get_fit_cost_values_none_returns_not_available():\n    \"\"\"Test that None values return 'not available'.\"\"\"\n    lookup_data = {\n        (\"capability\",): {\n            \"high_fit_percent\": None,\n            \"cost_saving_opportunity\": None,\n        },\n    }\n    lookup = (lookup_data, [])\n\n    class MockCapability:\n        l1CapabilityName = \"Capability\"\n\n    high_fit, cost_saving = get_fit_cost_values(capability, \"L1\", lookup)\n\n    assert high_fit == \"not available\"\n    assert cost_saving == \"not available\"",
+  "path": "tests/test_two_by_two_fit_cost.py"
+}
+Tool execution failed: No match found
 
-Third, in the second _load_impact_analyzer_for_process test, please assert that the result equals _extract_impact_analyzer_lookup(saved_output), so it proves the behavior is the same as before.
+Let me view the file to see the current state:
 
-Fourth, please add one test for build_fit_cost_lookup with an impact_analyzer row that has "Cost Saving Opportunity": 0 and "Cost Saving Opportunity (USD)": 999, and check that the lookup keeps 0.
+Read , lines 280 to 350
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    280,
+    350
+  ]
+}
 
-Finally, remove the unused imports, and in the get_fit_cost_values tests, use plain dicts instead of passing a class as the capability. Show me the updated file, and don't run anything.
+Edit 
+
+Edit 
+
+Edit 
+
+Edit 
+
+Now let me add the test for Cost Saving Opportunity: 0:
+
+Read , lines 175 to 210
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    175,
+    210
+  ]
+}
+
+Edit 
+
+Now let me update the _build_prompt tests to use the helper:
+
+Read , lines 445 to 520
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    445,
+    520
+  ]
+}
+
+Read , lines 520 to 650
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    520,
+    650
+  ]
+}
+
+Edit 
+
+Edit 
+
+Read , lines 630 to 730
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    630,
+    730
+  ]
+}
+
+Edit 
+
+Now let me update the final async test:
+
+Read , lines 710 to 770
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    710,
+    770
+  ]
+}
+
+Read , lines 750 to 790
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    750,
+    790
+  ]
+}
+
+Edit 
+
+Now let me view and display the updated file:
+
+Read , lines 1 to 100
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    1,
+    100
+  ]
+}
+
+Read , lines 100 to 220
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    100,
+    220
+  ]
+}
+
+Read , lines 220 to 330
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    220,
+    330
+  ]
+}
+
+Read , lines 330 to 480
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    330,
+    480
+  ]
+}
+
+Read , lines 480 to 620
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    480,
+    620
+  ]
+}
+
+Read , lines 620 to 760
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    620,
+    760
+  ]
+}
+
+Read , lines 760 to 790
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    760,
+    790
+  ]
+}
+
+Perfect! Now I need to fix one remaining issue - the test `test_get_fit_cost_values_capability_with_no_match` still uses a class instead of a dict:
+
+Edit 
+
+Perfect! Now let me show you the complete updated file in sections:
+
+Read , lines 1 to 100
+Completed with input: {
+  "path": "tests/test_two_by_two_fit_cost.py",
+  "view_range": [
+    1,
+    100
+  ]
+}
+
+Excellent! Here's a summary of the **updated test file** with all the fixes applied:
+
+## Summary of Changes Made
+
+### ✅ **1. Removed unused imports**
+   - Removed `MagicMock`, `Dict`, `Any`, `List` (now only using `pytest`, `AsyncMock`, `patch`)
+
+### ✅ **2. Added helper function**
+   - `_extract_fit_cost_block(prompt: str)` - Extracts the CAPABILITY FIT AND COST-SAVING CONTEXT section between the markers
+
+### ✅ **3. Fixed `test_build_fit_cost_prompt_text_contains_required_fields`**
+   - Added `l1CapabilityName` and `l2CapabilityName` to the capability so the full L1→L2→L3 path resolves correctly
+
+### ✅ **4. Updated all `_build_prompt` tests to use the helper**
+   - `test_build_prompt_with_fit_cost_lookup` - Now uses `_extract_fit_cost_block()` to verify content within the context block only
+   - `test_build_prompt_only_selected_capabilities_included` - Uses helper to verify only CAP-001 appears (not CAP-002) and only its High Fit % value shows
+   - `test_build_prompt_numeric_uniqueid_matches_string_id` - Uses helper to verify numeric ID matches string ID in the block
+
+### ✅ **5. Fixed async test**
+   - `test_load_impact_analyzer_for_process_returns_extracted_lookup` - Now asserts that `result == _extract_impact_analyzer_lookup(saved_output)`
+
+### ✅ **6. Added new test**
+   - `test_build_fit_cost_lookup_cost_saving_opportunity_zero_preferred` - Verifies that `"Cost Saving Opportunity": 0` is kept over `"Cost Saving Opportunity (USD)": 999`
+
+### ✅ **7. Converted all `get_fit_cost_values` tests to use plain dicts**
+   - Changed from mock class definitions to simple dictionary capabilities
+   - Applies to: `test_get_fit_cost_values_capability_with_no_match` and all L1/L2/L3 dict tests
+
+The test file is complete and ready to run! All assertions now properly check the fit/cost context block separately from the rest of the prompt, making them more robust and specific.
+-------------------------------------------------------------------------
+Code : 
+
+"""Regression tests for 2x2 fit and cost change features."""
+import pytest
+from unittest.mock import AsyncMock, patch
+
+from agents.two_by_two.fit_cost_enrichment import (
+    build_fit_cost_lookup,
+    get_fit_cost_values,
+    build_fit_cost_prompt_text,
+)
+from agents.two_by_two.two_by_two_generator import _build_prompt
+from apis.v1.capability_double_click import (
+    _extract_impact_analyzer_lookup,
+    _load_impact_analyzer_for_process,
+)
+
+
+def _extract_fit_cost_block(prompt: str) -> str:
+    """Extract the CAPABILITY FIT AND COST-SAVING CONTEXT block from the prompt."""
+    start_marker = "CAPABILITY FIT AND COST-SAVING CONTEXT"
+    end_marker = "RUBRIC"
+    
+    start_idx = prompt.find(start_marker)
+    if start_idx == -1:
+        return ""
+    
+    end_idx = prompt.find(end_marker, start_idx)
+    if end_idx == -1:
+        return ""
+    
+    return prompt[start_idx:end_idx].strip()
+
+
+# ============================================================================
+# build_fit_cost_lookup tests
+# ============================================================================
+
+def test_build_fit_cost_lookup_ai_identifier_shape():
+    """Test build_fit_cost_lookup with AI Identifier shaped output."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "l1_l2_heatmap": [
+                {
+                    "L1_name": "Finance & Accounting",
+                    "L1_percent": 85,
+                    "L1_amount": 250000,
+                    "L2s": [
+                        {
+                            "L2_name": "General Ledger",
+                            "L2_percent": 90,
+                            "L2_amount": 120000,
+                        },
+                        {
+                            "L2_name": "Tax Processing",
+                            "L2_percent": 80,
+                            "L2_amount": 130000,
+                        },
+                    ],
+                },
+            ],
+            "impact_analyzer": [
+                {
+                    "L1 Capability": "Finance & Accounting",
+                    "L2 Capability": "General Ledger",
+                    "L3 Capability": "Journal Entry Processing",
+                    "High Fit %": 95,
+                    "Cost Saving Opportunity": 60000,
+                },
+                {
+                    "L1 Capability": "Finance & Accounting",
+                    "L2 Capability": "Tax Processing",
+                    "L3 Capability": "Tax Return Compilation",
+                    "High Fit %": 75,
+                    "Cost Saving Opportunity": 45000,
+                },
+            ],
+        },
+    }
+
+    lookup, ambiguous = build_fit_cost_lookup(saved_output)
+
+    assert ("finance & accounting",) in lookup
+    assert lookup[("finance & accounting",)]["high_fit_percent"] == 85
+    assert lookup[("finance & accounting",)]["cost_saving_opportunity"] == 250000
+
+    assert ("finance & accounting", "general ledger") in lookup
+    assert lookup[("finance & accounting", "general ledger")]["high_fit_percent"] == 90
+    assert lookup[("finance & accounting", "general ledger")]["cost_saving_opportunity"] == 120000
+
+    assert ("finance & accounting", "general ledger", "journal entry processing") in lookup
+    assert lookup[("finance & accounting", "general ledger", "journal entry processing")]["high_fit_percent"] == 95
+    assert lookup[("finance & accounting", "general ledger", "journal entry processing")]["cost_saving_opportunity"] == 60000
+
+    assert ambiguous == []
+
+
+def test_build_fit_cost_lookup_workforce_analyzer_shape():
+    """Test build_fit_cost_lookup with Workforce Analyzer shaped output."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "l1_l2_heatmap": [
+                {
+                    "L1_name": "HR Operations",
+                    "L1_percent": 70,
+                    "L1_amount": 180000,
+                    "L2s": [
+                        {
+                            "L2_name": "Recruiting",
+                            "L2_percent": 75,
+                            "L2_amount": 100000,
+                        },
+                    ],
+                },
+            ],
+            "impact_analyzer": [
+                {
+                    "L1 Capability": "HR Operations",
+                    "L2 Capability": "Recruiting",
+                    "L3 Capability Name (Lvl 3)": "Candidate Screening",
+                    "High Fit %": 88,
+                    "Cost Saving Opportunity (USD)": 55000,
+                },
+            ],
+        },
+    }
+
+    lookup, ambiguous = build_fit_cost_lookup(saved_output)
+
+    assert ("hr operations", "recruiting", "candidate screening") in lookup
+    assert lookup[("hr operations", "recruiting", "candidate screening")]["high_fit_percent"] == 88
+    assert lookup[("hr operations", "recruiting", "candidate screening")]["cost_saving_opportunity"] == 55000
+
+    assert ambiguous == []
+
+
+def test_build_fit_cost_lookup_impact_analyzer_at_root():
+    """Test build_fit_cost_lookup when impact_analyzer sits at the root."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "l1_l2_heatmap": [
+                {
+                    "L1_name": "Supply Chain",
+                    "L1_percent": 65,
+                    "L1_amount": 300000,
+                    "L2s": [],
+                },
+            ],
+        },
+        "impact_analyzer": [
+            {
+                "L1 Capability": "Supply Chain",
+                "L2 Capability": "Procurement",
+                "l3CapabilityName": "Vendor Selection",
+                "High Fit %": 92,
+                "Cost Saving Opportunity": 75000,
+            },
+        ],
+    }
+
+    lookup, ambiguous = build_fit_cost_lookup(saved_output)
+
+    assert ("supply chain", "procurement", "vendor selection") in lookup
+    assert lookup[("supply chain", "procurement", "vendor selection")]["high_fit_percent"] == 92
+
+    assert ambiguous == []
+
+
+def test_build_fit_cost_lookup_case_and_whitespace_normalization():
+    """Test that capability names differing only in case or extra spaces match."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "l1_l2_heatmap": [
+                {
+                    "L1_name": "Finance  &  Accounting",  # Extra spaces
+                    "L1_percent": 80,
+                    "L1_amount": 200000,
+                    "L2s": [
+                        {
+                            "L2_name": "AP  Processing",  # Extra spaces
+                            "L2_percent": 85,
+                            "L2_amount": 100000,
+                        },
+                    ],
+                },
+            ],
+            "impact_analyzer": [
+                {
+                    "L1 Capability": "FINANCE & ACCOUNTING",  # Different case
+                    "L2 Capability": "AP Processing",  # Normal case
+                    "L3 Capability": "Invoice  Matching",  # Extra spaces
+                    "High Fit %": 90,
+                    "Cost Saving Opportunity": 50000,
+                },
+            ],
+        },
+    }
+
+    lookup, ambiguous = build_fit_cost_lookup(saved_output)
+
+    # All these should normalize to the same path
+    assert ("finance & accounting",) in lookup
+    assert ("finance & accounting", "ap processing") in lookup
+    assert ("finance & accounting", "ap processing", "invoice matching") in lookup
+
+    assert ambiguous == []
+
+
+def test_build_fit_cost_lookup_cost_saving_opportunity_zero_preferred():
+    """Test that 'Cost Saving Opportunity': 0 is kept over 'Cost Saving Opportunity (USD)': 999."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "l1_l2_heatmap": [
+                {
+                    "L1_name": "Finance",
+                    "L1_percent": 80,
+                    "L1_amount": 200000,
+                    "L2s": [],
+                },
+            ],
+            "impact_analyzer": [
+                {
+                    "L1 Capability": "Finance",
+                    "L2 Capability": "Accounting",
+                    "L3 Capability": "Reconciliation",
+                    "High Fit %": 90,
+                    "Cost Saving Opportunity": 0,
+                    "Cost Saving Opportunity (USD)": 999,
+                },
+            ],
+        },
+    }
+
+    lookup, ambiguous = build_fit_cost_lookup(saved_output)
+
+    assert ("finance", "accounting", "reconciliation") in lookup
+    assert lookup[("finance", "accounting", "reconciliation")]["cost_saving_opportunity"] == 0
+
+    assert ambiguous == []
+
+
+def test_build_fit_cost_lookup_same_l3_under_different_l2s():
+    """Test that same L3 name under different L2s stays as separate entries."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "l1_l2_heatmap": [
+                {
+                    "L1_name": "Operations",
+                    "L1_percent": 70,
+                    "L1_amount": 150000,
+                    "L2s": [
+                        {"L2_name": "Manufacturing", "L2_percent": 75, "L2_amount": 80000},
+                        {"L2_name": "Quality Control", "L2_percent": 65, "L2_amount": 70000},
+                    ],
+                },
+            ],
+            "impact_analyzer": [
+                {
+                    "L1 Capability": "Operations",
+                    "L2 Capability": "Manufacturing",
+                    "L3 Capability": "Inspection",
+                    "High Fit %": 88,
+                    "Cost Saving Opportunity": 40000,
+                },
+                {
+                    "L1 Capability": "Operations",
+                    "L2 Capability": "Quality Control",
+                    "L3 Capability": "Inspection",  # Same L3 name
+                    "High Fit %": 82,
+                    "Cost Saving Opportunity": 35000,
+                },
+            ],
+        },
+    }
+
+    lookup, ambiguous = build_fit_cost_lookup(saved_output)
+
+    # Both entries should exist and be distinct
+    assert ("operations", "manufacturing", "inspection") in lookup
+    assert ("operations", "quality control", "inspection") in lookup
+    assert lookup[("operations", "manufacturing", "inspection")]["cost_saving_opportunity"] == 40000
+    assert lookup[("operations", "quality control", "inspection")]["cost_saving_opportunity"] == 35000
+
+    assert ambiguous == []
+
+
+def test_build_fit_cost_lookup_duplicate_path_removed():
+    """Test that duplicate paths are removed from lookup and returned in ambiguous list."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "l1_l2_heatmap": [
+                {
+                    "L1_name": "Finance",
+                    "L1_percent": 80,
+                    "L1_amount": 200000,
+                    "L2s": [],
+                },
+            ],
+            "impact_analyzer": [
+                {
+                    "L1 Capability": "Finance",
+                    "L2 Capability": "Accounting",
+                    "L3 Capability": "Reconciliation",
+                    "High Fit %": 90,
+                    "Cost Saving Opportunity": 50000,
+                },
+                {
+                    "L1 Capability": "Finance",
+                    "L2 Capability": "Accounting",
+                    "L3 Capability": "Reconciliation",  # Exact duplicate
+                    "High Fit %": 85,
+                    "Cost Saving Opportunity": 45000,
+                },
+            ],
+        },
+    }
+
+    lookup, ambiguous = build_fit_cost_lookup(saved_output)
+
+    # Path should be removed and marked as ambiguous
+    assert ("finance", "accounting", "reconciliation") not in lookup
+    assert ("finance", "accounting", "reconciliation") in ambiguous
+
+
+# ============================================================================
+# get_fit_cost_values tests
+# ============================================================================
+
+def test_get_fit_cost_values_zero_returned_as_zero():
+    """Test that a zero value is returned as zero, not as 'not available'."""
+    lookup_data = {
+        ("capability",): {
+            "high_fit_percent": 0,
+            "cost_saving_opportunity": 0,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capability = {"l1CapabilityName": "Capability"}
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L1", lookup)
+
+    assert high_fit == 0
+    assert cost_saving == 0
+
+
+def test_get_fit_cost_values_none_returns_not_available():
+    """Test that None values return 'not available'."""
+    lookup_data = {
+        ("capability",): {
+            "high_fit_percent": None,
+            "cost_saving_opportunity": None,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capability = {"l1CapabilityName": "Capability"}
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L1", lookup)
+
+    assert high_fit == "not available"
+    assert cost_saving == "not available"
+
+
+def test_get_fit_cost_values_missing_key_returns_not_available():
+    """Test that missing lookup key returns 'not available'."""
+    lookup = ({}, [])
+
+    capability = {"l1CapabilityName": "Unknown Capability"}
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L1", lookup)
+
+    assert high_fit == "not available"
+    assert cost_saving == "not available"
+
+
+def test_get_fit_cost_values_ambiguous_path_returns_not_available():
+    """Test that ambiguous path returns 'not available'."""
+    ambiguous_path = ("ambiguous", "path")
+    lookup_data = {
+        ambiguous_path: {
+            "high_fit_percent": 80,
+            "cost_saving_opportunity": 100000,
+        },
+    }
+    lookup = (lookup_data, [ambiguous_path])
+
+    capability = {
+        "l1CapabilityName": "Ambiguous",
+        "l2CapabilityName": "Path",
+    }
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L2", lookup)
+
+    assert high_fit == "not available"
+    assert cost_saving == "not available"
+
+
+def test_get_fit_cost_values_capability_with_no_match():
+    """Test that a capability with no match comes back as 'not available' for both."""
+    lookup_data = {
+        ("finance", "accounting"): {
+            "high_fit_percent": 85,
+            "cost_saving_opportunity": 120000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capability = {
+        "l1CapabilityName": "HR",
+        "l2CapabilityName": "Recruiting",
+    }
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L2", lookup)
+
+    assert high_fit == "not available"
+    assert cost_saving == "not available"
+
+
+def test_get_fit_cost_values_l1_capability_dict():
+    """Test get_fit_cost_values with L1 capability as dict."""
+    lookup_data = {
+        ("operations",): {
+            "high_fit_percent": 75,
+            "cost_saving_opportunity": 250000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capability = {"l1CapabilityName": "Operations"}
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L1", lookup)
+
+    assert high_fit == 75
+    assert cost_saving == 250000
+
+
+def test_get_fit_cost_values_l2_capability_dict():
+    """Test get_fit_cost_values with L2 capability as dict."""
+    lookup_data = {
+        ("finance", "accounting"): {
+            "high_fit_percent": 88,
+            "cost_saving_opportunity": 180000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capability = {
+        "l1CapabilityName": "Finance",
+        "l2CapabilityName": "Accounting",
+    }
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L2", lookup)
+
+    assert high_fit == 88
+    assert cost_saving == 180000
+
+
+def test_get_fit_cost_values_l3_capability_dict():
+    """Test get_fit_cost_values with L3 capability as dict."""
+    lookup_data = {
+        ("finance", "accounting", "reconciliation"): {
+            "high_fit_percent": 92,
+            "cost_saving_opportunity": 95000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capability = {
+        "l1CapabilityName": "Finance",
+        "l2CapabilityName": "Accounting",
+        "l3CapabilityName": "Reconciliation",
+    }
+
+    high_fit, cost_saving = get_fit_cost_values(capability, "L3", lookup)
+
+    assert high_fit == 92
+    assert cost_saving == 95000
+
+
+# ============================================================================
+# build_fit_cost_prompt_text tests
+# ============================================================================
+
+def test_build_fit_cost_prompt_text_contains_required_fields():
+    """Test that each line contains capability name, uniqueId, High Fit %, and Cost Saving Opportunity."""
+    lookup_data = {
+        ("finance", "accounting", "reconciliation"): {
+            "high_fit_percent": 85,
+            "cost_saving_opportunity": 120000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capabilities = [
+        {
+            "l1CapabilityName": "Finance",
+            "l2CapabilityName": "Accounting",
+            "l3CapabilityName": "Reconciliation",
+            "uniqueId": "RECON-001",
+        },
+    ]
+
+    text = build_fit_cost_prompt_text(capabilities, "L3", lookup)
+
+    assert "Reconciliation" in text
+    assert "RECON-001" in text
+    assert "High Fit %: 85" in text
+    assert "Cost Saving Opportunity: 120000" in text
+
+
+def test_build_fit_cost_prompt_text_multiple_capabilities():
+    """Test prompt text with multiple capabilities."""
+    lookup_data = {
+        ("finance", "ap"): {
+            "high_fit_percent": 88,
+            "cost_saving_opportunity": 150000,
+        },
+        ("finance", "ar"): {
+            "high_fit_percent": 82,
+            "cost_saving_opportunity": 140000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    capabilities = [
+        {
+            "l1CapabilityName": "Finance",
+            "l2CapabilityName": "AP",
+            "uniqueId": "AP-002",
+        },
+        {
+            "l1CapabilityName": "Finance",
+            "l2CapabilityName": "AR",
+            "uniqueId": "AR-003",
+        },
+    ]
+
+    text = build_fit_cost_prompt_text(capabilities, "L2", lookup)
+
+    lines = text.strip().split("\n")
+    assert len(lines) == 2
+    assert "AP" in lines[0]
+    assert "AR" in lines[1]
+
+
+def test_build_fit_cost_prompt_text_not_available_values():
+    """Test that 'not available' is shown for missing values."""
+    lookup = ({}, [])
+
+    capabilities = [
+        {
+            "l1CapabilityName": "Unknown",
+            "uniqueId": "UNK-999",
+        },
+    ]
+
+    text = build_fit_cost_prompt_text(capabilities, "L1", lookup)
+
+    assert "Unknown" in text
+    assert "UNK-999" in text
+    assert "High Fit %: not available" in text
+    assert "Cost Saving Opportunity: not available" in text
+
+
+# ============================================================================
+# _build_prompt tests
+# ============================================================================
+
+def test_build_prompt_without_fit_cost_lookup():
+    """Test that when no lookup is passed, prompt contains no fit and cost block."""
+    unique_ids = ["CAP-001"]
+    selected_capability_map = [{"name": "Test Capability"}]
+    capabilities = {
+        "L1": [{"l1CapabilityName": "Test Capability", "uniqueId": "CAP-001"}],
+        "L2": [],
+        "L3": [],
+    }
+    analysis_type = "L1"
+    rubric_text = "Test rubric"
+
+    prompt = _build_prompt(
+        unique_ids=unique_ids,
+        selected_capability_map=selected_capability_map,
+        capabilities=capabilities,
+        analysis_type=analysis_type,
+        rubric_text=rubric_text,
+        fit_cost_lookup=None,
+    )
+
+    assert "CAPABILITY FIT AND COST-SAVING CONTEXT" not in prompt
+
+
+def test_build_prompt_with_fit_cost_lookup():
+    """Test that when a lookup is passed, it's included in the prompt."""
+    unique_ids = ["CAP-001"]
+    selected_capability_map = [{"name": "Test Capability"}]
+    capabilities = {
+        "L1": [{"l1CapabilityName": "Test Capability", "uniqueId": "CAP-001"}],
+        "L2": [],
+        "L3": [],
+    }
+    analysis_type = "L1"
+    rubric_text = "Test rubric"
+    
+    lookup_data = {
+        ("test capability",): {
+            "high_fit_percent": 85,
+            "cost_saving_opportunity": 200000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    prompt = _build_prompt(
+        unique_ids=unique_ids,
+        selected_capability_map=selected_capability_map,
+        capabilities=capabilities,
+        analysis_type=analysis_type,
+        rubric_text=rubric_text,
+        fit_cost_lookup=lookup,
+    )
+
+    block = _extract_fit_cost_block(prompt)
+    assert "CAPABILITY FIT AND COST-SAVING CONTEXT" in block
+    assert "CAP-001" in block
+    assert "High Fit %: 85" in block
+    assert "Cost Saving Opportunity: 200000" in block
+
+
+def test_build_prompt_only_selected_capabilities_included():
+    """Test that only capabilities whose uniqueId is in unique_ids appear."""
+    unique_ids = ["CAP-001"]
+    selected_capability_map = [{"name": "Test Capability"}]
+    capabilities = {
+        "L1": [
+            {"l1CapabilityName": "Included Capability", "uniqueId": "CAP-001"},
+            {"l1CapabilityName": "Excluded Capability", "uniqueId": "CAP-002"},
+        ],
+        "L2": [],
+        "L3": [],
+    }
+    analysis_type = "L1"
+    rubric_text = "Test rubric"
+    
+    lookup_data = {
+        ("included capability",): {
+            "high_fit_percent": 85,
+            "cost_saving_opportunity": 200000,
+        },
+        ("excluded capability",): {
+            "high_fit_percent": 70,
+            "cost_saving_opportunity": 150000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    prompt = _build_prompt(
+        unique_ids=unique_ids,
+        selected_capability_map=selected_capability_map,
+        capabilities=capabilities,
+        analysis_type=analysis_type,
+        rubric_text=rubric_text,
+        fit_cost_lookup=lookup,
+    )
+
+    block = _extract_fit_cost_block(prompt)
+    assert "CAP-001" in block
+    assert "CAP-002" not in block
+    assert "High Fit %: 85" in block
+    assert "High Fit %: 70" not in block
+
+
+def test_build_prompt_numeric_uniqueid_matches_string_id():
+    """Test that numeric uniqueId on capability matches string ID in unique_ids."""
+    unique_ids = ["123"]
+    selected_capability_map = [{"name": "Test Capability"}]
+    capabilities = {
+        "L1": [
+            {"l1CapabilityName": "Test Capability", "uniqueId": 123},  # numeric
+        ],
+        "L2": [],
+        "L3": [],
+    }
+    analysis_type = "L1"
+    rubric_text = "Test rubric"
+    
+    lookup_data = {
+        ("test capability",): {
+            "high_fit_percent": 80,
+            "cost_saving_opportunity": 250000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    prompt = _build_prompt(
+        unique_ids=unique_ids,
+        selected_capability_map=selected_capability_map,
+        capabilities=capabilities,
+        analysis_type=analysis_type,
+        rubric_text=rubric_text,
+        fit_cost_lookup=lookup,
+    )
+
+    block = _extract_fit_cost_block(prompt)
+    assert "123" in block
+    assert "High Fit %: 80" in block
+
+
+def test_build_prompt_capability_level_none_in_dict():
+    """Test that a capability level that is None in capabilities dict doesn't cause error."""
+    unique_ids = ["CAP-001"]
+    selected_capability_map = [{"name": "Test Capability"}]
+    capabilities = {
+        "L1": [{"l1CapabilityName": "Test Capability", "uniqueId": "CAP-001"}],
+        "L2": None,  # This is None
+        "L3": [],
+    }
+    analysis_type = "L1"
+    rubric_text = "Test rubric"
+    
+    lookup_data = {
+        ("test capability",): {
+            "high_fit_percent": 85,
+            "cost_saving_opportunity": 200000,
+        },
+    }
+    lookup = (lookup_data, [])
+
+    # Should not raise
+    prompt = _build_prompt(
+        unique_ids=unique_ids,
+        selected_capability_map=selected_capability_map,
+        capabilities=capabilities,
+        analysis_type=analysis_type,
+        rubric_text=rubric_text,
+        fit_cost_lookup=lookup,
+    )
+
+    assert prompt is not None
+    assert isinstance(prompt, str)
+
+
+# ============================================================================
+# _load_impact_analyzer_for_process tests
+# ============================================================================
+
+@pytest.mark.asyncio
+async def test_load_impact_analyzer_for_process_returns_empty_when_loader_none():
+    """Test that _load_impact_analyzer_for_process returns {} when loader returns None."""
+    with patch(
+        "apis.v1.capability_double_click._load_cost_saving_potential_output",
+        new_callable=AsyncMock,
+    ) as mock_loader:
+        mock_loader.return_value = None
+
+        result = await _load_impact_analyzer_for_process(123)
+
+        assert result == {}
+        mock_loader.assert_called_once_with(123)
+
+
+@pytest.mark.asyncio
+async def test_load_impact_analyzer_for_process_returns_extracted_lookup():
+    """Test that it returns the L3 lookup extracted from saved output."""
+    saved_output = {
+        "Cost Saving Potential": {
+            "impact_analyzer": [
+                {
+                    "L3 Capability": "Invoice Matching",
+                    "High Fit %": 88,
+                    "Cost Saving Opportunity": 75000,
+                },
+                {
+                    "L3 Capability": "Payment Processing",
+                    "High Fit %": 92,
+                    "Cost Saving Opportunity": 85000,
+                },
+            ],
+        },
+    }
+
+    with patch(
+        "apis.v1.capability_double_click._load_cost_saving_potential_output",
+        new_callable=AsyncMock,
+    ) as mock_loader:
+        mock_loader.return_value = saved_output
+
+        result = await _load_impact_analyzer_for_process(123)
+
+        expected = _extract_impact_analyzer_lookup(saved_output)
+        assert result == expected
