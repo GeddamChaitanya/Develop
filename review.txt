@@ -1,95 +1,93 @@
-2x2_fit_cost_98_20261106_102827_974890.json output file 
+2026-11-06 10:39:06,912 - watchfiles.main - INFO - 1 change detected
+=== /twobytwo REQUEST === {"stepKey":487,"substepkey":1222,"processName":"Blueprinting Analysis-#98","processKey":98,"input_key":354,"input_name":"ViabilityFeasibilityRequest","OutputKey":0,"ProjectKey":1,"WorkspaceName":"blueprinting-testing","ParentWorkspaceName":"Ascend","WorkspaceDescription":"Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.","discount_rate":0.1,"TwoByTwoOutPutKeys":[],"receiverEmail":"gedchaitanya@deloitte.com"}
+2026-11-06 10:57:02,876 - uvicorn.access - INFO - 127.0.0.1:63254 - "POST /api/v1/twobytwo HTTP/1.1" 202
+[TRACE] Received input_data: {"stepKey":487,"substepkey":1222,"processName":"Blueprinting Analysis-#98","processKey":98,"input_k
+--- Reading input record for input_key: 354 ---
+2026-11-06 10:57:02,885 - sqlalchemy.pool.impl.AsyncAdaptedQueuePool - ERROR - Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x0000015E4B7FAF50>>
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 697, in _write_appdata
+    self._do_write()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 716, in _do_write
+    self._process_outgoing()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 722, in _process_outgoing
+    self._transport.write(data)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 366, in write
+    self._loop_writing(data=bytes(data))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send'
 
-{
-  "processKey": 98,
-  "analysis_type": "l1",
-  "lookup_summary": {
-    "available": true,
-    "counts": {
-      "L1": 15,
-      "L2": 50,
-      "L3": 164
-    },
-    "ambiguous_paths": []
-  },
-  "fit_cost_lines": [
-    "- Capability: Strategy & Governance; uniqueId: l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0; High Fit %: 42; Cost Saving Opportunity: 16022479"
-  ],
-  "capability_matrix": [
-    {
-      "uniqueId": "l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0",
-      "l1CapabilityName": "Strategy & Governance",
-      "l1CapabilityDescription": "Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.",
-      "viability": [
-        {
-          "dimension": "Strategic Centrality",
-          "score": "HIGH",
-          "source_reasoning": "AI Generated: Strategy & Governance is core-adjacent, reinforcing differentiation by ensuring consistent strategic execution and robust oversight across the enterprise. Its foundational role in guiding the company's direction and managing compliance makes it materially linked to business strategy."
-        },
-        {
-          "dimension": "Cost Reduction Potential",
-          "score": "VERY HIGH",
-          "source_reasoning": "AI Generated: The Strategy & Governance capability has a High Fit % of 42 for agentic automation, indicating a significant portion of its activities could be automated. This translates to a potential operating expense reduction exceeding 40%, aligning with a structural opex step-change at scale."
-        },
-        {
-          "dimension": "Revenue Generation Potential",
-          "score": "VERY LOW",
-          "source_reasoning": "AI Generated: The Strategy & Governance capability, by its nature, is primarily an internal function focused on oversight, policy, and compliance rather than direct market engagement. Therefore, it is unlikely to have a discernible direct revenue effect or create new monetizable products."
-        },
-        {
-          "dimension": "Throughput / Cycle-Time Improvement",
-          "score": "VERY HIGH",
-          "source_reasoning": "AI Generated: With a 42% High Fit for agentic automation, the Strategy & Governance capability, particularly in areas like regulatory reporting, can achieve significant cycle time reductions. Automating data gathering, validation, and report generation will eliminate major handoffs and rework, leading to over 40% end-to-end cycle time improvement."
-        },
-        {
-          "dimension": "Customer Experience Impact",
-          "score": "LOW",
-          "source_reasoning": "AI Generated: As an internal function, improvements in Strategy & Governance primarily benefit internal stakeholders and operational efficiency rather than directly impacting external customer journeys. Any customer experience benefits would be minimal and hard to detect, such as avoiding regulatory fines that might indirectly affect customer trust."
-        }
-      ],
-      "feasibility": [
-        {
-          "dimension": "Data Readiness",
-          "score": "VERY HIGH",
-          "source_reasoning": "AI Generated: Regulatory reporting, a key component of Strategy & Governance, relies on clean, complete, and well-governed data with strong lineage and quality measures. The nature of compliance demands near real-time availability and clear data ownership, making this capability highly data-ready for automation."
-        },
-        {
-          "dimension": "Integration & Technical Readiness",
-          "score": "HIGH",
-          "source_reasoning": "AI Generated: The need for accurate and timely regulatory reporting within Strategy & Governance typically necessitates robust data integration from core systems. This suggests a mostly modern technical stack with established integration points, making automation straightforward with moderate effort and evaluation methods possible."
-        },
-        {
-          "dimension": "Standardization & Scalability Potential",
-          "score": "VERY HIGH",
-          "source_reasoning": "AI Generated: Regulatory reporting, a significant part of Strategy & Governance, is inherently driven by standardized rules and processes, allowing for a very high degree of straight-through processing. This capability involves predominantly standard cases with minimal physical steps, enabling near-zero marginal cost to scale automation across business units."
-        },
-        {
-          "dimension": "Operating Model & Change Readiness",
-          "score": "MEDIUM",
-          "source_reasoning": "AI Generated: While the benefits of automating parts of Strategy & Governance are clear, defining a change plan may encounter uneven executive support and stakeholder buy-in due to the sensitive nature of oversight and control. ROI tracking may be possible but could be unclear given the indirect nature of some governance benefits."
-        },
-        {
-          "dimension": "Compliance considerations",
-          "score": "MEDIUM",
-          "source_reasoning": "AI Generated: Automating aspects of Strategy & Governance, particularly regulatory reporting, inherently involves navigating significant compliance considerations. While the goal is to ensure adherence, the automation itself will require reasonable effort to seek approval and demonstrate compliance with geographic and regulatory constraints."
-        }
-      ],
-      "viability_score": 2.57,
-      "feasibility_score": 3.31,
-      "overall_summary": "No summary provided."
-    }
-  ]
-}
+During handling of the above exception, another exception occurred:
 
---------------------------------------------------------------------------------------------------------------------
-2026-11-06 10:21:23,126 - uvicorn.access - INFO - 127.0.0.1:62038 - "GET /openapi.json HTTP/1.1" 200
-=== /twobytwo REQUEST === {"stepKey":487,"substepkey":1221,"processName":"Blueprinting Analysis-#98","processKey":98,"input_key":353,"input_name":"ViabilityFeasibilityRequest","OutputKey":0,"ProjectKey":1,"WorkspaceName":"blueprinting-testing","ParentWorkspaceName":"Ascend","WorkspaceDescription":"Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.","discount_rate":0.1,"TwoByTwoOutPutKeys":[],"receiverEmail":"gedchaitanya@deloitte.com"}
-2026-11-06 10:26:50,341 - uvicorn.access - INFO - 127.0.0.1:56348 - "POST /api/v1/twobytwo HTTP/1.1" 202
-[TRACE] Received input_data: {"stepKey":487,"substepkey":1221,"processName":"Blueprinting Analysis-#98","processKey":98,"input_k
---- Reading input record for input_key: 353 ---
-2026-11-06 10:26:56,274 - watchfiles.main - INFO - 1 change detected
-Successfully retrieved input record with input_key: 353
-Details: Input Name: ViabilityFeasibilityRequest, Sub Step Key: 1221, Input Order: 1
+Traceback (most recent call last):
+  File "asyncpg/protocol/protocol.pyx", line 597, in asyncpg.protocol.protocol.BaseProtocol.close
+  File "asyncpg/protocol/coreproto.pyx", line 1211, in asyncpg.protocol.protocol.CoreProtocol._terminate
+  File "asyncpg/protocol/protocol.pyx", line 980, in asyncpg.protocol.protocol.BaseProtocol._write
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 222, in write
+    self._ssl_protocol._write_appdata((data,))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 700, in _write_appdata
+    self._fatal_error(ex, 'Fatal error on SSL protocol')
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 918, in _fatal_error
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1536, in close
+    await self._protocol.close(timeout)
+  File "asyncpg/protocol/protocol.pyx", line 606, in close
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 372, in _close_connection
+    self._dialect.do_terminate(connection)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1127, in do_terminate
+    dbapi_connection.terminate()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 402, in terminate
+    self.await_(asyncio.shield(self._terminate_graceful_close()))  # type: ignore[attr-defined] # noqa: E501
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 912, in _terminate_graceful_close
+    await self._connection.close(timeout=2)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1539, in close
+    self._abort()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1600, in _abort
+    self._protocol.abort()
+  File "asyncpg/protocol/protocol.pyx", line 567, in asyncpg.protocol.protocol.BaseProtocol.abort
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 250, in abort
+    self._force_close(None)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 255, in _force_close
+    self._ssl_protocol._abort(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 674, in _abort
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Successfully retrieved input record with input_key: 354
+Details: Input Name: ViabilityFeasibilityRequest, Sub Step Key: 1222, Input Order: 1
 --- Reading survey responses for project_id: 1 ---
 [ERROR] CRUD_Get_SurveyResponses - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
 [SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
@@ -140,7 +138,7 @@ FROM project_supporting_file
 WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
 [parameters: (1,)]
 (Background on this error at: https://sqlalche.me/e/20/f405)
-[TRACE] Starting agentic fit allocation for action: l1
+[TRACE] Starting agentic fit allocation for action: l2
 
 --- Starting database operations ---
 [TRACE] DB_Operations: Running UPDATE operation
@@ -148,101 +146,180 @@ WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_support
 
 --- Updating the blueprinting_process_sub_step_output record ---
 [TRACE] DB_Update: Completed crud operation
-Successfully updated output record with key: 1221
-Updated Description: viability-n-feasibility-1793940363595
+Successfully updated output record with key: 1222
+Updated Description: viability-n-feasibility-1793941731362
 
 --- Operations finished ---
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'Started', 'Logs': ' Started generating for Two by Two for action l1', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'missingFields': ['processKey', 'input_key']}}
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'Started', 'Logs': ' Started generating for Two by Two for action l2', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'missingFields': ['processKey', 'input_key']}}
 [TRACE] Attempting Redis publish: Started
-2026-11-06 10:27:13,238 - watchfiles.main - INFO - 4 changes detected
-2026-11-06 10:27:13,600 - watchfiles.main - INFO - 1 change detected
-2026-11-06 10:27:14,006 - watchfiles.main - INFO - 2 changes detected
 [TRACE] Redis message published successfully: Started
 --- Reading app_user for email: gedchaitanya@deloitte.com ---
 Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
 --- Reading app_user for email: gedchaitanya@deloitte.com ---
 Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
-[TRACE] Progress monitor started for ID: viability-feasibility-1221-1793940367697
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'action': 'l1', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Progress monitor started for ID: viability-feasibility-1222-1793941733058
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'action': 'l2', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
 [TRACE] Attempting Redis publish: In Progress
-[TRACE] Redis message published successfully: In Progress
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'action': 'l1', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
-[TRACE] Attempting Redis publish: In Progress
+2026-11-06 10:57:55,153 - sqlalchemy.pool.impl.AsyncAdaptedQueuePool - ERROR - Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x0000015E4B921750>>
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 697, in _write_appdata
+    self._do_write()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 716, in _do_write
+    self._process_outgoing()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 722, in _process_outgoing
+    self._transport.write(data)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 366, in write
+    self._loop_writing(data=bytes(data))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "asyncpg/protocol/protocol.pyx", line 597, in asyncpg.protocol.protocol.BaseProtocol.close
+  File "asyncpg/protocol/coreproto.pyx", line 1211, in asyncpg.protocol.protocol.CoreProtocol._terminate
+  File "asyncpg/protocol/protocol.pyx", line 980, in asyncpg.protocol.protocol.BaseProtocol._write
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 222, in write
+    self._ssl_protocol._write_appdata((data,))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 700, in _write_appdata
+    self._fatal_error(ex, 'Fatal error on SSL protocol')
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 918, in _fatal_error
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1536, in close
+    await self._protocol.close(timeout)
+  File "asyncpg/protocol/protocol.pyx", line 606, in close
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 372, in _close_connection
+    self._dialect.do_terminate(connection)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1127, in do_terminate
+    dbapi_connection.terminate()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 402, in terminate
+    self.await_(asyncio.shield(self._terminate_graceful_close()))  # type: ignore[attr-defined] # noqa: E501
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 912, in _terminate_graceful_close
+    await self._connection.close(timeout=2)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1539, in close
+    self._abort()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1600, in _abort
+    self._protocol.abort()
+  File "asyncpg/protocol/protocol.pyx", line 567, in asyncpg.protocol.protocol.BaseProtocol.abort
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 250, in abort
+    self._force_close(None)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 255, in _force_close
+    self._ssl_protocol._abort(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 674, in _abort
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
 [TRACE] Redis message published successfully: In Progress
 === 2x2 FIT/COST LOOKUP | processKey=98 === {"available": true, "counts": {"L1": 15, "L2": 50, "L3": 164}, "ambiguous_paths": []}
 [TRACE] generate_two_by_two_analysis: attempt 1/3 – 1 capabilities in 1 batch(es)
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'action': 'l2', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
 
-=== 2x2 FIT/COST | analysis_type=l1 | uniqueIds=['l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0'] ===
+=== 2x2 FIT/COST | analysis_type=l2 | uniqueIds=['l2-salary-opex-48adf938-6a6c-4a2f-acc5-ad2395b980d8'] ===
 
 CAPABILITY FIT AND COST-SAVING CONTEXT
 Use each capability's own values below as supporting evidence when judging every
 viability and feasibility dimension, alongside client context. These values are
 not scores or weights; do not copy them as scores or use them as scoring weights.
-- Capability: Strategy & Governance; uniqueId: l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0; High Fit %: 42; Cost Saving Opportunity: 16022479
+- Capability: Compliance Management; uniqueId: l2-salary-opex-48adf938-6a6c-4a2f-acc5-ad2395b980d8; High Fit %: 49; Cost Saving Opportunity: 3537393
 
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-E0000 00:00:1793941084.982452   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
-E0000 00:00:1793941085.050172   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'action': 'l1', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+E0000 00:00:1793942886.042750   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1793942886.058208   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'action': 'l2', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
 [TRACE] Attempting Redis publish: In Progress
 [TRACE] Redis message published successfully: In Progress
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'action': 'l1', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'action': 'l2', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
 [TRACE] Attempting Redis publish: In Progress
 [TRACE] Redis message published successfully: In Progress
-2026-11-06 10:28:28,295 - watchfiles.main - INFO - 2 changes detected
-2026-11-06 10:28:28,659 - watchfiles.main - INFO - 2 changes detected
-[TRACE] Progress monitor stopped for ID: viability-feasibility-1221-1793940367697
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l1', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'missingFields': ['processKey', 'input_key']}}
+2026-11-06 10:58:31,472 - watchfiles.main - INFO - 1 change detected
+2026-11-06 10:58:32,081 - watchfiles.main - INFO - 1 change detected
+[TRACE] Progress monitor stopped for ID: viability-feasibility-1222-1793941733058
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l2', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'missingFields': ['processKey', 'input_key']}}
 [TRACE] Attempting Redis publish: Completed
 [TRACE] Redis message published successfully: Completed
-Generated response:  {'projectInfo': {'projectKey': 1, 'projectName': 'Enterprise Default Project_Testing', 'projectDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.', 'industry': 'Freight Transportation', 'sector': 'Transportation & Logistics', 'subSector': 'Road Freight and Trucking', 'clientKey': 1, 'ClientKey': 1, 'ProjectKey': 1, 'project_key': 1, 'clientName': 'Enterprise Default Project_Testing', 'clientDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.'}, 'backgroundProcessingInfo': {'receiverEmail': 'gedchaitanya@deloitte.com', 'substepkey': 1221, 'stepKey': 487, 'step_name': 'viability-n-feasibility-1793940363595', 'processKey': 98, 'processName': 'Blueprinting Analysis-#98', 'ID': 'viability-feasibility-1221-1793940367697', 'requestedOn': '2026-11-06T04:46:07.697Z', 'input_key': 0, 'input_name': '', 'outputKey': None, 'outputTypeKey': None, 'generatedForInputKey': None, 'outputTypeName': '', 'outputTypeDescription': '', 'outputName': '', 'outputJson': None, 'total_opex': None, 'category': 'l1'}, 'selected_capability_map': [{'uniqueId': 'l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.'}], 'capability_matrix': [{'uniqueId': 'l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'viability': [{'dimension': 'Strategic Centrality', 'score': 'HIGH', 'source_reasoning': "AI Generated: Strategy & Governance is core-adjacent, reinforcing differentiation by ensuring consistent strategic execution and robust oversight across the enterprise. Its foundational role in guiding the company's direction and managing compliance makes it materially linked to business strategy."}, {'dimension': 'Cost Reduction Potential', 'score': 'VERY HIGH', 'source_reasoning': 'AI Generated: The Strategy & Governance capability has a High Fit % of 42 for agentic automation, indicating a significant portion of its activities could be automated. This translates to a potential operating expense reduction exceeding 40%, aligning with a structural opex step-change at scale.'}, {'dimension': 'Revenue Generation Potential', 'score': 'VERY LOW', 'source_reasoning': 'AI Generated: The Strategy & Governance capability, by its nature, is primarily an internal function focused on oversight, policy, and compliance rather than direct market engagement. Therefore, it is unlikely to have a discernible direct revenue effect or create new monetizable products.'}, {'dimension': 'Throughput / Cycle-Time Improvement', 'score': 'VERY HIGH', 'source_reasoning': 'AI Generated: With a 42% High Fit for agentic automation, the Strategy & Governance capability, particularly in areas like regulatory reporting, can achieve significant cycle time reductions. Automating data gathering, validation, and report generation will eliminate major handoffs and rework, leading to over 40% end-to-end cycle time improvement.'}, {'dimension': 'Customer Experience Impact', 'score': 'LOW', 'source_reasoning': 'AI Generated: As an internal function, improvements in Strategy & Governance primarily benefit internal stakeholders and operational efficiency rather than directly impacting external customer journeys. Any customer experience benefits would be minimal and hard to detect, such as avoiding regulatory fines that might indirectly affect customer trust.'}], 'feasibility': [{'dimension': 'Data Readiness', 'score': 'VERY HIGH', 'source_reasoning': 'AI Generated: Regulatory reporting, a key component of Strategy & Governance, relies on clean, complete, and well-governed data with strong lineage and quality measures. The nature of compliance demands near real-time availability and clear data ownership, making this capability highly data-ready for automation.'}, {'dimension': 'Integration & Technical Readiness', 'score': 'HIGH', 'source_reasoning': 'AI Generated: The need for accurate and timely regulatory reporting within Strategy & Governance typically necessitates robust data integration from core systems. This suggests a mostly modern technical stack with established integration points, making automation straightforward with moderate effort and evaluation methods possible.'}, {'dimension': 'Standardization & Scalability Potential', 'score': 'VERY HIGH', 'source_reasoning': 'AI Generated: Regulatory reporting, a significant part of Strategy & Governance, is inherently driven by standardized rules and processes, allowing for a very high degree of straight-through processing. This capability involves predominantly standard cases with minimal physical steps, enabling near-zero marginal cost to scale automation across business units.'}, {'dimension': 'Operating Model & Change Readiness', 'score': 'MEDIUM', 'source_reasoning': 'AI Generated: While the benefits of automating parts of Strategy & Governance are clear, defining a change plan may encounter uneven executive support and stakeholder buy-in due to the sensitive nature of oversight and control. ROI tracking may be possible but could be unclear given the indirect nature of some governance benefits.'}, {'dimension': 'Compliance considerations', 'score': 'MEDIUM', 'source_reasoning': 'AI Generated: Automating aspects of Strategy & Governance, particularly regulatory reporting, inherently involves navigating significant compliance considerations. While the goal is to ensure adherence, the automation itself will require reasonable effort to seek approval and demonstrate compliance with geographic and regulatory constraints.'}], 'viability_score': 2.57, 'feasibility_score': 3.31, 'overall_summary': 'No summary provided.'}]}
-2026-11-06 10:28:29,911 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Generated response:  {'projectInfo': {'projectKey': 1, 'projectName': 'Enterprise Default Project_Testing', 'projectDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.', 'industry': 'Freight Transportation', 'sector': 'Transportation & Logistics', 'subSector': 'Road Freight and Trucking', 'clientKey': 1, 'ClientKey': 1, 'ProjectKey': 1, 'project_key': 1, 'clientName': 'Enterprise Default Project_Testing', 'clientDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.'}, 'backgroundProcessingInfo': {'receiverEmail': 'gedchaitanya@deloitte.com', 'substepkey': 1222, 'stepKey': 487, 'step_name': 'viability-n-feasibility-1793941731362', 'processKey': 98, 'processName': 'Blueprinting Analysis-#98', 'ID': 'viability-feasibility-1222-1793941733058', 'requestedOn': '2026-11-06T05:08:53.058Z', 'input_key': 0, 'input_name': '', 'outputKey': None, 'outputTypeKey': None, 'generatedForInputKey': None, 'outputTypeName': '', 'outputTypeDescription': '', 'outputName': '', 'outputJson': None, 'total_opex': None, 'category': 'l2'}, 'selected_capability_map': [{'uniqueId': 'l2-salary-opex-48adf938-6a6c-4a2f-acc5-ad2395b980d8', 'l1CapabilityName': 'Security, Risk & Resilience', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.'}], 'capability_matrix': [{'uniqueId': 'l2-salary-opex-48adf938-6a6c-4a2f-acc5-ad2395b980d8', 'l1CapabilityName': 'Security, Risk & Resilience', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'viability': [{'dimension': 'Strategic Centrality', 'score': 'HIGH', 'source_reasoning': "Compliance Management is core-adjacent, reinforcing the organization's ability to operate across multiple business units and regions by ensuring adherence to diverse laws and regulations. Failure in this area would significantly impact business strategy and operational continuity. (Source: AI Generated)"}, {'dimension': 'Cost Reduction Potential', 'score': 'HIGH', 'source_reasoning': "The capability presents a significant Cost Saving Opportunity of $3,537,393, which represents approximately 33.6% of the L2 capability's total opex. This aligns with the 'High' rubric definition of 30-40% operating expense reduction through large recurring labor savings. (Source: AI Generated)"}, {'dimension': 'Revenue Generation Potential', 'score': 'VERY LOW', 'source_reasoning': 'Compliance Management primarily focuses on risk mitigation and adherence to regulations, which are cost-center activities rather than direct revenue-generating functions. There is no discernible direct revenue effect from improving this capability. (Source: AI Generated)'}, {'dimension': 'Throughput / Cycle-Time Improvement', 'score': 'VERY HIGH', 'source_reasoning': 'With a High Fit % of 49, a substantial portion of Compliance Management activities, such as monitoring and testing, can be automated by AI agents. This automation is expected to reduce end-to-end cycle times by over 40%, eliminating major manual handoffs and rework. (Source: AI Generated)'}, {'dimension': 'Customer Experience Impact', 'score': 'LOW', 'source_reasoning': 'Compliance Management is primarily an internal function focused on regulatory adherence, offering minimal direct perceived benefit to the customer journey or segments. Improvements in this area are unlikely to directly translate into detectable improvements in customer experience dimensions like NPS or CSAT. (Source: AI Generated)'}], 'feasibility': [{'dimension': 'Data Readiness', 'score': 'HIGH', 'source_reasoning': 'Effective Compliance Management relies on well-governed data from various systems for monitoring and testing, suggesting that data quality and stewardship are generally prioritized. While minor coverage or quality gaps may exist across diverse data sources, the data is largely complete and managed. (Source: AI Generated)'}, {'dimension': 'Integration & Technical Readiness', 'score': 'MEDIUM', 'source_reasoning': 'Compliance Management requires integration across a diverse landscape of internal systems, likely involving a mix of legacy and modern technologies. While integration is feasible, it will require sustained effort, and evaluating the accuracy and auditability of automated compliance results may necessitate novel investment. (Source: AI Generated)'}, {'dimension': 'Standardization & Scalability Potential', 'score': 'MEDIUM', 'source_reasoning': 'While a significant portion of Compliance Management involves standard cases suitable for automation, the landscape is also characterized by frequently changing regulations and a blend of standard and exception-heavy scenarios. Manual validations will often be required to build confidence or meet regulatory expectations, and scaling across diverse business units or regions will incur clear costs. (Source: AI Generated)'}, {'dimension': 'Operating Model & Change Readiness', 'score': 'MEDIUM', 'source_reasoning': 'Implementing agentic automation in Compliance Management will require careful change management, as it involves critical functions and potential regulatory scrutiny. While a change plan is definable, uneven executive support and stakeholder buy-in are expected due to the sensitivity of the domain, and ROI tracking may be possible but is unclear. (Source: AI Generated)'}, {'dimension': 'Compliance considerations', 'score': 'LOW', 'source_reasoning': 'Automating Compliance Management inherently involves navigating tight regulatory limits and ensuring the automation itself meets stringent legal and audit requirements. The regulatory landscape can be inconsistent across geographies, requiring significant effort and approvals. (Source: AI Generated)'}], 'viability_score': 2.32, 'feasibility_score': 2.37, 'overall_summary': 'No summary provided.'}]}
+2026-11-06 10:58:32,557 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
 Request method: 'GET'
 Request headers:
     'x-ms-version': 'REDACTED'
     'Accept': 'application/xml'
     'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
     'x-ms-date': 'REDACTED'
-    'x-ms-client-request-id': 'b58baa95-d99e-11f1-80db-d4f32df15686'
+    'x-ms-client-request-id': 'e801af09-d9a2-11f1-a5e5-d4f32df15686'
     'Authorization': 'REDACTED'
 No body was attached to the request
-2026-11-06 10:28:31,962 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+2026-11-06 10:58:34,667 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
 Response headers:
     'Transfer-Encoding': 'chunked'
     'Content-Type': 'application/xml'
     'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
-    'x-ms-request-id': 'a197d30a-801e-005d-42ab-6dfd3a000000'
-    'x-ms-client-request-id': 'b58baa95-d99e-11f1-80db-d4f32df15686'
+    'x-ms-request-id': 'e6921c88-f01e-0068-44af-6d912e000000'
+    'x-ms-client-request-id': 'e801af09-d9a2-11f1-a5e5-d4f32df15686'
     'x-ms-version': 'REDACTED'
-    'Date': 'Fri, 06 Nov 2026 04:58:31 GMT'
-2026-11-06 10:28:31,965 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307168-9b98-4eb0-bfb6-4a861538c05e.json'
+    'Date': 'Fri, 06 Nov 2026 05:28:34 GMT'
+2026-11-06 10:58:34,677 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6cc86-18b3-47f5-abac-840f3a3ae361.json'
 Request method: 'PUT'
 Request headers:
-    'Content-Length': '6904'
+    'Content-Length': '7288'
     'x-ms-blob-type': 'REDACTED'
     'x-ms-version': 'REDACTED'
     'Content-Type': 'application/octet-stream'
     'Accept': 'application/xml'
     'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
     'x-ms-date': 'REDACTED'
-    'x-ms-client-request-id': 'b6c58841-d99e-11f1-89c1-d4f32df15686'
+    'x-ms-client-request-id': 'e9454509-d9a2-11f1-99a7-d4f32df15686'
     'Authorization': 'REDACTED'
 A body is sent with the request
-2026-11-06 10:28:33,903 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+2026-11-06 10:58:36,536 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
 Response headers:
     'Content-Length': '0'
     'Content-MD5': 'REDACTED'
-    'Last-Modified': 'Fri, 06 Nov 2026 04:58:33 GMT'
-    'ETag': '"0x8DF3BC29C06F878"'
+    'Last-Modified': 'Fri, 06 Nov 2026 05:28:36 GMT'
+    'ETag': '"0x8DF3BC6CE79020E"'
     'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
-    'x-ms-request-id': '5522bfb8-201e-0019-56ab-6d7705000000'
-    'x-ms-client-request-id': 'b6c58841-d99e-11f1-89c1-d4f32df15686'
+    'x-ms-request-id': '6bc55f65-901e-008a-19af-6dac0f000000'
+    'x-ms-client-request-id': 'e9454509-d9a2-11f1-99a7-d4f32df15686'
     'x-ms-version': 'REDACTED'
     'x-ms-content-crc64': 'REDACTED'
     'x-ms-request-server-encrypted': 'REDACTED'
-    'Date': 'Fri, 06 Nov 2026 04:58:32 GMT'
-[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'Inserting', 'Logs': ' Two by Two inserting into DB for action l1', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'missingFields': ['processKey', 'input_key']}}
+    'Date': 'Fri, 06 Nov 2026 05:28:36 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6c
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'Inserting', 'Logs': ' Two by Two inserting into DB for action l2', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'missingFields': ['processKey', 'input_key']}}
 [TRACE] Attempting Redis publish: Inserting
 [TRACE] Redis message published successfully: Inserting
 
@@ -253,13 +330,10 @@ RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 [TRACE] DB_Operations: Running INSERT operation for output
 --- Running Insert Operation ---
 --- Creating a new sub_step_output record ---
-sub_step_output_data: {'sub_step_key': 1221, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 353, 'output_name': 'viability-feasibility Output', 'output_descriptio
-
--- Creating a new sub_step_output record ---
-sub_step_output_data: {'sub_step_key': 1221, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 353, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307168-9b98-4eb0-bfb6-4a861538c05e.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307168-9b98-4eb0-bfb6-4a861538c05e.json', 'output_file_size_mbs': 2}
-new_output_obj: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4C8DFE90>, 'sub_step_key': 1221, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 353, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307168-9b98-4eb0-bfb6-4a861538c05e.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307168-9b98-4eb0-bfb6-4a861538c05e.json', 'output_file_size_mbs': 2}
-Successfully created output record with key: 344
-Details: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4C8DFE90>, 'output_key': 344, 'generated_for_input_key': 353, 'output_description': '', 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307168-9b98-4eb0-bfb6-4a861538c05e.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_size_mbs': 2, 'sub_step_key': 1221, 'output_type_key': 2, 'output_name': 'viability-feasibility Output', 'output_order': 1, 'output_json': None, 'output_file_path': 'NV_PoC_V1/outputs/1/98/1221/viability_feasibility_output_00307168-9b98-4eb0-bfb6-4a861538c05e.json', 'created_date': datetime.datetime(2026, 11, 6, 4, 58, 37, 782689, tzinfo=datetime.timezone.utc)}
+sub_step_output_data: {'sub_step_key': 1222, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 354, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6cc86-18b3-47f5-abac-840f3a3ae361.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6cc86-18b3-47f5-abac-840f3a3ae361.json', 'output_file_size_mbs': 2}
+new_output_obj: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4D973A70>, 'sub_step_key': 1222, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 354, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6cc86-18b3-47f5-abac-840f3a3ae361.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6cc86-18b3-47f5-abac-840f3a3ae361.json', 'output_file_size_mbs': 2}
+Successfully created output record with key: 346
+Details: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4D973A70>, 'output_key': 346, 'generated_for_input_key': 354, 'output_description': '', 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6cc86-18b3-47f5-abac-840f3a3ae361.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_size_mbs': 2, 'sub_step_key': 1222, 'output_type_key': 2, 'output_name': 'viability-feasibility Output', 'output_order': 1, 'output_json': None, 'output_file_path': 'NV_PoC_V1/outputs/1/98/1222/viability_feasibility_output_22c6cc86-18b3-47f5-abac-840f3a3ae361.json', 'created_date': datetime.datetime(2026, 11, 6, 5, 28, 40, 538139, tzinfo=datetime.timezone.utc)}
 
 --- Operations finished ---
 
@@ -269,31 +343,31 @@ Details: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x
 
 --- Updating the blueprinting_process_sub_step_output record ---
 [TRACE] DB_Update: Completed crud operation
-Successfully updated output record with key: 1221
-Updated Description: viability-n-feasibility-1793940363595
+Successfully updated output record with key: 1222
+Updated Description: viability-n-feasibility-1793941731362
 
 --- Operations finished ---
-{'ID': 'viability-feasibility-1221-1793940367697', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l1', 'input_key': 0, 'substepkey': 1221, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1221, 'input_key': 0, 'ID': 'viability-feasibility-1221-1793940367697', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T04:46:07.697Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1221:0:viability-feasibility-1221-1793940367697', 'missingFields': ['processKey', 'input_key']}}
+{'ID': 'viability-feasibility-1222-1793941733058', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l2', 'input_key': 0, 'substepkey': 1222, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1222, 'input_key': 0, 'ID': 'viability-feasibility-1222-1793941733058', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:08:53.058Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1222:0:viability-feasibility-1222-1793941733058', 'missingFields': ['processKey', 'input_key']}}
 [TRACE] Attempting Redis publish: Completed
 [TRACE] Redis message published successfully: Completed
 --- Reading app_user for email: gedchaitanya@deloitte.com ---
 Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
-2026-11-06 10:28:48,430 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+2026-11-06 10:58:52,929 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
 Request method: 'POST'
 Request headers:
     'Content-Type': 'application/json'
     'Content-Length': '14330'
     'Accept': 'application/json'
-    'x-ms-client-request-id': 'c095c630-d99e-11f1-9bac-d4f32df15686'
+    'x-ms-client-request-id': 'f426a72b-d9a2-11f1-8271-d4f32df15686'
     'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
     'x-ms-date': 'REDACTED'
     'x-ms-content-sha256': 'REDACTED'
     'x-ms-return-client-request-id': 'true'
     'Authorization': 'REDACTED'
 A body is sent with the request
-2026-11-06 10:28:51,311 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+2026-11-06 10:58:56,038 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
 Response headers:
-    'Date': 'Fri, 06 Nov 2026 04:58:51 GMT'
+    'Date': 'Fri, 06 Nov 2026 05:28:55 GMT'
     'Content-Type': 'application/json; charset=utf-8'
     'Content-Length': '77'
     'Connection': 'keep-alive'
@@ -304,65 +378,19 @@ Response headers:
     'x-azure-ref': 'REDACTED'
     'Strict-Transport-Security': 'REDACTED'
     'X-Cache': 'REDACTED'
-2026-11-06 10:28:51,311 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/ab9ceb09-0da6-42c5-b2d1-058c688c677a?api-version=2025-09-01'
+2026-11-06 10:58:56,042 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/086605f1-12de-49cd-ad5d-8c104a56e07a?api-version=2025-09-01'
 Request method: 'GET'
 Request headers:
-    'x-ms-client-request-id': 'c095c630-d99e-11f1-9bac-d4f32df15686'
+    'x-ms-client-request-id': 'f426a72b-d9a2-11f1-8271-d4f32df15686'
     'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
     'x-ms-date': 'REDACTED'
     'x-ms-content-sha256': 'REDACTED'
     'x-ms-return-client-request-id': 'true'
     'Authorization': 'REDACTED'
 No body was attached to the request
-2026-11-06 10:28:51,673 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+2026-11-06 10:58:56,579 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
 Response headers:
-    'Date': 'Fri, 06 Nov 2026 04:58:51 GMT'
-    'Content-Type': 'application/json; charset=utf-8'
-    'Content-Length': '77'
-    'Connection': 'keep-alive'
-    'Retry-After': '3'
-    'MS-CV': 'REDACTED'
-    'api-supported-versions': 'REDACTED'
-    'x-azure-ref': 'REDACTED'
-    'Strict-Transport-Security': 'REDACTED'
-    'X-Cache': 'REDACTED'
-    'Accept-Ranges': 'REDACTED'
-2026-11-06 10:28:54,674 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/ab9ceb09-0da6-42c5-b2d1-058c688c677a?api-version=2025-09-01'
-Request method: 'GET'
-Request headers:
-    'x-ms-client-request-id': 'c095c630-d99e-11f1-9bac-d4f32df15686'
-    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
-    'x-ms-date': 'REDACTED'
-    'x-ms-content-sha256': 'REDACTED'
-    'x-ms-return-client-request-id': 'true'
-    'Authorization': 'REDACTED'
-No body was attached to the request
-2026-11-06 10:28:55,028 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
-Response headers:
-    'Date': 'Fri, 06 Nov 2026 04:58:54 GMT'
-    'Content-Type': 'application/json; charset=utf-8'
-    'Content-Length': '77'
-    'Connection': 'keep-alive'
-    'Retry-After': '3'
-    'MS-CV': 'REDACTED'
-    'api-supported-versions': 'REDACTED'
-    'x-azure-ref': 'REDACTED'
-    'Strict-Transport-Security': 'REDACTED'
-    'X-Cache': 'REDACTED'
-    'Accept-Ranges': 'REDACTED'
-2026-11-06 10:28:58,030 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/ab9ceb09-0da6-42c5-b2d1-058c688c677a?api-version=2025-09-01'
-Request method: 'GET'
-Request headers:
-    'x-ms-client-request-id': 'c095c630-d99e-11f1-9bac-d4f32df15686'
-    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
-    'x-ms-date': 'REDACTED'
-    'x-ms-content-sha256': 'REDACTED'
-    'x-ms-return-client-request-id': 'true'
-    'Authorization': 'REDACTED'
-No body was attached to the request
-2026-11-06 10:28:58,383 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
-Response headers:
-    'Date': 'Fri, 06 Nov 2026 04:58:58 GMT'
+    'Date': 'Fri, 06 Nov 2026 05:28:56 GMT'
     'Content-Type': 'application/json; charset=utf-8'
     'Content-Length': '77'
     'Connection': 'keep-alive'
