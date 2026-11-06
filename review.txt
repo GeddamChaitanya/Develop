@@ -1,3 +1,87 @@
+2x2_fit_cost_98_20261106_102827_974890.json output file 
+
+{
+  "processKey": 98,
+  "analysis_type": "l1",
+  "lookup_summary": {
+    "available": true,
+    "counts": {
+      "L1": 15,
+      "L2": 50,
+      "L3": 164
+    },
+    "ambiguous_paths": []
+  },
+  "fit_cost_lines": [
+    "- Capability: Strategy & Governance; uniqueId: l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0; High Fit %: 42; Cost Saving Opportunity: 16022479"
+  ],
+  "capability_matrix": [
+    {
+      "uniqueId": "l1-salary-opex-b20ba69a-03d8-4af4-8706-668eea081eb0",
+      "l1CapabilityName": "Strategy & Governance",
+      "l1CapabilityDescription": "Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.",
+      "viability": [
+        {
+          "dimension": "Strategic Centrality",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Strategy & Governance is core-adjacent, reinforcing differentiation by ensuring consistent strategic execution and robust oversight across the enterprise. Its foundational role in guiding the company's direction and managing compliance makes it materially linked to business strategy."
+        },
+        {
+          "dimension": "Cost Reduction Potential",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: The Strategy & Governance capability has a High Fit % of 42 for agentic automation, indicating a significant portion of its activities could be automated. This translates to a potential operating expense reduction exceeding 40%, aligning with a structural opex step-change at scale."
+        },
+        {
+          "dimension": "Revenue Generation Potential",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: The Strategy & Governance capability, by its nature, is primarily an internal function focused on oversight, policy, and compliance rather than direct market engagement. Therefore, it is unlikely to have a discernible direct revenue effect or create new monetizable products."
+        },
+        {
+          "dimension": "Throughput / Cycle-Time Improvement",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: With a 42% High Fit for agentic automation, the Strategy & Governance capability, particularly in areas like regulatory reporting, can achieve significant cycle time reductions. Automating data gathering, validation, and report generation will eliminate major handoffs and rework, leading to over 40% end-to-end cycle time improvement."
+        },
+        {
+          "dimension": "Customer Experience Impact",
+          "score": "LOW",
+          "source_reasoning": "AI Generated: As an internal function, improvements in Strategy & Governance primarily benefit internal stakeholders and operational efficiency rather than directly impacting external customer journeys. Any customer experience benefits would be minimal and hard to detect, such as avoiding regulatory fines that might indirectly affect customer trust."
+        }
+      ],
+      "feasibility": [
+        {
+          "dimension": "Data Readiness",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: Regulatory reporting, a key component of Strategy & Governance, relies on clean, complete, and well-governed data with strong lineage and quality measures. The nature of compliance demands near real-time availability and clear data ownership, making this capability highly data-ready for automation."
+        },
+        {
+          "dimension": "Integration & Technical Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: The need for accurate and timely regulatory reporting within Strategy & Governance typically necessitates robust data integration from core systems. This suggests a mostly modern technical stack with established integration points, making automation straightforward with moderate effort and evaluation methods possible."
+        },
+        {
+          "dimension": "Standardization & Scalability Potential",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: Regulatory reporting, a significant part of Strategy & Governance, is inherently driven by standardized rules and processes, allowing for a very high degree of straight-through processing. This capability involves predominantly standard cases with minimal physical steps, enabling near-zero marginal cost to scale automation across business units."
+        },
+        {
+          "dimension": "Operating Model & Change Readiness",
+          "score": "MEDIUM",
+          "source_reasoning": "AI Generated: While the benefits of automating parts of Strategy & Governance are clear, defining a change plan may encounter uneven executive support and stakeholder buy-in due to the sensitive nature of oversight and control. ROI tracking may be possible but could be unclear given the indirect nature of some governance benefits."
+        },
+        {
+          "dimension": "Compliance considerations",
+          "score": "MEDIUM",
+          "source_reasoning": "AI Generated: Automating aspects of Strategy & Governance, particularly regulatory reporting, inherently involves navigating significant compliance considerations. While the goal is to ensure adherence, the automation itself will require reasonable effort to seek approval and demonstrate compliance with geographic and regulatory constraints."
+        }
+      ],
+      "viability_score": 2.57,
+      "feasibility_score": 3.31,
+      "overall_summary": "No summary provided."
+    }
+  ]
+}
+
+--------------------------------------------------------------------------------------------------------------------
 2026-11-06 10:21:23,126 - uvicorn.access - INFO - 127.0.0.1:62038 - "GET /openapi.json HTTP/1.1" 200
 === /twobytwo REQUEST === {"stepKey":487,"substepkey":1221,"processName":"Blueprinting Analysis-#98","processKey":98,"input_key":353,"input_name":"ViabilityFeasibilityRequest","OutputKey":0,"ProjectKey":1,"WorkspaceName":"blueprinting-testing","ParentWorkspaceName":"Ascend","WorkspaceDescription":"Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.","discount_rate":0.1,"TwoByTwoOutPutKeys":[],"receiverEmail":"gedchaitanya@deloitte.com"}
 2026-11-06 10:26:50,341 - uvicorn.access - INFO - 127.0.0.1:56348 - "POST /api/v1/twobytwo HTTP/1.1" 202
