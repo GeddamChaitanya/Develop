@@ -1,3 +1,88 @@
+2x2_fit_cost_98_20261106_105831_400702.json
+
+{
+  "processKey": 98,
+  "analysis_type": "l2",
+  "lookup_summary": {
+    "available": true,
+    "counts": {
+      "L1": 15,
+      "L2": 50,
+      "L3": 164
+    },
+    "ambiguous_paths": []
+  },
+  "fit_cost_lines": [
+    "- Capability: Compliance Management; uniqueId: l2-salary-opex-48adf938-6a6c-4a2f-acc5-ad2395b980d8; High Fit %: 49; Cost Saving Opportunity: 3537393"
+  ],
+  "capability_matrix": [
+    {
+      "uniqueId": "l2-salary-opex-48adf938-6a6c-4a2f-acc5-ad2395b980d8",
+      "l1CapabilityName": "Security, Risk & Resilience",
+      "l1CapabilityDescription": "Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.",
+      "l2CapabilityName": "Compliance Management",
+      "l2CapabilityDescription": "Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.",
+      "viability": [
+        {
+          "dimension": "Strategic Centrality",
+          "score": "HIGH",
+          "source_reasoning": "Compliance Management is core-adjacent, reinforcing the organization's ability to operate across multiple business units and regions by ensuring adherence to diverse laws and regulations. Failure in this area would significantly impact business strategy and operational continuity. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Cost Reduction Potential",
+          "score": "HIGH",
+          "source_reasoning": "The capability presents a significant Cost Saving Opportunity of $3,537,393, which represents approximately 33.6% of the L2 capability's total opex. This aligns with the 'High' rubric definition of 30-40% operating expense reduction through large recurring labor savings. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Revenue Generation Potential",
+          "score": "VERY LOW",
+          "source_reasoning": "Compliance Management primarily focuses on risk mitigation and adherence to regulations, which are cost-center activities rather than direct revenue-generating functions. There is no discernible direct revenue effect from improving this capability. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Throughput / Cycle-Time Improvement",
+          "score": "VERY HIGH",
+          "source_reasoning": "With a High Fit % of 49, a substantial portion of Compliance Management activities, such as monitoring and testing, can be automated by AI agents. This automation is expected to reduce end-to-end cycle times by over 40%, eliminating major manual handoffs and rework. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Customer Experience Impact",
+          "score": "LOW",
+          "source_reasoning": "Compliance Management is primarily an internal function focused on regulatory adherence, offering minimal direct perceived benefit to the customer journey or segments. Improvements in this area are unlikely to directly translate into detectable improvements in customer experience dimensions like NPS or CSAT. (Source: AI Generated)"
+        }
+      ],
+      "feasibility": [
+        {
+          "dimension": "Data Readiness",
+          "score": "HIGH",
+          "source_reasoning": "Effective Compliance Management relies on well-governed data from various systems for monitoring and testing, suggesting that data quality and stewardship are generally prioritized. While minor coverage or quality gaps may exist across diverse data sources, the data is largely complete and managed. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Integration & Technical Readiness",
+          "score": "MEDIUM",
+          "source_reasoning": "Compliance Management requires integration across a diverse landscape of internal systems, likely involving a mix of legacy and modern technologies. While integration is feasible, it will require sustained effort, and evaluating the accuracy and auditability of automated compliance results may necessitate novel investment. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Standardization & Scalability Potential",
+          "score": "MEDIUM",
+          "source_reasoning": "While a significant portion of Compliance Management involves standard cases suitable for automation, the landscape is also characterized by frequently changing regulations and a blend of standard and exception-heavy scenarios. Manual validations will often be required to build confidence or meet regulatory expectations, and scaling across diverse business units or regions will incur clear costs. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Operating Model & Change Readiness",
+          "score": "MEDIUM",
+          "source_reasoning": "Implementing agentic automation in Compliance Management will require careful change management, as it involves critical functions and potential regulatory scrutiny. While a change plan is definable, uneven executive support and stakeholder buy-in are expected due to the sensitivity of the domain, and ROI tracking may be possible but is unclear. (Source: AI Generated)"
+        },
+        {
+          "dimension": "Compliance considerations",
+          "score": "LOW",
+          "source_reasoning": "Automating Compliance Management inherently involves navigating tight regulatory limits and ensuring the automation itself meets stringent legal and audit requirements. The regulatory landscape can be inconsistent across geographies, requiring significant effort and approvals. (Source: AI Generated)"
+        }
+      ],
+      "viability_score": 2.32,
+      "feasibility_score": 2.37,
+      "overall_summary": "No summary provided."
+    }
+  ]
+}
+-------------------------------------------------------------------------------------------------------
 2026-11-06 10:39:06,912 - watchfiles.main - INFO - 1 change detected
 === /twobytwo REQUEST === {"stepKey":487,"substepkey":1222,"processName":"Blueprinting Analysis-#98","processKey":98,"input_key":354,"input_name":"ViabilityFeasibilityRequest","OutputKey":0,"ProjectKey":1,"WorkspaceName":"blueprinting-testing","ParentWorkspaceName":"Ascend","WorkspaceDescription":"Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.","discount_rate":0.1,"TwoByTwoOutPutKeys":[],"receiverEmail":"gedchaitanya@deloitte.com"}
 2026-11-06 10:57:02,876 - uvicorn.access - INFO - 127.0.0.1:63254 - "POST /api/v1/twobytwo HTTP/1.1" 202
