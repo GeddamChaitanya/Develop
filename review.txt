@@ -1,46 +1,416 @@
-Proposed outline: “Running the GenAI API (ascend/develop) Locally”
+{
+  "processKey": 85,
+  "analysis_type": "l1",
+  "lookup_summary": {
+    "available": false,
+    "counts": {
+      "L1": 0,
+      "L2": 0,
+      "L3": 0
+    },
+    "ambiguous_paths": []
+  },
+  "fit_cost_lines": [],
+  "capability_matrix": [
+    {
+      "uniqueId": "l1-opex-2-1791896770906",
+      "l1CapabilityName": "OSS, BSS & Digital Platforms",
+      "l1CapabilityDescription": "Provides the systems backbone for telecom products, network operations, customer care and monetization.",
+      "viability": [
+        {
+          "dimension": "Strategic Centrality",
+          "score": "VERY HIGH",
+          "source_reasoning": "This capability is the core systems backbone for telecom products, network operations, customer care, and monetization. Losing or failing to innovate in this area would directly erode profit pools and market share within 12-24 months, as it underpins all critical business functions. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Cost Reduction Potential",
+          "score": "HIGH",
+          "source_reasoning": "As the systems backbone for a large portion of the company's operations (18% of total opex), this capability offers significant potential for large recurring labor and logistics savings. The L3 example of product catalog management shows 65% high-fit labor, suggesting a 30-40% operating expense reduction is achievable across multiple functions within this broad L1 capability. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Revenue Generation Potential",
+          "score": "HIGH",
+          "source_reasoning": "Enhancing OSS, BSS, and Digital Platforms can directly lead to faster time-to-market for new products, improved customer conversion through better digital experiences, and optimized pricing strategies. This capability is expected to drive a 1-2% revenue uplift in targeted scopes by improving product offerings and customer interactions. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Throughput / Cycle-Time Improvement",
+          "score": "HIGH",
+          "source_reasoning": "This capability, as the systems backbone, involves numerous interconnected processes across product, network, and customer care. Automating workflows like new offer launches and real-time checks, as seen in product catalog management, can lead to a 30-40% end-to-end cycle-time reduction by eliminating major handoffs and fragmentation. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Customer Experience Impact",
+          "score": "HIGH",
+          "source_reasoning": "As the foundation for customer care and digital platforms, improvements in this capability will directly enhance multiple priority customer journeys and segments. This will lead to measurable impacts on customer experience dimensions such as NPS, CSAT, and retention through smoother interactions and better service delivery. (Source: l1-opex-2-1791896770906)"
+        }
+      ],
+      "feasibility": [
+        {
+          "dimension": "Data Readiness",
+          "score": "MEDIUM",
+          "source_reasoning": "Given the broad nature of OSS, BSS, and Digital Platforms in a large telecom, data quality is likely to vary significantly by region, product, and system. While some areas like product catalog management may have structured data, overall data completeness and governance will require moderate effort to address existing gaps. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Integration & Technical Readiness",
+          "score": "MEDIUM",
+          "source_reasoning": "This capability encompasses a vast \"systems backbone\" for telecom, implying a mixed landscape of legacy OSS/BSS and more modern digital platforms. Integration will be feasible but require sustained effort due to the inherent complexity and heterogeneity of these systems, rather than being straightforward. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Standardization & Scalability Potential",
+          "score": "MEDIUM",
+          "source_reasoning": "While core product catalog management activities like automated data entry and price updates suggest a high degree of standardization, the broader OSS, BSS, and Digital Platforms capability likely involves a blend of standard and exception-heavy cases. Rules can frequently change due to market dynamics and regulatory shifts, requiring ongoing adjustments. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Operating Model & Change Readiness",
+          "score": "MEDIUM",
+          "source_reasoning": "Given that this capability is the \"systems backbone\" for a large part of the organization, defining a change plan is possible, but achieving consistent executive support and broad stakeholder buy-in will likely be uneven. The sheer scale and interconnectedness of OSS, BSS, and Digital Platforms mean many teams will be impacted, leading to potential resistance. (Source: l1-opex-2-1791896770906)"
+        },
+        {
+          "dimension": "Compliance considerations",
+          "score": "MEDIUM",
+          "source_reasoning": "As the \"systems backbone\" for telecom products and customer care, this capability operates within a highly regulated industry with significant geographic and regulatory constraints. While not prohibitive, reasonable effort will be required to seek and secure necessary approvals for agentic automation, especially concerning data privacy and service reliability. (Source: l1-opex-2-1791896770906)"
+        }
+      ],
+      "viability_score": 3.3,
+      "feasibility_score": 2.03,
+      "overall_summary": "No summary provided."
+    }
+  ]
+}
+-----------------------------------------------------------------------------------------------------------------------------------
+2026-11-06 13:25:42,491 - watchfiles.main - INFO - 1 change detected
+=== /twobytwo REQUEST === {"stepKey":422,"substepkey":1224,"processName":"Blueprinting Analysis-#85","processKey":85,"input_key":368,"input_name":"ViabilityFeasibilityRequest","OutputKey":0,"ProjectKey":1,"WorkspaceName":"blueprinting-testing","ParentWorkspaceName":"Ascend","WorkspaceDescription":"Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.","discount_rate":0.1,"TwoByTwoOutPutKeys":[],"receiverEmail":"gedchaitanya@deloitte.com"}
+2026-11-06 16:38:24,299 - uvicorn.access - INFO - 127.0.0.1:60001 - "POST /api/v1/twobytwo HTTP/1.1" 202
+[TRACE] Received input_data: {"stepKey":422,"substepkey":1224,"processName":"Blueprinting Analysis-#85","processKey":85,"input_k
+--- Reading input record for input_key: 368 ---
+2026-11-06 16:38:28,631 - watchfiles.main - INFO - 1 change detected
+Successfully retrieved input record with input_key: 368
+Details: Input Name: ViabilityFeasibilityRequest, Sub Step Key: 1224, Input Order: 1
+--- Reading survey responses for project_id: 1 ---
+[ERROR] CRUD_Get_SurveyResponses - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\sql\util.py:787: RuntimeWarning: coroutine 'Connection._cancel' was never awaited
+  ", ".join(trunc(value) for value in items_first_batch),
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[ERROR] DB_Read_SurveyResponses - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading survey responses: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch survey context for project 1: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+--- Reading supporting files for project_key: 1 ---
+[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_ProjectSupportingFiles - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading supporting files: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch file context for project 1: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[TRACE] Starting agentic fit allocation for action: l1
 
-1. Purpose. One or two lines on what the guide covers: running the aai-bpt-genaiapi repo locally on the ascend/develop branch.
+--- Starting database operations ---
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
 
-2. Prerequisites
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 1224
+Updated Description: viability-n-feasibility-1793963177888
 
-Windows with PowerShell
-Python 3.12 (the py launcher)
-Git, plus access to the aai-bpt-genaiapi repo
-GP VPN connected, needed for the dev DB, Redis and blob storage
-The run.ps1 file with environment values, shared separately by the team
+--- Operations finished ---
+{'ID': 'viability-feasibility-1224-1793963179305', 'Status': 'Started', 'Logs': ' Started generating for Two by Two for action l1', 'input_key': 0, 'substepkey': 1224, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1224, 'input_key': 0, 'ID': 'viability-feasibility-1224-1793963179305', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1224:0:viability-feasibility-1224-1793963179305', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+[TRACE] Progress monitor started for ID: viability-feasibility-1224-1793963179305
+{'ID': 'viability-feasibility-1224-1793963179305', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1224, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:1224:0:viability-feasibility-1224-1793963179305', 'substepkey': 1224, 'input_key': 0, 'ID': 'viability-feasibility-1224-1793963179305', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'action': 'l1', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+2026-11-06 16:39:15,792 - sqlalchemy.pool.impl.AsyncAdaptedQueuePool - ERROR - Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x0000015E4D9B6850>>
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 697, in _write_appdata
+    self._do_write()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 716, in _do_write
+    self._process_outgoing()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 722, in _process_outgoing
+    self._transport.write(data)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 366, in write
+    self._loop_writing(data=bytes(data))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send'
 
-3. Get the code. Clone the repo, switch to ascend/develop, and pull the latest.
+During handling of the above exception, another exception occurred:
 
-4. Create the virtual environment. py -3.12 -m venv .venv
+Traceback (most recent call last):
+  File "asyncpg/protocol/protocol.pyx", line 597, in asyncpg.protocol.protocol.BaseProtocol.close
+  File "asyncpg/protocol/coreproto.pyx", line 1211, in asyncpg.protocol.protocol.CoreProtocol._terminate
+  File "asyncpg/protocol/protocol.pyx", line 980, in asyncpg.protocol.protocol.BaseProtocol._write
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 222, in write
+    self._ssl_protocol._write_appdata((data,))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 700, in _write_appdata
+    self._fatal_error(ex, 'Fatal error on SSL protocol')
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 918, in _fatal_error
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
 
-5. Activate the virtual environment
+During handling of the above exception, another exception occurred:
 
-The execution-policy command, then .\.venv\Scripts\Activate.ps1
-How to confirm it worked: (.venv) appears in the prompt
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1536, in close
+    await self._protocol.close(timeout)
+  File "asyncpg/protocol/protocol.pyx", line 606, in close
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
 
-6. Install dependencies. Upgrade pip, then pip install -r requirements.txt.
+During handling of the above exception, another exception occurred:
 
-7. Load the environment variables. Put run.ps1 in the repo root, then run . .\run.ps1, with the leading dot.
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 372, in _close_connection
+    self._dialect.do_terminate(connection)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1127, in do_terminate
+    dbapi_connection.terminate()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 402, in terminate
+    self.await_(asyncio.shield(self._terminate_graceful_close()))  # type: ignore[attr-defined] # noqa: E501
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 912, in _terminate_graceful_close
+    await self._connection.close(timeout=2)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1539, in close
+    self._abort()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1600, in _abort
+    self._protocol.abort()
+  File "asyncpg/protocol/protocol.pyx", line 567, in asyncpg.protocol.protocol.BaseProtocol.abort
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 250, in abort
+    self._force_close(None)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 255, in _force_close
+    self._ssl_protocol._abort(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 674, in _abort
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[TRACE] Redis message published successfully: In Progress
+2026-11-06 16:39:20,046 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/85/898/Cost_Saving%20Potential%20Output_553cb6c4-137e-4767-a9e9-c1178aacc126.json'
+Request method: 'GET'
+Request headers:
+    'x-ms-range': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '83a91898-d9d2-11f1-84c0-d4f32df15686'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-11-06 16:39:22,156 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 404
+Response headers:
+    'Content-Length': '215'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'ef178bff-401e-0089-5cdf-6d4d6b000000'
+    'x-ms-client-request-id': '83a91898-d9d2-11f1-84c0-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'x-ms-error-code': 'BlobNotFound'
+    'Date': 'Fri, 06 Nov 2026 11:09:21 GMT'
+[TRACE] Warning: could not parse Cost Saving Potential output for process_key=85, output_key=270: The specified blob does not ex
+=== 2x2 FIT/COST LOOKUP | processKey=85 === {"available": false, "counts": {"L1": 0, "L2": 0, "L3": 0}, "ambiguous_paths": []}
+[TRACE] generate_two_by_two_analysis: attempt 1/3 – 1 capabilities in 1 batch(es)
 
-8. Start the API. The uvicorn command and port.
+=== 2x2 FIT/COST | analysis_type=l1 | uniqueIds=['l1-opex-2-1791896770906'] ===
 
-9. Verify it’s running
+E0000 00:00:1793963365.755569   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1793963365.766311   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'viability-feasibility-1224-1793963179305', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1224, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:1224:0:viability-feasibility-1224-1793963179305', 'substepkey': 1224, 'input_key': 0, 'ID': 'viability-feasibility-1224-1793963179305', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'action': 'l1', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'viability-feasibility-1224-1793963179305', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1224, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:1224:0:viability-feasibility-1224-1793963179305', 'substepkey': 1224, 'input_key': 0, 'ID': 'viability-feasibility-1224-1793963179305', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'action': 'l1', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+2026-11-06 16:39:47,769 - watchfiles.main - INFO - 1 change detected
+[TRACE] Progress monitor stopped for ID: viability-feasibility-1224-1793963179305
+{'ID': 'viability-feasibility-1224-1793963179305', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l1', 'input_key': 0, 'substepkey': 1224, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1224, 'input_key': 0, 'ID': 'viability-feasibility-1224-1793963179305', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1224:0:viability-feasibility-1224-1793963179305', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Completed
+[TRACE] Redis message published successfully: Completed
+Generated response:  {'projectInfo': {'projectKey': 1, 'projectName': 'Enterprise Default Project_Testing', 'projectDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.', 'industry': 'Freight Transportation', 'sector': 'Transportation & Logistics', 'subSector': 'Road Freight and Trucking', 'clientKey': 1, 'ClientKey': 1, 'ProjectKey': 1, 'project_key': 1, 'clientName': 'Enterprise Default Project_Testing', 'clientDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.'}, 'backgroundProcessingInfo': {'receiverEmail': 'gedchaitanya@deloitte.com', 'substepkey': 1224, 'stepKey': 422, 'step_name': 'viability-n-feasibility-1793963177888', 'processKey': 85, 'processName': 'Blueprinting Analysis-#85', 'ID': 'viability-feasibility-1224-1793963179305', 'requestedOn': '2026-11-06T11:06:19.305Z', 'input_key': 0, 'input_name': '', 'outputKey': None, 'outputTypeKey': None, 'generatedForInputKey': None, 'outputTypeName': '', 'outputTypeDescription': '', 'outputName': '', 'outputJson': None, 'total_opex': None, 'category': 'l1'}, 'selected_capability_map': [{'uniqueId': 'l1-opex-2-1791896770906', 'l1CapabilityName': 'OSS, BSS & Digital Platforms', 'l1CapabilityDescription': 'Provides the systems backbone for telecom products, network operations, customer care and monetization.'}], 'capability_matrix': [{'uniqueId': 'l1-opex-2-1791896770906', 'l1CapabilityName': 'OSS, BSS & Digital Platforms', 'l1CapabilityDescription': 'Provides the systems backbone for telecom products, network operations, customer care and monetization.', 'viability': [{'dimension': 'Strategic Centrality', 'score': 'VERY HIGH', 'source_reasoning': 'This capability is the core systems backbone for telecom products, network operations, customer care, and monetization. Losing or failing to innovate in this area would directly erode profit pools and market share within 12-24 months, as it underpins all critical business functions. (Source: l1-opex-2-1791896770906)'}, {'dimension': 'Cost Reduction Potential', 'score': 'HIGH', 'source_reasoning': "As the systems backbone for a large portion of the company's operations (18% of total opex), this capability offers significant potential for large recurring labor and logistics savings. The L3 example of product catalog management shows 65% high-fit labor, suggesting a 30-40% operating expense reduction is achievable across multiple functions within this broad L1 capability. (Source: l1-opex-2-1791896770906)"}, {'dimension': 'Revenue Generation Potential', 'score': 'HIGH', 'source_reasoning': 'Enhancing OSS, BSS, and Digital Platforms can directly lead to faster time-to-market for new products, improved customer conversion through better digital experiences, and optimized pricing strategies. This capability is expected to drive a 1-2% revenue uplift in targeted scopes by improving product offerings and customer interactions. (Source: l1-opex-2-1791896770906)'}, {'dimension': 'Throughput / Cycle-Time Improvement', 'score': 'HIGH', 'source_reasoning': 'This capability, as the systems backbone, involves numerous interconnected processes across product, network, and customer care. Automating workflows like new offer launches and real-time checks, as seen in product catalog management, can lead to a 30-40% end-to-end cycle-time reduction by eliminating major handoffs and fragmentation. (Source: l1-opex-2-1791896770906)'}, {'dimension': 'Customer Experience Impact', 'score': 'HIGH', 'source_reasoning': 'As the foundation for customer care and digital platforms, improvements in this capability will directly enhance multiple priority customer journeys and segments. This will lead to measurable impacts on customer experience dimensions such as NPS, CSAT, and retention through smoother interactions and better service delivery. (Source: l1-opex-2-1791896770906)'}], 'feasibility': [{'dimension': 'Data Readiness', 'score': 'MEDIUM', 'source_reasoning': 'Given the broad nature of OSS, BSS, and Digital Platforms in a large telecom, data quality is likely to vary significantly by region, product, and system. While some areas like product catalog management may have structured data, overall data completeness and governance will require moderate effort to address existing gaps. (Source: l1-opex-2-1791896770906)'}, {'dimension': 'Integration & Technical Readiness', 'score': 'MEDIUM', 'source_reasoning': 'This capability encompasses a vast "systems backbone" for telecom, implying a mixed landscape of legacy OSS/BSS and more modern digital platforms. Integration will be feasible but require sustained effort due to the inherent complexity and heterogeneity of these systems, rather than being straightforward. (Source: l1-opex-2-1791896770906)'}, {'dimension': 'Standardization & Scalability Potential', 'score': 'MEDIUM', 'source_reasoning': 'While core product catalog management activities like automated data entry and price updates suggest a high degree of standardization, the broader OSS, BSS, and Digital Platforms capability likely involves a blend of standard and exception-heavy cases. Rules can frequently change due to market dynamics and regulatory shifts, requiring ongoing adjustments. (Source: l1-opex-2-1791896770906)'}, {'dimension': 'Operating Model & Change Readiness', 'score': 'MEDIUM', 'source_reasoning': 'Given that this capability is the "systems backbone" for a large part of the organization, defining a change plan is possible, but achieving consistent executive support and broad stakeholder buy-in will likely be uneven. The sheer scale and interconnectedness of OSS, BSS, and Digital Platforms mean many teams will be impacted, leading to potential resistance. (Source: l1-opex-2-1791896770906)'}, {'dimension': 'Compliance considerations', 'score': 'MEDIUM', 'source_reasoning': 'As the "systems backbone" for telecom products and customer care, this capability operates within a highly regulated industry with significant geographic and regulatory constraints. While not prohibitive, reasonable effort will be required to seek and secure necessary approvals for agentic automation, especially concerning data privacy and service reliability. (Source: l1-opex-2-1791896770906)'}], 'viability_score': 3.3, 'feasibility_score': 2.03, 'overall_summary': 'No summary provided.'}]}
+2026-11-06 16:39:48,345 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '94876c1c-d9d2-11f1-968f-d4f32df15686'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-11-06 16:39:48,387 - watchfiles.main - INFO - 1 change detected
+2026-11-06 16:39:49,705 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'fcec8120-701e-0076-30df-6d7df6000000'
+    'x-ms-client-request-id': '94876c1c-d9d2-11f1-968f-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'Date': 'Fri, 06 Nov 2026 11:09:49 GMT'
+2026-11-06 16:39:53,052 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88fe08-6d80-4900-a6bb-fd463afe2bbc.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '7165'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': '9755a74f-d9d2-11f1-bf10-d4f32df15686'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-11-06 16:39:54,435 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Fri, 06 Nov 2026 11:09:54 GMT'
+    'ETag': '"0x8DF3BF67C3EAB04"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'd29ed7b9-b01e-0034-1fdf-6dc476000000'
+    'x-ms-client-request-id': '9755a74f-d9d2-11f1-bf10-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Fri, 06 Nov 2026 11:09:53 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88f
+{'ID': 'viability-feasibility-1224-1793963179305', 'Status': 'Inserting', 'Logs': ' Two by Two inserting into DB for action l1', 'input_key': 0, 'substepkey': 1224, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1224, 'input_key': 0, 'ID': 'viability-feasibility-1224-1793963179305', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1224:0:viability-feasibility-1224-1793963179305', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Inserting
+[TRACE] Redis message published successfully: Inserting
 
-Open Swagger at http://127.0.0.1:<port>/api/v1/docs
-Check /health/live and /health/ready
+--- Starting database operations ---
+C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\db\db_operations_orm.py:386: RuntimeWarning: coroutine 'read_latest_sub_step_output_by_input_key' was never awaited
+  resolved_output_key = resolve_idempotent_output_key(
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[TRACE] DB_Operations: Running INSERT operation for output
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+sub_step_output_data: {'sub_step_key': 1224, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 368, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88fe08-6d80-4900-a6bb-fd463afe2bbc.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88fe08-6d80-4900-a6bb-fd463afe2bbc.json', 'output_file_size_mbs': 2}
+new_output_obj: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4DDB3590>, 'sub_step_key': 1224, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 368, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88fe08-6d80-4900-a6bb-fd463afe2bbc.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88fe08-6d80-4900-a6bb-fd463afe2bbc.json', 'output_file_size_mbs': 2}
+Successfully created output record with key: 360
+Details: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4DDB3590>, 'output_key': 360, 'generated_for_input_key': 368, 'output_description': '', 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88fe08-6d80-4900-a6bb-fd463afe2bbc.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_size_mbs': 2, 'sub_step_key': 1224, 'output_type_key': 2, 'output_name': 'viability-feasibility Output', 'output_order': 1, 'output_json': None, 'output_file_path': 'NV_PoC_V1/outputs/1/85/1224/viability_feasibility_output_4c88fe08-6d80-4900-a6bb-fd463afe2bbc.json', 'created_date': datetime.datetime(2026, 11, 6, 11, 9, 58, 444151, tzinfo=datetime.timezone.utc)}
 
-10. Daily start (quick steps). For each new terminal: activate the venv, load run.ps1, start uvicorn.
+--- Operations finished ---
 
-11. Troubleshooting
+--- Starting database operations ---
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
 
-“Python was not found”: use py instead of python
-DB_string environment variable is not set: run.ps1 wasn’t loaded in this terminal
-The script can’t run: the execution-policy step was skipped
-DB or Redis connection errors: check the VPN
-Known harmless warnings (the ALTS creds message, the deprecation warnings)
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 1224
+Updated Description: viability-n-feasibility-1793963177888
 
-12. Security notes
-
-Never commit run.ps1. Add it to .git/info/exclude.
-Share run.ps1 only over a private channel (a Teams DM), never in a document, email thread or repo.
+--- Operations finished ---
+{'ID': 'viability-feasibility-1224-1793963179305', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l1', 'input_key': 0, 'substepkey': 1224, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1224, 'input_key': 0, 'ID': 'viability-feasibility-1224-1793963179305', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T11:06:19.305Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1224:0:viability-feasibility-1224-1793963179305', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Completed
+[TRACE] Redis message published successfully: Completed
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+2026-11-06 16:40:09,993 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14330'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'a16e3c08-d9d2-11f1-bc96-d4f32df15686'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-11-06 16:40:12,851 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Fri, 06 Nov 2026 11:10:12 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-11-06 16:40:12,854 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/cb8e7959-18d1-4bf6-9863-6aa280afee7f?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'a16e3c08-d9d2-11f1-bc96-d4f32df15686'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-11-06 16:40:13,184 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Fri, 06 Nov 2026 11:10:13 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
