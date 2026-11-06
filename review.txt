@@ -1,7 +1,9 @@
-Hi quick update on the 2×2 enhancement:
+I need to add some temporary debug output to smoke test the 2x2 fit and cost change locally. This is only for local testing and will be removed before the PR, so please keep it minimal, and mark every added line with a comment "# TEMP DEBUG - remove before PR" so I can find and delete it easily. Don't change any existing logic, and don't run anything.
 
-Done:
+First, in agents/two_by_two/two_by_two_generator.py inside _build_prompt, right after fit_cost_context_block is built, print the block to the console with a clear header that includes the analysis type and the unique IDs of the current batch, so I can see exactly what each LLM batch receives.
 
-/twobytwo now loads the saved Cost Saving Potential output by processKey and passes High Fit % and Cost Saving Opportunity (L1/L2 from l1_l2_heatmap, L3 from impact_analyzer) as context in _build_prompt(). It’s a read-only lookup, so the capability dicts aren’t modified, and the scoring logic is unchanged.
-The loader refactor in capability_double_click.py is in, as discussed, and CDC behavior is unchanged (its existing tests pass).
-25 new regression tests on mock data, all passing.
+Second, in apis/v1/two_by_two.py, please print the incoming request payload at the start of the /twobytwo handler, so I can see the exact fields the endpoint receives. After the lookup is built, print a short summary: the process key, how many L1, L2 and L3 entries the lookup has, and the ambiguous paths.
+
+Third, also in apis/v1/two_by_two.py, right after generate_two_by_two_analysis returns, write a temporary JSON file into a local folder named temp_debug in the project root, creating the folder if it doesn't exist. Name the file 2x2_fit_cost_<processKey>_<timestamp>.json. It should contain the process key, the analysis type, the lookup summary, the fit and cost lines for the selected capabilities, and the returned capability_matrix with each capability's viability, feasibility, scores and source_reasoning. Only include the fit and cost lines and the capability matrix, not the full prompt, since the prompt contains client survey and file content.
+
+Also, please show me the required and optional fields of AgenticFitAllocatorInput, the request model for /twobytwo, with their types, so I can build a valid Swagger payload. Explain how the handler uses input_key to load the saved input JSON from the database. Show me all the diffs before applying them.
