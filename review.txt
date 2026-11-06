@@ -1,3 +1,286 @@
+{
+  "processKey": 98,
+  "analysis_type": "l3",
+  "lookup_summary": {
+    "available": true,
+    "counts": {
+      "L1": 15,
+      "L2": 50,
+      "L3": 164
+    },
+    "ambiguous_paths": []
+  },
+  "fit_cost_lines": [
+    "- Capability: Regulatory Reporting; uniqueId: l3-salary-5-1793259344672; High Fit %: 43; Cost Saving Opportunity: 3491356.2974999994"
+  ],
+  "capability_matrix": [
+    {
+      "uniqueId": "l3-salary-5-1793259344672",
+      "l1CapabilityName": "Strategy & Governance",
+      "l1CapabilityDescription": "Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.",
+      "l2CapabilityName": "Regulatory & Compliance Management",
+      "l2CapabilityDescription": "Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.",
+      "l3CapabilityName": "Regulatory Reporting",
+      "l3CapabilityDescription": "This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.",
+      "viability": [
+        {
+          "dimension": "Strategic Centrality",
+          "score": "MEDIUM",
+          "source_reasoning": "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."
+        },
+        {
+          "dimension": "Cost Reduction Potential",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."
+        },
+        {
+          "dimension": "Revenue Generation Potential",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."
+        },
+        {
+          "dimension": "Throughput / Cycle-Time Improvement",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."
+        },
+        {
+          "dimension": "Customer Experience Impact",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."
+        }
+      ],
+      "feasibility": [
+        {
+          "dimension": "Data Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."
+        },
+        {
+          "dimension": "Integration & Technical Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."
+        },
+        {
+          "dimension": "Standardization & Scalability Potential",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."
+        },
+        {
+          "dimension": "Operating Model & Change Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."
+        },
+        {
+          "dimension": "Compliance considerations",
+          "score": "LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."
+        }
+      ],
+      "viability_score": 2.0,
+      "feasibility_score": 3.03,
+      "overall_summary": "No summary provided."
+    },
+    {
+      "uniqueId": "l3-salary-5-1793259344672",
+      "l1CapabilityName": "Strategy & Governance",
+      "l1CapabilityDescription": "Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.",
+      "l2CapabilityName": "Regulatory & Compliance Management",
+      "l2CapabilityDescription": "Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.",
+      "l3CapabilityName": "Regulatory Reporting",
+      "l3CapabilityDescription": "This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.",
+      "viability": [
+        {
+          "dimension": "Strategic Centrality",
+          "score": "MEDIUM",
+          "source_reasoning": "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."
+        },
+        {
+          "dimension": "Cost Reduction Potential",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."
+        },
+        {
+          "dimension": "Revenue Generation Potential",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."
+        },
+        {
+          "dimension": "Throughput / Cycle-Time Improvement",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."
+        },
+        {
+          "dimension": "Customer Experience Impact",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."
+        }
+      ],
+      "feasibility": [
+        {
+          "dimension": "Data Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."
+        },
+        {
+          "dimension": "Integration & Technical Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."
+        },
+        {
+          "dimension": "Standardization & Scalability Potential",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."
+        },
+        {
+          "dimension": "Operating Model & Change Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."
+        },
+        {
+          "dimension": "Compliance considerations",
+          "score": "LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."
+        }
+      ],
+      "viability_score": 2.0,
+      "feasibility_score": 3.03,
+      "overall_summary": "No summary provided."
+    },
+    {
+      "uniqueId": "l3-salary-5-1793259344672",
+      "l1CapabilityName": "Strategy & Governance",
+      "l1CapabilityDescription": "Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.",
+      "l2CapabilityName": "Regulatory & Compliance Management",
+      "l2CapabilityDescription": "Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.",
+      "l3CapabilityName": "Regulatory Reporting",
+      "l3CapabilityDescription": "This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.",
+      "viability": [
+        {
+          "dimension": "Strategic Centrality",
+          "score": "MEDIUM",
+          "source_reasoning": "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."
+        },
+        {
+          "dimension": "Cost Reduction Potential",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."
+        },
+        {
+          "dimension": "Revenue Generation Potential",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."
+        },
+        {
+          "dimension": "Throughput / Cycle-Time Improvement",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."
+        },
+        {
+          "dimension": "Customer Experience Impact",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."
+        }
+      ],
+      "feasibility": [
+        {
+          "dimension": "Data Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."
+        },
+        {
+          "dimension": "Integration & Technical Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."
+        },
+        {
+          "dimension": "Standardization & Scalability Potential",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."
+        },
+        {
+          "dimension": "Operating Model & Change Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."
+        },
+        {
+          "dimension": "Compliance considerations",
+          "score": "LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."
+        }
+      ],
+      "viability_score": 2.0,
+      "feasibility_score": 3.03,
+      "overall_summary": "No summary provided."
+    },
+    {
+      "uniqueId": "l3-salary-5-1793259344672",
+      "l1CapabilityName": "Strategy & Governance",
+      "l1CapabilityDescription": "Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.",
+      "l2CapabilityName": "Regulatory & Compliance Management",
+      "l2CapabilityDescription": "Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.",
+      "l3CapabilityName": "Regulatory Reporting",
+      "l3CapabilityDescription": "This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.",
+      "viability": [
+        {
+          "dimension": "Strategic Centrality",
+          "score": "MEDIUM",
+          "source_reasoning": "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."
+        },
+        {
+          "dimension": "Cost Reduction Potential",
+          "score": "VERY HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."
+        },
+        {
+          "dimension": "Revenue Generation Potential",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."
+        },
+        {
+          "dimension": "Throughput / Cycle-Time Improvement",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."
+        },
+        {
+          "dimension": "Customer Experience Impact",
+          "score": "VERY LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."
+        }
+      ],
+      "feasibility": [
+        {
+          "dimension": "Data Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."
+        },
+        {
+          "dimension": "Integration & Technical Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."
+        },
+        {
+          "dimension": "Standardization & Scalability Potential",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."
+        },
+        {
+          "dimension": "Operating Model & Change Readiness",
+          "score": "HIGH",
+          "source_reasoning": "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."
+        },
+        {
+          "dimension": "Compliance considerations",
+          "score": "LOW",
+          "source_reasoning": "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."
+        }
+      ],
+      "viability_score": 2.0,
+      "feasibility_score": 3.03,
+      "overall_summary": "No summary provided."
+    }
+  ]
+}
+----------------------------------------------------
 2026-11-06 11:33:12,664 - uvicorn.access - INFO - 127.0.0.1:61136 - "POST /api/v1/twobytwo HTTP/1.1" 202
 [TRACE] Received input_data: {"stepKey":487,"substepkey":1223,"processName":"Blueprinting Analysis-#98","processKey":98,"input_k
 --- Reading input record for input_key: 355 ---
