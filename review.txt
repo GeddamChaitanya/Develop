@@ -1,58 +1,449 @@
-L1 payload 
+2026-11-06 11:33:12,664 - uvicorn.access - INFO - 127.0.0.1:61136 - "POST /api/v1/twobytwo HTTP/1.1" 202
+[TRACE] Received input_data: {"stepKey":487,"substepkey":1223,"processName":"Blueprinting Analysis-#98","processKey":98,"input_k
+--- Reading input record for input_key: 355 ---
+2026-11-06 11:33:12,666 - sqlalchemy.pool.impl.AsyncAdaptedQueuePool - ERROR - Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x0000015E4BD73450>>
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 697, in _write_appdata
+    self._do_write()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 716, in _do_write
+    self._process_outgoing()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 722, in _process_outgoing
+    self._transport.write(data)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 366, in write
+    self._loop_writing(data=bytes(data))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send'
 
-{
-  "stepKey": 487,
-  "substepkey": 1221,
-  "processName": "Blueprinting Analysis-#98",
-  "processKey": 98,
-  "input_key": 353,
-  "input_name": "ViabilityFeasibilityRequest",
-  "OutputKey": 0,
-  "ProjectKey": 1,
-  "WorkspaceName": "blueprinting-testing",
-  "ParentWorkspaceName": "Ascend",
-  "WorkspaceDescription": "Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.",
-  "discount_rate": 0.1,
-  "TwoByTwoOutPutKeys": [],
-  "receiverEmail": "gedchaitanya@deloitte.com"
-}
+During handling of the above exception, another exception occurred:
 
--------------------------------
+Traceback (most recent call last):
+  File "asyncpg/protocol/protocol.pyx", line 597, in asyncpg.protocol.protocol.BaseProtocol.close
+  File "asyncpg/protocol/coreproto.pyx", line 1211, in asyncpg.protocol.protocol.CoreProtocol._terminate
+  File "asyncpg/protocol/protocol.pyx", line 980, in asyncpg.protocol.protocol.BaseProtocol._write
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 222, in write
+    self._ssl_protocol._write_appdata((data,))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 700, in _write_appdata
+    self._fatal_error(ex, 'Fatal error on SSL protocol')
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 918, in _fatal_error
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
 
-l2 payload : 
+During handling of the above exception, another exception occurred:
 
-{
-  "stepKey": 487,
-  "substepkey": 1222,
-  "processName": "Blueprinting Analysis-#98",
-  "processKey": 98,
-  "input_key": 354,
-  "input_name": "ViabilityFeasibilityRequest",
-  "OutputKey": 0,
-  "ProjectKey": 1,
-  "WorkspaceName": "blueprinting-testing",
-  "ParentWorkspaceName": "Ascend",
-  "WorkspaceDescription": "Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.",
-  "discount_rate": 0.1,
-  "TwoByTwoOutPutKeys": [],
-  "receiverEmail": "gedchaitanya@deloitte.com"
-}
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1536, in close
+    await self._protocol.close(timeout)
+  File "asyncpg/protocol/protocol.pyx", line 606, in close
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
 
-----------------------------------------------------
-l3 payload , 
-{
-  "stepKey": 487,
-  "substepkey": 1223,
-  "processName": "Blueprinting Analysis-#98",
-  "processKey": 98,
-  "input_key": 355,
-  "input_name": "ViabilityFeasibilityRequest",
-  "OutputKey": 347,
-  "ProjectKey": 1,
-  "WorkspaceName": "blueprinting-testing",
-  "ParentWorkspaceName": "Ascend",
-  "WorkspaceDescription": "Agentic AI Blueprinting workspace for development and testing on the Deloitte Ascend platform. Hosts enterprise blueprint navigator projects and supports end-to-end blueprinting workflows including capability mapping, impact analysis, and viability assessment.",
-  "discount_rate": 0.1,
-  "TwoByTwoOutPutKeys": [344, 346, 347],
-  "receiverEmail": "gedchaitanya@deloitte.com"
-}
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 372, in _close_connection
+    self._dialect.do_terminate(connection)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1127, in do_terminate
+    dbapi_connection.terminate()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 402, in terminate
+    self.await_(asyncio.shield(self._terminate_graceful_close()))  # type: ignore[attr-defined] # noqa: E501
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 912, in _terminate_graceful_close
+    await self._connection.close(timeout=2)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1539, in close
+    self._abort()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1600, in _abort
+    self._protocol.abort()
+  File "asyncpg/protocol/protocol.pyx", line 567, in asyncpg.protocol.protocol.BaseProtocol.abort
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 250, in abort
+    self._force_close(None)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 255, in _force_close
+    self._ssl_protocol._abort(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 674, in _abort
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Successfully retrieved input record with input_key: 355
+Details: Input Name: ViabilityFeasibilityRequest, Sub Step Key: 1223, Input Order: 1
+--- Reading survey responses for project_id: 1 ---
+[ERROR] CRUD_Get_SurveyResponses - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_SurveyResponses - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading survey responses: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch survey context for project 1: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column survey_response.client_id does not exist
+[SQL: SELECT public.survey_question_master.id AS public_survey_question_master_id, public.survey_question_master.is_master AS public_survey_question_master_is_master, public.survey_question_master.is_industry AS public_survey_question_master_is_industry, public.survey_question_master.is_sector AS public_survey_question_master_is_sector, public.survey_question_master.is_sub_sector AS public_survey_question_master_is_sub_sector, public.survey_question_master.question_text AS public_survey_question_master_question_text, public.survey_question_master.question_context AS public_survey_question_master_question_context, public.survey_question_master.response_type AS public_survey_question_master_response_type, public.survey_question_master.response_options AS public_survey_question_master_response_options, public.survey_question_master.is_active AS public_survey_question_master_is_active, public.survey_question_master.display_order AS public_survey_question_master_display_order, public.survey_question_master.created_by AS public_survey_question_master_created_by, public.survey_question_master.updated_by AS public_survey_question_master_updated_by, public.survey_question_master.created_at AS public_survey_question_master_created_at, public.survey_question_master.updated_at AS public_survey_question_master_updated_at, public.survey_response.response_value AS public_survey_response_response_value 
+FROM public.survey_question_master LEFT OUTER JOIN public.survey_response ON public.survey_question_master.id = public.survey_response.question_id AND public.survey_response.client_id = $1::INTEGER 
+WHERE public.survey_question_master.is_active = true ORDER BY public.survey_question_master.display_order]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+--- Reading supporting files for project_key: 1 ---
+[ERROR] CRUD_Get_ProjectSupportingFiles_ByProject - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[ERROR] DB_Read_ProjectSupportingFiles - (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+An error occurred while reading supporting files: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Warning: Failed to fetch file context for project 1: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column project_supporting_file.client_supporting_file_key does not exist
+[SQL: SELECT project_supporting_file.client_supporting_file_key AS project_supporting_file_client_supporting_file_key, project_supporting_file.project_key AS project_supporting_file_project_key, project_supporting_file.file_original_name AS project_supporting_file_file_original_name, project_supporting_file.file_storage_name AS project_supporting_file_file_storage_name, project_supporting_file.file_description AS project_supporting_file_file_description, project_supporting_file.file_category_key AS project_supporting_file_file_category_key, project_supporting_file.file_container_path AS project_supporting_file_file_container_path, project_supporting_file.file_size_in_mb AS project_supporting_file_file_size_in_mb, project_supporting_file.created_by_user_key AS project_supporting_file_created_by_user_key, project_supporting_file.created_date AS project_supporting_file_created_date 
+FROM project_supporting_file 
+WHERE project_supporting_file.project_key = $1::INTEGER ORDER BY project_supporting_file.created_date DESC]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+[TRACE] Starting agentic fit allocation for action: l3
+
+--- Starting database operations ---
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 1223
+Updated Description: viability-n-feasibility-1793943244381
+
+--- Operations finished ---
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'Started', 'Logs': ' Started generating for Two by Two for action l3', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Started', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Started
+[TRACE] Redis message published successfully: Started
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+[TRACE] Progress monitor started for ID: viability-feasibility-1223-1793943246349
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'initial', 'heartbeatCount': 1, 'jobMetadata': {'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'action': 'l3', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+2026-11-06 11:34:00,856 - sqlalchemy.pool.impl.AsyncAdaptedQueuePool - ERROR - Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x0000015E4B923250>>
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 697, in _write_appdata
+    self._do_write()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 716, in _do_write
+    self._process_outgoing()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 722, in _process_outgoing
+    self._transport.write(data)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 366, in write
+    self._loop_writing(data=bytes(data))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "asyncpg/protocol/protocol.pyx", line 597, in asyncpg.protocol.protocol.BaseProtocol.close
+  File "asyncpg/protocol/coreproto.pyx", line 1211, in asyncpg.protocol.protocol.CoreProtocol._terminate
+  File "asyncpg/protocol/protocol.pyx", line 980, in asyncpg.protocol.protocol.BaseProtocol._write
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 222, in write
+    self._ssl_protocol._write_appdata((data,))
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 700, in _write_appdata
+    self._fatal_error(ex, 'Fatal error on SSL protocol')
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 918, in _fatal_error
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1536, in close
+    await self._protocol.close(timeout)
+  File "asyncpg/protocol/protocol.pyx", line 606, in close
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 372, in _close_connection
+    self._dialect.do_terminate(connection)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1127, in do_terminate
+    dbapi_connection.terminate()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 402, in terminate
+    self.await_(asyncio.shield(self._terminate_graceful_close()))  # type: ignore[attr-defined] # noqa: E501
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 912, in _terminate_graceful_close
+    await self._connection.close(timeout=2)
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1539, in close
+    self._abort()
+  File "C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\.venv\Lib\site-packages\asyncpg\connection.py", line 1600, in _abort
+    self._protocol.abort()
+  File "asyncpg/protocol/protocol.pyx", line 567, in asyncpg.protocol.protocol.BaseProtocol.abort
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 250, in abort
+    self._force_close(None)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 255, in _force_close
+    self._ssl_protocol._abort(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 674, in _abort
+    self._transport._force_close(exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 152, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\gedchaitanya\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+[TRACE] Redis message published successfully: In Progress
+=== 2x2 FIT/COST LOOKUP | processKey=98 === {"available": true, "counts": {"L1": 15, "L2": 50, "L3": 164}, "ambiguous_paths": []}
+[TRACE] generate_two_by_two_analysis: attempt 1/3 – 4 capabilities in 1 batch(es)
+
+=== 2x2 FIT/COST | analysis_type=l3 | uniqueIds=['l3-salary-5-1793259344672', 'l3-salary-5-1793259344672', 'l3-salary-5-1793259344672', 'l3-salary-5-1793259344672'] ===
+
+CAPABILITY FIT AND COST-SAVING CONTEXT
+Use each capability's own values below as supporting evidence when judging every
+viability and feasibility dimension, alongside client context. These values are
+not scores or weights; do not copy them as scores or use them as scoring weights.
+- Capability: Regulatory Reporting; uniqueId: l3-salary-5-1793259344672; High Fit %: 43; Cost Saving Opportunity: 3491356.2974999994
+
+E0000 00:00:1793945050.800458   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1793945050.804424   33828 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 2, 'jobMetadata': {'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'action': 'l3', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 3, 'jobMetadata': {'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'action': 'l3', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'In Progress', 'Logs': 'Generating two by two analysis', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'progress-monitor', 'stageStatus': 'heartbeat', 'heartbeatCount': 4, 'jobMetadata': {'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'action': 'l3', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: In Progress
+[TRACE] Redis message published successfully: In Progress
+2026-11-06 11:34:37,223 - watchfiles.main - INFO - 1 change detected
+[TRACE] Progress monitor stopped for ID: viability-feasibility-1223-1793943246349
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l3', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Completed
+2026-11-06 11:34:37,579 - watchfiles.main - INFO - 1 change detected
+[TRACE] Redis message published successfully: Completed
+Generated response:  {'projectInfo': {'projectKey': 1, 'projectName': 'Enterprise Default Project_Testing', 'projectDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.', 'industry': 'Freight Transportation', 'sector': 'Transportation & Logistics', 'subSector': 'Road Freight and Trucking', 'clientKey': 1, 'ClientKey': 1, 'ProjectKey': 1, 'project_key': 1, 'clientName': 'Enterprise Default Project_Testing', 'clientDescription': 'Default project for the entire enterprise workspace — every user in this tenant is automatically mapped to it on first login.'}, 'backgroundProcessingInfo': {'receiverEmail': 'gedchaitanya@deloitte.com', 'substepkey': 1223, 'stepKey': 487, 'step_name': 'viability-n-feasibility-1793943244381', 'processKey': 98, 'processName': 'Blueprinting Analysis-#98', 'ID': 'viability-feasibility-1223-1793943246349', 'requestedOn': '2026-11-06T05:34:06.349Z', 'input_key': 0, 'input_name': '', 'outputKey': None, 'outputTypeKey': None, 'generatedForInputKey': None, 'outputTypeName': '', 'outputTypeDescription': '', 'outputName': '', 'outputJson': None, 'total_opex': None, 'category': 'l3'}, 'selected_capability_map': [{'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.'}, {'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.'}, {'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.'}, {'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.'}], 'capability_matrix': [{'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.', 'viability': [{'dimension': 'Strategic Centrality', 'score': 'MEDIUM', 'source_reasoning': "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."}, {'dimension': 'Cost Reduction Potential', 'score': 'VERY HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."}, {'dimension': 'Revenue Generation Potential', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."}, {'dimension': 'Throughput / Cycle-Time Improvement', 'score': 'HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."}, {'dimension': 'Customer Experience Impact', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."}], 'feasibility': [{'dimension': 'Data Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."}, {'dimension': 'Integration & Technical Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."}, {'dimension': 'Standardization & Scalability Potential', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."}, {'dimension': 'Operating Model & Change Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."}, {'dimension': 'Compliance considerations', 'score': 'LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."}], 'viability_score': 2.0, 'feasibility_score': 3.03, 'overall_summary': 'No summary provided.'}, {'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.', 'viability': [{'dimension': 'Strategic Centrality', 'score': 'MEDIUM', 'source_reasoning': "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."}, {'dimension': 'Cost Reduction Potential', 'score': 'VERY HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."}, {'dimension': 'Revenue Generation Potential', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."}, {'dimension': 'Throughput / Cycle-Time Improvement', 'score': 'HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."}, {'dimension': 'Customer Experience Impact', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."}], 'feasibility': [{'dimension': 'Data Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."}, {'dimension': 'Integration & Technical Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."}, {'dimension': 'Standardization & Scalability Potential', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."}, {'dimension': 'Operating Model & Change Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."}, {'dimension': 'Compliance considerations', 'score': 'LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."}], 'viability_score': 2.0, 'feasibility_score': 3.03, 'overall_summary': 'No summary provided.'}, {'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.', 'viability': [{'dimension': 'Strategic Centrality', 'score': 'MEDIUM', 'source_reasoning': "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."}, {'dimension': 'Cost Reduction Potential', 'score': 'VERY HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."}, {'dimension': 'Revenue Generation Potential', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."}, {'dimension': 'Throughput / Cycle-Time Improvement', 'score': 'HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."}, {'dimension': 'Customer Experience Impact', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."}], 'feasibility': [{'dimension': 'Data Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."}, {'dimension': 'Integration & Technical Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."}, {'dimension': 'Standardization & Scalability Potential', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."}, {'dimension': 'Operating Model & Change Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."}, {'dimension': 'Compliance considerations', 'score': 'LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."}], 'viability_score': 2.0, 'feasibility_score': 3.03, 'overall_summary': 'No summary provided.'}, {'uniqueId': 'l3-salary-5-1793259344672', 'l1CapabilityName': 'Strategy & Governance', 'l1CapabilityDescription': 'Manages the formulation of corporate strategy and the establishment of the organizational frameworks, policies, and oversight required to guide and control the enterprise.', 'l2CapabilityName': 'Regulatory & Compliance Management', 'l2CapabilityDescription': 'Ensures the organization adheres to all applicable laws, regulations, industry standards, and internal policies.', 'l3CapabilityName': 'Regulatory Reporting', 'l3CapabilityDescription': 'This capability encompasses the timely and accurate preparation and submission of all mandatory reports to regulatory bodies. It is a critical component of Regulatory & Compliance Management, demonstrating adherence to legal and statutory obligations. Key processes include data gathering and validation from various systems, report generation in specified formats, and submission to the relevant authorities, thereby ensuring transparency and avoiding penalties for non-compliance.', 'viability': [{'dimension': 'Strategic Centrality', 'score': 'MEDIUM', 'source_reasoning': "AI Generated: Regulatory Reporting is a critical component of Regulatory & Compliance Management, ensuring adherence to legal and statutory obligations and avoiding penalties. This makes it important to compete efficiently and meet expectations, aligning with a 'Table stakes' level of strategic centrality."}, {'dimension': 'Cost Reduction Potential', 'score': 'VERY HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability has a 'High Fit %' of 43% for agentic automation, indicating a substantial portion of the work could be done by AI agents. This directly translates to a potential for greater than 40% operating expense reduction, aligning with a 'VERY HIGH' cost reduction potential."}, {'dimension': 'Revenue Generation Potential', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: The Regulatory Reporting capability focuses on compliance and avoiding penalties, rather than directly contributing to sales, conversion, or customer acquisition. Therefore, it has no discernible revenue effect, aligning with a 'VERY LOW' revenue generation potential."}, {'dimension': 'Throughput / Cycle-Time Improvement', 'score': 'HIGH', 'source_reasoning': "AI Generated: The Regulatory Reporting capability involves data gathering, validation, and report generation, which are highly amenable to automation, as indicated by the 43% 'High Fit %'. Automating these steps can lead to a 30-40% end-to-end cycle-time reduction by streamlining major handoffs and improving flow."}, {'dimension': 'Customer Experience Impact', 'score': 'VERY LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is an internal compliance function focused on external regulatory bodies, not direct customer interaction or service delivery. Therefore, it offers no meaningful change or perceived benefit to customer journeys or segments, aligning with a 'VERY LOW' customer experience impact."}], 'feasibility': [{'dimension': 'Data Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting inherently requires highly accurate and complete data for submission to regulatory bodies, implying existing strong data governance and validation processes. This suggests that data is largely complete with minor quality or coverage gaps, and stewardship is in place, supporting a 'HIGH' data readiness score."}, {'dimension': 'Integration & Technical Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting requires structured data extraction from 'various systems' and precise report generation, suggesting that integration is mostly modern with some legacy components. The clear and widely accepted evaluation methods for regulatory reports further support a 'HIGH' integration and technical readiness."}, {'dimension': 'Standardization & Scalability Potential', 'score': 'HIGH', 'source_reasoning': "AI Generated: Regulatory Reporting involves the preparation of mandatory reports in 'specified formats,' indicating a high degree of standardization and stable rules for report generation. While manual validations may be required due to regulatory expectations, a high share of standard cases can be automated, supporting a 'HIGH' standardization and scalability potential."}, {'dimension': 'Operating Model & Change Readiness', 'score': 'HIGH', 'source_reasoning': "AI Generated: As a critical compliance function, Regulatory Reporting likely has clear ownership and executive sponsorship, making a change plan for automation definable with little complication. The potential for significant cost savings also makes ROI tracking possible and stakeholder buy-in anticipated, supporting a 'HIGH' operating model and change readiness."}, {'dimension': 'Compliance considerations', 'score': 'LOW', 'source_reasoning': "AI Generated: Regulatory Reporting is inherently subject to strict regulatory oversight and requirements, meaning that any automation of this capability will face tight regulatory limits. This necessitates careful consideration of data integrity, auditability, and accountability, aligning with a 'LOW' compliance considerations score."}], 'viability_score': 2.0, 'feasibility_score': 3.03, 'overall_summary': 'No summary provided.'}]}
+2026-11-06 11:34:37,762 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container?restype=REDACTED&comp=REDACTED&prefix=REDACTED'
+Request method: 'GET'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'f2921f84-d9a7-11f1-93f0-d4f32df15686'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-11-06 11:34:37,943 - watchfiles.main - INFO - 1 change detected
+2026-11-06 11:34:39,588 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/xml'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '43f8df9f-901e-006e-16b4-6da291000000'
+    'x-ms-client-request-id': 'f2921f84-d9a7-11f1-93f0-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'Date': 'Fri, 06 Nov 2026 06:04:39 GMT'
+2026-11-06 11:34:39,595 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_09ffa567-14ce-4113-8970-72fd4794499c.json'
+Request method: 'DELETE'
+Request headers:
+    'x-ms-version': 'REDACTED'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'f3a9d607-d9a7-11f1-b15b-d4f32df15686'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-11-06 11:34:39,845 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Content-Length': '0'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': '43f8e08f-901e-006e-6fb4-6da291000000'
+    'x-ms-client-request-id': 'f3a9d607-d9a7-11f1-b15b-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'x-ms-delete-type-permanent': 'REDACTED'
+    'Date': 'Fri, 06 Nov 2026 06:04:39 GMT'
+[TRACE] 🗑️ Deleted existing blob: NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_09ffa567-14ce-4113-8970-72fd4794499c.
+2026-11-06 11:34:39,845 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://aabdevstorage.blob.core.windows.net/aabdevstorage-container/NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e809-c457-4b5b-a656-f00e9313d8ab.json'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '29497'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.27.1 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'f3cff6d5-d9a7-11f1-9c33-d4f32df15686'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-11-06 11:34:41,759 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Fri, 06 Nov 2026 06:04:41 GMT'
+    'ETag': '"0x8DF3BCBD909F3DD"'
+    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'
+    'x-ms-request-id': 'b3610916-001e-007c-74b4-6dd941000000'
+    'x-ms-client-request-id': 'f3cff6d5-d9a7-11f1-9c33-d4f32df15686'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Fri, 06 Nov 2026 06:04:41 GMT'
+[TRACE] ✅ JSON uploaded to Azure Storage: aabdevstorage-container/NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'Inserting', 'Logs': ' Two by Two inserting into DB for action l3', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Inserting', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Inserting
+[TRACE] Redis message published successfully: Inserting
+
+--- Starting database operations ---
+C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi\db\db_operations_orm.py:386: RuntimeWarning: coroutine 'read_latest_sub_step_output_by_input_key' was never awaited
+  resolved_output_key = resolve_idempotent_output_key(
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[TRACE] DB_Operations: Running INSERT operation for output
+--- Running Insert Operation ---
+--- Creating a new sub_step_output record ---
+sub_step_output_data: {'sub_step_key': 1223, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 355, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e809-c457-4b5b-a656-f00e9313d8ab.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e809-c457-4b5b-a656-f00e9313d8ab.json', 'output_file_size_mbs': 2}
+new_output_obj: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4BA28590>, 'sub_step_key': 1223, 'output_type_key': 2, 'output_json': None, 'generated_for_input_key': 355, 'output_name': 'viability-feasibility Output', 'output_description': '', 'output_order': 1, 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e809-c457-4b5b-a656-f00e9313d8ab.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_path': 'NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e809-c457-4b5b-a656-f00e9313d8ab.json', 'output_file_size_mbs': 2}
+Successfully created output record with key: 349
+Details: {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x0000015E4BA28590>, 'output_key': 349, 'generated_for_input_key': 355, 'output_description': '', 'is_output_json': False, 'output_file_storage_name': 'NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e809-c457-4b5b-a656-f00e9313d8ab.json', 'output_file_original_name': 'Viability_Feasibility_Output.json', 'output_file_size_mbs': 2, 'sub_step_key': 1223, 'output_type_key': 2, 'output_name': 'viability-feasibility Output', 'output_order': 1, 'output_json': None, 'output_file_path': 'NV_PoC_V1/outputs/1/98/1223/viability_feasibility_output_9529e809-c457-4b5b-a656-f00e9313d8ab.json', 'created_date': datetime.datetime(2026, 11, 6, 6, 4, 45, 792231, tzinfo=datetime.timezone.utc)}
+
+--- Operations finished ---
+
+--- Starting database operations ---
+[TRACE] DB_Operations: Running UPDATE operation
+--- Running Update Operation ---
+
+--- Updating the blueprinting_process_sub_step_output record ---
+[TRACE] DB_Update: Completed crud operation
+Successfully updated output record with key: 1223
+Updated Description: viability-n-feasibility-1793943244381
+
+--- Operations finished ---
+{'ID': 'viability-feasibility-1223-1793943246349', 'Status': 'Completed', 'Logs': ' Two by Two inserted into DB for action l3', 'input_key': 0, 'substepkey': 1223, 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'IndustryMapsFileKey': None, 'workflowutilitykey': None, 'CapabilityMapKey': None, 'progressPercentage': None, 'stage': 'Completed', 'stageStatus': 'published', 'heartbeatCount': None, 'jobMetadata': {'substepkey': 1223, 'input_key': 0, 'ID': 'viability-feasibility-1223-1793943246349', 'receiverEmail': 'gedchaitanya@deloitte.com', 'requestedOn': '2026-11-06T05:34:06.349Z', 'channelName': 'two_by_two_background_process', 'module': None, 'subModule': None, 'action': None, 'jobId': 'genai:1223:0:viability-feasibility-1223-1793943246349', 'missingFields': ['processKey', 'input_key']}}
+[TRACE] Attempting Redis publish: Completed
+[TRACE] Redis message published successfully: Completed
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
+2026-11-06 11:34:56,767 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails:send?api-version=2025-09-01'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14330'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'fde61a73-d9a7-11f1-8a16-d4f32df15686'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-11-06 11:34:59,605 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 202
+Response headers:
+    'Date': 'Fri, 06 Nov 2026 06:04:59 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'Operation-Location': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+2026-11-06 11:34:59,607 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/40186dee-6692-4d45-986e-4b24f8d3f56a?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'fde61a73-d9a7-11f1-8a16-d4f32df15686'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-11-06 11:34:59,993 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Fri, 06 Nov 2026 06:04:59 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '77'
+    'Connection': 'keep-alive'
+    'Retry-After': '3'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+2026-11-06 11:35:02,999 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://agenticaiblueprinting-communication-service.unitedstates.communication.azure.com/emails/operations/40186dee-6692-4d45-986e-4b24f8d3f56a?api-version=2025-09-01'
+Request method: 'GET'
+Request headers:
+    'x-ms-client-request-id': 'fde61a73-d9a7-11f1-8a16-d4f32df15686'
+    'User-Agent': 'azsdk-python-communication-email/1.1.0 Python/3.12.10 (Windows-11-10.0.26100-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-content-sha256': 'REDACTED'
+    'x-ms-return-client-request-id': 'true'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-11-06 11:35:03,268 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Date': 'Fri, 06 Nov 2026 06:05:03 GMT'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Length': '79'
+    'Connection': 'keep-alive'
+    'MS-CV': 'REDACTED'
+    'api-supported-versions': 'REDACTED'
+    'x-azure-ref': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'Accept-Ranges': 'REDACTED'
+Email send operation status:  {'id': '40186dee-6692-4d45-986e-4b24f8d3f56a', 'status': 'Succeeded', 'error': None}
+Message sent with ID:  40186dee-6692-4d45-986e-4b24f8d3f56a
+Status:  Succeeded
+--- Reading app_user for email: gedchaitanya@deloitte.com ---
+Successfully retrieved user_key: 22 for email: gedchaitanya@deloitte.com
