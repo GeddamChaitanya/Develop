@@ -15,3 +15,54 @@ git commit -m "2x2: add High Fit % and Cost Saving Opportunity as dimension-scor
 git push origin two_by_two_enc_asc
 
 
+----------------------------------------------------------------------------------------------------------
+
+(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> git diff
+diff --git a/agents/two_by_two/two_by_two_generator.py b/agents/two_by_two/two_by_two_generator.py
+index 1d960d9..b600bc3 100644
+--- a/agents/two_by_two/two_by_two_generator.py
++++ b/agents/two_by_two/two_by_two_generator.py
+@@ -30,6 +30,7 @@ from .prompts import (
+ )
+ from .llm_helper import call_llm
+ from .llm_helper import _extract_json as extract_json
++from .fit_cost_enrichment import FitCostLookup, build_fit_cost_prompt_text
+ 
+ # ----------------------------- Prompt/Parsing helpers -----------------------------
+ 
+@@ -81,6 +82,7 @@ def _build_prompt(
+     rubric_text: str,
+(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> Select-String -Path apis\v1\two_by_two.py, agents\two_by_two\two_by_two_generator.py, agents\two_by_two\fit_cost_enrichment.py -Pattern "TEMP DEBUG", "temp_debug"
+   
+apis\v1\two_by_two.py:5:from pathlib import Path  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:6:from datetime import datetime  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:7:from agents.two_by_two.fit_cost_enrichment import build_fit_cost_prompt_text  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:8:from agents.two_by_two.two_by_two_generator import define_scope_of_unique_ids  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:52:    print("=== /twobytwo REQUEST ===", input_data.model_dump_json(exclude_unset=True), flush=True)  # TEMP DEBUG - remove 
+before PR
+apis\v1\two_by_two.py:269:            debug_entries, debug_ambiguous = fit_cost_lookup if fit_cost_lookup is not None else ({}, [])  # TEMP DEBUG - 
+remove before PR
+apis\v1\two_by_two.py:270:            debug_lookup_summary = {"available": fit_cost_lookup is not None, "counts": {f"L{level}": sum(len(path) == level 
+for path in debug_entries) for level in (1, 2, 3)}, "ambiguous_paths": debug_ambiguous}  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:271:            print(f"=== 2x2 FIT/COST LOOKUP | processKey={process_key} ===", json.dumps(debug_lookup_summary), flush=True)  
+# TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:275:            try:  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:276:                debug_ids = {str(unique_id) for unique_id in define_scope_of_unique_ids(selected_capability, capabilities, 
+analysis_type, step_name)}  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:277:                debug_capabilities = [cap for cap in (capabilities.get(analysis_type.upper()) or []) if 
+str(cap.get("uniqueId") if isinstance(cap, dict) else getattr(cap, "uniqueId", None)) in debug_ids]  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:278:                debug_lines = build_fit_cost_prompt_text(debug_capabilities, analysis_type, fit_cost_lookup) if 
+fit_cost_lookup is not None else ""  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:279:                debug_payload = {"processKey": process_key, "analysis_type": analysis_type, "lookup_summary": 
+debug_lookup_summary, "fit_cost_lines": debug_lines.splitlines(), "capability_matrix": capability_matrix}  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:280:                debug_folder = Path(__file__).resolve().parents[2] / "temp_debug"  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:281:                debug_folder.mkdir(parents=True, exist_ok=True)  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:282:                debug_file = debug_folder / f"2x2_fit_cost_{process_key}_{datetime.now():%Y%m%d_%H%M%S_%f}.json"  # TEMP 
+DEBUG - remove before PR
+apis\v1\two_by_two.py:283:                debug_file.write_text(json.dumps(debug_payload, indent=2, ensure_ascii=False), encoding="utf-8")  # TEMP 
+DEBUG - remove before PR
+apis\v1\two_by_two.py:284:            except Exception as debug_error:  # TEMP DEBUG - remove before PR
+apis\v1\two_by_two.py:285:                print(f"=== 2x2 DEBUG FILE WRITE FAILED === {debug_error}", flush=True)  # TEMP DEBUG - remove before PR
+
+
+(.venv) PS C:\Users\gedchaitanya\2by2_enc_asc\aai-bpt-genaiapi> 
